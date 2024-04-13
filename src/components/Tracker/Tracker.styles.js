@@ -9,12 +9,7 @@ export const Wrapper=styled.div`
         height: 40px;
         width:50px;
         border-radius: 100px;
-
     }
-
-
-
-
 `;
 
 export const Sheet=styled.div`

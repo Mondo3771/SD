@@ -58,8 +58,6 @@ const Tracker = () => {
     }else{
         if(task===''){
             setText('Task cannot be empty')
-            
-
         }
         else{
             setArray(prevArray => [
@@ -114,6 +112,7 @@ const Tracker = () => {
 const renderArrayItems = () => {
     // Get all unique projects
     const uniqueProjects = Array.reduce((projects, item) => {
+      console.log(Array);
       if (!projects.includes(item.project)) {
         return [...projects, item.project];
       }
@@ -130,6 +129,9 @@ const renderArrayItems = () => {
               <p>{item.task}</p>
               <p>{item.time}</p>
               <p>{item.date}</p>
+              <button>
+              Pause
+               </button>
               <button onClick={() => remove(index)}>X</button>
             </Sheet>
           </section>

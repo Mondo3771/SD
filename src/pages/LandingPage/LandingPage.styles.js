@@ -4,9 +4,6 @@ import background from './background.svg';
 export const LandingPageContainer = styled.main`
   background-image: url(${background});
   background-size: cover; /* This ensures the image covers the entire background */
-  
-
-
 `;
 
 export const Wrapper=styled.section`
@@ -16,12 +13,6 @@ export const Wrapper=styled.section`
     justify-content: center;
     align-items: center;
     height: 700px;
-
-    
-    
-    
-
-
 
 ` ;
 
