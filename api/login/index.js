@@ -35,7 +35,7 @@ module.exports = async function (context, req) {
 
   const config = {
     user: "azureuser", // better stored in an app setting such as process.env.DB_USER
-    password: "30012004Kb.", // better stored in an app setting such as process.env.DB_PASSWORD
+    password: process.env.password, // better stored in an app setting such as process.env.DB_PASSWORD
     server: "mysqlserverkabza.database.windows.net", // better stored in an app setting such as process.env.DB_SERVER
     port: 1433, // optional, defaults to 1433, better stored in an app setting such as process.env.DB_PORT
     database: "LuckyCars", // better stored in an app setting such as process.env.DB_NAME
