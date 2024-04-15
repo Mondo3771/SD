@@ -5,66 +5,117 @@ export const Wrapper = styled.div`
   flex-flow: column;
   box-sizing: border-box;
   background: var(--dark);
-  height: 100vh;
+  min-height: 100vh;
+  gap: 2rem;
 `;
 
 export const Header = styled.div`
+  display: flex;
+  padding: 0.5rem 3rem;
+  justify-content: space-between;
+  min-height: 14vh;
+  align-items: center;
+  // border: 1px solid black;
+
+  .logo {
     display: flex;
-    justify-content: space-around;
-    height: 10vh;
-    border : 1px solid black;
-    align-items: center;
+  }
 
-    a {
-        text-decoration: none;
-    }
-    ul {
-        list-style-type: none;
-        list-decoration: none;
-        display: flex;
-        justify-content: space-between;
-        align-items: ;
-        // gap: 0.5rem;
-        border : 1px solid black;
-    }
+  a {
+    font-size: 1.35rem;
+    text-decoration: none;
+    transition: all 200 ease-in-out;
+  }
 
-    li {
-        display: flex;
-        list-decoration: none;
-        justify-content: space-between;
+  ul {
+    display: flex;
+    padding: 0;
+    list-style: none;
+    gap: 5rem;
+  }
 
-    }
+  a:visited {
+    color: black;
+  }
 
-    a:visited , ul li a:visited {
-        color: black;
-    }
-
-    li a {
-        border : 1px solid black;
-    }
-
-
-`
+  li a:hover {
+    color: var(--darker);
+  }
+`;
 
 export const Card = styled.article`
+  scroll-behavior: smooth;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 50px;
-  border: 1px solid black;
-  // color: aliceblue;
+  box-shadow: 10px;
   background: var(--whiter);
   width: 1300px;
-  height: 90%;
-  margin: 50px auto;
+  min-height: 500px;
+  color: var(--darkest);
+  flex: 1;
+  padding: 40px;
+  margin: 0 auto 20px auto;
   display: flex;
   flex-direction: column;
+
+  .title {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .createTaskButton {
+    display: flex;
+    border: none;
+    background: var(--darker);
+    border-radius: 10px;
+    width: 500px;
+    padding: 5px 10px;
+    justify-content: flex-start;
+    color: white;
+  }
+  .createTaskButton h2 {
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 1.1rem;
+  }
+  .clock {
+    // background: var(--darker);
+    color: var(--darker);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
 `;
 
 export const Sheet = styled.div`
-  background-color: black;
+  background-color: var(--darker);
+  border: 2px solid var(--darker);
+  border-radius: 10px;
+  margin: 5px 0;
+  padding: 5px 10px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+
   p {
-    color: red;
+    color: white;
+    font-size: 1.1rem;
+  }
+  .stopButton,
+  .playButton,
+  .pauseButton {
+    background-color: var(--darker);
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
+
+  .removeButton {
+    background: var(--darker);
+    color: white;
+    width: 50px;
+    border-radius: 50%;
+    border: none;
   }
 `;
 
@@ -72,8 +123,6 @@ export const ProjectHolder = styled.div`
   display: flex;
   flex-flow: column;
   box-sizing: border-box;
-
-  padding: 5px;
 `;
 
 export const StopStartContainer = styled.div`
@@ -83,7 +132,7 @@ export const StopStartContainer = styled.div`
   justify-content: flex-end;
 
   button {
-    width: 60px;
+    width: 50px;
     border-radius: 50%;
     transition: all 300ms ease-in-out;
   }
