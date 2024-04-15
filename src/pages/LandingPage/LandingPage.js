@@ -1,6 +1,7 @@
 // export default LandingPage;
 import React, { useState } from "react";
 import Index from "../../routes/Index";
+import { Link } from "react-router-dom";
 
 import {
   InputContainer,
@@ -82,6 +83,11 @@ const LandingPage = () => {
           .then((response) => response.json())
           .then((data) => {
             console.log("Success:", data);
+// change pages
+<Link to={{ pathname: '/FakeHomePage' }}></Link>
+console.log("heyyyyy");
+
+
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -90,6 +96,9 @@ const LandingPage = () => {
     }
     // console.log(DBsign);
   };
+
+
+
   const log = () => {
     if (!data.email) {
       return setlogError("Select Account");
@@ -106,6 +115,11 @@ const LandingPage = () => {
           .then((response) => response.json())
           .then((data) => {
             console.log("Success:", data);
+            //change pages
+            <Link to={{ pathname: '/FakeHomePage' }}></Link>
+            console.log("heyyyyy");
+
+
           })
           .catch((error) => {
             console.error("Error:", error);
