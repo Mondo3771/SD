@@ -64,7 +64,7 @@ const LandingPage = () => {
     } else if (!data.email_verified) {
       return setError("Unverified a Account");
     } else {
-      setError("Welcome " + data.name + "! Click Sign Up");
+      setError("Loading");
       setDBsign({
         Department: Department,
         employeeType: EmpType,
@@ -132,7 +132,7 @@ useEffect(() => {
     } else if (!data.email_verified) {
       return setlogError("Unverified a Account");
     } else {
-      setlogError("Waiting for " + data.name + "! Click Login");
+      setlogError("Loading!");
       setDBlog({
         email: data.email,
         Name: data.given_name,
@@ -158,6 +158,7 @@ useEffect(() => {
           })
           .catch((error) => {
             console.error("Error:", error);
+            setlogError('No user found');
           });
       console.log(DBlog);
       login();
