@@ -64,9 +64,31 @@ const LandingPage = () => {
         Surname: data.family_name,
       });
       // FETCH POST REQUEST TO DATABASE USE LOG
-      // PUT dbsign IN A BODY FRO YOUR REQUEST
+      console.log(data);
+      const get = () =>
+        fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Department: Department,
+            employeeType: EmpType,
+            Email: data.email,
+            Name: data.given_name,
+            Surname: data.family_name,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      get();
     }
-    console.log(DBsign);
+    // console.log(DBsign);
   };
   const log = () => {
     if (!data.email) {
@@ -79,10 +101,19 @@ const LandingPage = () => {
         email: data.email,
         Name: data.given_name,
       });
-
+      const login = () =>
+        fetch(`/api/login?email=${data.email}`)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      console.log(DBlog);
+      login();
     }
-
-    console.log(DBlog);
+    // console.log(DBlog);
   };
 
   return (
@@ -112,8 +143,7 @@ const LandingPage = () => {
                 <>
                   <button className="login" onClick={handleLogin}>
                     Login
-                  </button>
-                  {" "}
+                  </button>{" "}
                   <article className="secSign">
                     <h2>{Error}</h2>
                     <InputContainer>
@@ -142,7 +172,7 @@ const LandingPage = () => {
                         <option value="HR">HR</option>
                       </select>
                     </InputContainer>
-                    <Index child={childToParent}/>
+                    <Index child={childToParent} />
                     <button className="sign" onClick={sign}>
                       Sign Up
                     </button>
