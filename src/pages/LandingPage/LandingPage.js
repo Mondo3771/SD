@@ -1,7 +1,8 @@
 // export default LandingPage;
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Index from "../../routes/Index";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+
 
 import {
   InputContainer,
@@ -11,9 +12,12 @@ import {
 } from "./LandingPage.styles";
 
 const LandingPage = () => {
+
+
   const [login, setLogin] = useState(false);
   const [signup, setSignup] = useState(false);
   const [first, setFirst] = useState(false);
+  const [Loaded,setLoaded]=useState(false);
 
   const handleLogin = () => {
     setLogin((prevLogin) => !prevLogin);
@@ -83,9 +87,12 @@ const LandingPage = () => {
           .then((response) => response.json())
           .then((data) => {
             console.log("Success:", data);
-// change pages
-<Link to={{ pathname: '/FakeHomePage' }}></Link>
-console.log("heyyyyy");
+// // change pages
+// setLoaded(true);
+// console.log("heyyyyy");
+setLoaded(true);
+
+
 
 
           })
@@ -116,8 +123,14 @@ console.log("heyyyyy");
           .then((data) => {
             console.log("Success:", data);
             //change pages
-            <Link to={{ pathname: '/FakeHomePage' }}></Link>
-            console.log("heyyyyy");
+            // <Link to={{ pathname: '/FakeHomePage' }}></Link>
+            setLoaded(true);
+            console.log(Loaded);
+
+
+
+
+
 
 
           })
@@ -129,6 +142,21 @@ console.log("heyyyyy");
     }
     // console.log(DBlog);
   };
+
+  const reload=()=>{
+
+  }
+
+  useEffect(()=>{
+    if(Loaded){
+      
+      
+
+    }
+
+  },[Loaded])
+
+  
 
   return (
     <>
@@ -145,9 +173,23 @@ console.log("heyyyyy");
                   <article className="secLog">
                     <h2>{logError}</h2>
                     {first ? <Index child={childToParent} /> : null}
-                    <button className="log" onClick={log}>
+                    {/* <button className="log" onClick={log}>
                       Login
-                    </button>
+                    </button> */}
+                    {/* {Loaded ? ( */}
+                      
+                      <Link to="/FakeHomePage">
+                        <button className="log" onClick={reload}>Login</button>
+                      </Link>
+                    {/* ) : ( */}
+                      {/* <button className="log" onClick={log}>
+                        Login
+                      </button>
+                    )} */}
+
+
+
+
                   </article>
                   <button className="login" onClick={handleSignup}>
                     Sign Up
@@ -187,9 +229,28 @@ console.log("heyyyyy");
                       </select>
                     </InputContainer>
                     <Index child={childToParent} />
-                    <button className="sign" onClick={sign}>
+                  
+                 
+                    {/* <button className="sign" onClick={sign}>
                       Sign Up
-                    </button>
+                    </button> */}
+                    
+                    {Loaded ? (
+                      
+                      <Link to="/FakeHomePage">
+                        <button className="sign">Sign Up</button>
+                      </Link>
+                    ) : (
+                      <button className="sign" onClick={sign}>
+                        Sign Up
+                      </button>
+                    )}
+
+                    
+                   
+                  
+
+                 
                   </article>
                 </>
               )}
