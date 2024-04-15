@@ -1,13 +1,16 @@
-import React from 'react'
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 const FakeHomePage = () => {
-  return (
+    const { data } = useParams();
+    console.log(data);
 
-
-    <div>Hello</div>
-
-
-  )
+    return (
+        <div>
+            <h1>Fake Home Page</h1>
+            <p>Data received: {data}</p>
+        </div>
+    );
 }
 
-export default FakeHomePage
+export default FakeHomePage;

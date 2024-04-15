@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Index from "../../routes/Index";
 import { Link} from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 
 import {
@@ -12,6 +13,7 @@ import {
 } from "./LandingPage.styles";
 
 const LandingPage = () => {
+  const history=useHistory();
 
 
   const [login, setLogin] = useState(false);
@@ -45,7 +47,9 @@ const LandingPage = () => {
   const [data, setData] = useState("");
   const childToParent = (childdata) => {
     setData(childdata);
+
   };
+
 
   const [Error, setError] = useState("Create Account");
   const [logError, setlogError] = useState("Log in with your Google account");
@@ -53,7 +57,7 @@ const LandingPage = () => {
   const [DBlog, setDBlog] = useState({}); // querying database wiht email and name
 
   const sign = () => {
-    if (!Department || !EmpType) {
+    if (!Department) {
       return setError("Enter All Fields");
     } else if (!data.email) {
       return setError("Select Account");
@@ -78,7 +82,7 @@ const LandingPage = () => {
           },
           body: JSON.stringify({
             Department: Department,
-            employeeType: EmpType,
+            employeeType: "Staff",
             Email: data.email,
             Name: data.given_name,
             Surname: data.family_name,
@@ -87,10 +91,10 @@ const LandingPage = () => {
           .then((response) => response.json())
           .then((data) => {
             console.log("Success:", data);
-// // change pages
-// setLoaded(true);
-// console.log("heyyyyy");
+
 setLoaded(true);
+history.push(`/Fake/${Email}`);
+
 
 
 
@@ -104,9 +108,25 @@ setLoaded(true);
     // console.log(DBsign);
   };
 
+const[Email,setEmail]=useState('no')
 
+useEffect(() => {
+  // Function to update email every second
+  const updateEmail = () => {
+    setEmail(data.email);
+  };
+
+  // Call updateEmail initially and then every second
+  updateEmail(); // Call initially
+  const intervalId = setInterval(updateEmail, 1000); // Call every second
+
+  // Clean up the interval when the component unmounts or when data.email changes
+  return () => clearInterval(intervalId);
+}, [data.email]);
 
   const log = () => {
+    // setEmail(data.email);
+
     if (!data.email) {
       return setlogError("Select Account");
     } else if (!data.email_verified) {
@@ -125,9 +145,11 @@ setLoaded(true);
             //change pages
             // <Link to={{ pathname: '/FakeHomePage' }}></Link>
             setLoaded(true);
-            console.log(Loaded);
+           
+            console.log(Email);
 
-
+      // history.push('/Fake', { data: data.email });
+      history.push(`/Fake/${Email}`);
 
 
 
@@ -143,18 +165,12 @@ setLoaded(true);
     // console.log(DBlog);
   };
 
-  const reload=()=>{
 
-  }
-
-  useEffect(()=>{
-    if(Loaded){
-      
-      
-
-    }
-
-  },[Loaded])
+  // useEffect(() => {
+  //   if (Loaded) {
+  //     window.location.href = '/Fake'; // Navigate to the new page
+  //   }
+  // }, [Loaded]);
 
   
 
@@ -176,16 +192,16 @@ setLoaded(true);
                     {/* <button className="log" onClick={log}>
                       Login
                     </button> */}
-                    {/* {Loaded ? ( */}
+                    {Loaded ? (
                       
-                      <Link to="/FakeHomePage">
-                        <button className="log" onClick={reload}>Login</button>
+                      <Link to="/Fake">
+                        <button className="log" >Login</button>
                       </Link>
-                    {/* ) : ( */}
-                      {/* <button className="log" onClick={log}>
+                    ) : (
+                      <button className="log" onClick={log}>
                         Login
                       </button>
-                    )} */}
+                    )}
 
 
 
@@ -211,9 +227,9 @@ setLoaded(true);
                         onChange={depChange}
                       />
                     </InputContainer>
-                    <InputContainer>
+                    {/* <InputContainer>
                       <img src={require("./profile.png")}></img>
-                      {/* <input type='text' placeholder='Employee Type' value={EmpType} onChange={typeChange} /> */}
+                      <input type='text' placeholder='Employee Type' value={EmpType} onChange={typeChange} />
                       <select
                         value={EmpType}
                         onChange={typeChange}
@@ -227,7 +243,7 @@ setLoaded(true);
                         <option value="Manager">Manager</option>
                         <option value="HR">HR</option>
                       </select>
-                    </InputContainer>
+                    </InputContainer> */}
                     <Index child={childToParent} />
                   
                  
