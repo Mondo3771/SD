@@ -1,4 +1,3 @@
-const e = require("express");
 const getPool = require("../db");
 const sql = require("mssql");
 
