@@ -123,6 +123,7 @@ useEffect(() => {
   // Clean up the interval when the component unmounts or when data.email changes
   return () => clearInterval(intervalId);
 }, [data.email]);
+console.log(DBlog);
 
   const log = () => {
     // setEmail(data.email);
@@ -137,7 +138,9 @@ useEffect(() => {
         email: data.email,
         Name: data.given_name,
       });
+
       const login = () =>
+
         fetch(`/api/login?email=${data.email}`)
           .then((response) => response.json())
           .then((data) => {
@@ -146,7 +149,7 @@ useEffect(() => {
             // <Link to={{ pathname: '/FakeHomePage' }}></Link>
             setLoaded(true);
            
-            console.log(Email);
+            // console.log(Email);
 
       // history.push('/Fake', { data: data.email });
       history.push(`/Fake/${Email}`);
@@ -160,10 +163,9 @@ useEffect(() => {
             console.error("Error:", error);
             setlogError('No user found');
           });
-      console.log(DBlog);
+      // console.log(DBlog);
       login();
     }
-    // console.log(DBlog);
   };
 
 
