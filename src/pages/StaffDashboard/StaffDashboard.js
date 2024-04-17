@@ -103,15 +103,17 @@ export const StaffDashboard = () => {
     setTask(event.target.value);
   };
   const handlePause = (tastToPause) => {
-    // takes time from the thing
+    // takes time from the task and task id
     const pause = () => {
       fetch(`/api/Tasks/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ time: taskToPause.time,
-        taskID: taskToPause.taskID}),
+        body: JSON.stringify({
+          time: taskToPause.time,
+          taskID: taskToPause.taskID,
+        }),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -123,24 +125,24 @@ export const StaffDashboard = () => {
     };
     pause();
   };
-const handleStop = (taskToStop) => {
-  // in here we pass a task_id and 
-  //cahnge true to false ,,,, ACtive
-  fetch(`/api/Tasks/${taskToStop.taskID}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ done: true }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
+  const handleStop = (taskToStop) => {
+    // in here we pass a task_id and
+    //cahnge true to false ,,,, ACtive
+    fetch(`/api/Tasks/${taskToStop.taskID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ done: true }),
     })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
     const deleteTask = () => {
@@ -157,7 +159,7 @@ const handleStop = (taskToStop) => {
         .catch((error) => {
           console.error("Error:", error);
         });
-    }
+    };
     setAllProjects((prevTasks) =>
       prevTasks.filter((task) => task !== taskToDelete)
     );
@@ -234,12 +236,12 @@ const handleStop = (taskToStop) => {
               type="button"
               onClick={() => {
                 const newTask = {
-                  name: name,
-                  task: task,
-                  time: 0,
-                  done: false,
-                  date: "2018-09-08",
-                  taskID: 10,
+                  Emp_ID: name, // Assuming 'name' holds the employee ID
+                  Project: task, // Assuming 'task' holds the project name
+                  Date: "2018-09-08",
+                  Description: task, // Assuming 'task' holds the task description
+                  Time: 0,
+                  Active: false, // Assuming 'done' corresponds to 'Active'
                 };
                 return handleAdd(newTask);
               }}
