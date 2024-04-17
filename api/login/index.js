@@ -16,7 +16,7 @@ module.exports = async function (context, req) {
           req.query.token === null
         ) {
           context.res.status = 400;
-          context.res.body= "Please provide an email address and a token";
+          context.res.body = "Please provide an email address and a token";
         } else {
           const resultSet = await pool
             .request()
@@ -75,8 +75,8 @@ module.exports = async function (context, req) {
               .query(
                 `INSERT INTO Employees (Email, Name, Surname, Department, EMP_type,token) VALUES (@Email, @Name, @Surname, @Department, @Emp_type,@Token)`
               );
-            context.res.status = 201;
-            context.res.body = "User created successfully";
+            context.res.status = 200;
+            context.res.body = data;
           }
         }
       } catch (err) {

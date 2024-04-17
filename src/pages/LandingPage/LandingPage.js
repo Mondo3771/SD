@@ -87,9 +87,10 @@ const LandingPage = () => {
         })
           .then((response) => response.json())
           .then((DB) => {
-            console.log("Success:", DB);
+            console.log("Success:",DB);
+            console.log(data);
             setLoaded(true);
-            history.push(`/Fake`, { data: DB[0].Email });
+            history.push(`/Fake`, { data: data.email });
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -149,7 +150,7 @@ const LandingPage = () => {
             setlogError("No user found");
           });
       // console.log(DBlog);
-      
+
       login();
     }
   };
