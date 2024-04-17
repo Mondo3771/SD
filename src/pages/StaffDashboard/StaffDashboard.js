@@ -17,7 +17,7 @@ import {
 
 import { fetchData, setData } from "../../helpers/helpers";
 import { useLoaderData } from "react-router";
-
+const Emp_ID = 14;
 // const p = [
 //   {
 //     name: "Login",
@@ -65,37 +65,108 @@ export const StaffDashboard = () => {
   const { Projects } = useLoaderData();
 
   const [AllProjects, setAllProjects] = useState(Projects);
-  
-  const [task,setTask] = useState("")
-  const [name,setName] = useState("")
 
-const [createTask, setCreate] = useState(false)
+  const [task, setTask] = useState("");
+  const [name, setName] = useState("");
 
+  const [createTask, setCreate] = useState(false);
 
   const handleClick = (prev) => !prev;
 
-  const hnadleAdd = (taskToAdd) => {
-    setAllProjects(prevTasks => [...prevTasks,taskToAdd]);
-  }
+  const handleAdd = (taskToAdd) => {
+    taskToAdd["Emp_ID"] = Emp_ID;
+    const add = () => {
+      fetch("/api/Tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(taskToAdd),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    add();
+    setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
+  };
 
   const projectNameChange = (event) => {
     setName(event.target.value);
-  }
+  };
 
   const taskChange = (event) => {
     setTask(event.target.value);
-  }
-   
+  };
+  const handlePause = (tastToPause) => {
+    // takes time from the thing
+    const pause = () => {
+      fetch(`/api/Tasks/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ time: taskToPause.time,
+        taskID: taskToPause.taskID}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    pause();
+  };
+const handleStop = (taskToStop) => {
+  // in here we pass a task_id and 
+  //cahnge true to false ,,,, ACtive
+  fetch(`/api/Tasks/${taskToStop.taskID}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ done: true }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
   const handleDelete = (taskToDelete) => {
+    // pass task id to delete
+    const deleteTask = () => {
+      fetch(`/api/Tasks/${taskToDelete.taskID}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
     setAllProjects((prevTasks) =>
       prevTasks.filter((task) => task !== taskToDelete)
     );
   };
 
   //gets the unique project names
-  console.log('====================================');
+  console.log("====================================");
   console.log(AllProjects);
-  console.log('====================================');
+  console.log("====================================");
   const uniqueProjects = AllProjects.reduce((partialSum, project) => {
     if (!partialSum.includes(project.name)) {
       return [...partialSum, project.name];
@@ -129,27 +200,54 @@ const [createTask, setCreate] = useState(false)
       </Header>
 
       <Card>
-        {!createTask ?
-        <section className="title">
-          <button className="createTaskButton" onClick={() => setCreate(handleClick)}>
-            <h2>Create a task</h2>
-          </button>
-          <ClockIcon className="clock" width={50} />
-        </section> :
-        <CreateTaskContainer>
-          <LabelHolder>
-            <label>Project Name</label>
-            <input type="text" placeholder="project name"value={name} onChange={projectNameChange}></input>
-          </LabelHolder>
-          <LabelHolder>
-            <label>Task Name</label>
-            <input type="text" placeholder="task name" value={task} onChange={taskChange}></input>
-          </LabelHolder>
-          <button type="button" onClick={() => {
-            const newTask = {name: name, task: task,done: false, date: "2018-09-08",taskID:10};
-            return hnadleAdd(newTask)}} >Add task </button>
-        </CreateTaskContainer>
-        }
+        {!createTask ? (
+          <section className="title">
+            <button
+              className="createTaskButton"
+              onClick={() => setCreate(handleClick)}
+            >
+              <h2>Create a task</h2>
+            </button>
+            <ClockIcon className="clock" width={50} />
+          </section>
+        ) : (
+          <CreateTaskContainer>
+            <LabelHolder>
+              <label>Project Name</label>
+              <input
+                type="text"
+                placeholder="project name"
+                value={name}
+                onChange={projectNameChange}
+              ></input>
+            </LabelHolder>
+            <LabelHolder>
+              <label>Task Name</label>
+              <input
+                type="text"
+                placeholder="task name"
+                value={task}
+                onChange={taskChange}
+              ></input>
+            </LabelHolder>
+            <button
+              type="button"
+              onClick={() => {
+                const newTask = {
+                  name: name,
+                  task: task,
+                  time: 0,
+                  done: false,
+                  date: "2018-09-08",
+                  taskID: 10,
+                };
+                return handleAdd(newTask);
+              }}
+            >
+              Add task{" "}
+            </button>
+          </CreateTaskContainer>
+        )}
 
         {uniqueProjects.map((name, index) => {
           return (
@@ -175,6 +273,15 @@ const [createTask, setCreate] = useState(false)
 };
 
 export const StaffDashBoardLoader = () => {
-  const Projects = fetchData("Projects") ?? [];
+  // get all task by ID
+  const Projects = fetch(`/api/Tasks/${Emp_ID}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
   return { Projects };
 };

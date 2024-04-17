@@ -186,11 +186,4 @@ const LandingPage = () => {
     </>
   );
 };
-          </Card>
-        </Wrapper>
-      </LandingPageContainer>
-    </>
-  );
-};
-
 export default LandingPage;
