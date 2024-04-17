@@ -34,8 +34,8 @@ module.exports = async function (context, req) {
             .request()
             .input("Emp_ID", sql.Int, data.Emp_ID)
             .query(`SELECT Emp_ID FROM Employees WHERE Emp_ID = @Emp_ID`);
-console.log(data.Emp_ID);
-console.log(existingID);
+          console.log(data.Emp_ID);
+          console.log(existingID);
           if (existingID.recordset.length > 0) {
             // If the ID exists, update the Emp_type
             const resultSet = await pool
@@ -73,22 +73,21 @@ console.log(existingID);
         } else {
           // Check if the ID exists in the database
           const existingID = await pool
-          .request()
-          .input("Emp_ID", sql.Int, data.Emp_ID)
-          .query(`SELECT Emp_ID FROM Employees WHERE Emp_ID = @Emp_ID`);
-            console.log(data);
-            console.log(data.Emp_ID);
-            console.log(existingID.recordset);
+            .request()
+            .input("Emp_ID", sql.Int, data.Emp_ID)
+            .query(`SELECT Emp_ID FROM Employees WHERE Emp_ID = @Emp_ID`);
           if (existingID.recordset.length > 0) {
             // If the ID exists, delete the row
             const resultSet = await pool
               .request()
               .input("Emp_ID", sql.Int, data.Emp_ID)
-              .query(`DELETE FROM Employees WHERE Emp_ID = @Emp_ID`);
-            context.res ={
-              "staus": 200,
-              "message": "Deleted"
-            }
+              .query(
+                `DELETE FROM Tasks WHERE Emp_ID = @Emp_ID ;DELETE FROM Employees WHERE Emp_ID = @Emp_ID `
+              );
+            context.res = {
+              staus: 200,
+              message: "Deleted",
+            };
           } else {
             context.res.status = 404;
             context.res.body = "ID not found";
