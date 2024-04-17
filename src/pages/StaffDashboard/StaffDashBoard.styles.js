@@ -1,5 +1,30 @@
 import styled from "styled-components";
 
+//react
+import React, { useEffect, useState } from "react";
+
+//icons
+import {
+  PlayIcon,
+  PauseIcon,
+  TrashIcon,
+  StopIcon,
+  ClockIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/24/outline";
+import { setData } from "../../helpers/helpers";
+import { Form} from "react-router-dom";
+
+const formatTime = (timeInSeconds) => {
+  const hours = Math.floor(timeInSeconds / 3600);
+  const minutes = Math.floor((timeInSeconds % 3600) / 60);
+  const seconds = timeInSeconds % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}:${String(seconds).padStart(2, "0")}`;
+};
+
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -50,7 +75,7 @@ export const Card = styled.article`
   box-shadow: 10px;
   background: var(--whiter);
   width: 1300px;
-  min-height: 500px;
+  height: 500px;
   color: var(--darkest);
   flex: 1;
   padding: 40px;
@@ -61,6 +86,7 @@ export const Card = styled.article`
   .title {
     display: flex;
     gap: 1.5rem;
+    transition: all 500ms ease-in-out;
   }
 
   .createTaskButton {
@@ -72,6 +98,7 @@ export const Card = styled.article`
     padding: 5px 10px;
     justify-content: flex-start;
     color: white;
+    cursor : pointer;
   }
   .createTaskButton h2 {
     font-family: inherit;
@@ -87,16 +114,35 @@ export const Card = styled.article`
   }
 `;
 
-export const Sheet = styled.div`
-  background-color: var(--darker);
-  border: 2px solid var(--darker);
-  border-radius: 10px;
-  margin: 5px 0;
-  padding: 5px 10px;
-  box-sizing: border-box;
+export const CreateTaskContainer = styled.section`
   display: flex;
-  justify-content: space-between;
+  font-family: inherit;
+  border: 1px solid black;
+  padding: 5px;
+  transition: all 500ms ease-in-out;
 
+  button {
+    
+  }
+`
+export const LabelHolder = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin:  0 0.5rem;
+`
+
+export const Sheet = styled.div`
+  .form {
+    background-color: var(--darker);
+    border: 2px solid var(--darker);
+    border-radius: 10px;
+    margin: 5px 0;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+  }
   p {
     color: white;
     font-size: 1.1rem;
@@ -137,3 +183,92 @@ export const StopStartContainer = styled.div`
     transition: all 300ms ease-in-out;
   }
 `;
+
+export const SheetContainer = styled.div`
+  display: flex;
+  flex-flow: column;
+`;
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export const TaskContainer = ({ task, onDelete }) => {
+  const [timerRunning, setTimerRunning] = useState(false);
+  const [stop, setStop] = useState(false);
+  const [time, setTime] = useState(0);
+
+  const handleButtonClick = (prev) => !prev;
+
+  useEffect(() => {
+    let interval;
+
+    if (timerRunning) {
+      interval = setInterval(() => {
+        setTime((prevCounter) => prevCounter + 1);
+      }, 1000);
+    } else {
+      clearInterval(interval); // Stop the timer
+      // setTime(0);
+    }
+
+    return () => clearInterval(interval); // Cleanup function to clear the interval when component unmounts or when clicked changes
+  }, [timerRunning, stop]);
+
+  return (
+    <Sheet key={task.taskID}>
+      <Form className="form" method="post" action="/">
+        <p>{task.task}</p>
+        <p>{task.date}</p>
+        <p>{!task.done ? formatTime(time) : task.time}</p>
+        <StopStartContainer>
+          <button
+            type="button"
+            className="playButton"
+            style={{
+              color: !timerRunning ? "var(--whiter)" : "gray",
+            }}
+            onClick={() => setTimerRunning(handleButtonClick(timerRunning))}
+            disabled={timerRunning}
+            hidden={task.done || stop}
+          >
+            <PlayIcon width={25} />
+          </button>
+          <button
+            type="button"
+            className="pauseButton"
+            style={{
+              color: timerRunning ? "var(--whiter)" : "gray",
+            }}
+            onClick={() => setTimerRunning(handleButtonClick(timerRunning))}
+            disabled={!timerRunning}
+            hidden={task.done || stop}
+          >
+            <PauseIcon width={25} />
+          </button>
+          <button
+            type="button"
+            className="stopButton"
+            style={{
+              color: !timerRunning || stop ? "var(--whiter)" : "gray",
+            }}
+            onClick={() => setStop(handleButtonClick(stop))}
+            disabled={task.done || stop || timerRunning}
+          >
+            <StopIcon width={25} />
+          </button>
+        </StopStartContainer>
+        <button
+          type="submit"
+          className="removeButton"
+          onClick={() => onDelete(task)}
+        >
+          <TrashIcon width={25} />
+        </button>
+        <input name="_action" type="hidden" value={"deleteTask"} />
+        <input type="hidden" name="taskID" value={task.taskID} />
+      </Form>
+    </Sheet>
+  );
+};

@@ -4,7 +4,10 @@ import "./App.css";
 //components
 import Tracker from "./components/Tracker/Tracker";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import { StaffDashboard } from "./pages/StaffDashboard/StaffDashboard";
+import {
+  StaffDashboard,
+  StaffDashBoardLoader,
+} from "./pages/StaffDashboard/StaffDashboard";
 
 import {
   BrowserRouter,
@@ -12,10 +15,16 @@ import {
   createRoutesFromChildren,
   Route,
 } from "react-router-dom";
+import StaffDashboardAction from "./helpers/StaffDashboardAction";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<StaffDashboard />} ></Route>
+    <Route
+      path="/"
+      element={<StaffDashboard />}
+      loader={StaffDashBoardLoader}
+      action={StaffDashboardAction}
+    ></Route>
   )
 );
 
