@@ -5,7 +5,6 @@ const HRHome = () => {
   return (
     <>
     <HRAccess></HRAccess>
-    <p>Lrew=twsd</p>
     </>
   )
 }
