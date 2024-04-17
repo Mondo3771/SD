@@ -1,9 +1,8 @@
 // export default LandingPage;
 import React, { useEffect, useState } from "react";
 import Index from "../../routes/Index";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-
 
 import {
   InputContainer,
@@ -13,13 +12,12 @@ import {
 } from "./LandingPage.styles";
 
 const LandingPage = () => {
-  const history=useHistory();
-
+  const history = useHistory();
 
   const [login, setLogin] = useState(false);
   const [signup, setSignup] = useState(false);
   const [first, setFirst] = useState(false);
-  const [Loaded,setLoaded]=useState(false);
+  const [Loaded, setLoaded] = useState(false);
 
   const handleLogin = () => {
     setLogin((prevLogin) => !prevLogin);
@@ -47,9 +45,7 @@ const LandingPage = () => {
   const [data, setData] = useState("");
   const childToParent = (childdata) => {
     setData(childdata);
-
   };
-
 
   const [Error, setError] = useState("Create Account");
   const [logError, setlogError] = useState("Log in with your Google account");
@@ -73,7 +69,7 @@ const LandingPage = () => {
         Surname: data.family_name,
       });
       // FETCH POST REQUEST TO DATABASE USE LOG
-      console.log(data);
+      // console.log(data);
       const get = () =>
         fetch("/api/login", {
           method: "POST",
@@ -86,19 +82,14 @@ const LandingPage = () => {
             Email: data.email,
             Name: data.given_name,
             Surname: data.family_name,
+            Token: data.sub,
           }),
         })
           .then((response) => response.json())
           .then((DB) => {
             console.log("Success:", DB);
-
-setLoaded(true);
-history.push(`/Fake`,{ data: DB[0].Email });
-
-
-
-
-
+            setLoaded(true);
+            history.push(`/Fake`, { data: DB[0].Email });
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -108,24 +99,23 @@ history.push(`/Fake`,{ data: DB[0].Email });
     // console.log(DBsign);
   };
 
-const[Email,setEmail]=useState('no')
-const[type,settype]=useState('unknown')
-;
-useEffect(() => {
-  // Function to update email every second
-  const updateEmail = () => {
-    setEmail(data.email);
-    settype(data.EMP_type);
-  };
+  const [Email, setEmail] = useState("no");
+  const [type, settype] = useState("unknown");
+  useEffect(() => {
+    // Function to update email every second
+    const updateEmail = () => {
+      setEmail(data.email);
+      settype(data.EMP_type);
+    };
 
-  // Call updateEmail initially and then every second
-  updateEmail(); // Call initially
-  const intervalId = setInterval(updateEmail, 1000); // Call every second
+    // Call updateEmail initially and then every second
+    updateEmail(); // Call initially
+    const intervalId = setInterval(updateEmail, 1000); // Call every second
 
-  // Clean up the interval when the component unmounts or when data.email changes
-  return () => clearInterval(intervalId);
-}, [data.email]);
-// console.log(DBlog);
+    // Clean up the interval when the component unmounts or when data.email changes
+    return () => clearInterval(intervalId);
+  }, [data.email]);
+  // console.log(DBlog);
 
   const log = () => {
     // setEmail(data.email);
@@ -142,51 +132,33 @@ useEffect(() => {
       });
 
       const login = () =>
-
-        fetch(`/api/login?email=${data.email}`)
+        fetch(`/api/login?email=${data.email}&token=${data.sub}`)
           .then((response) => response.json())
           .then((DB) => {
             console.log("Success:", DB);
-            //change pages
-            // <Link to={{ pathname: '/FakeHomePage' }}></Link>
             setLoaded(true);
-           
-            // console.log(Email);
 
-      // history.push('/Fake', { data: data.email });
-      if(DB[0].EMP_type==='HR'){
-        history.push(`/HRhome`,{ params: DB[0] });
-
-
-
-      }
-      else{
-        history.push(`/Fake`,{ params: DB[0].Email });
-      }
-      
-
-
-
-
-
+            if (DB[0].EMP_type === "HR") {
+              history.push(`/HRhome`, { params: DB[0] });
+            } else {
+              history.push(`/Fake`, { params: DB[0].Email });
+            }
           })
           .catch((error) => {
             console.error("Error:", error);
-            setlogError('No user found');
+            setlogError("No user found");
           });
       // console.log(DBlog);
+      
       login();
     }
   };
-
 
   // useEffect(() => {
   //   if (Loaded) {
   //     window.location.href = '/Fake'; // Navigate to the new page
   //   }
   // }, [Loaded]);
-
-  
 
   return (
     <>
@@ -207,19 +179,14 @@ useEffect(() => {
                       Login
                     </button> */}
                     {Loaded ? (
-                      
                       <Link to="/Fake">
-                        <button className="log" >Login</button>
+                        <button className="log">Login</button>
                       </Link>
                     ) : (
                       <button className="log" onClick={log}>
                         Login
                       </button>
                     )}
-
-
-
-
                   </article>
                   <button className="login" onClick={handleSignup}>
                     Sign Up
@@ -259,14 +226,12 @@ useEffect(() => {
                       </select>
                     </InputContainer> */}
                     <Index child={childToParent} />
-                  
-                 
+
                     {/* <button className="sign" onClick={sign}>
                       Sign Up
                     </button> */}
-                    
+
                     {Loaded ? (
-                      
                       <Link to="/FakeHomePage">
                         <button className="sign">Sign Up</button>
                       </Link>
@@ -275,12 +240,6 @@ useEffect(() => {
                         Sign Up
                       </button>
                     )}
-
-                    
-                   
-                  
-
-                 
                   </article>
                 </>
               )}
