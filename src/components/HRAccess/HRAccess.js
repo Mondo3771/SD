@@ -1,85 +1,166 @@
-import React, { useState ,useEffect} from 'react'
-import { EmployeeCard,AllEmployees,DisplayEmp,Modal } from './HRAccess.styles';
-
-
+import React, { useState, useEffect } from "react";
+import {
+  EmployeeCard,
+  AllEmployees,
+  DisplayEmp,
+  Modal,
+} from "./HRAccess.styles";
 
 const employees = [
-  { "name": "John", "surname": "Doe", "email": "john.doe@gmail.com", "emp_type": "Staff" },
-  { "name": "Jane", "surname": "Smith", "email": "jane.smith@gmail.com", "emp_type": "Manager" },
-  { "name": "Alice", "surname": "Johnson", "email": "alice.johnson@gmail.com", "emp_type": "HR" },
-  { "name": "Michael", "surname": "Williams", "email": "michael.williams@gmail.com", "emp_type": "Staff" },
-  { "name": "Emily", "surname": "Brown", "email": "emily.brown@gmail.com", "emp_type": "Manager" },
-  { "name": "Daniel", "surname": "Jones", "email": "daniel.jones@gmail.com", "emp_type": "HR" },
-  { "name": "Olivia", "surname": "Taylor", "email": "olivia.taylor@gmail.com", "emp_type": "Staff" },
-  { "name": "William", "surname": "Davis", "email": "william.davis@gmail.com", "emp_type": "Manager" },
-  { "name": "Sophia", "surname": "Miller", "email": "sophia.miller@gmail.com", "emp_type": "HR" },
-  { "name": "Matthew", "surname": "Wilson", "email": "matthew.wilson@gmail.com", "emp_type": "Staff" },
-  { "name": "Ethan", "surname": "Moore", "email": "ethan.moore@gmail.com", "emp_type": "Manager" },
-  { "name": "Ava", "surname": "Anderson", "email": "ava.anderson@gmail.com", "emp_type": "HR" },
-  { "name": "David", "surname": "Thomas", "email": "david.thomas@gmail.com", "emp_type": "Staff" },
-  { "name": "Madison", "surname": "Jackson", "email": "madison.jackson@gmail.com", "emp_type": "Manager" },
-  { "name": "Liam", "surname": "White", "email": "liam.white@gmail.com", "emp_type": "HR" },
-  { "name": "Mia", "surname": "Harris", "email": "mia.harris@gmail.com", "emp_type": "Staff" }
+  {
+    name: "John",
+    surname: "Doe",
+    email: "john.doe@gmail.com",
+    emp_type: "Staff",
+  },
+  {
+    name: "Jane",
+    surname: "Smith",
+    email: "jane.smith@gmail.com",
+    emp_type: "Manager",
+  },
+  {
+    name: "Alice",
+    surname: "Johnson",
+    email: "alice.johnson@gmail.com",
+    emp_type: "HR",
+  },
+  {
+    name: "Michael",
+    surname: "Williams",
+    email: "michael.williams@gmail.com",
+    emp_type: "Staff",
+  },
+  {
+    name: "Emily",
+    surname: "Brown",
+    email: "emily.brown@gmail.com",
+    emp_type: "Manager",
+  },
+  {
+    name: "Daniel",
+    surname: "Jones",
+    email: "daniel.jones@gmail.com",
+    emp_type: "HR",
+  },
+  {
+    name: "Olivia",
+    surname: "Taylor",
+    email: "olivia.taylor@gmail.com",
+    emp_type: "Staff",
+  },
+  {
+    name: "William",
+    surname: "Davis",
+    email: "william.davis@gmail.com",
+    emp_type: "Manager",
+  },
+  {
+    name: "Sophia",
+    surname: "Miller",
+    email: "sophia.miller@gmail.com",
+    emp_type: "HR",
+  },
+  {
+    name: "Matthew",
+    surname: "Wilson",
+    email: "matthew.wilson@gmail.com",
+    emp_type: "Staff",
+  },
+  {
+    name: "Ethan",
+    surname: "Moore",
+    email: "ethan.moore@gmail.com",
+    emp_type: "Manager",
+  },
+  {
+    name: "Ava",
+    surname: "Anderson",
+    email: "ava.anderson@gmail.com",
+    emp_type: "HR",
+  },
+  {
+    name: "David",
+    surname: "Thomas",
+    email: "david.thomas@gmail.com",
+    emp_type: "Staff",
+  },
+  {
+    name: "Madison",
+    surname: "Jackson",
+    email: "madison.jackson@gmail.com",
+    emp_type: "Manager",
+  },
+  {
+    name: "Liam",
+    surname: "White",
+    email: "liam.white@gmail.com",
+    emp_type: "HR",
+  },
+  {
+    name: "Mia",
+    surname: "Harris",
+    email: "mia.harris@gmail.com",
+    emp_type: "Staff",
+  },
 ];
 
-
-
 const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
-    const typeChange = (event) => {
-      setEmpType(event.target.value, index); // Pass the index along with the new value
-    };
-    const [text,settext]=useState('Select Employee Type:')//error
-    const [update,setupdate]=useState(employee.emp_type)
+  const typeChange = (event) => {
+    setEmpType(event.target.value, index); // Pass the index along with the new value
+  };
+  const [text, settext] = useState("Select Employee Type:"); //error
+  const [update, setupdate] = useState(employee.emp_type);
 
-
-    const updateEmp=()=>{
-        console.log(empType)
-        if(!empType){
-            settext('Enter a Type')
-
-        }
-        else if(empType===employee.emp_type){
-            settext('They are already under '+employee.emp_type)
-
-
-        }
-        else {
-            //update their type here
-            // employee.emp_type=empType
-            setupdate(empType)
-            settext('Success ')
-
-            employee.emp_type=empType;
-            
-        }
+  const updateEmp = () => {
+    console.log(empType);
+    if (!empType) {
+      settext("Enter a Type");
+    } else if (empType === employee.emp_type) {
+      settext("They are already under " + employee.emp_type);
+    } else {
+      //update their type here
+      // employee.emp_type=empType
+      fetch("/api/HR_Employees")
+        .then((response) => response.json())
+        .then((data) => {
+          //deal woth response
+        });
+      setupdate(empType);
+      settext("Success ");
+      employee.emp_type = empType;
     }
-  
-    return (
-      <EmployeeCard>
-        <p>Name: {employee.name}</p>
-        <p>Surname: {employee.surname}</p>
-        <p>Email: {employee.email}</p>
-        <p>Employee Type: {update}</p>
-        <label htmlFor={`employeeType-${index}`}>{text}</label>
-        <select id={`employeeType-${index}`} value={empType} onChange={typeChange}>
-          <option value=""></option>
-          <option value="HR">HR</option>
-          <option value="Manager">Manager</option>
-          <option value="Staff">Staff</option>
-        </select>
-        <button onClick={updateEmp}>Change type</button>
-        <button onClick={() => removeEmp(employee.email, index)}>Remove</button>
-      </EmployeeCard>
-    );
   };
 
+  return (
+    <EmployeeCard>
+      <p>Name: {employee.name}</p>
+      <p>Surname: {employee.surname}</p>
+      <p>Email: {employee.email}</p>
+      <p>Employee Type: {update}</p>
+      <label htmlFor={`employeeType-${index}`}>{text}</label>
+      <select
+        id={`employeeType-${index}`}
+        value={empType}
+        onChange={typeChange}
+      >
+        <option value=""></option>
+        <option value="HR">HR</option>
+        <option value="Manager">Manager</option>
+        <option value="Staff">Staff</option>
+      </select>
+      <button onClick={updateEmp}>Change type</button>
+      <button onClick={() => removeEmp(employee.email, index)}>Remove</button>
+    </EmployeeCard>
+  );
+};
+
 const HRAccess = () => {
-  const [empClicked,setempCLicked]=useState(false);
+  const [empClicked, setempCLicked] = useState(false);
   const [allEmployeedata, setallEmployeedata] = useState(null);
 
-
-
-  useEffect(() => {//runs until allEmployees data is not null anymore
+  useEffect(() => {
+    //runs until allEmployees data is not null anymore
     // const fetchData = async () => {//databse fectch
     //   try {
     //     const response = await fetch('https://api.example.com/data');
@@ -90,31 +171,37 @@ const HRAccess = () => {
     //     setallEmployeedata(data);
     //   } catch (error) {
 
-    //   } 
+    //   }
     // };
-    const fetchData=()=>{
-            setallEmployeedata(employees);
+
+    const fetchData = () => {
+      fetch("/api/HR_Employess")
+        .then((response) => response.json())
+        .then((employees) => {});
+      setallEmployeedata(employees);
     };
-  
+
     fetchData();
-  }, []); 
-  
-  const displayEmp=()=>{//button for displaying employees
-    setempCLicked(prev=>!prev);  
+  }, []);
+
+  const displayEmp = () => {
+    //button for displaying employees
+    setempCLicked((prev) => !prev);
   };
 
- 
-
-  const removeEmp=(email,index)=>{
+  const removeEmp = (email, index) => {
+    //need ID to remove employee
     //query to remove email with row
+    fetch(`/api/HR_Employees?email=${email}`, {})
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      });
 
-
-
-
-    setallEmployeedata(prevArray => {
-        const newArray = [...prevArray];
-        newArray.splice(index, 1);
-        return newArray;
+    setallEmployeedata((prevArray) => {
+      const newArray = [...prevArray];
+      newArray.splice(index, 1);
+      return newArray;
     });
   };
 
@@ -128,41 +215,29 @@ const HRAccess = () => {
     });
   };
 
-
-
   return (
-   <> 
-   <DisplayEmp onClick={displayEmp}>
-    Show all employees
-   </DisplayEmp>
+    <>
+      <DisplayEmp onClick={displayEmp}>Show all employees</DisplayEmp>
 
-   {empClicked?
-       <AllEmployees>
-     
-       <h2>Employee List</h2>
-       <section>
-         {allEmployeedata.map((employee, index) => (
-
-        <Emp
+      {empClicked ? (
+        <AllEmployees>
+          <h2>Employee List</h2>
+          <section>
+            {allEmployeedata.map((employee, index) => (
+              <Emp
                 key={index}
                 employee={employee}
                 index={index}
                 removeEmp={removeEmp}
-                empType={empType[index] || ''}
+                empType={empType[index] || ""}
                 setEmpType={setEmpTypeAtIndex}
               />
-         ))}
-       </section>
-     </AllEmployees>:
-     null
-   
-  }
+            ))}
+          </section>
+        </AllEmployees>
+      ) : null}
+    </>
+  );
+};
 
-
-
-  </>
-  )
-}
-
-export default HRAccess
-
+export default HRAccess;
