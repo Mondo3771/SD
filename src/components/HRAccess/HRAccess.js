@@ -7,103 +7,120 @@ import {
 } from "./HRAccess.styles";
 
 const employees = [
-  {
-    name: "John",
-    surname: "Doe",
-    email: "john.doe@gmail.com",
-    emp_type: "Staff",
-  },
-  {
-    name: "Jane",
-    surname: "Smith",
-    email: "jane.smith@gmail.com",
-    emp_type: "Manager",
-  },
-  {
-    name: "Alice",
-    surname: "Johnson",
-    email: "alice.johnson@gmail.com",
-    emp_type: "HR",
-  },
-  {
-    name: "Michael",
-    surname: "Williams",
-    email: "michael.williams@gmail.com",
-    emp_type: "Staff",
-  },
-  {
-    name: "Emily",
-    surname: "Brown",
-    email: "emily.brown@gmail.com",
-    emp_type: "Manager",
-  },
-  {
-    name: "Daniel",
-    surname: "Jones",
-    email: "daniel.jones@gmail.com",
-    emp_type: "HR",
-  },
-  {
-    name: "Olivia",
-    surname: "Taylor",
-    email: "olivia.taylor@gmail.com",
-    emp_type: "Staff",
-  },
-  {
-    name: "William",
-    surname: "Davis",
-    email: "william.davis@gmail.com",
-    emp_type: "Manager",
-  },
-  {
-    name: "Sophia",
-    surname: "Miller",
-    email: "sophia.miller@gmail.com",
-    emp_type: "HR",
-  },
-  {
-    name: "Matthew",
-    surname: "Wilson",
-    email: "matthew.wilson@gmail.com",
-    emp_type: "Staff",
-  },
-  {
-    name: "Ethan",
-    surname: "Moore",
-    email: "ethan.moore@gmail.com",
-    emp_type: "Manager",
-  },
-  {
-    name: "Ava",
-    surname: "Anderson",
-    email: "ava.anderson@gmail.com",
-    emp_type: "HR",
-  },
-  {
-    name: "David",
-    surname: "Thomas",
-    email: "david.thomas@gmail.com",
-    emp_type: "Staff",
-  },
-  {
-    name: "Madison",
-    surname: "Jackson",
-    email: "madison.jackson@gmail.com",
-    emp_type: "Manager",
-  },
-  {
-    name: "Liam",
-    surname: "White",
-    email: "liam.white@gmail.com",
-    emp_type: "HR",
-  },
-  {
-    name: "Mia",
-    surname: "Harris",
-    email: "mia.harris@gmail.com",
-    emp_type: "Staff",
-  },
-];
+    {
+      name: "John",
+      surname: "Doe",
+      email: "john.doe@gmail.com",
+      emp_type: "Staff",
+      Emp_ID: 1
+    },
+    {
+      name: "Jane",
+      surname: "Smith",
+      email: "jane.smith@gmail.com",
+      emp_type: "Manager",
+      Emp_ID: 2
+    },
+    {
+      name: "Alice",
+      surname: "Johnson",
+      email: "alice.johnson@gmail.com",
+      emp_type: "HR",
+      Emp_ID: 3
+    },
+    {
+      name: "Michael",
+      surname: "Williams",
+      email: "michael.williams@gmail.com",
+      emp_type: "Staff",
+      Emp_ID: 4
+    },
+    {
+      name: "Emily",
+      surname: "Brown",
+      email: "emily.brown@gmail.com",
+      emp_type: "Manager",
+      Emp_ID: 5
+    },
+    {
+      name: "Daniel",
+      surname: "Jones",
+      email: "daniel.jones@gmail.com",
+      emp_type: "HR",
+      Emp_ID: 6
+    },
+    {
+      name: "Olivia",
+      surname: "Taylor",
+      email: "olivia.taylor@gmail.com",
+      emp_type: "Staff",
+      Emp_ID: 7
+    },
+    {
+      name: "William",
+      surname: "Davis",
+      email: "william.davis@gmail.com",
+      emp_type: "Manager",
+      Emp_ID: 8
+    },
+    {
+      name: "Sophia",
+      surname: "Miller",
+      email: "sophia.miller@gmail.com",
+      emp_type: "HR",
+      Emp_ID: 9
+    },
+    {
+      name: "Matthew",
+      surname: "Wilson",
+      email: "matthew.wilson@gmail.com",
+      emp_type: "Staff",
+      Emp_ID: 10
+    },
+    {
+      name: "Ethan",
+      surname: "Moore",
+      email: "ethan.moore@gmail.com",
+      emp_type: "Manager",
+      Emp_ID: 11
+    },
+    {
+      name: "Ava",
+      surname: "Anderson",
+      email: "ava.anderson@gmail.com",
+      emp_type: "HR",
+      Emp_ID: 12
+    },
+    {
+      name: "David",
+      surname: "Thomas",
+      email: "david.thomas@gmail.com",
+      emp_type: "Staff",
+      Emp_ID: 13
+    },
+    {
+      name: "Madison",
+      surname: "Jackson",
+      email: "madison.jackson@gmail.com",
+      emp_type: "Manager",
+      Emp_ID: 14
+    },
+    {
+      name: "Liam",
+      surname: "White",
+      email: "liam.white@gmail.com",
+      emp_type: "HR",
+      Emp_ID: 15
+    },
+    {
+      name: "Mia",
+      surname: "Harris",
+      email: "mia.harris@gmail.com",
+      emp_type: "Staff",
+      Emp_ID: 16
+    },
+  ];
+  
 
 const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
   const typeChange = (event) => {
@@ -150,7 +167,7 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
         <option value="Staff">Staff</option>
       </select>
       <button onClick={updateEmp}>Change type</button>
-      <button onClick={() => removeEmp(employee.email, index)}>Remove</button>
+      <button onClick={() => removeEmp(employee.email, index, employee.Emp_ID)}>Remove</button>
     </EmployeeCard>
   );
 };
@@ -189,7 +206,7 @@ const HRAccess = () => {
     setempCLicked((prev) => !prev);
   };
 
-  const removeEmp = (email, index) => {
+  const removeEmp = (email, index,ID) => {
     //need ID to remove employee
     //query to remove email with row
     fetch(`/api/HR_Employees?email=${email}`, {})
@@ -197,6 +214,10 @@ const HRAccess = () => {
       .then((data) => {
         console.log("Success:", data);
       });
+
+
+      
+      console.log(ID);
 
     setallEmployeedata((prevArray) => {
       const newArray = [...prevArray];
