@@ -121,22 +121,31 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
     } else {
       //update their type here
       // employee.emp_type=empType
-      fetch("/api/HR_Employees")
+      fetch("/api/HR_Employees", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Emp_ID: employee.Emp_ID,
+          Emp_type: empType,
+        }),
+      })
         .then((response) => response.json())
         .then((data) => {
           //deal woth response
+          setupdate(empType);
+          settext("Success ");
+          employee.emp_type = empType;
         });
-      setupdate(empType);
-      settext("Success ");
-      employee.emp_type = empType;
     }
   };
 
   return (
     <EmployeeCard>
-      <p>Name: {employee.name}</p>
-      <p>Surname: {employee.surname}</p>
-      <p>Email: {employee.email}</p>
+      <p>Name: {employee.Name}</p>
+      <p>Surname: {employee.Surname}</p>
+      <p>Email: {employee.Email}</p>
       <p>Employee Type: {update}</p>
       <label htmlFor={`employeeType-${index}`}>{text}</label>
       <select
@@ -156,7 +165,7 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
 };
 
 const HRAccess = () => {
-  const [empClicked, setempCLicked] = useState(false);
+  const [empClicked, setempCLicked] = useState(true);
   const [allEmployeedata, setallEmployeedata] = useState(null);
 
   useEffect(() => {
@@ -175,28 +184,41 @@ const HRAccess = () => {
     // };
 
     const fetchData = () => {
-      fetch("/api/HR_Employess")
+      fetch("/api/HR_Employees")
         .then((response) => response.json())
-        .then((employees) => {});
-      setallEmployeedata(employees);
+        .then((employees) => {
+          console.log(employees);
+          setallEmployeedata(employees);
+        });
     };
-
     fetchData();
   }, []);
 
   const displayEmp = () => {
     //button for displaying employees
-    setempCLicked((prev) => !prev);
+    // setempCLicked((prev) => !prev);
   };
 
-  const removeEmp = (email, index) => {
+  const removeEmp = (index, Emp_ID) => {
     //need ID to remove employee
     //query to remove email with row
-    fetch(`/api/HR_Employees?email=${email}`, {})
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      });
+    const get = () =>
+      fetch("/api/HR_Employees", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Emp_ID: Emp_ID,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
     setallEmployeedata((prevArray) => {
       const newArray = [...prevArray];
@@ -218,7 +240,7 @@ const HRAccess = () => {
   return (
     <>
       <DisplayEmp onClick={displayEmp}>Show all employees</DisplayEmp>
-
+      <p>Clicke the buton</p>
       {empClicked ? (
         <AllEmployees>
           <h2>Employee List</h2>

@@ -3,7 +3,10 @@ import HRAccess from '../../components/HRAccess/HRAccess'
 
 const HRHome = () => {
   return (
+    <>
     <HRAccess></HRAccess>
+    <p>Lrew=twsd</p>
+    </>
   )
 }
 
