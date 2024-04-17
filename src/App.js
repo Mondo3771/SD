@@ -6,15 +6,15 @@ import HRHome from './pages/HRHome/HRHome';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-      <Route exact path="/" component={LandingPage} />
-        <Route path="/Fake" component={FakeHomePage} />
-        <Route path="/HRhome" component={HRHome} />
+    // <BrowserRouter>
+    //   <Switch>
+    //   <Route exact path="/" component={LandingPage} />
+    //     <Route path="/Fake" component={FakeHomePage} />
+    //     <Route path="/HRhome" component={HRHome} />
 
-      </Switch>
-    </BrowserRouter>
-    // <HRHome/>
+    //   </Switch>
+    // </BrowserRouter>
+    <HRHome/>
   );
 }
 

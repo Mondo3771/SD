@@ -4,6 +4,121 @@ import {
   AllEmployees,
   Spinner,
 } from "./HRAccess.styles";
+const employees = [
+  {
+    name: "John",
+    surname: "Doe",
+    email: "john.doe@gmail.com",
+    emp_type: "Staff",
+    Emp_ID: 1
+  },
+  {
+    name: "Jane",
+    surname: "Smith",
+    email: "jane.smith@gmail.com",
+    emp_type: "Manager",
+    Emp_ID: 2
+  },
+  {
+    name: "Alice",
+    surname: "Johnson",
+    email: "alice.johnson@gmail.com",
+    emp_type: "HR",
+    Emp_ID: 3
+  },
+  {
+    name: "Michael",
+    surname: "Williams",
+    email: "michael.williams@gmail.com",
+    emp_type: "Staff",
+    Emp_ID: 4
+  },
+  {
+    name: "Emily",
+    surname: "Brown",
+    email: "emily.brown@gmail.com",
+    emp_type: "Manager",
+    Emp_ID: 5
+  },
+  {
+    name: "Daniel",
+    surname: "Jones",
+    email: "daniel.jones@gmail.com",
+    emp_type: "HR",
+    Emp_ID: 6
+  },
+  {
+    name: "Olivia",
+    surname: "Taylor",
+    email: "olivia.taylor@gmail.com",
+    emp_type: "Staff",
+    Emp_ID: 7
+  },
+  {
+    name: "William",
+    surname: "Davis",
+    email: "william.davis@gmail.com",
+    emp_type: "Manager",
+    Emp_ID: 8
+  },
+  {
+    name: "Sophia",
+    surname: "Miller",
+    email: "sophia.miller@gmail.com",
+    emp_type: "HR",
+    Emp_ID: 9
+  },
+  {
+    name: "Matthew",
+    surname: "Wilson",
+    email: "matthew.wilson@gmail.com",
+    emp_type: "Staff",
+    Emp_ID: 10
+  },
+  {
+    name: "Ethan",
+    surname: "Moore",
+    email: "ethan.moore@gmail.com",
+    emp_type: "Manager",
+    Emp_ID: 11
+  },
+  {
+    name: "Ava",
+    surname: "Anderson",
+    email: "ava.anderson@gmail.com",
+    emp_type: "HR",
+    Emp_ID: 12
+  },
+  {
+    name: "David",
+    surname: "Thomas",
+    email: "david.thomas@gmail.com",
+    emp_type: "Staff",
+    Emp_ID: 13
+  },
+  {
+    name: "Madison",
+    surname: "Jackson",
+    email: "madison.jackson@gmail.com",
+    emp_type: "Manager",
+    Emp_ID: 14
+  },
+  {
+    name: "Liam",
+    surname: "White",
+    email: "liam.white@gmail.com",
+    emp_type: "HR",
+    Emp_ID: 15
+  },
+  {
+    name: "Mia",
+    surname: "Harris",
+    email: "mia.harris@gmail.com",
+    emp_type: "Staff",
+    Emp_ID: 16
+  },
+];
+
 
 const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
   const typeChange = (event) => {
@@ -68,7 +183,7 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
 const HRAccess = () => {
   const [empClicked, setempCLicked] = useState(true);
   const [allEmployeedata, setallEmployeedata] = useState(null);
-  const [Loaded,setLoaded]=useState(false);
+  const [Loaded,setLoaded]=useState(true);//change back to false
 
   useEffect(() => {
 
@@ -136,7 +251,7 @@ get();
         <AllEmployees>
           <h2>Employee List</h2>
           <section>
-            {allEmployeedata.map((employee, index) => (
+            {employees.map((employee, index) => (
               <Emp
                 key={index}
                 employee={employee}
