@@ -220,6 +220,10 @@ const HRAccess = () => {
           console.log(error);
         });
 
+
+
+      console.log(ID);
+
     setallEmployeedata((prevArray) => {
       const newArray = [...prevArray];
       newArray.splice(index, 1);
