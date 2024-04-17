@@ -89,11 +89,11 @@ const LandingPage = () => {
           }),
         })
           .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
+          .then((DB) => {
+            console.log("Success:", DB);
 
 setLoaded(true);
-history.push(`/Fake/${Email}`);
+history.push(`/Fake`,{ data: DB[0].Email });
 
 
 
@@ -109,11 +109,13 @@ history.push(`/Fake/${Email}`);
   };
 
 const[Email,setEmail]=useState('no')
-
+const[type,settype]=useState('unknown')
+;
 useEffect(() => {
   // Function to update email every second
   const updateEmail = () => {
     setEmail(data.email);
+    settype(data.EMP_type);
   };
 
   // Call updateEmail initially and then every second
@@ -123,7 +125,7 @@ useEffect(() => {
   // Clean up the interval when the component unmounts or when data.email changes
   return () => clearInterval(intervalId);
 }, [data.email]);
-console.log(DBlog);
+// console.log(DBlog);
 
   const log = () => {
     // setEmail(data.email);
@@ -143,8 +145,8 @@ console.log(DBlog);
 
         fetch(`/api/login?email=${data.email}`)
           .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
+          .then((DB) => {
+            console.log("Success:", DB);
             //change pages
             // <Link to={{ pathname: '/FakeHomePage' }}></Link>
             setLoaded(true);
@@ -152,7 +154,16 @@ console.log(DBlog);
             // console.log(Email);
 
       // history.push('/Fake', { data: data.email });
-      history.push(`/Fake/${Email}`);
+      if(DB[0].EMP_type==='HR'){
+        history.push(`/HRhome`,{ params: DB[0] });
+
+
+
+      }
+      else{
+        history.push(`/Fake`,{ params: DB[0].Email });
+      }
+      
 
 
 
