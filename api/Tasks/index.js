@@ -38,24 +38,26 @@ module.exports = async function (context, req) {
         task.Project &&
         task.Date &&
         task.Description &&
-        task.Time &&
-        task.Active !== undefined
+        task.Time !== undefined
       ) {
         try {
-          await pool
+          const result = await pool
             .request()
             .input("Emp_ID", sql.Int, task.Emp_ID)
             .input("Project", sql.NVarChar, task.Project)
-            .input("Date", sql.DateTime, new Date(task.Date))
+            .input("Date", sql.DateTime, task.Date)
             .input("Description", sql.NVarChar, task.Description)
             .input("Time", sql.Int, task.Time)
             .input("Active", sql.Bit, task.Active)
             .query(
-              "INSERT INTO Tasks (Emp_ID, Project, Date, Description, Time, Active) VALUES (@Emp_ID, @Project, @Date, @Description, @Time, @Active)"
+              `INSERT INTO Tasks (Emp_ID, Project, Date, Description, Time, Active) OUTPUT INSERTED.* VALUES (@Emp_ID, @Project, @Date, @Description, @Time, @Active)`
             );
+          // console.log(task);
+
+          console.log(result);
           context.res = {
-            status: 201,
-            body: "Task successfully created",
+            status: 200,
+            body: result.recordset[0],
           };
         } catch (err) {
           context.res = {
@@ -89,14 +91,16 @@ module.exports = async function (context, req) {
           };
         }
       } else {
+        console.log(req.body);
         const task = req.body;
-        const taskId = req.body.task_ID;
-        if (taskId && task.Time !== undefined) {
+        const taskId = req.body.taskID;
+        console.log(taskId, task.time);
+        if (taskId && task.time !== undefined) {
           try {
             await pool
               .request()
               .input("Task_ID", sql.Int, taskId)
-              .input("Time", sql.Int, task.Time)
+              .input("Time", sql.Int, task.time)
               .query(`UPDATE Tasks SET Time = @Time WHERE Task_ID = @Task_ID`);
             context.res = {
               status: 200,
@@ -117,6 +121,7 @@ module.exports = async function (context, req) {
       }
       break;
     case "DELETE":
+      console.log(req.query);
       const taskId = req.query.task_ID || req.body.task_ID;
       if (taskId) {
         try {

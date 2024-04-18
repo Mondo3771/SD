@@ -185,7 +185,7 @@ export const SheetContainer = styled.div`
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export const TaskContainer = ({ task, onDelete }) => {
+export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
   const [timerRunning, setTimerRunning] = useState(false);
   const [stop, setStop] = useState(false);
   const [time, setTime] = useState(0);
@@ -208,10 +208,10 @@ export const TaskContainer = ({ task, onDelete }) => {
   }, [timerRunning, stop]);
 
   return (
-    <Sheet key={task.taskID}>
-      <p>{task.task}</p>
-      <p>{task.date}</p>
-      <p>{!task.done ? formatTime(time) : task.time}</p>
+    <Sheet key={task.task_ID}>
+      <p>{task.Description}</p>
+      <p>{task.Date}</p>
+      <p>{!task.Active ? formatTime(time) : task.Time}</p>
       <StopStartContainer>
         <button
           type="button"
@@ -221,7 +221,7 @@ export const TaskContainer = ({ task, onDelete }) => {
           }}
           onClick={() => setTimerRunning(handleButtonClick(timerRunning))}
           disabled={timerRunning}
-          hidden={task.done || stop}
+          hidden={task.Active || stop}
         >
           <PlayIcon width={25} />
         </button>
@@ -231,9 +231,12 @@ export const TaskContainer = ({ task, onDelete }) => {
           style={{
             color: timerRunning ? "var(--whiter)" : "gray",
           }}
-          onClick={() => setTimerRunning(handleButtonClick(timerRunning))}
+          onClick={() => {
+            onPause(task, time);
+            setTimerRunning(handleButtonClick(timerRunning));
+          }}
           disabled={!timerRunning}
-          hidden={task.done || stop}
+          hidden={task.Active || stop}
         >
           <PauseIcon width={25} />
         </button>
@@ -243,8 +246,11 @@ export const TaskContainer = ({ task, onDelete }) => {
           style={{
             color: !timerRunning || stop ? "var(--whiter)" : "gray",
           }}
-          onClick={() => setStop(handleButtonClick(stop))}
-          disabled={task.done || stop || timerRunning}
+          onClick={() => {
+            onStop(task, time);
+            setStop(handleButtonClick(stop));
+          }}
+          disabled={task.Active || stop || timerRunning}
         >
           <StopIcon width={25} />
         </button>
@@ -257,7 +263,7 @@ export const TaskContainer = ({ task, onDelete }) => {
         <TrashIcon width={25} />
       </button>
       <input name="_action" type="hidden" value={"deleteTask"} />
-      <input type="hidden" name="taskID" value={task.taskID} />
+      <input type="hidden" name="taskID" value={task.task_ID} />
     </Sheet>
   );
 };

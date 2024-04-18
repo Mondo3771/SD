@@ -15,16 +15,34 @@ import {
   Wrapper,
 } from "./StaffDashBoard.styles";
 
-import { useLoaderData } from "react-router";
-import { useLocation } from "react-router-dom/cjs/react-router-dom";
-const Emp_ID = 49;
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
 const StaffDashboard = () => {
   const location = useLocation();
-  const data = location.state.params;
-  console.log(data);
-  const { Projects } = useLoaderData();
+  const data = location.state.params; // Remove this line
+  const Emp_ID = data.Emp_ID;
+  const [Loaded, setLoaded] = useState(false);
 
-  const [AllProjects, setAllProjects] = useState(Projects);
+  useEffect(() => {
+    const Projects = () => {
+      fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          console.log(data);
+          setAllProjects(data);
+          setLoaded(true);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    Projects();
+    console.log(AllProjects);
+  }, []);
+
+  const [AllProjects, setAllProjects] = useState(null);
 
   const [task, setTask] = useState("");
   const [name, setName] = useState("");
@@ -63,16 +81,18 @@ const StaffDashboard = () => {
     setTask(event.target.value);
   };
   const handlePause = (taskToPause) => {
+    console.log(taskToPause);
     // takes time from the task and task id
     const pause = () => {
+      console.log(taskToPause);
       fetch(`/api/Tasks/`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "applicati`on/json",
         },
         body: JSON.stringify({
-          time: taskToPause.time,
-          taskID: taskToPause.taskID,
+          time: taskToPause.Time,
+          taskID: taskToPause.Task_ID,
         }),
       })
         .then((response) => response.json())
@@ -86,9 +106,10 @@ const StaffDashboard = () => {
     pause();
   };
   const handleStop = (taskToStop) => {
+    console.log(taskToStop);
     // in here we pass a task_id and
     //cahnge true to false ,,,, ACtive
-    fetch(`/api/Tasks/${taskToStop.taskID}`, {
+    fetch(`/api/Tasks/?task_ID=${taskToStop.Task_ID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -104,9 +125,10 @@ const StaffDashboard = () => {
       });
   };
   const handleDelete = (taskToDelete) => {
+    console.log(taskToDelete);
     // pass task id to delete
     const deleteTask = () => {
-      fetch(`/api/Tasks/${taskToDelete.taskID}`, {
+      fetch(`/api/Tasks/?task_ID=${taskToDelete.Task_ID}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -120,21 +142,23 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
+    deleteTask();
     setAllProjects((prevTasks) =>
       prevTasks.filter((task) => task !== taskToDelete)
     );
   };
-
+  let uniqueProjects = [];
+  if (Loaded) {
+    uniqueProjects = AllProjects.reduce((partialSum, project) => {
+      if (!partialSum.includes(project.Project)) {
+        return [...partialSum, project.Project];
+      }
+      return partialSum;
+    }, []);
+  }
   //gets the unique project names
-  console.log("====================================");
+
   console.log(AllProjects);
-  console.log("====================================");
-  const uniqueProjects = AllProjects.reduce((partialSum, project) => {
-    if (!partialSum.includes(project.name)) {
-      return [...partialSum, project.name];
-    }
-    return partialSum;
-  }, []);
 
   return (
     <Wrapper>
@@ -196,8 +220,8 @@ const StaffDashboard = () => {
               type="button"
               onClick={() => {
                 const newTask = {
-                  Emp_ID: name, // Assuming 'name' holds the employee ID
-                  Project: task, // Assuming 'task' holds the project name
+                  Emp_ID: Emp_ID, // Assuming 'name' holds the employee ID
+                  Project: name, // Assuming 'task' holds the project name
                   Date: "2018-09-08",
                   Description: task, // Assuming 'task' holds the task description
                   Time: 0,
@@ -211,42 +235,45 @@ const StaffDashboard = () => {
           </CreateTaskContainer>
         )}
 
-        {uniqueProjects.map((name, index) => {
-          return (
-            <ProjectHolder key={index}>
-              <h2>{name}</h2>
-              {AllProjects.filter((project) => project.name === name).map(
-                (item, i) => {
-                  return (
-                    <TaskContainer
-                      key={i}
-                      task={item}
-                      onDelete={handleDelete}
-                    ></TaskContainer>
-                  );
-                }
-              )}
-            </ProjectHolder>
-          );
-        })}
+        {Loaded &&
+          uniqueProjects.map((name, index) => {
+            return (
+              <ProjectHolder key={index}>
+                <h2>{name}</h2>
+                {AllProjects.filter((project) => project.Project === name).map(
+                  (item, i) => {
+                    return (
+                      <TaskContainer
+                        key={i}
+                        task={item}
+                        onDelete={handleDelete}
+                        onPause={handlePause}
+                        onStop={handleStop}
+                      ></TaskContainer>
+                    );
+                  }
+                )}
+              </ProjectHolder>
+            );
+          })}
       </Card>
     </Wrapper>
   );
 };
 
-export const StaffDashBoardLoader = () => {
-  // get all task by ID
-  const Projects = fetch(`/api/Tasks/${Emp_ID}`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-      return data;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-  return { Projects };
+// export const StaffDashBoardLoader = () => {
+//   // get all task by ID
+//   const Projects = fetch(`/api/Tasks/${Emp_ID}`)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log("Success:", data);
+//       console.log(data);
 
-
-};
+//       return data;
+//     })
+//     .catch((error) => {
+//       console.error("Error:", error);
+//     });
+//   return { Projects };
+// };
 export default StaffDashboard;
