@@ -87,10 +87,10 @@ const LandingPage = () => {
         })
           .then((response) => response.json())
           .then((DB) => {
-            console.log("Success:",DB);
-            console.log(data);
+            console.log("Success:", DB);
             setLoaded(true);
-            history.push(`/Fake`, { data: data.email });
+
+            history.push(`/Fake`, { params: DB });
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -142,7 +142,7 @@ const LandingPage = () => {
             if (DB[0].EMP_type === "HR") {
               history.push(`/HRhome`, { params: DB[0] });
             } else {
-              history.push(`/Fake`, { params: DB[0].Email });
+              history.push(`/Fake`, { params: DB[0] });
             }
           })
           .catch((error) => {
