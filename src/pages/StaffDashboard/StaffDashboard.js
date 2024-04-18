@@ -16,51 +16,12 @@ import {
 } from "./StaffDashBoard.styles";
 
 import { useLoaderData } from "react-router";
-const Emp_ID = 14;
-// const p = [
-//   {
-//     name: "Login",
-//     task: "Button",
-//     date: "2015-03-02",
-//     time: "00:06:00",
-//     done: true,
-//     taskID: 0
-//   },
-//   {
-//     name: "Login",
-//     task: "Butto2",
-//     date: "2015-03-02",
-//     time: "00:06:00",
-//     done: true,
-//     taskID: 1
-//   },
-//   {
-//     name: "SignUp",
-//     task: "Butto3",
-//     date: "2015-03-02",
-//     time: "00:06:00",
-//     done: false,
-//     taskID: 2,
-//   },
-//   {
-//     name: "SignUp",
-//     task: "Butto4",
-//     date: "2015-03-02",
-//     time: "00:06:00",
-//     done: false,
-//     taskID: 3,
-//   },
-//   {
-//     name: "Login",
-//     task: "ButtonD",
-//     date: "2015-03-02",
-//     time: "00:06:00",
-//     done: true,
-//     taskID: 4,
-//   },
-// ];
-
-export const StaffDashboard = () => {
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
+const Emp_ID = 49;
+const StaffDashboard = () => {
+  const location = useLocation();
+  const data = location.state.params;
+  console.log(data);
   const { Projects } = useLoaderData();
 
   const [AllProjects, setAllProjects] = useState(Projects);
@@ -285,4 +246,7 @@ export const StaffDashBoardLoader = () => {
       console.error("Error:", error);
     });
   return { Projects };
+
+
 };
+export default StaffDashboard;

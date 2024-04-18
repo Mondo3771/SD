@@ -90,7 +90,7 @@ const LandingPage = () => {
             console.log("Success:", DB);
             setLoaded(true);
 
-            history.push(`/Fake`, { params: DB });
+            history.push(`/DashBoard`, { params: DB });
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -142,7 +142,7 @@ const LandingPage = () => {
             if (DB[0].EMP_type === "HR") {
               history.push(`/HRhome`, { params: DB[0] });
             } else {
-              history.push(`/Fake`, { params: DB[0] });
+              history.push(`/DashBoard`, { params: DB[0] });
             }
           })
           .catch((error) => {
