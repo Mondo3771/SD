@@ -9,10 +9,8 @@ import {
   PauseIcon,
   TrashIcon,
   StopIcon,
-  ClockIcon,
-  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
-import { setData } from "../../helpers/helpers";
+
 import { Form} from "react-router-dom";
 
 const formatTime = (timeInSeconds) => {
@@ -122,7 +120,7 @@ export const CreateTaskContainer = styled.section`
   transition: all 500ms ease-in-out;
 
   button {
-    
+    3
   }
 `
 export const LabelHolder = styled.div`

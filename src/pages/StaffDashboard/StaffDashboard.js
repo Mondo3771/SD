@@ -15,7 +15,6 @@ import {
   Wrapper,
 } from "./StaffDashBoard.styles";
 
-import { fetchData, setData } from "../../helpers/helpers";
 import { useLoaderData } from "react-router";
 const Emp_ID = 14;
 // const p = [
@@ -102,7 +101,7 @@ export const StaffDashboard = () => {
   const taskChange = (event) => {
     setTask(event.target.value);
   };
-  const handlePause = (tastToPause) => {
+  const handlePause = (taskToPause) => {
     // takes time from the task and task id
     const pause = () => {
       fetch(`/api/Tasks/`, {
