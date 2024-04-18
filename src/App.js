@@ -1,34 +1,21 @@
-import { createRoutesFromElements, Router, RouterProvider } from "react-router";
-import "./App.css";
-
-//components
-import LandingPage from "./pages/LandingPage/LandingPage";
-import {
-  StaffDashboard,
-  StaffDashBoardLoader,
-} from "./pages/StaffDashboard/StaffDashboard";
-
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  createRoutesFromChildren,
-  Route,
-} from "react-router-dom";
-import StaffDashboardAction from "./helpers/StaffDashboardAction";
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route
-      path="/"
-      element={<StaffDashboard />}
-      loader={StaffDashBoardLoader}
-      action={StaffDashboardAction}
-    ></Route>
-  )
-);
+import './App.css';
+import {  Route, BrowserRouter,Switch } from 'react-router-dom';
+import LandingPage from './pages/LandingPage/LandingPage';
+import FakeHomePage from './pages/FakeHomePage/FakeHomePage';
+import HRHome from './pages/HRHome/HRHome';
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <BrowserRouter>
+      <Switch>
+      <Route exact path="/" component={LandingPage} />
+        <Route path="/Fake" component={FakeHomePage} />
+        <Route path="/HRhome" component={HRHome} />
+
+      </Switch>
+    </BrowserRouter>
+    // <HRHome/>
+  );
 }
 
 export default App;

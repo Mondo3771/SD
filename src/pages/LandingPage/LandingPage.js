@@ -1,6 +1,8 @@
 // export default LandingPage;
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Index from "../../routes/Index";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 import {
   InputContainer,
@@ -10,9 +12,12 @@ import {
 } from "./LandingPage.styles";
 
 const LandingPage = () => {
+  const history = useHistory();
+
   const [login, setLogin] = useState(false);
   const [signup, setSignup] = useState(false);
   const [first, setFirst] = useState(false);
+  const [Loaded, setLoaded] = useState(false);
 
   const handleLogin = () => {
     setLogin((prevLogin) => !prevLogin);
@@ -48,14 +53,14 @@ const LandingPage = () => {
   const [DBlog, setDBlog] = useState({}); // querying database wiht email and name
 
   const sign = () => {
-    if (!Department || !EmpType) {
+    if (!Department) {
       return setError("Enter All Fields");
     } else if (!data.email) {
       return setError("Select Account");
     } else if (!data.email_verified) {
       return setError("Unverified a Account");
     } else {
-      setError("Welcome " + data.name + "! Click Sign Up");
+      setError("Loading");
       setDBsign({
         Department: Department,
         employeeType: EmpType,
@@ -64,7 +69,7 @@ const LandingPage = () => {
         Surname: data.family_name,
       });
       // FETCH POST REQUEST TO DATABASE USE LOG
-      console.log(data);
+      // console.log(data);
       const get = () =>
         fetch("/api/login", {
           method: "POST",
@@ -73,15 +78,19 @@ const LandingPage = () => {
           },
           body: JSON.stringify({
             Department: Department,
-            employeeType: EmpType,
+            employeeType: "Staff",
             Email: data.email,
             Name: data.given_name,
             Surname: data.family_name,
+            Token: data.sub,
           }),
         })
           .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
+          .then((DB) => {
+            console.log("Success:", DB);
+            setLoaded(true);
+
+            history.push(`/Fake`, { params: DB });
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -90,31 +99,67 @@ const LandingPage = () => {
     }
     // console.log(DBsign);
   };
+
+  const [Email, setEmail] = useState("no");
+  const [type, settype] = useState("unknown");
+  useEffect(() => {
+    // Function to update email every second
+    const updateEmail = () => {
+      setEmail(data.email);
+      settype(data.EMP_type);
+    };
+
+    // Call updateEmail initially and then every second
+    updateEmail(); // Call initially
+    const intervalId = setInterval(updateEmail, 1000); // Call every second
+
+    // Clean up the interval when the component unmounts or when data.email changes
+    return () => clearInterval(intervalId);
+  }, [data.email]);
+  // console.log(DBlog);
+
   const log = () => {
+    // setEmail(data.email);
+
     if (!data.email) {
       return setlogError("Select Account");
     } else if (!data.email_verified) {
       return setlogError("Unverified a Account");
     } else {
-      setlogError("Waiting for " + data.name + "! Click Login");
+      setlogError("Loading!");
       setDBlog({
         email: data.email,
         Name: data.given_name,
       });
+
       const login = () =>
-        fetch(`/api/login?email=${data.email}`)
+        fetch(`/api/login?email=${data.email}&token=${data.sub}`)
           .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
+          .then((DB) => {
+            console.log("Success:", DB);
+            setLoaded(true);
+
+            if (DB[0].EMP_type === "HR") {
+              history.push(`/HRhome`, { params: DB[0] });
+            } else {
+              history.push(`/Fake`, { params: DB[0] });
+            }
           })
           .catch((error) => {
             console.error("Error:", error);
+            setlogError("No user found");
           });
-      console.log(DBlog);
+      // console.log(DBlog);
+
       login();
     }
-    // console.log(DBlog);
   };
+
+  // useEffect(() => {
+  //   if (Loaded) {
+  //     window.location.href = '/Fake'; // Navigate to the new page
+  //   }
+  // }, [Loaded]);
 
   return (
     <>
@@ -131,9 +176,18 @@ const LandingPage = () => {
                   <article className="secLog">
                     <h2>{logError}</h2>
                     {first ? <Index child={childToParent} /> : null}
-                    <button className="log" onClick={log}>
+                    {/* <button className="log" onClick={log}>
                       Login
-                    </button>
+                    </button> */}
+                    {Loaded ? (
+                      <Link to="/Fake">
+                        <button className="log">Login</button>
+                      </Link>
+                    ) : (
+                      <button className="log" onClick={log}>
+                        Login
+                      </button>
+                    )}
                   </article>
                   <button className="login" onClick={handleSignup}>
                     Sign Up
@@ -155,9 +209,9 @@ const LandingPage = () => {
                         onChange={depChange}
                       />
                     </InputContainer>
-                    <InputContainer>
+                    {/* <InputContainer>
                       <img src={require("./profile.png")}></img>
-                      {/* <input type='text' placeholder='Employee Type' value={EmpType} onChange={typeChange} /> */}
+                      <input type='text' placeholder='Employee Type' value={EmpType} onChange={typeChange} />
                       <select
                         value={EmpType}
                         onChange={typeChange}
@@ -171,11 +225,22 @@ const LandingPage = () => {
                         <option value="Manager">Manager</option>
                         <option value="HR">HR</option>
                       </select>
-                    </InputContainer>
+                    </InputContainer> */}
                     <Index child={childToParent} />
-                    <button className="sign" onClick={sign}>
+
+                    {/* <button className="sign" onClick={sign}>
                       Sign Up
-                    </button>
+                    </button> */}
+
+                    {Loaded ? (
+                      <Link to="/FakeHomePage">
+                        <button className="sign">Sign Up</button>
+                      </Link>
+                    ) : (
+                      <button className="sign" onClick={sign}>
+                        Sign Up
+                      </button>
+                    )}
                   </article>
                 </>
               )}

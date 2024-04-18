@@ -10,16 +10,20 @@ module.exports = async function (context, req) {
         if (
           req.query.email === undefined ||
           req.query.email === "" ||
-          req.query.email === null
+          req.query.email === null ||
+          req.query.token === undefined ||
+          req.query.token === "" ||
+          req.query.token === null
         ) {
           context.res.status = 400;
-          context.res.body = "Please provide an email address";
+          context.res.body = "Please provide an email address and a token";
         } else {
           const resultSet = await pool
             .request()
             .input("email", sql.NVarChar, req.query.email)
+            .input("token", sql.NVarChar, req.query.token)
             .query(
-              `SELECT * FROM Employees where Email = '${req.query.email}'`
+              `SELECT * FROM Employees WHERE Email = @email AND token = @token`
             );
           if (resultSet.recordset.length == 0) {
             context.res.status = 404;
@@ -67,11 +71,12 @@ module.exports = async function (context, req) {
               .input("Department", sql.NVarChar, data.Department)
               .input("Emp_type", sql.NVarChar, data.employeeType)
               .input("Email", sql.NVarChar, data.Email)
+              .input("Token", sql.NVarChar, data.Token)
               .query(
-                `INSERT INTO Employees (Email, Name, Surname, Department, EMP_type) VALUES (@Email, @Name, @Surname, @Department, @Emp_type)`
+                `INSERT INTO Employees (Email, Name, Surname, Department, EMP_type,token) VALUES (@Email, @Name, @Surname, @Department, @Emp_type,@Token)`
               );
-            context.res.status = 201;
-            context.res.body = "User created successfully";
+            context.res.status = 200;
+            context.res.body = data;
           }
         }
       } catch (err) {
