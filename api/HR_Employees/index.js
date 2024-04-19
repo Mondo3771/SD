@@ -12,7 +12,7 @@ module.exports = async function (context, req) {
       } catch (err) {
         context.res = {
           status: 500,
-          body: "Error connecting to the database",
+          message: "Error connecting to the database",
         };
         console.error("Error running query", err);
       }
@@ -27,7 +27,7 @@ module.exports = async function (context, req) {
           data.Emp_ID === null
         ) {
           context.res.status = 400;
-          context.res.body = "ID cannot be null or empty";
+          context.res.message = "ID cannot be null or empty";
         } else {
           // If the ID exists, update the Emp_type
           const resultSet = await pool
@@ -38,12 +38,12 @@ module.exports = async function (context, req) {
               `UPDATE Employees SET EMP_type = @Emp_type WHERE Emp_ID = @Emp_ID`
             );
           context.res.status = 200;
-          context.res.body = "Employee type updated successfully";
+          context.res.message = "Employee type updated successfully";
         }
       } catch (err) {
         context.res = {
           status: 500,
-          body: "Error inserting data into the database",
+          message: "Error inserting data into the database",
         };
         console.error("Error running query", err);
       }
@@ -56,7 +56,7 @@ module.exports = async function (context, req) {
           data.Emp_ID === null
         ) {
           context.res.status = 400;
-          context.res.body = "ID cannot be null or empty";
+          context.res.message = "ID cannot be null or empty";
         } else {
           // If the ID exists, delete the row
           //these are 2 seperates queries that i do in one line
@@ -75,7 +75,7 @@ module.exports = async function (context, req) {
       } catch (err) {
         context.res = {
           status: 500,
-          body: "Error deleting data from the database",
+          message: "Error deleting data from the database",
         };
         console.error("Error running query", err);
       }
@@ -83,7 +83,7 @@ module.exports = async function (context, req) {
     default:
       context.res = {
         status: 400,
-        body: "Please send a GET or POST request",
+        message: "Please send a GET or POST request",
       };
       break;
   }

@@ -20,13 +20,14 @@ module.exports = async function (context, req) {
         } catch (err) {
           context.res = {
             status: 500,
-            body: "Error executing query",
+            message: "Error executing query",
           };
         }
       } else {
         context.res = {
           status: 400,
-          body: "Please pass emp_id on the query string or in the request body",
+          message:
+            "Please pass emp_id on the query string or in the request body",
         };
       }
       break;
@@ -53,8 +54,6 @@ module.exports = async function (context, req) {
               `INSERT INTO Tasks (Emp_ID, Project, Date, Description, Time, Active) OUTPUT INSERTED.* VALUES (@Emp_ID, @Project, @Date, @Description, @Time, @Active)`
             );
           // console.log(task);
-
-          console.log(result);
           context.res = {
             status: 200,
             body: result.recordset[0],
@@ -62,13 +61,13 @@ module.exports = async function (context, req) {
         } catch (err) {
           context.res = {
             status: 500,
-            body: "Error executing query",
+            message: "Error executing query",
           };
         }
       } else {
         context.res = {
           status: 400,
-          body: "Please provide all task details in the request body",
+          message: "Please provide all task details in the request body",
         };
       }
       break;
@@ -82,12 +81,12 @@ module.exports = async function (context, req) {
             .input("taskID", sql.Int, taskID)
             .query(`UPDATE Tasks SET Active = 1 WHERE Task_ID = @taskID`);
           context.res = {
-            body: "Task successfully updated",
+            message: "Task successfully updated",
           };
         } catch (err) {
           context.res = {
             status: 500,
-            body: "Error executing query",
+            message: "Error executing query",
           };
         }
       } else {
@@ -104,24 +103,24 @@ module.exports = async function (context, req) {
               .query(`UPDATE Tasks SET Time = @Time WHERE Task_ID = @Task_ID`);
             context.res = {
               status: 200,
-              body: "Task successfully updated",
+              message: "Task successfully updated",
             };
           } catch (err) {
             context.res = {
               status: 500,
-              body: "Error executing query",
+              message: "Error executing query",
             };
           }
         } else {
           context.res = {
             status: 400,
-            body: "Please provide task details in the request body and task id in the query",
+            message:
+              "Please provide task details in the request body and task id in the query",
           };
         }
       }
       break;
     case "DELETE":
-      console.log(req.query);
       const taskId = req.query.task_ID || req.body.task_ID;
       if (taskId) {
         try {
@@ -131,25 +130,25 @@ module.exports = async function (context, req) {
             .query("DELETE FROM Tasks WHERE Task_ID = @Task_ID");
           context.res = {
             status: 200,
-            body: "Task successfully deleted",
+            message: "Task successfully deleted",
           };
         } catch (err) {
           context.res = {
             status: 500,
-            body: "Error executing query",
+            message: "Error executing query",
           };
         }
       } else {
         context.res = {
           status: 400,
-          body: "Please provide task id in the query",
+          message: "Please provide task id in the query",
         };
       }
       break;
     default:
       context.res = {
         status: 400,
-        body: "Invalid request method",
+        message: "Invalid request method",
       };
       break;
   }

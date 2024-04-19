@@ -21,6 +21,10 @@ const formatTime = (timeInSeconds) => {
   )}:${String(seconds).padStart(2, "0")}`;
 };
 
+const formatDate = (date) => {
+  console.log(typeof date);
+};
+
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
@@ -187,8 +191,8 @@ export const SheetContainer = styled.div`
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
   const [timerRunning, setTimerRunning] = useState(false);
-  const [stop, setStop] = useState(false);
-  const [time, setTime] = useState(0);
+  const [stop, setStop] = useState(task.Active);
+  const [time, setTime] = useState(task.Time);
 
   const handleButtonClick = (prev) => !prev;
 
@@ -210,8 +214,8 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
   return (
     <Sheet key={task.task_ID}>
       <p>{task.Description}</p>
-      <p>{task.Date}</p>
-      <p>{!task.Active ? formatTime(time) : task.Time}</p>
+      <p>{typeof task.Date}</p>
+      <p>{!task.Active ? formatTime(time) : formatTime(task.Time)}</p>
       <StopStartContainer>
         <button
           type="button"
