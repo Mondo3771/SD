@@ -21,6 +21,7 @@ import { useEffect } from "react";
 const StaffDashboard = () => {
   const location = useLocation();
   const data = location.state.params; // Remove this line
+  const User = data;
   const Emp_ID = data.Emp_ID;
   const [Loaded, setLoaded] = useState(false);
 
@@ -29,17 +30,19 @@ const StaffDashboard = () => {
       fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
-          console.log(data);
-          setAllProjects(data);
-          setLoaded(true);
+          if (data.data.length === 0) {
+            return;
+          } else {
+            console.log("Success:", data,message);
+            setAllProjects(data.data);
+            setLoaded(true);
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
     Projects();
-    console.log(AllProjects);
   }, []);
 
   const [AllProjects, setAllProjects] = useState(null);
@@ -64,13 +67,14 @@ const StaffDashboard = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          taskToAdd["Task_ID"] = data.data.Task_ID;
+          setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
     add();
-    setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
   };
 
   const projectNameChange = (event) => {
@@ -80,24 +84,22 @@ const StaffDashboard = () => {
   const taskChange = (event) => {
     setTask(event.target.value);
   };
-  const handlePause = (taskToPause) => {
-    console.log(taskToPause);
+  const handlePause = (taskToPause, time) => {
     // takes time from the task and task id
     const pause = () => {
-      console.log(taskToPause);
       fetch(`/api/Tasks/`, {
         method: "PUT",
         headers: {
-          "Content-Type": "applicati`on/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          time: taskToPause.Time,
-          taskID: taskToPause.Task_ID,
+          Time: time,
+          Task_ID: taskToPause.Task_ID,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success:", data.message);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -106,10 +108,9 @@ const StaffDashboard = () => {
     pause();
   };
   const handleStop = (taskToStop) => {
-    console.log(taskToStop);
     // in here we pass a task_id and
     //cahnge true to false ,,,, ACtive
-    fetch(`/api/Tasks/?task_ID=${taskToStop.Task_ID}`, {
+    fetch(`/api/Tasks/?Task_ID=${taskToStop.Task_ID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -118,17 +119,16 @@ const StaffDashboard = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        console.log("Success:", data.message);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
   const handleDelete = (taskToDelete) => {
-    console.log(taskToDelete);
     // pass task id to delete
     const deleteTask = () => {
-      fetch(`/api/Tasks/?task_ID=${taskToDelete.Task_ID}`, {
+      fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -136,7 +136,7 @@ const StaffDashboard = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success:", data.message);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -157,8 +157,6 @@ const StaffDashboard = () => {
     }, []);
   }
   //gets the unique project names
-
-  console.log(AllProjects);
 
   return (
     <Wrapper>
@@ -219,10 +217,11 @@ const StaffDashboard = () => {
             <button
               type="button"
               onClick={() => {
+                const today = new Date().toISOString().slice(0, 10);
                 const newTask = {
                   Emp_ID: Emp_ID, // Assuming 'name' holds the employee ID
                   Project: name, // Assuming 'task' holds the project name
-                  Date: "2018-09-08",
+                  Date: today,
                   Description: task, // Assuming 'task' holds the task description
                   Time: 0,
                   Active: false, // Assuming 'done' corresponds to 'Active'

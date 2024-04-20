@@ -8,35 +8,44 @@ module.exports = async function (context, req) {
     case "GET":
       try {
         if (
-          req.query.email === undefined ||
-          req.query.email === "" ||
-          req.query.email === null ||
-          req.query.token === undefined ||
-          req.query.token === "" ||
-          req.query.token === null
+          req.query.Email === undefined ||
+          req.query.Email === "" ||
+          req.query.Email === null ||
+          req.query.Token === undefined ||
+          req.query.Token === "" ||
+          req.query.Token === null
         ) {
-          context.res.status = 400;
-          context.res.message = "Please provide an email address and a token";
+          context.res = {
+            status: 400,
+            body: { message: "Please provide an email address and a token" },
+          };
         } else {
           const resultSet = await pool
             .request()
-            .input("email", sql.NVarChar, req.query.email)
-            .input("token", sql.NVarChar, req.query.token)
+            .input("Email", sql.NVarChar, req.query.Email)
+            .input("Token", sql.NVarChar, req.query.Token)
             .query(
-              `SELECT * FROM Employees WHERE Email = @email AND token = @token`
+              `SELECT * FROM Employees WHERE Email = @Email AND token = @Token`
             );
           if (resultSet.recordset.length == 0) {
-            context.res.status = 404;
-            context.res.message = "No user found";
+            context.res = {
+              status: 404,
+              body: { message: "No user found" },
+            };
           } else {
-            context.res.status = 200;
-            context.res.body = resultSet.recordset;
+            context.res = {
+              status: 200,
+              body: {
+                data: resultSet.recordset[0],
+                message: "Successfully retrieved employee",
+              },
+            };
           }
         }
       } catch (err) {
         context.res = {
           status: 500,
-          message: "Error connecting to the database",
+          body: { message: "Error connecting to the database" },
         };
         console.error("Error running query", err);
       }
@@ -50,8 +59,11 @@ module.exports = async function (context, req) {
           data.Email === "" ||
           data.Email === null
         ) {
-          context.res.status = 400;
-          context.res.message = "Email cannot be null or empty";
+          context.res = {
+            status: 400,
+
+            bode: { message: "Email cannot be null or empty" },
+          };
         } else {
           // Check if the email already exists in the database
           const existingEmail = await pool
@@ -60,29 +72,36 @@ module.exports = async function (context, req) {
             .query("SELECT Email FROM Employees WHERE Email = @Email");
 
           if (existingEmail.recordset.length > 0) {
-            context.res.status = 401;
-            context.res.message = "Email already exists";
+            context.res = {
+              status: 401,
+              body: { message: "Email already exists" },
+            };
           } else {
             const resultSet = await pool
               .request()
               .input("Surname", sql.NVarChar, data.Surname)
               .input("Name", sql.NVarChar, data.Name)
               .input("Department", sql.NVarChar, data.Department)
-              .input("Emp_type", sql.NVarChar, data.employeeType)
+              .input("Emp_type", sql.NVarChar, data.EMP_type)
               .input("Email", sql.NVarChar, data.Email)
               .input("Token", sql.NVarChar, data.Token)
               .query(
                 `INSERT INTO Employees (Email, Name, Surname, Department, EMP_type,token) OUTPUT INSERTED.* VALUES (@Email, @Name, @Surname, @Department, @Emp_type,@Token)`
               );
-            console.log(resultSet.recordset);
-            context.res.status = 200;
-            context.res.body = resultSet.recordset[0];
+            context.res = {
+              status: 200,
+              body: {
+                data: resultSet.recordset[0],
+                message: "Employee added successfully",
+              },
+            };
           }
         }
       } catch (err) {
         context.res = {
           status: 500,
-          message: "Error inserting data into the database",
+
+          body: { message: "Error inserting data into the database" },
         };
         console.error("Error running query", err);
       }
@@ -91,7 +110,8 @@ module.exports = async function (context, req) {
     default:
       context.res = {
         status: 400,
-        message: "Please send a GET or POST request",
+
+        body: { message: "Please send a GET or POST request" },
       };
       break;
   }

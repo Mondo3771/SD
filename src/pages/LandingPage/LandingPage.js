@@ -78,7 +78,7 @@ const LandingPage = () => {
           },
           body: JSON.stringify({
             Department: Department,
-            employeeType: "Staff",
+            EMP_type: "Staff",
             Email: data.email,
             Name: data.given_name,
             Surname: data.family_name,
@@ -89,8 +89,7 @@ const LandingPage = () => {
           .then((DB) => {
             console.log("Success:", DB);
             setLoaded(true);
-
-            history.push(`/DashBoard`, { params: DB });
+            history.push(`/DashBoard`, { params: DB.data });
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -133,16 +132,15 @@ const LandingPage = () => {
       });
 
       const login = () =>
-        fetch(`/api/login?email=${data.email}&token=${data.sub}`)
+        fetch(`/api/login?Email=${data.email}&Token=${data.sub}`)
           .then((response) => response.json())
           .then((DB) => {
-            console.log("Success:", DB);
+            console.log("Success:", DB.message);
             setLoaded(true);
-
-            if (DB[0].EMP_type === "HR") {
-              history.push(`/HRhome`, { params: DB[0] });
+            if (DB.data.EMP_type === "HR") {
+              history.push(`/HRhome`, { params: DB.data });
             } else {
-              history.push(`/DashBoard`, { params: DB[0] });
+              history.push(`/DashBoard`, { params: DB.data });
             }
           })
           .catch((error) => {

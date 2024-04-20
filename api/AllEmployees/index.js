@@ -8,11 +8,18 @@ module.exports = async function (context, req) {
     case "GET":
       try {
         const resultSet = await pool.request().query(`SELECT * FROM Employees`);
-        context.res.body = resultSet.recordset;
+        context.res = {
+          status: 200,
+          body: {
+            data: resultSet.recordset,
+            message: "Successfully retrieved employees",
+          },
+        };
       } catch (err) {
         context.res = {
           status: 500,
           message: "Error connecting to the database",
+          body: {},
         };
         console.error("Error running query", err);
       }
@@ -26,8 +33,11 @@ module.exports = async function (context, req) {
           data.Emp_ID === "" ||
           data.Emp_ID === null
         ) {
-          context.res.status = 400;
-          context.res.message = "ID cannot be null or empty";
+          context.res = {
+            status: 400,
+            message: "ID cannot be null or empty",
+            body: {},
+          };
         } else {
           // If the ID exists, update the Emp_type
           const resultSet = await pool
@@ -37,13 +47,18 @@ module.exports = async function (context, req) {
             .query(
               `UPDATE Employees SET EMP_type = @Emp_type WHERE Emp_ID = @Emp_ID`
             );
-          context.res.status = 200;
-          context.res.message = "Employee type updated successfully";
+
+          context.res = {
+            status: 200,
+            message: "Employee type updated successfully",
+            body: {},
+          };
         }
       } catch (err) {
         context.res = {
           status: 500,
           message: "Error inserting data into the database",
+          body: {},
         };
         console.error("Error running query", err);
       }
@@ -55,8 +70,11 @@ module.exports = async function (context, req) {
           data.Emp_ID === "" ||
           data.Emp_ID === null
         ) {
-          context.res.status = 400;
-          context.res.message = "ID cannot be null or empty";
+          context.res = {
+            status: 400,
+            message: "ID cannot be null or empty",
+            body: {},
+          };
         } else {
           // If the ID exists, delete the row
           //these are 2 seperates queries that i do in one line
@@ -69,13 +87,14 @@ module.exports = async function (context, req) {
             );
           context.res = {
             staus: 200,
-            message: "Deleted",
+            body: { message: "Deleted" },
           };
         }
       } catch (err) {
         context.res = {
           status: 500,
           message: "Error deleting data from the database",
+          body: {},
         };
         console.error("Error running query", err);
       }
@@ -84,6 +103,7 @@ module.exports = async function (context, req) {
       context.res = {
         status: 400,
         message: "Please send a GET or POST request",
+        body: {},
       };
       break;
   }
