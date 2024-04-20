@@ -33,7 +33,7 @@ const StaffDashboard = () => {
           if (data.data.length === 0) {
             return;
           } else {
-            console.log("Success:", data,message);
+            console.log("Success:", data.message);
             setAllProjects(data.data);
             setLoaded(true);
           }
