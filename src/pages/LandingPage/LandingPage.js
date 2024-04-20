@@ -135,7 +135,7 @@ const LandingPage = () => {
         fetch(`/api/login?Email=${data.email}&Token=${data.sub}`)
           .then((response) => response.json())
           .then((DB) => {
-            console.log("Success:", DB);
+            console.log("Success:", DB.message);
             setLoaded(true);
             if (DB.data.EMP_type === "HR") {
               history.push(`/HRhome`, { params: DB.data });

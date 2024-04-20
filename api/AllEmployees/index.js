@@ -87,8 +87,7 @@ module.exports = async function (context, req) {
             );
           context.res = {
             staus: 200,
-            message: "Deleted",
-            body: {},
+            body: { message: "Deleted" },
           };
         }
       } catch (err) {

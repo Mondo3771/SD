@@ -33,7 +33,7 @@ const StaffDashboard = () => {
           if (data.data.length === 0) {
             return;
           } else {
-            console.log("Success:", data);
+            console.log("Success:", data,message);
             setAllProjects(data.data);
             setLoaded(true);
           }
@@ -43,7 +43,6 @@ const StaffDashboard = () => {
         });
     };
     Projects();
-    console.log(AllProjects);
   }, []);
 
   const [AllProjects, setAllProjects] = useState(null);
@@ -86,18 +85,16 @@ const StaffDashboard = () => {
     setTask(event.target.value);
   };
   const handlePause = (taskToPause, time) => {
-    console.log(taskToPause);
     // takes time from the task and task id
     const pause = () => {
-      console.log(taskToPause);
       fetch(`/api/Tasks/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          time: time,
-          taskID: taskToPause.Task_ID,
+          Time: time,
+          Task_ID: taskToPause.Task_ID,
         }),
       })
         .then((response) => response.json())
@@ -111,7 +108,6 @@ const StaffDashboard = () => {
     pause();
   };
   const handleStop = (taskToStop) => {
-    console.log(taskToStop);
     // in here we pass a task_id and
     //cahnge true to false ,,,, ACtive
     fetch(`/api/Tasks/?Task_ID=${taskToStop.Task_ID}`, {
@@ -130,7 +126,6 @@ const StaffDashboard = () => {
       });
   };
   const handleDelete = (taskToDelete) => {
-    console.log(taskToDelete);
     // pass task id to delete
     const deleteTask = () => {
       fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
@@ -162,8 +157,6 @@ const StaffDashboard = () => {
     }, []);
   }
   //gets the unique project names
-
-  console.log(AllProjects);
 
   return (
     <Wrapper>

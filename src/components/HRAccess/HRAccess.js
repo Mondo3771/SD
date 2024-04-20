@@ -73,13 +73,11 @@ const HRAccess = () => {
         .then((response) => response.json())
         .then((employees) => {
           setallEmployeedata(employees.data);
-          console.log(employees);
+
           setLoaded(true);
-          console.log(employees.data);
         });
     };
     fetchData();
-    console.log(allEmployeedata);
   }, []);
 
   const displayEmp = () => {

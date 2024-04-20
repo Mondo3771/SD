@@ -12,11 +12,10 @@ module.exports = async function (context, req) {
             .request()
             .input("Emp_id", sql.Int, Emp_id)
             .query("SELECT * FROM Tasks WHERE Emp_ID = @Emp_id");
-            console.log(result.recordset[0]);
           context.res = {
             status: 200,
             body: {
-              data: result.recordset[0],
+              data: result.recordset,
               message: "Successfully retrieved tasks",
             },
           };
@@ -81,13 +80,16 @@ module.exports = async function (context, req) {
       }
       break;
     case "PUT":
-      const taskID = req.query.task_ID;
-      if (taskID) {
+      //this is the stop function
+      const Task_ID = req.query.Task_ID;
+      console.log(Task_ID);
+      if (Task_ID) {
         try {
           await pool
             .request()
-            .input("taskID", sql.Int, taskID)
-            .query(`UPDATE Tasks SET Active = 1 WHERE Task_ID = @taskID`);
+            .input("Task_ID", sql.Int, Task_ID)
+            .query(`UPDATE Tasks SET Active = 1 WHERE Task_ID = @Task_ID`);
+           
           context.res = {
             status: 200,
             body: { message: "Task successfully updated" },
@@ -100,13 +102,14 @@ module.exports = async function (context, req) {
         }
       } else {
         const task = req.body;
-        const taskId = req.body.taskID;
-        if (taskId && task.time !== undefined) {
+        const Task_ID = req.body.Task_ID;
+        console.log(task);
+        if (Task_ID && task.Time !== undefined) {
           try {
             await pool
               .request()
-              .input("Task_ID", sql.Int, taskId)
-              .input("Time", sql.Int, task.time)
+              .input("Task_ID", sql.Int, Task_ID)
+              .input("Time", sql.Int, task.Time)
               .query(`UPDATE Tasks SET Time = @Time WHERE Task_ID = @Task_ID`);
             context.res = {
               status: 200,
@@ -130,12 +133,12 @@ module.exports = async function (context, req) {
       }
       break;
     case "DELETE":
-      const taskId = req.query.task_ID || req.body.task_ID;
-      if (taskId) {
+      const task_ID = req.query.Task_ID || req.body.Task_ID;
+      if (task_ID) {
         try {
           await pool
             .request()
-            .input("Task_ID", sql.Int, taskId)
+            .input("Task_ID", sql.Int, task_ID)
             .query("DELETE FROM Tasks WHERE Task_ID = @Task_ID");
           context.res = {
             status: 200,

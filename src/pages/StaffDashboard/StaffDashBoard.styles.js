@@ -206,7 +206,6 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
       }, 1000);
 
       task.Time = time;
-      console.log(task.Time);
     } else {
       clearInterval(interval); // Stop the timer
       // setTime(0);
