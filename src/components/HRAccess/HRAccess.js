@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  EmployeeCard,
-  AllEmployees,
-  Spinner,
-} from "./HRAccess.styles";
+import { EmployeeCard, AllEmployees, Spinner } from "./HRAccess.styles";
 
 const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
   const typeChange = (event) => {
@@ -13,7 +9,6 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
   const [update, setupdate] = useState(employee.Emp_type);
 
   const updateEmp = () => {
-    console.log(employee.EMP_type);
     if (!empType) {
       settext("Enter a Type");
     } else if (empType === employee.EMP_type) {
@@ -21,7 +16,7 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
     } else {
       //update their type here
       // employee.emp_type=empType
-      fetch("/api/HR_Employees", {
+      fetch("/api/AllEmployees", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -34,9 +29,9 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
         .then((response) => response.json())
         .then((data) => {
           //deal woth response
-          console.log(data);
           setupdate(empType);
           settext("Success ");
+          console.log(data.message);
           employee.EMP_type = empType;
         });
     }
@@ -60,7 +55,9 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
         <option value="Staff">Staff</option>
       </select>
       <button onClick={updateEmp}>Change type</button>
-      <button onClick={() => removeEmp(employee.email, index, employee.Emp_ID)}>Remove</button>
+      <button onClick={() => removeEmp(employee.email, index, employee.Emp_ID)}>
+        Remove
+      </button>
     </EmployeeCard>
   );
 };
@@ -68,18 +65,17 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
 const HRAccess = () => {
   const [empClicked, setempCLicked] = useState(true);
   const [allEmployeedata, setallEmployeedata] = useState(null);
-  const [Loaded,setLoaded]=useState(false);
+  const [Loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-
-
     const fetchData = () => {
-      fetch("/api/HR_Employees")
+      fetch("/api/AllEmployees")
         .then((response) => response.json())
         .then((employees) => {
+          setallEmployeedata(employees.data);
           console.log(employees);
-          setallEmployeedata(employees);
           setLoaded(true);
+          console.log(employees.data);
         });
     };
     fetchData();
@@ -91,17 +87,17 @@ const HRAccess = () => {
     // setempCLicked((prev) => !prev);
   };
 
-  const removeEmp = (email,index, Emp_ID) => {
+  const removeEmp = (email, index, Emp_ID) => {
     //need ID to remove employee
     //query to remove email with row
     const get = () =>
-      fetch("/api/HR_Employees", {
+      fetch("/api/AllEmployees", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "Emp_ID": Emp_ID,
+          Emp_ID: Emp_ID,
         }),
       })
         .then((response) => response.json())
@@ -112,7 +108,7 @@ const HRAccess = () => {
           console.log(error);
         });
 
-get();
+    get();
     setallEmployeedata((prevArray) => {
       const newArray = [...prevArray];
       newArray.splice(index, 1);
@@ -148,7 +144,9 @@ get();
             ))}
           </section>
         </AllEmployees>
-      ) : <p>Employees Loading</p>}
+      ) : (
+        <p>Employees Loading</p>
+      )}
     </>
   );
 };

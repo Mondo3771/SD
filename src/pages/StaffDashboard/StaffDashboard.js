@@ -30,9 +30,13 @@ const StaffDashboard = () => {
       fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
-          setAllProjects(data);
-          setLoaded(true);
+          if (data.data.length === 0) {
+            return;
+          } else {
+            console.log("Success:", data);
+            setAllProjects(data.data);
+            setLoaded(true);
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -64,7 +68,7 @@ const StaffDashboard = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          taskToAdd["Task_ID"] = data.Task_ID;
+          taskToAdd["Task_ID"] = data.data.Task_ID;
           setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
         })
         .catch((error) => {
@@ -89,7 +93,7 @@ const StaffDashboard = () => {
       fetch(`/api/Tasks/`, {
         method: "PUT",
         headers: {
-          "Content-Type": "applicati`on/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           time: time,
@@ -98,7 +102,7 @@ const StaffDashboard = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success:", data.message);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -110,7 +114,7 @@ const StaffDashboard = () => {
     console.log(taskToStop);
     // in here we pass a task_id and
     //cahnge true to false ,,,, ACtive
-    fetch(`/api/Tasks/?task_ID=${taskToStop.Task_ID}`, {
+    fetch(`/api/Tasks/?Task_ID=${taskToStop.Task_ID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -119,7 +123,7 @@ const StaffDashboard = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        console.log("Success:", data.message);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -129,7 +133,7 @@ const StaffDashboard = () => {
     console.log(taskToDelete);
     // pass task id to delete
     const deleteTask = () => {
-      fetch(`/api/Tasks/?task_ID=${taskToDelete.Task_ID}`, {
+      fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +141,7 @@ const StaffDashboard = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success:", data.message);
         })
         .catch((error) => {
           console.error("Error:", error);
