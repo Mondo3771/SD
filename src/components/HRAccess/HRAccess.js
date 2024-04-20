@@ -6,7 +6,7 @@ const Emp = ({ employee, index, removeEmp, empType, setEmpType }) => {
     setEmpType(event.target.value, index); // Pass the index along with the new value
   };
   const [text, settext] = useState("Select Employee Type:"); //error
-  const [update, setupdate] = useState(employee.Emp_type);
+  const [update, setupdate] = useState(employee.EMP_type);
 
   const updateEmp = () => {
     if (!empType) {
