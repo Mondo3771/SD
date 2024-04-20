@@ -21,6 +21,7 @@ import { useEffect } from "react";
 const StaffDashboard = () => {
   const location = useLocation();
   const data = location.state.params; // Remove this line
+  const User = data;
   const Emp_ID = data.Emp_ID;
   const [Loaded, setLoaded] = useState(false);
 
@@ -30,7 +31,6 @@ const StaffDashboard = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          console.log(data);
           setAllProjects(data);
           setLoaded(true);
         })
@@ -64,13 +64,14 @@ const StaffDashboard = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          taskToAdd["Task_ID"] = data.Task_ID;
+          setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
     add();
-    setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
   };
 
   const projectNameChange = (event) => {
@@ -80,7 +81,7 @@ const StaffDashboard = () => {
   const taskChange = (event) => {
     setTask(event.target.value);
   };
-  const handlePause = (taskToPause) => {
+  const handlePause = (taskToPause, time) => {
     console.log(taskToPause);
     // takes time from the task and task id
     const pause = () => {
@@ -91,7 +92,7 @@ const StaffDashboard = () => {
           "Content-Type": "applicati`on/json",
         },
         body: JSON.stringify({
-          time: taskToPause.Time,
+          time: time,
           taskID: taskToPause.Task_ID,
         }),
       })
@@ -219,10 +220,11 @@ const StaffDashboard = () => {
             <button
               type="button"
               onClick={() => {
+                const today = new Date().toISOString().slice(0, 10);
                 const newTask = {
                   Emp_ID: Emp_ID, // Assuming 'name' holds the employee ID
                   Project: name, // Assuming 'task' holds the project name
-                  Date: "2018-09-08",
+                  Date: today,
                   Description: task, // Assuming 'task' holds the task description
                   Time: 0,
                   Active: false, // Assuming 'done' corresponds to 'Active'

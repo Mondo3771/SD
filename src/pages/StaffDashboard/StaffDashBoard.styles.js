@@ -22,7 +22,8 @@ const formatTime = (timeInSeconds) => {
 };
 
 const formatDate = (date) => {
-  console.log(typeof date);
+  const temp = date.split("T")[0];
+  return temp;
 };
 
 export const Wrapper = styled.div`
@@ -203,9 +204,13 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
       interval = setInterval(() => {
         setTime((prevCounter) => prevCounter + 1);
       }, 1000);
+
+      task.Time = time;
+      console.log(task.Time);
     } else {
       clearInterval(interval); // Stop the timer
       // setTime(0);
+      task.Time = time;
     }
 
     return () => clearInterval(interval); // Cleanup function to clear the interval when component unmounts or when clicked changes
@@ -214,8 +219,8 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
   return (
     <Sheet key={task.task_ID}>
       <p>{task.Description}</p>
-      <p>{typeof task.Date}</p>
-      <p>{!task.Active ? formatTime(time) : formatTime(task.Time)}</p>
+      <p>{formatDate(task.Date)}</p>
+      <p>{formatTime(time)}</p>
       <StopStartContainer>
         <button
           type="button"
