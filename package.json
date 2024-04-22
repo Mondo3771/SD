@@ -25,7 +25,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "CI=False react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --",
+    "coverage": "jest --collectCoverage --",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,7 +47,15 @@
       "last 1 safari version"
     ]
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-react": "^7.24.1",
+    "jest": "^27.5.1"
   }
 }
