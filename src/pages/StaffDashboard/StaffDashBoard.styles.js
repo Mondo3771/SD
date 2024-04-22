@@ -196,6 +196,7 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
   const [time, setTime] = useState(task.Time);
 
   const handleButtonClick = (prev) => !prev;
+  console.log(task);
 
   useEffect(() => {
     let interval;
@@ -217,7 +218,7 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
   }, [timerRunning, stop]);
 
   return (
-    <Sheet key={task.task_ID}>
+    <Sheet key={task.task_ID} onClick={() => console.log(task)}>
       <p>{task.Description}</p>
       <p>{formatDate(task.Date)}</p>
       <p>{formatTime(time)}</p>
