@@ -153,12 +153,6 @@ const LandingPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (Loaded) {
-  //     window.location.href = '/Fake'; // Navigate to the new page
-  //   }
-  // }, [Loaded]);
-
   return (
     <>
       <LandingPageContainer>
@@ -207,28 +201,8 @@ const LandingPage = () => {
                         onChange={depChange}
                       />
                     </InputContainer>
-                    {/* <InputContainer>
-                      <img src={require("./profile.png")}></img>
-                      <input type='text' placeholder='Employee Type' value={EmpType} onChange={typeChange} />
-                      <select
-                        value={EmpType}
-                        onChange={typeChange}
-                        placeholder="Employee type"
-                      >
-                        <option value="" disabled hidden>
-                          Select Employee Type
-                        </option>
-
-                        <option value="Staff">Staff</option>
-                        <option value="Manager">Manager</option>
-                        <option value="HR">HR</option>
-                      </select>
-                    </InputContainer> */}
+              
                     <Index child={childToParent} />
-
-                    {/* <button className="sign" onClick={sign}>
-                      Sign Up
-                    </button> */}
 
                     {Loaded ? (
                       <Link to="/FakeHomePage">
