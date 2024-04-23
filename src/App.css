@@ -1,0 +1,17 @@
+:root{
+
+    --darkest: #253439;
+    --darker: #456073;
+    --backgroundColor: #CADFDF;
+    --whiter:#ECF0EF;
+    --dark:#969FAE;
+    
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+::placeholder{
+    color: white;
+
+}
