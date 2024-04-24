@@ -6,6 +6,7 @@ import StaffDashboard, { StaffDashBoardLoader } from "./pages/StaffDashboard/Sta
 
 
 import LandingNew from "./pages/LandingNew/LandingNew";
+import HRdatagrid from "./components/HRdatagrid/HRdatagrid";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
     //   </Switch>
     // </BrowserRouter>
     // <HRHome/>
-    <LandingNew/>
+    // <LandingNew/>
+    <HRdatagrid/>
   );
 }
 
