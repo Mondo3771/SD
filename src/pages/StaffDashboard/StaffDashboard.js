@@ -237,7 +237,7 @@ const StaffDashboard = () => {
             </button>
           </CreateTaskContainer>
         )}
-
+        {console.log(uniqueProjects)}
         {Loaded &&
           uniqueProjects.map((name, index) => {
             return (
