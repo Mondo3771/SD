@@ -11,6 +11,9 @@ import {
   StopIcon,
 } from "@heroicons/react/24/outline";
 
+import { unmountComponentAtNode } from "react-dom";
+
+
 const formatTime = (timeInSeconds) => {
   const hours = Math.floor(timeInSeconds / 3600);
   const minutes = Math.floor((timeInSeconds % 3600) / 60);
@@ -194,6 +197,7 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
   const [timerRunning, setTimerRunning] = useState(false);
   const [stop, setStop] = useState(task.Active);
   const [time, setTime] = useState(task.Time);
+  // const [initial,setInitial] = useState(false)
 
   const handleButtonClick = (prev) => !prev;
   console.log(task);
@@ -210,18 +214,21 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
       console.log(task.Time);
     } else {
       clearInterval(interval); // Stop the timer
-      // setTime(0);
+      // setTime(0); 
       task.Time = time;
+      setTime(task.Time)
+     
     }
 
     return () => clearInterval(interval); // Cleanup function to clear the interval when component unmounts or when clicked changes
   }, [timerRunning, stop]);
 
+  
   return (
-    <Sheet key={task.task_ID} onClick={() => console.log(task)}>
+    <Sheet id={task.Task_ID.toString()} key={task.Task_ID} onClick={() => { console.log();console.log(task.Time); console.log(time)}}>
       <p>{task.Description}</p>
       <p>{formatDate(task.Date)}</p>
-      <p>{formatTime(time)}</p>
+      <p>{time !== task.Time ? formatTime(time) : formatTime(task.Time)}</p>
       <StopStartContainer>
         <button
           type="button"
@@ -268,7 +275,16 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
       <button
         type="button"
         className="removeButton"
-        onClick={() => onDelete(task)}
+        onClick={() =>  {
+          // const sheet = document.getElementById(task.Task_ID.toString());
+          // console.log('====================================');
+          // console.log(sheet);
+          // console.log('====================================');
+          // unmountComponentAtNode(sheet); 
+          onDelete(task)
+        }
+
+        }
       >
         <TrashIcon width={25} />
       </button>

@@ -21,10 +21,11 @@ import { useEffect } from "react";
 const StaffDashboard = () => {
   const location = useLocation();
   const data = location.state.params; // Remove this line
-  const User = data;
+
   const Emp_ID = data.Emp_ID;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
+
 
   useEffect(() => {
     const Projects = () => {
