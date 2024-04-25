@@ -2,11 +2,17 @@ import React, { useEffect, useState, useMemo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import Loader from "../Loader/Loader";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
-
-import { Spinner } from "./HRdatagrid.styles";
-const HRAccess = () => {
+const HRdatagrid = () => {
   const [rowId, setrowId] = useState(null);
+  const location = useLocation();
+
+  const user = location.state.params;
+
+ 
+  console.log(user);
 
   // const rows = [
   //   {
@@ -91,7 +97,12 @@ const HRAccess = () => {
         .then((response) => response.json())
         .then((employees) => {
           // setallEmployeedata(employees.data);
-          const employeesWithId = employees.data.map((employee, index) => ({
+          console.log(employees.data[1].Emp_ID)
+          console.log('hey')
+          console.log(user.Emp_ID)
+          const employeesWithId = employees.data
+          .filter(employee => employee.Emp_ID !== user.Emp_ID) 
+          .map((employee, index) => ({
             ...employee,
             id: index + 1, // Assigning a unique id to each row
           }));
@@ -276,22 +287,8 @@ const HRAccess = () => {
         </Box></>
       ):(
       
-      <Spinner>
-             <div class="center">
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-  <div class="wave"></div>
-</div>
-
-      </Spinner>
- 
+     
+ <Loader></Loader>
       
       )}
    
@@ -301,4 +298,4 @@ const HRAccess = () => {
   );
 };
 
-export default HRAccess;
+export default HRdatagrid;
