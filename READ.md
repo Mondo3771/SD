@@ -1,0 +1,1 @@
+[![Coverage Status](https://coveralls.io/repos/github/Mondo3771/SD/badge.svg)](https://coveralls.io/github/Mondo3771/SD)
