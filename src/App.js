@@ -18,9 +18,9 @@ function App() {
     //     <Route path="/HRhome" component={HRHome} />
     //   </Switch>
     // </BrowserRouter>
-    // <HRHome/>
+    // <HRHome />
     <LandingNew />
-    //<HRdatagrid/>
+    // <HRdatagrid />
   );
 }
 

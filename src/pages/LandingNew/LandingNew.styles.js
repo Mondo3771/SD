@@ -124,7 +124,7 @@ export const DropDown = styled.section`
   /* background-color: #8e79b6; */
   background-color: #514d76;
   width: 100vw;
-  height: 50vh;
+  height: 55vh;
   margin: 0;
 
   p {
@@ -146,16 +146,27 @@ export const Element = styled.article`
   display: flex;
   flex-direction: column;
   width: 40vw;
-  height: 50vh;
+  height: 55vh;
   border-right: 1px;
   border-color: white;
 `;
 
-export const features = styled.section`
+export const Features = styled.section`
   display: flex;
   flex-direction: column;
   gap: 2vw;
   justify-content: space-evenly;
-  width: 10vw;
+  width: 25vw;
   height: 50vh;
+`;
+
+export const About = styled.section`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding-left: 20px;
+  width: 85vw;
+  height: 30vh;
 `;
