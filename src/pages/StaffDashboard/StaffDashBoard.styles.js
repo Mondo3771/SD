@@ -123,7 +123,6 @@ export const CreateTaskContainer = styled.section`
   transition: all 500ms ease-in-out;
 
   button {
-    3
   }
 `;
 export const LabelHolder = styled.div`

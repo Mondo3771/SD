@@ -3,13 +3,15 @@ import { Route, BrowserRouter, Switch } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import HRHome from "./pages/HRHome/HRHome";
 
-import StaffDashboard, { StaffDashBoardLoader } from "./pages/StaffDashboard/StaffDashboard";
-
+import StaffDashboard, {
+  StaffDashBoardLoader,
+} from "./pages/StaffDashboard/StaffDashboard";
 
 import LandingNew from "./pages/LandingNew/LandingNew";
 
 function App() {
   return (
+
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LandingNew} />
@@ -20,6 +22,7 @@ function App() {
     // <HRHome/>
     // <LandingNew/>
     // <HRdatagrid/>
+
   );
 }
 
