@@ -14,12 +14,13 @@ function App() {
     // <BrowserRouter>
     //   <Switch>
     //     <Route exact path="/" component={LandingPage} />
-    //     <Route path="/DashBoard" component={StaffDashboard}  />
+    //     <Route path="/DashBoard" component={StaffDashboard} />
     //     <Route path="/HRhome" component={HRHome} />
     //   </Switch>
     // </BrowserRouter>
-    // <HRHome />
+    //<HRHome />
     <LandingNew />
+
     // <HRdatagrid />
   );
 }

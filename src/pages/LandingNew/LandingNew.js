@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "./Images/synergyLogo.PNG";
+import logo from "./Images/logo3.svg";
 import tasks from "./Images/icon2.PNG";
 import report from "./Images/reportingnew.PNG";
 import manage from "./Images/icon3.PNG";
@@ -25,7 +25,7 @@ const LandingNew = () => {
       <LandingPageBack>
         <Header>
           <section className="heading">
-            <img src={logo} width="45vw" height="45vh"></img>
+            <img src={logo} width="55vw" height="55vh"></img>
             <h1> SYNERGY</h1>
           </section>
 
