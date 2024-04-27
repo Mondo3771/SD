@@ -13,7 +13,8 @@ const Index = ({child}) => {
 <GoogleLogin
   onSuccess={credentialResponse => {
     const details=jwtDecode(credentialResponse.credential);
-    console.log(details);
+    // console.log(details);
+    console.log(credentialResponse);
     child(details);
     
   }}

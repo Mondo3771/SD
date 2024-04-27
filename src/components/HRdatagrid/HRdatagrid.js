@@ -12,7 +12,6 @@ const HRdatagrid = () => {
   const user = location.state.params;
 
  
-  console.log(user);
 
   // const rows = [
   //   {
@@ -97,9 +96,7 @@ const HRdatagrid = () => {
         .then((response) => response.json())
         .then((employees) => {
           // setallEmployeedata(employees.data);
-          console.log(employees.data[1].Emp_ID)
-          console.log('hey')
-          console.log(user.Emp_ID)
+  
           const employeesWithId = employees.data
           .filter(employee => employee.Emp_ID !== user.Emp_ID) 
           .map((employee, index) => ({
@@ -263,7 +260,6 @@ const HRdatagrid = () => {
           color: "Black",
         },
       }}
-      
       >
         
         <DataGrid
