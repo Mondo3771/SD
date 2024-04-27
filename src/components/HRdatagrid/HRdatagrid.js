@@ -237,64 +237,10 @@ const HRdatagrid = () => {
   ];
 
   return (
-    <>
-      {/* <h1> Manage Users</h1> */}
-
-// <<<<<<< LandingPageMakeover
-//       {Loaded ? (
-//         <>
-//           <Typography variant="h3" align="center" gutterBottom="false">
-//             Manage Users
-//           </Typography>
-
-//           <Box
-//             sx={{
-//               height: 300,
-//               width: "100%",
-//               padding: 8,
-//               color: "black",
-//               "& .headername": {
-//                 backgroundColor: "white",
-//                 color: "Black",
-//               },
-//             }}
-//           >
-//             <DataGrid
-//               rows={allEmployeedata}
-//               columns={columns}
-//               sx={{
-//                 height: 400,
-//                 width: "90%",
-//                 gap: 5,
-//                 textAlign: "center",
-//                 boxShadow: 2,
-//                 border: 2,
-//                 color: "white",
-//                 borderColor: "red",
-//                 background: "linear-gradient(-45deg, purple, black)",
-//                 fontFamily: "sans-serif",
-//               }}
-//             />
-//           </Box>
-//         </>
-//       ) : (
-//         <Spinner>
-//           <div class="center">
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//             <div class="wave"></div>
-//           </div>
-//         </Spinner>
-// =======
+    
 <>
-{/* <h1> Manage Users</h1> */}
+
+
   
      {Loaded?
       ( <>
@@ -337,12 +283,12 @@ const HRdatagrid = () => {
      
  <Loader></Loader>
       
-// >>>>>>> UImakeOver
       )}
-    </>
-  );
-};
+
+</>
+
+  )
+}
 
 
 export default HRdatagrid;
-// >>>>>>> UImakeOver

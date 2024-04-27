@@ -114,7 +114,6 @@ const LandingNew = () => {
 
   return (
     <>
-// <<<<<<< LandingPageMakeover
       <LandingPageBack>
         <Header>
           <section className="heading">
@@ -210,34 +209,7 @@ const LandingNew = () => {
         </section>
         <Index child={childToParent} />
       </LandingPageBack>
-// =======
-//       <Header>
-//         <section className='heading'>
-//           <img src='#'></img>
-//           <h1> SYNERGY</h1>
-//         </section>
-//         <section className='description'>
-//           <p onMouseEnter={() => setIsDropdownOpen(true)} onMouseLeave={() => setIsDropdownOpen(false)}>
-//             Features
-//           </p>
-//           <p onMouseEnter={() => setIsAboutOpen(true)} onMouseLeave={() => setIsAboutOpen(false)}>
-//             About
-//           </p>
-//         </section>
-//       </Header>
-//       {loading && <Loader />}
-//       {isDropdownOpen && (
-//         <DropDown>
-//           <Element>
-//             <img src='#'></img>
-//             <p>jnfkjenfl</p>
-//           </Element>
-//           {/* Add more Elements as needed */}
-//         </DropDown>
-//       )}
-//       {isAboutOpen && <DropDown>Hello</DropDown>}
-//       <Index child={childToParent} />
-// >>>>>>> UImakeOver
+
     </>
   );
 };
