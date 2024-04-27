@@ -4,6 +4,7 @@ import React, { useState } from "react";
 //icons
 import { ClockIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
+import logo from "./Images/logo3.svg";
 // StaffDashboard styles
 import {
   Card,
@@ -162,7 +163,7 @@ const StaffDashboard = () => {
     <Wrapper>
       <Header>
         <section className="logo">
-          <img className="logoPic"></img>
+          <img src={logo} width="55vw" height="55vh"></img>
           <h1>
             <a href="/">SYNERGY</a>
           </h1>
@@ -182,6 +183,9 @@ const StaffDashboard = () => {
         </nav>
         <ArrowRightIcon width={24} />
       </Header>
+      <section className="titlepage">
+        <h2>Task Tracker</h2>
+      </section>
 
       <Card>
         {!createTask ? (
@@ -200,7 +204,7 @@ const StaffDashboard = () => {
               <label>Project Name</label>
               <input
                 type="text"
-                placeholder="project name"
+                placeholder="Project Name"
                 value={name}
                 onChange={projectNameChange}
               ></input>
@@ -209,7 +213,7 @@ const StaffDashboard = () => {
               <label>Task Name</label>
               <input
                 type="text"
-                placeholder="task name"
+                placeholder="Task Name"
                 value={task}
                 onChange={taskChange}
               ></input>
@@ -229,7 +233,7 @@ const StaffDashboard = () => {
                 return handleAdd(newTask);
               }}
             >
-              Add task{" "}
+              Add Task{" "}
             </button>
           </CreateTaskContainer>
         )}
@@ -238,7 +242,7 @@ const StaffDashboard = () => {
           uniqueProjects.map((name, index) => {
             return (
               <ProjectHolder key={index}>
-                <h2>{name}</h2>
+                <h3>{name}</h3>
                 {AllProjects.filter((project) => project.Project === name).map(
                   (item, i) => {
                     return (
