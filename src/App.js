@@ -19,8 +19,8 @@ function App() {
     //   </Switch>
     // </BrowserRouter>
     //<HRHome />
-    <LandingNew />
-
+    //<LandingNew />
+    <StaffDashboard />
     // <HRdatagrid />
   );
 }
