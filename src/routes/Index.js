@@ -14,6 +14,7 @@ const Index = ({child}) => {
   onSuccess={credentialResponse => {
     const details=jwtDecode(credentialResponse.credential);
     // console.log(details);
+    console.log(credentialResponse);
     child(details);
     
   }}

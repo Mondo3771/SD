@@ -2,10 +2,18 @@ import React, { useEffect, useState, useMemo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
+import Loader from "../Loader/Loader";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 import { Spinner } from "./HRdatagrid.styles";
+
 const HRdatagrid = () => {
   const [rowId, setrowId] = useState(null);
+  const location = useLocation();
+
+  const user = location.state.params;
+
+ 
 
   const rows = [
     {
@@ -89,7 +97,10 @@ const HRdatagrid = () => {
         .then((response) => response.json())
         .then((employees) => {
           // setallEmployeedata(employees.data);
-          const employeesWithId = employees.data.map((employee, index) => ({
+  
+          const employeesWithId = employees.data
+          .filter(employee => employee.Emp_ID !== user.Emp_ID) 
+          .map((employee, index) => ({
             ...employee,
             id: index + 1, // Assigning a unique id to each row
           }));
@@ -229,60 +240,109 @@ const HRdatagrid = () => {
     <>
       {/* <h1> Manage Users</h1> */}
 
-      {Loaded ? (
-        <>
-          <Typography variant="h3" align="center" gutterBottom="false">
-            Manage Users
-          </Typography>
+// <<<<<<< LandingPageMakeover
+//       {Loaded ? (
+//         <>
+//           <Typography variant="h3" align="center" gutterBottom="false">
+//             Manage Users
+//           </Typography>
 
-          <Box
-            sx={{
-              height: 300,
-              width: "100%",
-              padding: 8,
-              color: "black",
-              "& .headername": {
-                backgroundColor: "white",
-                color: "Black",
-              },
-            }}
-          >
-            <DataGrid
-              rows={allEmployeedata}
-              columns={columns}
-              sx={{
-                height: 400,
-                width: "90%",
-                gap: 5,
-                textAlign: "center",
-                boxShadow: 2,
-                border: 2,
-                color: "white",
-                borderColor: "red",
-                background: "linear-gradient(-45deg, purple, black)",
-                fontFamily: "sans-serif",
-              }}
-            />
-          </Box>
-        </>
-      ) : (
-        <Spinner>
-          <div class="center">
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
-          </div>
-        </Spinner>
+//           <Box
+//             sx={{
+//               height: 300,
+//               width: "100%",
+//               padding: 8,
+//               color: "black",
+//               "& .headername": {
+//                 backgroundColor: "white",
+//                 color: "Black",
+//               },
+//             }}
+//           >
+//             <DataGrid
+//               rows={allEmployeedata}
+//               columns={columns}
+//               sx={{
+//                 height: 400,
+//                 width: "90%",
+//                 gap: 5,
+//                 textAlign: "center",
+//                 boxShadow: 2,
+//                 border: 2,
+//                 color: "white",
+//                 borderColor: "red",
+//                 background: "linear-gradient(-45deg, purple, black)",
+//                 fontFamily: "sans-serif",
+//               }}
+//             />
+//           </Box>
+//         </>
+//       ) : (
+//         <Spinner>
+//           <div class="center">
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//             <div class="wave"></div>
+//           </div>
+//         </Spinner>
+// =======
+<>
+{/* <h1> Manage Users</h1> */}
+  
+     {Loaded?
+      ( <>
+        <Typography variant="h3" align="center" gutterBottom='false'>Manage Users</Typography>
+
+      <Box
+      sx={{
+        height: 300,
+        width: "100%",
+        padding: 8,
+        color:'black',
+        "& .headername": {
+          backgroundColor: "white",
+          color: "Black",
+        },
+      }}
+      >
+        
+        <DataGrid
+          rows={allEmployeedata}
+     
+      
+          columns={columns}
+          sx={{
+            height: 400,
+            width: "90%",
+            gap: 5,
+            textAlign: "center",
+            boxShadow: 2,
+            border: 2,
+            color:"white",
+            borderColor: "red",
+            background: "linear-gradient(-45deg, purple, black)",
+            fontFamily: "sans-serif",
+          }}
+        />
+        </Box></>
+      ):(
+      
+     
+ <Loader></Loader>
+      
+// >>>>>>> UImakeOver
       )}
     </>
   );
 };
 
+
 export default HRdatagrid;
+// >>>>>>> UImakeOver
