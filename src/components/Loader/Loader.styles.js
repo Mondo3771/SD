@@ -10,7 +10,7 @@ export const Spinner = styled.div`
 .wave {
   width: 5px;
   height: 100px;
-  background: linear-gradient(45deg, purple, black);
+  background: linear-gradient(45deg, var(--darkest), white);
   margin: 10px;
   animation: wave 1s linear infinite;
   border-radius: 20px;

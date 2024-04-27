@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import back from "./Images/Bckgrd.svg";
+import lpBack from "./Images/LPBack.svg"
 
 export const LandingPageBack = styled.section`
   //background-image: ;
   /* background-size: cover; /* This ensures the image covers the entire background */
   /* width: 100%;
   height: 100%; */
-  background-image: url(${back});
+  background-image: url(${lpBack});
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -24,7 +25,7 @@ export const LandingPageBack = styled.section`
   }
 
   h2 {
-    font-size: 5rem;
+    font-size: 4rem;
     color: #bdbdbd;
     margin: auto;
     text-align: center;
@@ -33,7 +34,14 @@ export const LandingPageBack = styled.section`
 
   .text {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    font-size: 4rem;
+    color: #bdbdbd;
+    gap: 3vh;
+    margin: auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
     align-items: center;
     text-align: center;
     width: 80vw;
@@ -43,13 +51,6 @@ export const LandingPageBack = styled.section`
   }
 `;
 
-// export const tsec = styled.section`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   text-align: center;
-// `;
-
 export const Header = styled.header`
   background-color: transparent;
   width: 100vw;
@@ -58,20 +59,46 @@ export const Header = styled.header`
   padding: 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-
+  justify-content: space-around;
   color: white;
-
-  .heading,
-  .description,
-  img {
+  .heading{
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    h1{
+      font-size:x-large;
+      font-style: oblique;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    }
+    img{
+      width: 100px;
+      height: 40px;
+    }
+  }
+
+  .description{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: large;
+    gap:4vh;
+    font-style: oblique;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+
+  }
+
+  
+  
+
+  /* .heading, */
+  img {
     margin: 15px;
     padding: 0;
     flex-direction: row;
     align-items: center;
     gap: 4vh;
-    font-size: large;
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
@@ -86,6 +113,7 @@ export const Header = styled.header`
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     text-shadow: white;
   }
+  
 `;
 
 export const footer = styled.footer`

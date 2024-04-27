@@ -18,16 +18,11 @@ import React,{useState,useEffect} from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Index from '../../routes/Index';
 
-// import { Header,DropDown,Element } from './LandingNew.styles'
-// >>>>>>> UImakeOver
 
 
 import Loader from '../../components/Loader/Loader';
 const LandingNew = () => {
-// <<<<<<< LandingPageMakeover
-//   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-//   const [isAboutOpen, setIsAboutOpen] = useState(false);
-// =======
+
   const history = useHistory();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -205,9 +200,10 @@ const LandingNew = () => {
           </DropDown>
         )}
         <section className="text">
-          <h2>Connecting Teams, Boosting Productivity Together!</h2>
+          Connecting Teams, Boosting Productivity Together!
+          <Index child={childToParent} />
+
         </section>
-        <Index child={childToParent} />
       </LandingPageBack>
 
     </>
