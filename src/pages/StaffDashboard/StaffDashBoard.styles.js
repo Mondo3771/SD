@@ -114,7 +114,7 @@ export const Card = styled.article`
   border-radius: 50px;
   box-shadow: 10px;
   width: 80vw;
-  height: 80vh;
+  max-height: 80vh;
   color: var(--white);
   flex: 1;
   padding: 40px;
