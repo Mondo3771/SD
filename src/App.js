@@ -11,18 +11,16 @@ import LandingNew from "./pages/LandingNew/LandingNew";
 
 function App() {
   return (
-
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LandingNew} />
-        <Route path="/DashBoard" component={StaffDashboard}  />
+        <Route path="/DashBoard" component={StaffDashboard} />
         <Route path="/HRhome" component={HRHome} />
       </Switch>
     </BrowserRouter>
-    // <HRHome/>
-    // <LandingNew/>
+    //<HRHome />
+    // // <LandingNew/>
     // <HRdatagrid/>
-
   );
 }
 

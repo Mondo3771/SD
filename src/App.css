@@ -2,9 +2,10 @@
 
     --darkest: #13072e;
     --darker: #16144e;
-    --backgroundColor: #CADFDF;
-    --whiter:#ECF0EF;
+    --backgroundColor: #13072e;
+    --whiter:#514D74;
     --dark:#3f2182;
+    --white: #bdbdbd;
     
 }
 body{
