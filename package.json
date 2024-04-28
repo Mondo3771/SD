@@ -13,7 +13,7 @@
     "jwt-decode": "^4.0.0",
     "mssql": "^10.0.2",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "react-headroom": "^3.2.1",
     "react-router": "^6.22.3",
@@ -24,15 +24,20 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": " react-scripts build",
-    "test": "jest --coverage",
+    "build": "CI=False react-scripts build",
+    "test": "jest ",
+    "coverage": "jest --coverage",
     "coveralls": "jest --coverage && type .\\coverage\\lcov-report\\lcov.info | coveralls",
     "eject": "react-scripts eject"
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "coverageReporters": [
       "lcov"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/public/__mocks__/fildMock.js"
+    }
   },
   "eslintConfig": {
     "extends": [
