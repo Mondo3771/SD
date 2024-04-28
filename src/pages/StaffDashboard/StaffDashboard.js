@@ -24,6 +24,7 @@ const StaffDashboard = () => {
   const User = data;
   const Emp_ID = data.Emp_ID;
   const [Loaded, setLoaded] = useState(false);
+  const [AllProjects, setAllProjects] = useState([]);
 
   useEffect(() => {
     const Projects = () => {
@@ -44,8 +45,6 @@ const StaffDashboard = () => {
     };
     Projects();
   }, []);
-
-  const [AllProjects, setAllProjects] = useState(null);
 
   const [task, setTask] = useState("");
   const [name, setName] = useState("");
@@ -143,9 +142,11 @@ const StaffDashboard = () => {
         });
     };
     deleteTask();
+    // console.log(AllProjects);
     setAllProjects((prevTasks) =>
       prevTasks.filter((task) => task !== taskToDelete)
     );
+    // console.log(AllProjects);
   };
   let uniqueProjects = [];
   if (Loaded) {
@@ -233,7 +234,7 @@ const StaffDashboard = () => {
             </button>
           </CreateTaskContainer>
         )}
-
+        {console.log(uniqueProjects)}
         {Loaded &&
           uniqueProjects.map((name, index) => {
             return (
