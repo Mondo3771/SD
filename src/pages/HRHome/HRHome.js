@@ -44,15 +44,7 @@ const HRHome = () => {
           <h2>Manage Users</h2>
         </section>
         <Card>
-          <p>Hello</p>
-          <p>Hello</p>
-          <p>Hello</p>
-          <p>Hello</p>
-          <p>Hello</p>
-          <p>Hello</p>
-          <p>Hello</p>
-          <p>Hello</p>
-          <p>Hello</p>
+         
           <HRdatagrid></HRdatagrid>
         </Card>
       </Wrapper>

@@ -7,7 +7,7 @@ export const LandingPageBack = styled.section`
   /* background-size: cover; /* This ensures the image covers the entire background */
   /* width: 100%;
   height: 100%; */
-  background-image: url(${lpBack});
+  background-image: url(${back});
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -32,11 +32,14 @@ export const LandingPageBack = styled.section`
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 
-  .text {
+  .open{
+    padding-top:0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 4rem;
+    font-size: 3.5rem;
+  
+    font-weight: bold;
     color: #bdbdbd;
     gap: 3vh;
     margin: auto;
@@ -46,8 +49,30 @@ export const LandingPageBack = styled.section`
     text-align: center;
     width: 80vw;
     height: 100vh;
+    max-height:100vh;
     text-align: center;
+
+  }
+
+  .text {
+    padding-top:15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 5.5rem;
+    /* font-style: bold; */
+    font-weight: bold;
+    color: #bdbdbd;
+    gap: 3vh;
+    margin: auto;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    align-items: center;
+    text-align: center;
+    width: 80vw;
+    height: 100vh;
+    max-height:100vh;
+    text-align: center;
   }
 `;
 
@@ -67,7 +92,6 @@ export const Header = styled.header`
     align-items: center;
     h1{
       font-size:x-large;
-      font-style: oblique;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
 
     }
@@ -83,7 +107,6 @@ export const Header = styled.header`
     align-items: center;
     font-size: large;
     gap:4vh;
-    font-style: oblique;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 
@@ -108,9 +131,10 @@ export const Header = styled.header`
     cursor: pointer;
     margin: 0;
     padding: 0;
+    text-align: justify;
   }
   p:hover {
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    color: pink;
     text-shadow: white;
   }
   
@@ -148,11 +172,9 @@ export const DropDown = styled.section`
     }
   }
 
-  /* background-color: #7b5eb4; */
-  /* background-color: #8e79b6; */
   background-color: #514d76;
   width: 100vw;
-  height: 55vh;
+  height: fit-content;
   margin: 0;
 
   p {
@@ -167,6 +189,9 @@ export const DropDown = styled.section`
 
   p:hover {
     background-color: white;
+  }
+  img{
+    padding-top:3vh ;
   }
 `;
 
@@ -183,9 +208,22 @@ export const Features = styled.section`
   display: flex;
   flex-direction: column;
   gap: 2vw;
+  text-align: center;
   justify-content: space-evenly;
   width: 25vw;
   height: 50vh;
+  border-right: solid white 3px;
+P{
+  padding-top: 0;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding-left: 5vh;
+  padding-right: 5vh;
+}
+img{
+  height: 30vh;
+  }
 `;
 
 export const About = styled.section`
@@ -197,4 +235,7 @@ export const About = styled.section`
   padding-left: 20px;
   width: 85vw;
   height: 30vh;
+  p{
+    color: white;
+  }
 `;

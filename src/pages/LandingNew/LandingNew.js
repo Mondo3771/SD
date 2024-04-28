@@ -199,11 +199,25 @@ const LandingNew = () => {
             </About>
           </DropDown>
         )}
-        <section className="text">
-          Connecting Teams, Boosting Productivity Together!
-          <Index child={childToParent} />
+        {isDropdownOpen|| isAboutOpen?
+        <section className="open">
+        Connecting Teams, Boosting Productivity Together!
+        <Index child={childToParent} />
 
-        </section>
+      </section>
+        
+        
+        :
+        <section className="text">
+        Connecting Teams, Boosting Productivity Together!
+        <Index child={childToParent} />
+
+      </section>
+
+        
+      }
+      
+       
       </LandingPageBack>
 
     </>

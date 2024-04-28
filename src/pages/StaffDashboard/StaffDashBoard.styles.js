@@ -9,6 +9,7 @@ import {
   PauseIcon,
   TrashIcon,
   StopIcon,
+  PlusIcon
 } from "@heroicons/react/24/outline";
 
 const formatTime = (timeInSeconds) => {
@@ -30,6 +31,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
   box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
   background-image: url(${background});
   //background: var(--darkest);
   background-size: cover;
@@ -120,7 +123,7 @@ export const Card = styled.article`
   padding: 40px;
   margin: 0 auto 20px auto;
   display: flex;
-  overflow: auto;
+  overflow-y: auto;
   flex-direction: column;
   //background: linear-gradient(65deg, var(--darkest), #3f2182);
   //background: linear-gradient(120deg, #16154e, var(--dark));
@@ -169,25 +172,29 @@ export const Card = styled.article`
 
 export const CreateTaskContainer = styled.section`
   display: flex;
+  flex-direction: row;
   font-family: inherit;
   //border: 1px solid black;
   padding: 5px;
   gap: 1.5rem;
   transition: all 500ms ease-in-out;
   background: transparent;
+  align-items: center;
 
   button {
     height: 6vh;
-    width: 7.5vw;
+    width: fit-content;
     font-family: inherit;
-    border-radius: 20px;
+    border-radius: 100%;
     background-color: var(--white);
     color: var(--darkest);
     font-size: 1.1rem;
+
   }
 
   input {
     height: 6vh;
+    font-size: 1.1rem;
     width: 15vw;
     border-radius: 20px;
     font-family: inherit;
@@ -196,9 +203,10 @@ export const CreateTaskContainer = styled.section`
   }
   ::placeholder {
     font-family: inherit;
-    color: var(--darkest);
+    color: rgba(0, 0, 0, 0.2);
+
     font-size: 1.1rem;
-    text-align: center;
+    text-align: left;
     align-items: center;
   }
 
@@ -215,6 +223,8 @@ export const LabelHolder = styled.div`
   flex-direction: row;
   gap: 1rem;
   margin: 0 0.5rem;
+  
+
 `;
 
 export const Sheet = styled.div`

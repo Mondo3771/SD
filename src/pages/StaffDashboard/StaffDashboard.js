@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 //icons
-import { ClockIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { ClockIcon, ArrowRightIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 import logo from "./Images/logo3.svg";
 // StaffDashboard styles
@@ -201,7 +201,7 @@ const StaffDashboard = () => {
         ) : (
           <CreateTaskContainer>
             <LabelHolder>
-              <label>Project Name</label>
+              {/* <label>Project Name</label> */}
               <input
                 type="text"
                 placeholder="Project Name"
@@ -210,7 +210,7 @@ const StaffDashboard = () => {
               ></input>
             </LabelHolder>
             <LabelHolder>
-              <label>Task Name</label>
+              {/* <label>Task Name</label> */}
               <input
                 type="text"
                 placeholder="Task Name"
@@ -233,7 +233,8 @@ const StaffDashboard = () => {
                 return handleAdd(newTask);
               }}
             >
-              Add Task{" "}
+              {/* Add Task{" "} */}
+              <PlusIcon width={30}></PlusIcon>
             </button>
           </CreateTaskContainer>
         )}
