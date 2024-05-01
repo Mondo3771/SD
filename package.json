@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@azure/static-web-apps-cli": "^1.1.7",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
