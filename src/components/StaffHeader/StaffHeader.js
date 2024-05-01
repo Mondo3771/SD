@@ -8,9 +8,14 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 
 
 const StaffHeader = () => {
-const history=useHistory();
+    const history=useHistory();
     const Lunch=()=>{
         history.push('/Lunch');
+    }
+    const Home=()=>{
+      history.push('/DashBoard');
+
+
     }
   return (
     <Header>
@@ -23,7 +28,7 @@ const history=useHistory();
     <nav className="links">
       <ul>
         <li>
-          <a href="#">Home</a>
+          <a onClick={Home}>Home</a>
         </li>
         <li>
           <a href="#">Reports</a>
