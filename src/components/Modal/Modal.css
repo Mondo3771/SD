@@ -1,0 +1,124 @@
+.modalBackground {
+  width: 100rem;
+  height: 100rem;
+  position:fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background-color: #ddd;
+  opacity: 0.8;
+}
+
+.modalContainer {
+  width: 30rem;
+  height: 20rem;
+  border-radius: 12px;
+  background-color: red;
+  opacity: unset;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  z-index: 1002;
+}
+
+.modalContainer .title {
+  display: inline-block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.titleCloseBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.titleCloseBtn button {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.modalContainer .body {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.modalContainer .footer {
+  flex: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer .footer button {
+  width: 150px;
+  height: 45px;
+  margin: 10px;
+  border: none;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#cancelBtn {
+  background-color: crimson;
+}
+
+/* For small devices (e.g., phones) */
+@media (max-width: 576px) {
+  .modalContainer {
+    width: 10%;
+    height: 10%;
+    padding: 20px;
+  }
+
+  .modalContainer h2 {
+    font-size: 1.5rem;
+  }
+
+  .modalContainer p {
+    font-size: 1rem;
+  }
+
+  .modalContainer .footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modalContainer .footer button {
+    width: 80%;
+    margin: 10px 0;
+  }
+}
+
+/* For medium devices (e.g., tablets) */
+@media (min-width: 577px) and (max-width: 992px) {
+  .modalContainer {
+    /* width: 70%; */
+    height: 50%;
+  }
+
+  .modalContainer h2 {
+    font-size: 2rem;
+  }
+
+  .modalContainer p {
+    font-size: 1.2rem;
+  }
+
+  .modalContainer .footer button {
+    width: 50%;
+  }
+}
+
+
+
