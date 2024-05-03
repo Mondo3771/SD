@@ -159,9 +159,9 @@ const HRMeals = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        Name_of_Meal: ,
-        Availability: ,
-        Description: ,
+        Name_of_Meal: meal.Name,
+        Availability: meal.Available ,
+        Description: meal.Description,
       }),
     })
       .then((response) => {})
