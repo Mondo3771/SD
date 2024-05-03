@@ -1,10 +1,11 @@
 // <<<<<<< LandingPageMakeover
 // import React, { useState } from "react";
-import logo from "./Images/logo3.svg";
+import logo from "../../Images/logo3.svg";
 import tasks from "./Images/icon2.PNG";
 import report from "./Images/reportingnew.PNG";
 import manage from "./Images/icon3.PNG";
 import book from "./Images/icon4.PNG";
+
 import {
   Header,
   DropDown,

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import background from "./Images/Bckgrd.svg";
+import background from "../../Images/Bckgrd.svg";
 //react
 import React, { useEffect, useState } from "react";
 

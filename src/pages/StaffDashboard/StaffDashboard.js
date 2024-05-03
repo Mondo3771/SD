@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 //icons
 import { ClockIcon, ArrowRightIcon, PlusIcon } from "@heroicons/react/24/outline";
 
-import logo from "./Images/logo3.svg";
 // StaffDashboard styles
 import {
   Card,
@@ -20,6 +19,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import StaffHeader from "../../components/StaffHeader/StaffHeader";
+
 
 const StaffDashboard = () => {
   const history = useHistory();
