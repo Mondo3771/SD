@@ -49,10 +49,11 @@ export const Wrapper = styled.div`
 
   .titlepage {
     display: flex;
-    flex-direction: start;
+    flex-direction: left;
     text-align: left;
-    padding-left: 10vw;
-    width: 80vw;
+    padding-left: 4vw;
+    width: 40vw;
+    height: 5vh;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--white);
     font-size: 1.5rem;
@@ -60,47 +61,63 @@ export const Wrapper = styled.div`
 
   .container {
     display: flex;
+    width: 95vw;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 2vw;
   }
 `;
 
 export const Card = styled.article`
   display: grid;
-  gap: 50px;
+  gap: 5vw;
   // row-gap: 50px;
   // column-gap: 50px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
-  flex: 0.6;
+  flex: 0.7;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 50px;
+  border-radius: 20px;
   max-height: 50vh;
   color: var(--white);
-  padding: 40px;
-  margin: 0 20px;
+  align-items: center;
+  padding: 30px;
+  //margin: 0 20px;
   overflow-y: auto;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  max-width: 60vw;
+  //background-color: #31174b;//dark purple
+  background-color: var(--white);
+  /* backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); */
   border: 1px solid white;
 `;
 
 export const CreateMealCard = styled.div`
   display: flex;
   flex-direction: column;
+  //width: 12vw;
   gap: 0.5rem;
-  color: var(--white);
-  flex: 0.4;
+  width: 30vw;
+  height: 53vh;
+  color: var(--dark);
+  flex: 0.3;
   margin: 0 20px;
   border: 1px solid white;
   padding: 20px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 50px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  background-color: var(--white);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  /* backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); */
   overflow-y: auto;
 
   .input {
-    width: 200px;
+    width: 20vw;
+    height: 3vh;
+    border-radius: 10px;
   }
 
   .available {
@@ -109,31 +126,60 @@ export const CreateMealCard = styled.div`
   }
 
   button {
-    width: 100px;
-    height: 50px;
-    border-radius: 40px;
+    width: 7vw;
+    height: 5vh;
+    border-radius: 10px;
+    background-color: var(--dark);
+    color: var(--white);
+    font-weight: bold;
+  }
+
+  p {
+    font-weight: bold;
+  }
+
+  label {
+    font-weight: bold;
   }
 `;
 
 export const MealCard = styled.article`
   border: 1px solid white;
   display: flex;
-  width: 250px;
+  /* width: 20vw; */
   flex-direction: column;
+  background-color: var(--dark);
+  border-radius: 10px;
+  padding: 2vw;
 `;
 
 export const ShowMealCard = styled.article`
   display: flex;
+  width: 40vw;
+  height: 48vh;
   flex-direction: column;
   gap: 0.5rem;
   color: var(--white);
-  flex: 0.4;
+  flex: 0.2;
   margin: 0 20px;
   border: 1px solid white;
-  padding: 20px;
+  padding: 40px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 50px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  background-color: var(--dark);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
   overflow-y: auto;
+
+  button {
+    border-radius: 10px;
+    width: 7vw;
+    height: 4vh;
+    background-color: var(--white);
+    color: var(--dark);
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
 `;

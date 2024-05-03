@@ -57,7 +57,7 @@ const HRMeals = () => {
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
-  const [changed,setChanged] = useState(false)
+  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
     // fetch all meals from database
@@ -105,16 +105,13 @@ const HRMeals = () => {
   };
 
   const changeAvailableViewMeal = (event) => {
-    setViewMeal((meal) => (
-      {
-        MealId: meal.MealId,
-        Name: meal.Name,
-        Description: meal.Description,
-        Available: event.target.checked,
-      }
-    ))
-
-  }
+    setViewMeal((meal) => ({
+      MealId: meal.MealId,
+      Name: meal.Name,
+      Description: meal.Description,
+      Available: event.target.checked,
+    }));
+  };
 
   return (
     <>
@@ -194,16 +191,17 @@ const HRMeals = () => {
             ) : (
               <ShowMealCard>
                 <h3>{viewMeal.Name}</h3>
-                <label>Description: </label>
+                <label>Description:</label>
                 <p>{viewMeal.Description}</p>
                 <section>
-                <p>{viewMeal.Available ? "Available" : "Not Available"}</p>
-                <input type="checkbox" checked={viewMeal.Available}
-                onChange={changeAvailableViewMeal}
-                ></input>
+                  <p>{viewMeal.Available ? "Available" : "Not Available"}</p>
+                  <input
+                    type="checkbox"
+                    checked={viewMeal.Available}
+                    onChange={changeAvailableViewMeal}
+                  ></input>
                 </section>
-                {changed && 
-                <button> Save Changes</button>}
+                {changed && <button> Save Changes</button>}
                 <button onClick={() => setViewMealState(false)}>Back</button>
               </ShowMealCard>
             )}

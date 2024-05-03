@@ -10,17 +10,18 @@ import HRMeals from "./pages/HRMeals/HRMeals";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={LandingNew} index/>
-        <Route path="/DashBoard" component={StaffDashboard} />
-        <Route path="/HRhome" component={HRHome} />
-        <Route path="/HRMeals" component={HRMeals} />
-      </Switch>
-    </BrowserRouter>
+    // <BrowserRouter>
+    //   <Switch>
+    //     <Route exact path="/" component={LandingNew} index/>
+    //     <Route path="/DashBoard" component={StaffDashboard} />
+    //     <Route path="/HRhome" component={HRHome} />
+    //     <Route path="/HRMeals" component={HRMeals} />
+    //   </Switch>
+    // </BrowserRouter>
     //<HRHome />
     // // <LandingNew/>
     // <HRdatagrid/>
+    <HRMeals></HRMeals>
   );
 }
 
