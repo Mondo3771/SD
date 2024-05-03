@@ -19,7 +19,7 @@ function Modal({ setOpenModal, data }) {
             X
           </button>
         </div>
-        <h2>{data.Meal}</h2>
+        <h2>{data.Name_of_Meal}</h2>
         <p>Description: {data.Description}</p>
         {/* <p>Available: {data.Available ? "Yes" : "No"}</p> */}
         <section className="section">

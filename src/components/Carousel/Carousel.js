@@ -79,7 +79,7 @@ const mock = [
 ];
 
 const Carousel = () => {
-
+  const [Meals,setMeals]=useState(null)
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false);
@@ -91,9 +91,16 @@ const Carousel = () => {
   useEffect(() => {
     const fetchData = () => {
 
-      //fetch
+      fetch("/api/Meals")
+      .then((response) => response.json())
+      .then((meals) => {
+        setMeals(meals.data);
 
-      setLoaded(true);
+    
+
+        setLoaded(true);
+      });
+      // setLoaded(true);
       
     };
     fetchData();
@@ -107,7 +114,10 @@ const Carousel = () => {
         <Modal setOpenModal={setModalOpen} data={selectedBooking} />
       )}
 
+
       <Wrapper>
+      {Loaded? 
+
         <Main>
           <Left>
             <section className="text">
@@ -140,21 +150,23 @@ const Carousel = () => {
                 modifier: 2.5,
               }}
               pagination={{ el: ".swiper-pagination", clickable: true }}
-              navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-                clickable: true,
-              }}
+              navigation
+              // ={{
+              //   nextEl: '.swiper-button-next',
+              //   prevEl: '.swiper-button-prev',
+              //   clickable: true,
+              // }}
+  
               className="swiper_container"
             >
-              {mock.map((booking, index) => (
+              {Meals.map((booking, index) => (
                 <SwiperSlide key={index}>
                   <Card onClick={() => Book(booking)}>
                     <section className="textwrap">
-                      <h1>{booking.Meal}</h1>
+                      <h1>{booking.Name_of_Meal}</h1>
                       <p>Description: {booking.Description}</p>
-                      <p>Allergens: {booking.Allergens}</p>
-                      <p>Date: {booking.Date}</p>
+                      {/* <p>Allergens: {booking.Allergens}</p> */}
+                      {/* <p>Date: {booking.Date}</p> */}
                       {/* <button>Order</button> */}
                     </section>
                   </Card>
@@ -173,10 +185,11 @@ const Carousel = () => {
           </Swrapper>
         </Main>
 
-        {/* <section className='Right'> */}
+ 
+        :<Loader></Loader>}
 
-        {/* </section> */}
       </Wrapper>
+
 
       </>
 

@@ -149,6 +149,23 @@ export const Wrapper = styled.section`
       transform: translateX(-20%) !important;
     }
   }
+  .swiper-container .swiper-button-next,
+.swiper-container .swiper-button-prev {
+  background-color: #ffffff; /* Background color */
+  color: #333333; /* Text color */
+  border-radius: 50%; /* Make buttons circular */
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+  font-size: 24px; /* Adjust font size */
+  line-height: 40px; /* Center text vertically */
+}
+
+/* Example CSS for hover effect on navigation buttons */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: #dddddd; /* Change background color on hover */
+  color: #555555; /* Change text color on hover */
+}
 
   .slider-controler .slider-arrow {
     background: var(--white);
@@ -288,6 +305,9 @@ export const Left = styled.section`
 
 export const Main = styled.section`
   background: var(--white);
+  /* background-color: transparent; */
+  /* backdrop-filter:blur(10px);
+  -webkit-backdrop-filter: blur(10px); */
   border-radius: 30px;
   height: 80vh;
   width: 80vw;

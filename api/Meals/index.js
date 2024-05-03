@@ -6,8 +6,7 @@ module.exports = async function (context, req) {
   const data = req.body;
   switch (req.method) {
     case "GET":
-      console.log(req.body.Meal_ID);
-      if (req.body.Emp_ID_ID === undefined || req.body.Emp_ID === null) {
+      if (req.query.Emp_ID === undefined || req.query.Emp_ID === null) {
         try {
           const resultSet = await pool.request().query(`SELECT * FROM Meals`);
           context.res = {
