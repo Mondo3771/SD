@@ -4,8 +4,6 @@ import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import Loader from "../Loader/Loader";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
-
-import { Spinner } from "./HRdatagrid.styles";
 import {
   PlayIcon,
   PauseIcon,
@@ -216,7 +214,7 @@ const HRdatagrid = () => {
                 //border: 2,
                 color: "var(--white)",
                 fontSize: "1.1rem",
-              
+
                 background:
                   "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
                 backdropFilter: "blur(10px)",
