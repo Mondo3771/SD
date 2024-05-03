@@ -59,6 +59,8 @@ const Carousel = () => {
 
   }
 
+  
+
 
   return (<>
   {/* seperate component */}
@@ -67,11 +69,6 @@ const Carousel = () => {
     
     <Wrapper>
     <Left></Left>
-
-      
-
-
-
           <>
          
        {/* <section className='Right'> */}
@@ -84,19 +81,29 @@ const Carousel = () => {
             grabCursor={true}
             centeredSlides={true}
             loop={true}
-            slidesPerView={'3'}
+            slidesPerView={'2'}
             coverflowEffect={{
+
               rotate: 0,
-              stretch: 0,
+              stretch: 30,
               depth: 100,
-              modifier: 2.5,
+              modifier: 2.5
+
             }}
             pagination={{ el: '.swiper-pagination', clickable: true }}
-            navigation={{
+
+
+            navigation
+            ={{
+
               nextEl: '.swiper-button-next',
               prevEl: '.swiper-button-prev',
               clickable: true,
+
+
             }}
+
+
             className="swiper_container"
           >
 

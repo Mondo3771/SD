@@ -127,6 +127,7 @@ max-width: 84rem;
   .slider-controler .swiper-button-next {
     left: 70% !important;
     transform: translateX(-70%) !important;
+    background-color: red;
   }
 }
 
