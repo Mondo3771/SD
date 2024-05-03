@@ -51,15 +51,67 @@ const meals = [
 const formatDate = (date) => {
   return date;
 };
+  const changeAvailable = (meal) => fetch("/api/CreateMeals", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      Meal_ID: meal.Meal_ID,
+      Availability: !meal.Availability,
+    }),
+  })
+    .then((response) => {}) 
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log();
+    });
+
+
+
+
+const deleteMeal = (meal) => {
+  const deleteMeals = () => fetch("/api/CreateMeals", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      Meal_ID: meal.Meal_ID,
+    }),
+  })
+    .then((response) => {})
+    .then((data) => {})
+    .catch((error) => {
+      console.log();
+    });
+  deleteMeals();
+
+} 
 
 const HRMeals = () => {
   const [Meals, setMeals] = useState(meals);
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
-  const [changed,setChanged] = useState(false)
+  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
+    const getMeals = () => {
+      fetch("/api/CreateMeals")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getMeals();
     // fetch all meals from database
     const data = meals;
     setLoaded(true);
@@ -101,20 +153,37 @@ const HRMeals = () => {
   };
 
   const createMeal = (meal) => {
+   const Addmeals = () => fetch("/api/CreateMeals", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Name_of_Meal: ,
+        Availability: ,
+        Description: ,
+      }),
+    })
+      .then((response) => {})
+      .then((data) => {
+
+      })
+      .catch((error) => {
+        console.log();
+      });
+    Addmeals();
     setMeals((prev) => [meal, ...prev]);
   };
 
   const changeAvailableViewMeal = (event) => {
-    setViewMeal((meal) => (
-      {
-        MealId: meal.MealId,
-        Name: meal.Name,
-        Description: meal.Description,
-        Available: event.target.checked,
-      }
-    ))
 
-  }
+    setViewMeal((meal) => ({
+      MealId: meal.MealId,
+      Name: meal.Name,
+      Description: meal.Description,
+      Available: event.target.checked,
+    }));
+  };
 
   return (
     <>
@@ -197,13 +266,14 @@ const HRMeals = () => {
                 <label>Description: </label>
                 <p>{viewMeal.Description}</p>
                 <section>
-                <p>{viewMeal.Available ? "Available" : "Not Available"}</p>
-                <input type="checkbox" checked={viewMeal.Available}
-                onChange={changeAvailableViewMeal}
-                ></input>
+                  <p>{viewMeal.Available ? "Available" : "Not Available"}</p>
+                  <input
+                    type="checkbox"
+                    checked={viewMeal.Available}
+                    onChange={changeAvailableViewMeal}
+                  ></input>
                 </section>
-                {changed && 
-                <button> Save Changes</button>}
+                {changed && <button> Save Changes</button>}
                 <button onClick={() => setViewMealState(false)}>Back</button>
               </ShowMealCard>
             )}
