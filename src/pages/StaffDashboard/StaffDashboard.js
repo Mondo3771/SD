@@ -6,6 +6,7 @@ import { ClockIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
 // StaffDashboard styles
 import {
+  allProjects,
   Card,
   CreateTaskContainer,
   Header,
@@ -18,30 +19,141 @@ import {
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
+// Function to filter unique Project values and return an array of unique projects
+function filterUniqueProjects(projects) {
+  const uniqueProjects = {};
+  const result = [];
+
+  projects.forEach((project) => {
+    if (!uniqueProjects[project.Project]) {
+      uniqueProjects[project.Project] = true;
+      result.push(project.Project); // Pushing the project name only
+    }
+  });
+
+  return result;
+}
+
+function filterTasksByProject(Sheets, projectName) {
+  const tasks = [];
+
+  for (let i = 0; i < Sheets.length; i++) {
+    if (projectName === Sheets[i].Project) {
+      // Add tasks of the matching project to the tasks array
+      tasks.push(...Sheets[i].Tasks);
+    }
+  }
+
+  return tasks;
+}
+
+function x(prevSheets,taskToDelete,AllProjects){
+  console.log("Sheets",prevSheets);
+  console.log("Projects",AllProjects);
+
+  let sheets = [];
+
+
+  let uniques = filterUniqueProjects(AllProjects)
+
+  for (let i = 0; i < uniques.length; i){
+    let temp = {
+      Project: uniques[i],
+      Tasks: prevSheets[i].Tasks, 
+    }
+    sheets.push(temp)
+  }
+
+
+  let changingTask = [];
+  for (let i = 0; i < prevSheets.length; i++){
+    if (prevSheets[i].Project === taskToDelete.Project){
+      changingTask = prevSheets[i].Tasks.filter(p => parseInt(p.key) !== taskToDelete.Task_ID);
+      // sheets[i].Tasks = changingTask
+    }
+  }
+  console.log(changingTask);
+  return changingTask
+
+}
+
+
 const StaffDashboard = () => {
   const location = useLocation();
-  const data = location.state.params; // Remove this line
+  // const data = location.state.params; // Remove this line
 
-  const Emp_ID = data.Emp_ID;
+  const Emp_ID = 1;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
-
+  const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
+  const [Sheets, setSheets] = useState([]);
+  // console.log(AllProjects);
+  // console.log(uniqueProjectNames);
 
   useEffect(() => {
-    const Projects = () => {
-      fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          setAllProjects(data);
-          setLoaded(true);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
-    Projects();
-    console.log(AllProjects);
+    const data = allProjects;
+    setAllProjects([...allProjects]);
+    let sheets = [];
+
+    //filter Allprojects and add objects (number of projects ) to the sheets array
+    const uniques = filterUniqueProjects(allProjects);
+    setUniqueProjectNames(uniques);
+
+    for (let i = 0; i < uniques.length; i++) {
+      let u = {
+        Project: uniques[i],
+        Tasks: [],
+      };
+      sheets.push(u);
+    }
+
+    for (let p in allProjects) {
+      let x = {
+        Task_ID: allProjects[p].Task_ID,
+        Project: allProjects[p].Project,
+        Date: allProjects[p].Date,
+        Description: allProjects[p].Description,
+        Time: allProjects[p].Time,
+        Emp_ID: allProjects[p].Emp_ID,
+        Active: allProjects[p].Active,
+      };
+
+      let element = (
+        <TaskContainer
+          key={allProjects[p].Task_ID}
+          task={x}
+          Sheets={sheets}
+
+          onDelete={handleDelete}
+          onPause={handlePause}
+          onStop={handleStop}
+        />
+      );
+
+      for (let i = 0; i < sheets.length; i++) {
+
+        if (sheets[i].Project === allProjects[p].Project) {
+          sheets[i].Tasks = [...sheets[i].Tasks, element];
+        }
+      }
+    }
+    setSheets(sheets);
+
+    setLoaded(true);
+
+    // const Projects = () => {
+    //   fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       console.log("Success:", data);
+    //       setAllProjects(data);
+    //       setLoaded(true);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error:", error);
+    //     });
+    // };
+    // Projects();
   }, []);
 
   const [task, setTask] = useState("");
@@ -53,6 +165,7 @@ const StaffDashboard = () => {
 
   const handleAdd = (taskToAdd) => {
     taskToAdd["Emp_ID"] = Emp_ID;
+
     const add = () => {
       fetch("/api/Tasks", {
         method: "POST",
@@ -71,7 +184,10 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    add();
+    // add();
+    taskToAdd["Task_ID"] = Emp_ID;
+    setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
+    // console.log(AllProjects)
   };
 
   const projectNameChange = (event) => {
@@ -82,7 +198,7 @@ const StaffDashboard = () => {
     setTask(event.target.value);
   };
   const handlePause = (taskToPause, time) => {
-    console.log(taskToPause);
+    console.log("pause ", taskToPause);
     // takes time from the task and task id
     const pause = () => {
       console.log(taskToPause);
@@ -104,29 +220,29 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    pause();
+    // pause();
   };
   const handleStop = (taskToStop) => {
     console.log(taskToStop);
     // in here we pass a task_id and
     //cahnge true to false ,,,, ACtive
-    fetch(`/api/Tasks/?task_ID=${taskToStop.Task_ID}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ done: true }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    // fetch(`/api/Tasks/?task_ID=${taskToStop.Task_ID}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ done: true }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log("Success:", data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
-  const handleDelete = (taskToDelete) => {
-    console.log(taskToDelete);
+  const handleDelete = (taskToDelete,sheets) => {
+   
     // pass task id to delete
     const deleteTask = () => {
       fetch(`/api/Tasks/?task_ID=${taskToDelete.Task_ID}`, {
@@ -143,25 +259,22 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    deleteTask();
-    // console.log(AllProjects);
-    setAllProjects((prevTasks) =>
-      prevTasks.filter((task) => task !== taskToDelete)
-    );
-    // console.log(AllProjects);
-  };
-  let uniqueProjects = [];
-  if (Loaded) {
-    uniqueProjects = AllProjects.reduce((partialSum, project) => {
-      if (!partialSum.includes(project.Project)) {
-        return [...partialSum, project.Project];
-      }
-      return partialSum;
-    }, []);
-  }
-  //gets the unique project names
+    // console.log(sheets);
+    const updatedSheets = [...sheets];
+    const sheetIndex = sheets.findIndex( (item) => item.Project === taskToDelete.Project)
+    const sheetToUpdate = updatedSheets[sheetIndex];  
 
-  console.log(AllProjects);
+    sheetToUpdate.Tasks = sheetToUpdate.Tasks.filter(
+      (item) => item.key != taskToDelete.Task_ID
+    );
+ 
+    updatedSheets[sheetIndex] = sheetToUpdate;
+
+    // setUniqueProjectNames(filterUniqueProjects(allProjects))
+    setSheets(updatedSheets); 
+
+}
+
 
   return (
     <Wrapper>
@@ -238,25 +351,13 @@ const StaffDashboard = () => {
             </button>
           </CreateTaskContainer>
         )}
-        {console.log(uniqueProjects)}
         {Loaded &&
-          uniqueProjects.map((name, index) => {
+          uniqueProjectNames.map((name, index) => {
             return (
               <ProjectHolder key={index}>
                 <h2>{name}</h2>
-                {AllProjects.filter((project) => project.Project === name).map(
-                  (item, i) => {
-                    return (
-                      <TaskContainer
-                        key={i}
-                        task={item}
-                        onDelete={handleDelete}
-                        onPause={handlePause}
-                        onStop={handleStop}
-                      ></TaskContainer>
-                    );
-                  }
-                )}
+
+                {filterTasksByProject(Sheets,name).map(s => s)}
               </ProjectHolder>
             );
           })}
@@ -265,19 +366,4 @@ const StaffDashboard = () => {
   );
 };
 
-// export const StaffDashBoardLoader = () => {
-//   // get all task by ID
-//   const Projects = fetch(`/api/Tasks/${Emp_ID}`)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       console.log("Success:", data);
-//       console.log(data);
-
-//       return data;
-//     })
-//     .catch((error) => {
-//       console.error("Error:", error);
-//     });
-//   return { Projects };
-// };
 export default StaffDashboard;

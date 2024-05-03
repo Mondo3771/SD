@@ -11,8 +11,6 @@ import {
   StopIcon,
 } from "@heroicons/react/24/outline";
 
-import { unmountComponentAtNode } from "react-dom";
-
 
 const formatTime = (timeInSeconds) => {
   const hours = Math.floor(timeInSeconds / 3600);
@@ -193,14 +191,14 @@ export const SheetContainer = styled.div`
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
+export const TaskContainer = ({ task, onDelete, onPause, onStop ,Sheets, allProjects }) => {
   const [timerRunning, setTimerRunning] = useState(false);
   const [stop, setStop] = useState(task.Active);
   const [time, setTime] = useState(task.Time);
   // const [initial,setInitial] = useState(false)
 
   const handleButtonClick = (prev) => !prev;
-  console.log(task);
+ 
 
   useEffect(() => {
     let interval;
@@ -225,9 +223,9 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
 
   
   return (
-    <Sheet id={task.Task_ID.toString()} key={task.Task_ID} onClick={() => { console.log();console.log(task.Time); console.log(time)}}>
+    <Sheet id={task.Task_ID.toString()} key={task.Task_ID} onClick={() => { ;console.log(task.Task_ID) }}>
       <p>{task.Description}</p>
-      <p>{formatDate(task.Date)}</p>
+      <p>{(task.Date)}</p>
       <p>{time !== task.Time ? formatTime(time) : formatTime(task.Time)}</p>
       <StopStartContainer>
         <button
@@ -276,12 +274,7 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
         type="button"
         className="removeButton"
         onClick={() =>  {
-          // const sheet = document.getElementById(task.Task_ID.toString());
-          // console.log('====================================');
-          // console.log(sheet);
-          // console.log('====================================');
-          // unmountComponentAtNode(sheet); 
-          onDelete(task)
+          onDelete(task,Sheets,allProjects)
         }
 
         }
@@ -293,3 +286,26 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop }) => {
     </Sheet>
   );
 };
+
+
+
+export const allProjects = [
+  {
+    Task_ID: 0,
+    Emp_ID: 0,
+    Project: "Project",
+    Description: "SD",
+    Acitve: true,
+    Time: 0,
+    Date: "2015-09-09",
+  },
+  {
+    Task_ID: 1,
+    Emp_ID: 0,
+    Project: "Project2",
+    Description: "SDW",
+    Acitve: true,
+    Time: 0,
+    Date: "2015-09-09",
+  },
+];
