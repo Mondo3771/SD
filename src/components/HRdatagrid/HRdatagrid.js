@@ -5,7 +5,6 @@ import { Typography } from "@mui/material";
 import Loader from "../Loader/Loader";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
-import { Spinner } from "./HRdatagrid.styles";
 import {
   PlayIcon,
   PauseIcon,
