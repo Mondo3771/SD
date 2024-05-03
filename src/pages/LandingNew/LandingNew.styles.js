@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import back from "./Images/Bckgrd.svg";
-import lpBack from "./Images/LPBack.svg"
+import back from "../../Images/Bckgrd.svg";
+
 
 export const LandingPageBack = styled.section`
   //background-image: ;
