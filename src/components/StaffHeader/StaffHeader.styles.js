@@ -4,7 +4,7 @@ export const Header = styled.div`
   position: fixed;
   z-index: 9999;
   width: 100%;
-  background-color: var(--darkest);
+  background-color: transparent;
   display: flex;
   padding: 0.5rem 3rem;
   justify-content: space-between;
