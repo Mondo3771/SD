@@ -158,11 +158,11 @@ export const Wrapper = styled.section`
     left: 42%;
     transform: translateX(-42%);
     filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
-@media (max-width: 990px) {
+/* @media (max-width: 990px) {
   .slider-controler .swiper-button-next {
     left: 70% !important;
     transform: translateX(-70%) !important;
-    background-color: red;
+    background-color: red; */
   }
 
   .slider-controler .slider-arrow ion-icon {

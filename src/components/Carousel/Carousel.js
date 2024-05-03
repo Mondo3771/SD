@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Wrapper,
   Card,
@@ -9,7 +8,6 @@ import {
 } from "./Carousel.styles";
 
 import React, { useState,useEffect } from 'react';
-import { Wrapper, Card ,Left} from './Carousel.styles';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -90,10 +88,20 @@ const Carousel = () => {
     setSelectedBooking(booking);
     setModalOpen(true);
   };
+  useEffect(() => {
+    const fetchData = () => {
+
+      //fetch
+
+      setLoaded(true);
+      
+    };
+    fetchData();
+  }, []);
+
 
   return (
     <>
-      {/* seperate component */}
       <StaffHeader></StaffHeader>
       {modalOpen && (
         <Modal setOpenModal={setModalOpen} data={selectedBooking} />
@@ -169,82 +177,73 @@ const Carousel = () => {
 
         {/* </section> */}
       </Wrapper>
-=======
 
-  }
-  useEffect(() => {
-    const fetchData = () => {
+      </>
 
-      //fetch
-
-      setLoaded(true);
-      
-    };
-    fetchData();
-  }, []);
+      )
+ 
 
 
 
 
-
-  return (<>
-  {/* seperate component */}
-  <StaffHeader></StaffHeader> 
-  {Loaded? 
+  // return (<>
+  // {/* seperate component */}
+  // <StaffHeader></StaffHeader> 
+  // {Loaded? 
 
   
 
     
-    <Wrapper>
-    <Left></Left>
-          <>
+  //   <Wrapper>
+  //   <Left></Left>
+  //         <>
          
-       {/* <section className='Right'> */}
-       {modalOpen && <Modal setOpenModal={setModalOpen} data={selectedBooking} />}
+  //      {/* <section className='Right'> */}
+  //      {modalOpen && <Modal setOpenModal={setModalOpen} data={selectedBooking} />}
 
 
           
-          <Swiper
-            effect={'coverflow'}
-            grabCursor={true}
-            centeredSlides={true}
-            loop={true}
-            slidesPerView={'2'}
-            coverflowEffect={{
+  //         <Swiper
+  //           effect={'coverflow'}
+  //           grabCursor={true}
+  //           centeredSlides={true}
+  //           loop={true}
+  //           slidesPerView={'2'}
+  //           coverflowEffect={{
 
-              rotate: 0,
-              stretch: 30,
-              depth: 100,
-              modifier: 2.5
+  //             rotate: 0,
+  //             stretch: 30,
+  //             depth: 100,
+  //             modifier: 2.5
 
-            }}
-            pagination={{ el: '.swiper-pagination', clickable: true }}
-
-
-            navigation
-            ={{
-
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-              clickable: true,
+  //           }}
+  //           pagination={{ el: '.swiper-pagination', clickable: true }}
 
 
-            }}
+  //           navigation
+  //           ={{
+
+  //             nextEl: '.swiper-button-next',
+  //             prevEl: '.swiper-button-prev',
+  //             clickable: true,
 
 
-            className="swiper_container"
-          >
+  //           }}
 
-                    {mock.map((booking, index) => (
-                      <SwiperSlide key={index}>
-                        <Card onClick={() => Book(booking)}>
-                          <h1>{booking.Meal}</h1>
-                        </Card>
-                      </SwiperSlide>
-                    ))}
-            </Swiper>
-            {/* </section> */}
-              </>
+
+  //           className="swiper_container"
+  //         >
+
+  //                   {mock.map((booking, index) => (
+  //                     <SwiperSlide key={index}>
+  //                       <Card onClick={() => Book(booking)}>
+  //                         <h1>{booking.Meal}</h1>
+  //                       </Card>
+  //                     </SwiperSlide>
+  //                   ))}
+  //           </Swiper>
+  //           {/* </section> */}
+  //             </>
               
 
 
@@ -252,11 +251,11 @@ const Carousel = () => {
         
         
 
-    </Wrapper>
-    :<Loader></Loader>}
+  //   </Wrapper>
+  //   :<Loader></Loader>}
     
-    </>
-  );
+  //   </>
+  // );
 };
 
 export default Carousel;
