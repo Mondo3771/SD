@@ -33,7 +33,10 @@ function App() {
    //<LandingNew/>
     // <HRdatagrid/>
     <Carousel></Carousel>
-    // <Meals></Meals>
+// <<<<<<< Tholwana/UIBookings
+//     // <Meals></Meals>
+// =======
+// >>>>>>> Nathan-Bookings
   );
 }
 
