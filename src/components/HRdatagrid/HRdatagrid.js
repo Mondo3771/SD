@@ -20,79 +20,6 @@ const HRdatagrid = () => {
 
   const user = location.state.params;
 
-  // const rows = [
-  //   {
-  //     NaName: "John",
-  //     Surname: "Doe",
-  //     email: "john.doe@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 1,
-  //   },
-  //   {
-  //     name: "Jenny",
-  //     surname: "Doe",
-  //     email: "jenny.doe@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 2,
-  //   },
-  //   {
-  //     name: "Emily",
-  //     surname: "Doe",
-  //     email: "emily.doe@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 3,
-  //   },
-  //   {
-  //     name: "Adam",
-  //     surname: "Smith",
-  //     email: "adam.smith@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 4,
-  //   },
-  //   {
-  //     name: "Sarah",
-  //     surname: "Jones",
-  //     email: "sarah.jones@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 5,
-  //   },
-  //   {
-  //     name: "Michael",
-  //     surname: "Brown",
-  //     email: "michael.brown@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 6,
-  //   },
-  //   {
-  //     name: "Jessica",
-  //     surname: "Wilson",
-  //     email: "jessica.wilson@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 7,
-  //   },
-  //   {
-  //     name: "David",
-  //     surname: "Martinez",
-  //     email: "david.martinez@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 8,
-  //   },
-  //   {
-  //     name: "Emma",
-  //     surname: "Garcia",
-  //     email: "emma.garcia@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 9,
-  //   },
-  //   {
-  //     name: "Matthew",
-  //     surname: "Lopez",
-  //     email: "matthew.lopez@gmail.com",
-  //     emp_type: "Staff",
-  //     id: 10,
-  //   },
-  // ];
-
   const [allEmployeedata, setallEmployeedata] = useState(null);
   const [Loaded, setLoaded] = useState(false);
 
@@ -289,9 +216,7 @@ const HRdatagrid = () => {
                 //border: 2,
                 color: "var(--white)",
                 fontSize: "1.1rem",
-                //borderColor: "red",
-                // background: "var(--white)",
-                //background: "transparent",
+              
                 background:
                   "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
                 backdropFilter: "blur(10px)",

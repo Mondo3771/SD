@@ -14,8 +14,8 @@ const Index = ({ child }) => {
         <GoogleLogin
           onSuccess={(credentialResponse) => {
             const details = jwtDecode(credentialResponse.credential);
-            console.log(details);
-            console.log(credentialResponse);
+            // console.log(details);
+            // console.log(credentialResponse);
             child(details);
           }}
           onError={() => {
@@ -24,9 +24,9 @@ const Index = ({ child }) => {
           prompt="none"
           children="Sign in with Google"
         />
-        ;
+        
       </GoogleOAuthProvider>
-      ;
+      
     </section>
   );
 };

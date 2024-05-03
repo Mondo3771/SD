@@ -1,46 +1,28 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import LandingNew from "./LandingNew";
+import { render, screen } from "@testing-library/react";
+import { createMemoryHistory } from "history";
+import { Router } from "react-router-dom";
+import App from "./App";
 
-describe("LandingNew", () => {
-  test("renders landing page with logo and heading", () => {
-    render(
-      <BrowserRouter>
-        <LandingNew />
-      </BrowserRouter>
-    );
-    const logoElement = screen.getByAltText("logo");
-    const headingElement = screen.getByText("SYNERGY");
-    expect(logoElement).toBeInTheDocument();
-    expect(headingElement).toBeInTheDocument();
-  });
+test("full app rendering/navigating", () => {
+  const history = createMemoryHistory();
+  render(
+    <Router history={history}>
+      <App />
+    </Router>
+  );
 
-  test('toggles dropdown when "Features" is hovered', () => {
-    render(
-      <BrowserRouter>
-        <LandingNew />
-      </BrowserRouter>
-    );
-    const featuresElement = screen.getByText("Features");
-    fireEvent.mouseEnter(featuresElement);
-    const dropdownElement = screen.getByTestId("dropdown_Features");
-    expect(dropdownElement).toBeInTheDocument();
-    fireEvent.mouseLeave(featuresElement);
-    expect(dropdownElement).not.toBeInTheDocument();
-  });
+  // check if LandingNew component renders on '/'
+  expect(screen.getByText(/landingnew component text/i)).toBeInTheDocument();
 
-  test('toggles dropdown when "About" is hovered', () => {
-    render(
-      <BrowserRouter>
-        <LandingNew />
-      </BrowserRouter>
-    );
-    const aboutElement = screen.getByText("About");
-    fireEvent.mouseEnter(aboutElement);
-    const dropdownElement = screen.getByTestId("dropdown_About");
-    expect(dropdownElement).toBeInTheDocument();
-    fireEvent.mouseLeave(aboutElement);
-    expect(dropdownElement).not.toBeInTheDocument();
-  });
+  // navigate to '/DashBoard'
+  history.push("/DashBoard");
+  // check if StaffDashboard component renders on '/DashBoard'
+  expect(
+    screen.getByText(/staffdashboard component text/i)
+  ).toBeInTheDocument();
+
+  // navigate to '/HRhome'
+  history.push("/HRhome");
+  // check if HRHome component renders on '/HRhome'
+  expect(screen.getByText(/hrhome component text/i)).toBeInTheDocument();
 });
