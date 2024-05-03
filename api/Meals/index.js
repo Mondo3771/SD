@@ -28,7 +28,7 @@ module.exports = async function (context, req) {
         try {
           const resultSet = await pool
             .request()
-            .input("Emp_ID", sql.Int, data.Emp_ID)
+            .input("Emp_ID", sql.Int, req.query.Emp_ID)
             .query(
               `SELECT Meals.* From Bookings JOIN Meals ON Bookings.Meal_ID = Meals.Meal_ID Where Bookings.Emp_ID = @Emp_ID`
             );

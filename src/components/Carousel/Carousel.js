@@ -7,17 +7,16 @@ import {
   Swrapper,
 } from "./Carousel.styles";
 
-import React, { useState,useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import Modal from '../Modal/Modal';
-import Loader from '../Loader/Loader';
+import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import Modal from "../Modal/Modal";
+import Loader from "../Loader/Loader";
 
-import StaffHeader from '../StaffHeader/StaffHeader';
-
+import StaffHeader from "../StaffHeader/StaffHeader";
 
 const mock = [
   {
@@ -79,7 +78,7 @@ const mock = [
 ];
 
 const Carousel = () => {
-  const [Meals,setMeals]=useState(null)
+  const [Meals, setMeals] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false);
@@ -90,22 +89,16 @@ const Carousel = () => {
   };
   useEffect(() => {
     const fetchData = () => {
-
       fetch("/api/Meals")
-      .then((response) => response.json())
-      .then((meals) => {
-        setMeals(meals.data);
-
-    
-
-        setLoaded(true);
-      });
+        .then((response) => response.json())
+        .then((meals) => {
+          setMeals(meals.data);
+          setLoaded(true);
+        });
       // setLoaded(true);
-      
     };
     fetchData();
   }, []);
-
 
   return (
     <>
@@ -114,15 +107,13 @@ const Carousel = () => {
         <Modal setOpenModal={setModalOpen} data={selectedBooking} />
       )}
 
-
       <Wrapper>
-      {Loaded? 
-
-        <Main>
-          <Left>
-            <section className="text">
-              <h2>Something Healthy, Something Tasty!</h2>
-              {/* <p>
+        {Loaded ? (
+          <Main>
+            <Left>
+              <section className="text">
+                <h2>Something Healthy, Something Tasty!</h2>
+                {/* <p>
                 "Welcome to our lunch booking platform! At [Your Company Name],
                 we believe that enjoying good food isn't just a pleasure—it's a
                 source of energy and inspiration. Fuel your day with delicious
@@ -130,92 +121,80 @@ const Carousel = () => {
                 we understand that what you eat matters, and great meals make
                 great workdays."
               </p> */}
-            </section>
-          </Left>{" "}
-          <Swrapper>
-            <section className="text">
-              <h3>Our Menu</h3>
-            </section>
+              </section>
+            </Left>{" "}
+            <Swrapper>
+              <section className="text">
+                <h3>Our Menu</h3>
+              </section>
 
-            <Swiper
-              effect={"coverflow"}
-              grabCursor={true}
-              centeredSlides={true}
-              loop={false}
-              slidesPerView={"1"}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 2.5,
-              }}
-              pagination={{ el: ".swiper-pagination", clickable: true }}
-              navigation
-              // ={{
-              //   nextEl: '.swiper-button-next',
-              //   prevEl: '.swiper-button-prev',
-              //   clickable: true,
-              // }}
-  
-              className="swiper_container"
-            >
-              {Meals.map((booking, index) => (
-                <SwiperSlide key={index}>
-                  <Card onClick={() => Book(booking)}>
-                    <section className="textwrap">
-                      <h1>{booking.Name_of_Meal}</h1>
-                      <p>Description: {booking.Description}</p>
-                      {/* <p>Allergens: {booking.Allergens}</p> */}
-                      {/* <p>Date: {booking.Date}</p> */}
-                      {/* <button>Order</button> */}
-                    </section>
-                  </Card>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <section className="text">
-              <p>
-                Welcome to the Meals page! We take your health and productivity
-                seriously. That's why we offer a selection of nutritious and
-                delicious lunches designed to boost both your energy and
-                performance. Enjoy a delightful lunch break that keeps you
-                focused and productive throughout the day. Bon appétit!
-              </p>
-            </section>
-          </Swrapper>
-        </Main>
+              <Swiper
+                effect={"coverflow"}
+                grabCursor={true}
+                centeredSlides={true}
+                loop={false}
+                slidesPerView={"1"}
+                coverflowEffect={{
+                  rotate: 0,
+                  stretch: 0,
+                  depth: 100,
+                  modifier: 2.5,
+                }}
+                pagination={{ el: ".swiper-pagination", clickable: true }}
+                navigation
+                // ={{
+                //   nextEl: '.swiper-button-next',
+                //   prevEl: '.swiper-button-prev',
+                //   clickable: true,
+                // }}
 
- 
-        :<Loader></Loader>}
-
+                className="swiper_container"
+              >
+                {Meals.map((booking, index) => (
+                  <SwiperSlide key={index}>
+                    <Card onClick={() => Book(booking)}>
+                      <section className="textwrap">
+                        <h1>{booking.Name_of_Meal}</h1>
+                        <p>Description: {booking.Description}</p>
+                        {/* <p>Allergens: {booking.Allergens}</p> */}
+                        {/* <p>Date: {booking.Date}</p> */}
+                        {/* <button>Order</button> */}
+                      </section>
+                    </Card>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <section className="text">
+                <p>
+                  Welcome to the Meals page! We take your health and
+                  productivity seriously. That's why we offer a selection of
+                  nutritious and delicious lunches designed to boost both your
+                  energy and performance. Enjoy a delightful lunch break that
+                  keeps you focused and productive throughout the day. Bon
+                  appétit!
+                </p>
+              </section>
+            </Swrapper>
+          </Main>
+        ) : (
+          <Loader></Loader>
+        )}
       </Wrapper>
-
-
-      </>
-
-      )
- 
-
-
-
+    </>
+  );
 
   // return (<>
   // {/* seperate component */}
-  // <StaffHeader></StaffHeader> 
-  // {Loaded? 
+  // <StaffHeader></StaffHeader>
+  // {Loaded?
 
-  
-
-    
   //   <Wrapper>
   //   <Left></Left>
   //         <>
-         
+
   //      {/* <section className='Right'> */}
   //      {modalOpen && <Modal setOpenModal={setModalOpen} data={selectedBooking} />}
 
-
-          
   //         <Swiper
   //           effect={'coverflow'}
   //           grabCursor={true}
@@ -232,7 +211,6 @@ const Carousel = () => {
   //           }}
   //           pagination={{ el: '.swiper-pagination', clickable: true }}
 
-
   //           navigation
   //           ={{
 
@@ -240,9 +218,7 @@ const Carousel = () => {
   //             prevEl: '.swiper-button-prev',
   //             clickable: true,
 
-
   //           }}
-
 
   //           className="swiper_container"
   //         >
@@ -257,16 +233,10 @@ const Carousel = () => {
   //           </Swiper>
   //           {/* </section> */}
   //             </>
-              
-
-
-        
-        
-        
 
   //   </Wrapper>
   //   :<Loader></Loader>}
-    
+
   //   </>
   // );
 };
