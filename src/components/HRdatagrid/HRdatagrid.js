@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
 import Loader from "../Loader/Loader";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import {
@@ -11,6 +10,60 @@ import {
   StopIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
+
+const updateEmp = (params) =>
+  fetch("/api/AllEmployees", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      Emp_ID: params.row.Emp_ID,
+      EMP_type: params.row.EMP_type,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.message);
+      return "Success";
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      return "Error";
+    });
+
+const fetchData = (users, setallEmployeedatas, setLoadeds) =>
+  fetch("/api/AllEmployees")
+    .then((response) => response.json())
+    .then((employees) => {
+      const employeesWithId = employees.data
+        .filter((employee) => employee.Emp_ID !== users.Emp_ID)
+        .map((employee, index) => ({
+          ...employee,
+          id: index + 1, // Assigning a unique id to each row
+        }));
+      setallEmployeedatas(employeesWithId);
+      setLoadeds(true);
+    });
+const DELETEEmp = (Emp_ID) =>
+  fetch("/api/AllEmployees", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      Emp_ID: Emp_ID,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data.message);
+      return "Success";
+    })
+    .catch((error) => {
+      console.log(error);
+      return "Error";
+    });
 
 const HRdatagrid = () => {
   const [rowId, setrowId] = useState(null);
@@ -22,72 +75,16 @@ const HRdatagrid = () => {
   const [Loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const fetchData = () => {
-      fetch("/api/AllEmployees")
-        .then((response) => response.json())
-        .then((employees) => {
-          // setallEmployeedata(employees.data);
-
-          const employeesWithId = employees.data
-            .filter((employee) => employee.Emp_ID !== user.Emp_ID)
-            .map((employee, index) => ({
-              ...employee,
-              id: index + 1, // Assigning a unique id to each row
-            }));
-          setallEmployeedata(employeesWithId);
-
-          setLoaded(true);
-        });
-    };
-    fetchData();
+    fetchData(user, setallEmployeedata, setLoaded);
   }, []);
 
   const removeEmp = (id, Emp_ID) => {
     // need ID to remove employee
     // query to remove email with row
-    const get = () =>
-      fetch("/api/AllEmployees", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Emp_ID: Emp_ID,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data.message);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    get();
+
+    DELETEEmp(Emp_ID);
     const updatedEmployees = allEmployeedata.filter((emp) => emp.id !== id);
     setallEmployeedata(updatedEmployees);
-  };
-
-  const updateEmp = (params) => {
-    // update their type here
-    //employee.emp_type = empType;
-    fetch("/api/AllEmployees", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Emp_ID: params.row.Emp_ID,
-        EMP_type: params.row.EMP_type,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        //deal woth response
-        // setupdate(empType);
-        // settext("Success ");
-        console.log(data.message);
-        // employee.EMP_type = empType;
-      });
   };
 
   const columns = [
@@ -232,3 +229,5 @@ const HRdatagrid = () => {
 };
 
 export default HRdatagrid;
+
+export { DELETEEmp, updateEmp, fetchData };
