@@ -33,7 +33,7 @@ const LandingNew = () => {
   const [data, setData] = useState("");
 
   const childToParent = (childdata) => {
-    setData(childdata);
+    setData(0);
     setLoaded(true);
   };
 
@@ -53,6 +53,8 @@ const LandingNew = () => {
           const get = () =>
           fetch("/api/login", {
             method: "POST",
+            //authorisation header pass token in auth header 
+            //user google user id to connect google and our database
             headers: {
               "Content-Type": "application/json",
             },

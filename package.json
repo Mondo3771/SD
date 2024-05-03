@@ -24,14 +24,30 @@
     "react-router": "^6.22.3",
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
+    "react-use-googlelogin": "^0.12.5",
     "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=False react-scripts build",
-    "test": "react-scripts test",
+    "build": "react-scripts build",
+    "test": "react-scripts test --coverage --watchAll=false",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 30,
+        "functions": 30,
+        "lines": 30,
+        "statements": 30
+      }
+    },
+    "coverageReporters": [
+      "text",
+      "html"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +68,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/react-hooks": "^8.0.1"
   }
 }
