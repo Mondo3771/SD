@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Wrapper, Card ,Left} from './Carousel.styles';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -7,6 +7,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Modal from '../Modal/Modal';
+import Loader from '../Loader/Loader';
 
 import StaffHeader from '../StaffHeader/StaffHeader';
 
@@ -51,20 +52,37 @@ const mock = [
 
 const Carousel = () => {
 
+
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [Loaded, setLoaded] = useState(false);
+
   const Book = (booking) => {
     setSelectedBooking(booking);
     setModalOpen(true);
 
   }
+  useEffect(() => {
+    const fetchData = () => {
 
-  
+      //fetch
+
+      setLoaded(true);
+      
+    };
+    fetchData();
+  }, []);
+
+
+
 
 
   return (<>
   {/* seperate component */}
   <StaffHeader></StaffHeader> 
+  {Loaded? 
+
+  
 
     
     <Wrapper>
@@ -125,7 +143,7 @@ const Carousel = () => {
         
 
     </Wrapper>
-    
+    :<Loader></Loader>}
     
     </>
 
