@@ -11,7 +11,6 @@ import {
   StopIcon,
 } from "@heroicons/react/24/outline";
 
-
 const formatTime = (timeInSeconds) => {
   const hours = Math.floor(timeInSeconds / 3600);
   const minutes = Math.floor((timeInSeconds % 3600) / 60);
@@ -191,14 +190,20 @@ export const SheetContainer = styled.div`
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export const TaskContainer = ({ task, onDelete, onPause, onStop ,Sheets, allProjects }) => {
+export const TaskContainer = ({
+  task,
+  onDelete,
+  onPause,
+  onStop,
+  Sheets,
+  allProjects,
+}) => {
   const [timerRunning, setTimerRunning] = useState(false);
   const [stop, setStop] = useState(task.Active);
   const [time, setTime] = useState(task.Time);
   // const [initial,setInitial] = useState(false)
 
   const handleButtonClick = (prev) => !prev;
- 
 
   useEffect(() => {
     let interval;
@@ -212,20 +217,24 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop ,Sheets, allProj
       console.log(task.Time);
     } else {
       clearInterval(interval); // Stop the timer
-      // setTime(0); 
+      // setTime(0);
       task.Time = time;
-      setTime(task.Time)
-     
+      setTime(task.Time);
     }
 
     return () => clearInterval(interval); // Cleanup function to clear the interval when component unmounts or when clicked changes
   }, [timerRunning, stop]);
 
-  
   return (
-    <Sheet id={task.Task_ID.toString()} key={task.Task_ID} onClick={() => { ;console.log(task.Task_ID) }}>
+    <Sheet
+      id={task.Task_ID.toString()}
+      key={task.Task_ID}
+      onClick={() => {
+        console.log(task.Task_ID);
+      }}
+    >
       <p>{task.Description}</p>
-      <p>{(task.Date)}</p>
+      <p>{task.Date}</p>
       <p>{time !== task.Time ? formatTime(time) : formatTime(task.Time)}</p>
       <StopStartContainer>
         <button
@@ -273,11 +282,9 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop ,Sheets, allProj
       <button
         type="button"
         className="removeButton"
-        onClick={() =>  {
-          onDelete(task,Sheets,allProjects)
-        }
-
-        }
+        onClick={() => {
+          onDelete(task, Sheets, allProjects);
+        }}
       >
         <TrashIcon width={25} />
       </button>
@@ -286,8 +293,6 @@ export const TaskContainer = ({ task, onDelete, onPause, onStop ,Sheets, allProj
     </Sheet>
   );
 };
-
-
 
 export const allProjects = [
   {

@@ -18,6 +18,7 @@ import {
 
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+// import sheet from "styled-components/dist/sheet";
 
 // Function to filter unique Project values and return an array of unique projects
 function filterUniqueProjects(projects) {
@@ -40,43 +41,12 @@ function filterTasksByProject(Sheets, projectName) {
   for (let i = 0; i < Sheets.length; i++) {
     if (projectName === Sheets[i].Project) {
       // Add tasks of the matching project to the tasks array
-      tasks.push(...Sheets[i].Tasks);
+      tasks.push(Sheets[i]);
     }
   }
 
   return tasks;
 }
-
-function x(prevSheets,taskToDelete,AllProjects){
-  console.log("Sheets",prevSheets);
-  console.log("Projects",AllProjects);
-
-  let sheets = [];
-
-
-  let uniques = filterUniqueProjects(AllProjects)
-
-  for (let i = 0; i < uniques.length; i){
-    let temp = {
-      Project: uniques[i],
-      Tasks: prevSheets[i].Tasks, 
-    }
-    sheets.push(temp)
-  }
-
-
-  let changingTask = [];
-  for (let i = 0; i < prevSheets.length; i++){
-    if (prevSheets[i].Project === taskToDelete.Project){
-      changingTask = prevSheets[i].Tasks.filter(p => parseInt(p.key) !== taskToDelete.Task_ID);
-      // sheets[i].Tasks = changingTask
-    }
-  }
-  console.log(changingTask);
-  return changingTask
-
-}
-
 
 const StaffDashboard = () => {
   const location = useLocation();
@@ -91,7 +61,6 @@ const StaffDashboard = () => {
   // console.log(uniqueProjectNames);
 
   useEffect(() => {
-    const data = allProjects;
     setAllProjects([...allProjects]);
     let sheets = [];
 
@@ -99,14 +68,14 @@ const StaffDashboard = () => {
     const uniques = filterUniqueProjects(allProjects);
     setUniqueProjectNames(uniques);
 
-    for (let i = 0; i < uniques.length; i++) {
-      let u = {
-        Project: uniques[i],
-        Tasks: [],
-      };
-      sheets.push(u);
-    }
-
+    // for (let i = 0; i < uniques.length; i++) {
+    //   let u = {
+    //     Project: uniques[i],
+    //     Tasks: [],
+    //   };
+    //   sheets.push(u);
+    // }
+    const pjs = []
     for (let p in allProjects) {
       let x = {
         Task_ID: allProjects[p].Task_ID,
@@ -116,29 +85,48 @@ const StaffDashboard = () => {
         Time: allProjects[p].Time,
         Emp_ID: allProjects[p].Emp_ID,
         Active: allProjects[p].Active,
+        Component: (
+          <TaskContainer
+            task={{
+              Task_ID: allProjects[p].Task_ID,
+              Project: allProjects[p].Project,
+              Date: allProjects[p].Date,
+              Description: allProjects[p].Description,
+              Time: allProjects[p].Time,
+              Emp_ID: allProjects[p].Emp_ID,
+              Active: allProjects[p].Active,
+            }}
+            onDelete={handleDelete}
+            onPause= {handlePause}
+            onStop={handleStop}
+            key={allProjects[p].Task_ID}
+            allProjects={allProjects}
+          />
+        ),
       };
-
-      let element = (
-        <TaskContainer
-          key={allProjects[p].Task_ID}
-          task={x}
-          Sheets={sheets}
-
-          onDelete={handleDelete}
-          onPause={handlePause}
-          onStop={handleStop}
-        />
-      );
-
-      for (let i = 0; i < sheets.length; i++) {
-
-        if (sheets[i].Project === allProjects[p].Project) {
-          sheets[i].Tasks = [...sheets[i].Tasks, element];
-        }
-      }
+      pjs.push(x)
     }
-    setSheets(sheets);
+    setAllProjects(pjs)
 
+      // let element = (
+      //   <TaskContainer
+      //     key={allProjects[p].Task_ID}
+      //     task={x}
+      //     // Sheets={sheets}
+      //     allProjects={allProjects}
+      //     onDelete={handleDelete}
+      //     onPause={handlePause}
+      //     onStop={handleStop}
+      //   />
+      // );
+
+    //   for (let i = 0; i < sheets.length; i++) {
+    //     if (sheets[i].Project === allProjects[p].Project) {
+    //       sheets[i].Tasks = [...sheets[i].Tasks, element];
+    //     }
+    //   }
+    // }
+    // setSheets(sheets);
     setLoaded(true);
 
     // const Projects = () => {
@@ -186,7 +174,50 @@ const StaffDashboard = () => {
     };
     // add();
     taskToAdd["Task_ID"] = Emp_ID;
-    setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
+
+    // const updatedSheets = [...Sheets];
+    // const sheetIndex = Sheets.findIndex(
+    //   (item) => item.Project === taskToAdd.Project
+    // );
+    // const sheetToUpdate = updatedSheets[sheetIndex];
+
+    const sheetToAdd = (
+      <TaskContainer
+        key={taskToAdd.Task_ID}
+        task={taskToAdd}
+        // Sheets={Sheets}
+        allProjects={AllProjects}
+        onDelete={handleDelete}
+        onPause={handlePause}
+        onStop={handleStop}
+      />
+    );
+
+    const temp = taskToAdd;
+    temp["Component"] = sheetToAdd
+    setAllProjects((prev) => [temp,...prev])
+
+    // sheetToUpdate.Tasks = [sheetToAdd, ...sheetToUpdate.Tasks];
+
+    // updatedSheets[sheetIndex] = sheetToUpdate;
+
+    // setAllProjects(a => a.filter( p => p.Task_ID !== taskToDelete.Task_ID))
+
+    // setSheets(prevSheets => {
+    //   return prevSheets.map((Project) => {
+    //     if (Project.Project === taskToAdd.Project){
+    //       return {
+    //         ...sheet,
+    //         Tasks: [...sheet.Tasks,sheetToAdd]
+    //       };
+    //     }
+    //     return sheet;
+
+    //   })
+    // });
+
+    // setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
+
     // console.log(AllProjects)
   };
 
@@ -241,8 +272,7 @@ const StaffDashboard = () => {
     //     console.error("Error:", error);
     //   });
   };
-  const handleDelete = (taskToDelete,sheets) => {
-   
+  const handleDelete = (taskToDelete, sheets, allProjects) => {
     // pass task id to delete
     const deleteTask = () => {
       fetch(`/api/Tasks/?task_ID=${taskToDelete.Task_ID}`, {
@@ -259,22 +289,30 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    // console.log(sheets);
+
     const updatedSheets = [...sheets];
-    const sheetIndex = sheets.findIndex( (item) => item.Project === taskToDelete.Project)
-    const sheetToUpdate = updatedSheets[sheetIndex];  
+    const sheetIndex = sheets.findIndex(
+      (item) => item.Project === taskToDelete.Project
+    );
+    const sheetToUpdate = updatedSheets[sheetIndex];
 
     sheetToUpdate.Tasks = sheetToUpdate.Tasks.filter(
       (item) => item.key != taskToDelete.Task_ID
     );
- 
+
     updatedSheets[sheetIndex] = sheetToUpdate;
 
-    // setUniqueProjectNames(filterUniqueProjects(allProjects))
-    setSheets(updatedSheets); 
+    console.log(Sheets);
+    setAllProjects((a) => a.filter((p) => p.Task_ID !== taskToDelete.Task_ID));
 
-}
-
+    setSheets(updatedSheets);
+    setUniqueProjectNames(
+      filterUniqueProjects(
+        allProjects.filter((p) => p.Task_ID !== taskToDelete.Task_ID)
+      )
+    );
+    // console.log(allProjects)
+  };
 
   return (
     <Wrapper>
@@ -357,7 +395,7 @@ const StaffDashboard = () => {
               <ProjectHolder key={index}>
                 <h2>{name}</h2>
 
-                {filterTasksByProject(Sheets,name).map(s => s)}
+                {filterTasksByProject(AllProjects, name).map((s) => s.Component)}
               </ProjectHolder>
             );
           })}
