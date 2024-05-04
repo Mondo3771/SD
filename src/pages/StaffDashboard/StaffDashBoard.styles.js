@@ -136,12 +136,13 @@ export const LabelHolder = styled.div`
 export const Sheet = styled.div`
   background-color: var(--darker);
   border: 2px solid var(--darker);
-  border-radius: 10px;
+  border-radius: 10px 0px 0px 10px;
   margin: 5px 0;
   padding: 5px 10px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  width: 80%;
 
   p {
     color: white;
@@ -169,6 +170,24 @@ export const ProjectHolder = styled.div`
   display: flex;
   flex-flow: column;
   box-sizing: border-box;
+
+  .SheetHolderFin {
+    display: flex;
+  }
+  //DELET Button 
+  .SheetHolderFin button {
+    flex: 1;
+    width: 50px;
+    border: 1px solid black;
+    background-color: var(--darker);
+    color: var(--whiter);
+    border: 2px solid var(--darker);
+    border-radius: 0px 10px 10px 0 ;
+    margin: 5px 0 5px 0px;
+    justify-self: right;
+    align-self: right;
+    // padding: 5px 1rem;
+  }
 `;
 
 export const StopStartContainer = styled.div`
@@ -192,7 +211,6 @@ export const SheetContainer = styled.div`
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const TaskContainer = ({
   task,
-  onDelete,
   onPause,
   onStop,
   Sheets,
@@ -217,7 +235,6 @@ export const TaskContainer = ({
       console.log(task.Time);
     } else {
       clearInterval(interval); // Stop the timer
-      // setTime(0);
       task.Time = time;
       setTime(task.Time);
     }
@@ -230,7 +247,7 @@ export const TaskContainer = ({
       id={task.Task_ID.toString()}
       key={task.Task_ID}
       onClick={() => {
-        console.log(task.Task_ID);
+        console.log(allProjects.length);
       }}
     >
       <p>{task.Description}</p>
@@ -279,17 +296,6 @@ export const TaskContainer = ({
           <StopIcon width={25} />
         </button>
       </StopStartContainer>
-      <button
-        type="button"
-        className="removeButton"
-        onClick={() => {
-          onDelete(task, Sheets, allProjects);
-        }}
-      >
-        <TrashIcon width={25} />
-      </button>
-      <input name="_action" type="hidden" value={"deleteTask"} />
-      <input type="hidden" name="taskID" value={task.task_ID} />
     </Sheet>
   );
 };

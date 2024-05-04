@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 //icons
-import { ClockIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { ClockIcon, ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 // StaffDashboard styles
 import {
@@ -50,98 +50,33 @@ function filterTasksByProject(Sheets, projectName) {
 
 const StaffDashboard = () => {
   const location = useLocation();
-  // const data = location.state.params; // Remove this line
+   const data = location.state.params; // Remove this line
 
-  const Emp_ID = 1;
+  const Emp_ID = data.Emp_ID;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
-  const [Sheets, setSheets] = useState([]);
-  // console.log(AllProjects);
-  // console.log(uniqueProjectNames);
+
 
   useEffect(() => {
-    setAllProjects([...allProjects]);
-    let sheets = [];
+//replace allprojects with data from fetch
 
-    //filter Allprojects and add objects (number of projects ) to the sheets array
-    const uniques = filterUniqueProjects(allProjects);
-    setUniqueProjectNames(uniques);
-
-    // for (let i = 0; i < uniques.length; i++) {
-    //   let u = {
-    //     Project: uniques[i],
-    //     Tasks: [],
-    //   };
-    //   sheets.push(u);
-    // }
-    const pjs = []
-    for (let p in allProjects) {
-      let x = {
-        Task_ID: allProjects[p].Task_ID,
-        Project: allProjects[p].Project,
-        Date: allProjects[p].Date,
-        Description: allProjects[p].Description,
-        Time: allProjects[p].Time,
-        Emp_ID: allProjects[p].Emp_ID,
-        Active: allProjects[p].Active,
-        Component: (
-          <TaskContainer
-            task={{
-              Task_ID: allProjects[p].Task_ID,
-              Project: allProjects[p].Project,
-              Date: allProjects[p].Date,
-              Description: allProjects[p].Description,
-              Time: allProjects[p].Time,
-              Emp_ID: allProjects[p].Emp_ID,
-              Active: allProjects[p].Active,
-            }}
-            onDelete={handleDelete}
-            onPause= {handlePause}
-            onStop={handleStop}
-            key={allProjects[p].Task_ID}
-            allProjects={allProjects}
-          />
-        ),
-      };
-      pjs.push(x)
-    }
-    setAllProjects(pjs)
-
-      // let element = (
-      //   <TaskContainer
-      //     key={allProjects[p].Task_ID}
-      //     task={x}
-      //     // Sheets={sheets}
-      //     allProjects={allProjects}
-      //     onDelete={handleDelete}
-      //     onPause={handlePause}
-      //     onStop={handleStop}
-      //   />
-      // );
-
-    //   for (let i = 0; i < sheets.length; i++) {
-    //     if (sheets[i].Project === allProjects[p].Project) {
-    //       sheets[i].Tasks = [...sheets[i].Tasks, element];
-    //     }
-    //   }
-    // }
-    // setSheets(sheets);
-    setLoaded(true);
-
-    // const Projects = () => {
-    //   fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       console.log("Success:", data);
-    //       setAllProjects(data);
-    //       setLoaded(true);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error:", error);
-    //     });
-    // };
-    // Projects();
+const Projects = () => {
+  fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+      const uniques = filterUniqueProjects(allProjects);
+      setUniqueProjectNames(uniques);
+      setAllProjects(data);
+      setLoaded(true);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+Projects();
+   
   }, []);
 
   const [task, setTask] = useState("");
@@ -153,6 +88,7 @@ const StaffDashboard = () => {
 
   const handleAdd = (taskToAdd) => {
     taskToAdd["Emp_ID"] = Emp_ID;
+    taskToAdd["Task_ID"] = Math.random() * 100;
 
     const add = () => {
       fetch("/api/Tasks", {
@@ -166,59 +102,21 @@ const StaffDashboard = () => {
         .then((data) => {
           console.log("Success:", data);
           taskToAdd["Task_ID"] = data.Task_ID;
-          setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
+          setAllProjects((prevTasks) => [taskToAdd,...prevTasks]);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
-    // add();
-    taskToAdd["Task_ID"] = Emp_ID;
+    add(); 
 
-    // const updatedSheets = [...Sheets];
-    // const sheetIndex = Sheets.findIndex(
-    //   (item) => item.Project === taskToAdd.Project
-    // );
-    // const sheetToUpdate = updatedSheets[sheetIndex];
 
-    const sheetToAdd = (
-      <TaskContainer
-        key={taskToAdd.Task_ID}
-        task={taskToAdd}
-        // Sheets={Sheets}
-        allProjects={AllProjects}
-        onDelete={handleDelete}
-        onPause={handlePause}
-        onStop={handleStop}
-      />
-    );
 
-    const temp = taskToAdd;
-    temp["Component"] = sheetToAdd
-    setAllProjects((prev) => [temp,...prev])
 
-    // sheetToUpdate.Tasks = [sheetToAdd, ...sheetToUpdate.Tasks];
-
-    // updatedSheets[sheetIndex] = sheetToUpdate;
-
-    // setAllProjects(a => a.filter( p => p.Task_ID !== taskToDelete.Task_ID))
-
-    // setSheets(prevSheets => {
-    //   return prevSheets.map((Project) => {
-    //     if (Project.Project === taskToAdd.Project){
-    //       return {
-    //         ...sheet,
-    //         Tasks: [...sheet.Tasks,sheetToAdd]
-    //       };
-    //     }
-    //     return sheet;
-
-    //   })
-    // });
-
-    // setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
-
-    // console.log(AllProjects)
+    setAllProjects((prev) => {
+      setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
+      return [taskToAdd, ...prev];
+    });
   };
 
   const projectNameChange = (event) => {
@@ -251,28 +149,34 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    // pause();
+    pause();
+    // setAllProjects((prev) => {
+    //   const temp = prev.filter(project => project.Task_ID === taskToPause.Task_ID)[0]
+    //   console.log(temp)
+    //   return prev
+    // })
+
   };
   const handleStop = (taskToStop) => {
-    console.log(taskToStop);
+    // console.log(taskToStop);
     // in here we pass a task_id and
     //cahnge true to false ,,,, ACtive
-    // fetch(`/api/Tasks/?task_ID=${taskToStop.Task_ID}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ done: true }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log("Success:", data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
+    fetch(`/api/Tasks/?task_ID=${taskToStop.Task_ID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ done: true }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
-  const handleDelete = (taskToDelete, sheets, allProjects) => {
+  const handleDelete = (taskToDelete) => {
     // pass task id to delete
     const deleteTask = () => {
       fetch(`/api/Tasks/?task_ID=${taskToDelete.Task_ID}`, {
@@ -289,26 +193,13 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-
-    const updatedSheets = [...sheets];
-    const sheetIndex = sheets.findIndex(
-      (item) => item.Project === taskToDelete.Project
-    );
-    const sheetToUpdate = updatedSheets[sheetIndex];
-
-    sheetToUpdate.Tasks = sheetToUpdate.Tasks.filter(
-      (item) => item.key != taskToDelete.Task_ID
-    );
-
-    updatedSheets[sheetIndex] = sheetToUpdate;
-
-    console.log(Sheets);
+    deleteTask()
     setAllProjects((a) => a.filter((p) => p.Task_ID !== taskToDelete.Task_ID));
 
-    setSheets(updatedSheets);
+    // setSheets(updatedSheets);
     setUniqueProjectNames(
       filterUniqueProjects(
-        allProjects.filter((p) => p.Task_ID !== taskToDelete.Task_ID)
+        AllProjects.filter((p) => p.Task_ID !== taskToDelete.Task_ID)
       )
     );
     // console.log(allProjects)
@@ -395,7 +286,20 @@ const StaffDashboard = () => {
               <ProjectHolder key={index}>
                 <h2>{name}</h2>
 
-                {filterTasksByProject(AllProjects, name).map((s) => s.Component)}
+                {/* {filterTasksByProject(AllProjects, name).map((s) => s.Component)} */}
+                {filterTasksByProject(AllProjects, name).map((s) => (
+                  <article className="SheetHolderFin">
+                    <TaskContainer
+                      task={s}
+                      key={s.Task_ID}
+                      onPause={handlePause}
+                      onStop={handleStop}
+                      allProjects={AllProjects}
+                    ></TaskContainer>
+                    <button>
+                      <TrashIcon width={25} onClick={() => handleDelete(s)}/> </button>
+                  </article>
+                ))}
               </ProjectHolder>
             );
           })}
