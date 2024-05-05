@@ -1,4 +1,5 @@
 import "./App.css";
+import ReactDOM from "react-dom";
 
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import HRHome from "./pages/HRHome/HRHome";
