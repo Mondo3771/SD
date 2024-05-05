@@ -1,5 +1,13 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import fetchMock from "jest-fetch-mock";
+
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+  waitFor,
+} from "@testing-library/react";
 import { createMemoryHistory } from "history";
 // import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import LandingNew from "./LandingNew";
@@ -51,6 +59,11 @@ test("renders LandingNew and checks dropdown", async () => {
 test("Login button redirects to /HRhome", () => {
   const history = createMemoryHistory();
   render(<LandingNew history={history} />);
-//   fireEvent.click(screen.getByText("Login"));
-//   expect(history.location.pathname).toBe("/HRhome");
+  //   fireEvent.click(screen.getByText("Login"));
+  //   expect(history.location.pathname).toBe("/HRhome");
+});
+fetchMock.enableMocks();
+test("renders LandingNew and checks basic interactions", async () => {
+  const { getByTestID } = render(<LandingNew />);
+  const loginButton = screen.getByTestID("Login");
 });

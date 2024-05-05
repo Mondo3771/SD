@@ -22,6 +22,7 @@ import {
 
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+
 const pause = (taskToPause,time) => {
   fetch(`/api/Tasks/`, {
     method: "PUT",

@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import StaffDashboard from "./StaffDashboard";
 import { Projects, add, deleteTask, pause } from "./StaffDashboard";
-
+import fetchMock from "jest-fetch-mock";
 fetchMock.enableMocks();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
