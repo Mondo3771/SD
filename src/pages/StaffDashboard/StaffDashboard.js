@@ -22,7 +22,7 @@ import {
 
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-const pause = () => {
+const pause = (taskToPause,time) => {
   fetch(`/api/Tasks/`, {
     method: "PUT",
     headers: {
@@ -41,7 +41,7 @@ const pause = () => {
       console.error("Error:", error);
     });
 };
-const add = (setAllProjects) => {
+const add = (taskToAdd, setAllProjects) => {
   fetch("/api/Tasks", {
     method: "POST",
     headers: {
@@ -59,7 +59,7 @@ const add = (setAllProjects) => {
       console.error("Error:", error);
     });
 };
-const deleteTask = () => {
+const deleteTask = (taskToDelete) => {
   fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
     method: "DELETE",
     headers: {
@@ -112,7 +112,7 @@ const StaffDashboard = () => {
 
   const handleAdd = (taskToAdd) => {
     taskToAdd["Emp_ID"] = Emp_ID;
-    add();
+    add(taskToAdd,setAllProjects);
   };
 
   const projectNameChange = (event) => {
@@ -125,7 +125,7 @@ const StaffDashboard = () => {
   const handlePause = (taskToPause, time) => {
     // takes time from the task and task id
 
-    pause();
+    pause(taskToPause, time);
   };
   const handleStop = (taskToStop) => {
     // in here we pass a task_id and
@@ -147,7 +147,7 @@ const StaffDashboard = () => {
   };
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
-    deleteTask();
+    deleteTask(taskToDelete);
     setAllProjects((prevTasks) =>
       prevTasks.filter((task) => task !== taskToDelete)
     );
