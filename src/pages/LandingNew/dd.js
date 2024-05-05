@@ -15,29 +15,32 @@ import {
   About,
 } from "./LandingNew.styles";
 // =======
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Index from "../../routes/Index";
+import React,{useState,useEffect} from 'react'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Index from '../../routes/Index';
 
-import Loader from "../../components/Loader/Loader";
 
+
+import Loader from '../../components/Loader/Loader';
 const LandingNew = () => {
+
   const history = useHistory();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
-  const [Loaded, setLoaded] = useState(false); //to perfrom login()
+  const [Loaded, setLoaded] = useState(false);//to perfrom login()
 
-  const [loading, setLoading] = useState(false); //for Loader
+  const [loading,setLoading]=useState(false);//for Loader
   const [data, setData] = useState("");
 
   const childToParent = (childdata) => {
     setData(childdata);
     setLoaded(true);
   };
+
   useEffect(() => {
     if (data) {
-      setLoading(true);
+      setLoading(true)
       login();
     }
   }, [data]);
@@ -47,50 +50,64 @@ const LandingNew = () => {
       .then((response) => response.json())
       .then((DB) => {
         console.log("Success:", DB.message);
-        if (DB.message === "No user found") {
+        if(DB.message==='No user found'){
           const get = () =>
-            fetch("/api/login", {
-              method: "POST",
-              //authorisation header pass token in auth header
-              //user google user id to connect google and our database
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                Department: null,
-                EMP_type: "Staff",
-                Email: data.email,
-                Name: data.given_name,
-                Surname: data.family_name,
-                Token: data.sub,
-              }),
+          fetch("/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              Department: null,
+              EMP_type: "Staff",
+              Email: data.email,
+              Name: data.given_name,
+              Surname: data.family_name,
+              Token: data.sub,
+            }),
+          })
+            .then((response) => response.json())
+            .then((DB) => {
+              console.log("Success:", DB);
+              setLoaded(true);
+              history.push(`/DashBoard`, { params: DB.data });
             })
-              .then((response) => response.json())
-              .then((DB) => {
-                console.log("Success:", DB);
-                setLoaded(true);
-                history.push(`/DashBoard`, { params: DB.data });
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-              });
-          get();
-        } else {
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+            get();
+
+
+
+
+
+
+
+        }
+        else{
           if (DB.data.EMP_type === "HR") {
             history.push(`/HRhome`, { params: DB.data });
           } else {
-            history.push(`/DashBoard`, { params: DB.data });
+            history.push(`/Lunch`, { params: DB.data });
           }
+
         }
+         
       })
       .catch((error) => {
         console.error("Error:", error);
       })
-      .finally(() => {
+      .finally(()=>{
         setLoading(false);
+
       });
   };
-  // >>>>>>> UImakeOver
+// >>>>>>> UImakeOver
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <>
       <LandingPageBack>
@@ -116,7 +133,8 @@ const LandingNew = () => {
             </p>
           </section>
         </Header>
-        {loading && <Loader />}
+      {loading && <Loader />}
+
 
         {isDropdownOpen && (
           <DropDown>
@@ -182,18 +200,27 @@ const LandingNew = () => {
             </About>
           </DropDown>
         )}
-        {isDropdownOpen || isAboutOpen ? (
-          <section className="open">
-            Connecting Teams, Boosting Productivity Together!
-            <Index data-testid="Login" child={childToParent} />
-          </section>
-        ) : (
-          <section className="text">
-            Connecting Teams, Boosting Productivity Together!
-            <Index data-testid="Login" child={childToParent} />
-          </section>
-        )}
+        {isDropdownOpen|| isAboutOpen?
+        <section className="open">
+        Connecting Teams, Boosting Productivity Together!
+        <Index child={childToParent} />
+
+      </section>
+        
+        
+        :
+        <section className="text">
+        Connecting Teams, Boosting Productivity Together!
+        <Index child={childToParent} />
+
+      </section>
+
+        
+      }
+      
+       
       </LandingPageBack>
+
     </>
   );
 };
