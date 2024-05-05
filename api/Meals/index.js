@@ -3,7 +3,7 @@ const sql = require("mssql");
 
 module.exports = async function (context, req) {
   const pool = await getPool();
-  const data = req.body;
+  let data = req.body;
   switch (req.method) {
     case "GET":
       if (req.query.Emp_ID === undefined || req.query.Emp_ID === null) {
@@ -51,6 +51,7 @@ module.exports = async function (context, req) {
       break;
     case "DELETE":
       try {
+        data = req.query;
         if (
           data.Booking_ID === undefined ||
           data.Booking_ID === "" ||
