@@ -9,29 +9,31 @@ const formatDate = (date) => {
   return temp;
 };
 
+const fetchData = (setallBookings, setLoaded) => {
+  fetch("/api/Bookings")
+    .then((response) => response.json())
+    .then((Bookings) => {
+      // console.log(Bookings);
+      const BookingsArr = Bookings.data.map((b, index) => {
+        let temp = b;
+        temp["Date_of_booking"] = temp["Date_of_booking"]
+          ? formatDate(temp["Date_of_booking"])
+          : "Null";
+        return { ...temp, id: index + 1 };
+      });
+      setallBookings(BookingsArr);
+      setLoaded(true);
+    });
+};
+
 const HRBookingsGrid = () => {
   const [rowId, setrowId] = useState(null);
-
+  0;
   const [allBookings, setallBookings] = useState(null);
   const [Loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const fetchData = () => {
-      fetch("/api/Bookings")
-        .then((response) => response.json())
-        .then((Bookings) => {
-          console.log(Bookings);
-          const BookingsArr = Bookings.data.map((b, index) => {
-            let temp = b;
-            temp["Date_of_booking"] = temp["Date_of_booking"] ? formatDate(temp["Date_of_booking"]) : "Null"
-            return { ...temp, id: index + 1 };
-          });
-
-          setallBookings(BookingsArr);
-          setLoaded(true);
-        });
-    };
-    fetchData();
+    fetchData(setallBookings, setLoaded);
   }, []);
 
   //   const removeEmp = (id, Emp_ID) => {
@@ -207,3 +209,4 @@ const HRBookingsGrid = () => {
 };
 
 export default HRBookingsGrid;
+export { fetchData, formatDate };

@@ -12,19 +12,12 @@ import {
 import logo from "../../pages/HRHome/Images/logo3.svg";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-const formatDate = (date) => {
-  const temp = date.split("T")[0];
-  return temp;
-};
-
 const HRMeals = () => {
   const [Meals, setMeals] = useState([]);
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [changed, setChanged] = useState(false);
-
-
 
   useEffect(() => {
     const getMeals = () => {
@@ -44,7 +37,6 @@ const HRMeals = () => {
     getMeals();
     // fetch all meals from database
   }, []);
-  
 
   const [viewMealState, setViewMealState] = useState(false);
 
