@@ -30,8 +30,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=False react-scripts build",
-    "test": "react-scripts test",
+    "build": "react-scripts build",
+    "test": "react-scripts test --coverage --watchAll=false",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "eject": "react-scripts eject"
   },
   "jest": {
