@@ -13,7 +13,6 @@ import LandingNew from "./pages/LandingNew/LandingNew";
 import Carousel from "./components/Carousel/Carousel";
 
 import { register } from 'swiper/element/bundle';
-import Meals from "./pages/Meals/Meals";
 // register Swiper custom elements
 register(); 
 function App() {
