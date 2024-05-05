@@ -12,7 +12,7 @@ function Modal({ setOpenModal, data ,employee, booking}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Emp_ID: Emp_ID, Meal_ID: Meal_ID }),
+        body: JSON.stringify({ "Emp_ID": Emp_ID, "Meal_ID": Meal_ID, "Date": new Date()}),
       })
         .then((response) => response.json())
         .then((data) => {
