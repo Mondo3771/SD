@@ -9,7 +9,8 @@ import {
   ShowMealCard,
   Wrapper,
 } from "./HRMeals.styles";
-import logo from "../../pages/HRHome/Images/logo3.svg";
+// import logo from "../../pages/HRHome/Images/logo3.svg";
+import logo from "../../Images/logo3.svg";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 const HRMeals = () => {

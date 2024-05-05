@@ -1,4 +1,3 @@
-
 import React from "react";
 import HRdatagrid from "../../components/HRdatagrid/HRdatagrid";
 import { Header, Wrapper, Card } from "./HRHome.styles";
@@ -39,7 +38,6 @@ const HRHome = () => {
           <h2>Manage Users</h2>
         </section>
         <Card>
-         
           <HRdatagrid></HRdatagrid>
         </Card>
       </Wrapper>
