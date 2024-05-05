@@ -75,6 +75,7 @@ const DELETEEmp = (Emp_ID) => {
 const HRdatagrid = () => {
   const [rowId, setrowId] = useState(null);
   const location = useLocation();
+
   console.log(location, "location");
   let user = null;
   if (!location.state) {
@@ -82,7 +83,6 @@ const HRdatagrid = () => {
   } else {
     user = location.state.params;
   }
-
   const [allEmployeedata, setallEmployeedata] = useState(null);
   const [Loaded, setLoaded] = useState(false);
 
