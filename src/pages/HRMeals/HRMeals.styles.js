@@ -6,7 +6,7 @@ export const Header = styled.header`
   display: flex;
   padding: 0.5rem 3rem;
   justify-content: space-between;
-  min-height: 14vh;
+  min-height: 12vh;
   align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
@@ -79,7 +79,7 @@ export const Card = styled.article`
   flex: 0.7;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 20px;
-  max-height: 50vh;
+  max-height: 60vh;
   color: var(--white);
   align-items: center;
   padding: 30px;
@@ -98,9 +98,9 @@ export const CreateMealCard = styled.div`
   display: flex;
   flex-direction: column;
   //width: 12vw;
-  gap: 0.5rem;
+  gap: 2rem;
   width: 30vw;
-  height: 53vh;
+  height: 62vh;
   color: var(--dark);
   flex: 0.3;
   margin: 0 20px;
@@ -115,14 +115,26 @@ export const CreateMealCard = styled.div`
   overflow-y: auto;
 
   .input {
-    width: 20vw;
-    height: 3vh;
-    border-radius: 10px;
+    height: 6vh;
+    font-size: 1.1rem;
+    width: 17vw;
+    border-radius: 20px;
+    font-family: inherit;
+    background-color: var(--white);
+    color: var(--darkest);
   }
 
   .available {
     display: flex;
     gap: 0.5rem;
+  }
+  ::placeholder {
+    font-family: inherit;
+    color: rgba(0, 0, 0, 0.2);
+
+    font-size: 1.1rem;
+    text-align: left;
+    align-items: center;
   }
 
   button {
