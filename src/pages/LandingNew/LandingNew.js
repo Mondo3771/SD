@@ -32,15 +32,9 @@ const LandingNew = () => {
   const [data, setData] = useState("");
 
   const childToParent = (childdata) => {
-    setData(childdata);
+    setData(0);
     setLoaded(true);
   };
-  useEffect(() => {
-    if (data) {
-      setLoading(true);
-      login();
-    }
-  }, [data]);
 
   const login = () => {
     fetch(`/api/login?Email=${data.email}&Token=${data.sub}`)
@@ -91,6 +85,11 @@ const LandingNew = () => {
       });
   };
   // >>>>>>> UImakeOver
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <>
       <LandingPageBack>
