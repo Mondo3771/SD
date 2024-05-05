@@ -1,10 +1,11 @@
 // <<<<<<< LandingPageMakeover
 // import React, { useState } from "react";
-import logo from "./Images/logo3.svg";
+import logo from "../../Images/logo3.svg";
 import tasks from "./Images/icon2.PNG";
 import report from "./Images/reportingnew.PNG";
 import manage from "./Images/icon3.PNG";
 import book from "./Images/icon4.PNG";
+
 import {
   Header,
   DropDown,
@@ -14,22 +15,20 @@ import {
   About,
 } from "./LandingNew.styles";
 // =======
-import React,{useState,useEffect} from 'react'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import Index from '../../routes/Index';
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Index from "../../routes/Index";
 
+import Loader from "../../components/Loader/Loader";
 
-
-import Loader from '../../components/Loader/Loader';
 const LandingNew = () => {
-
   const history = useHistory();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
-  const [Loaded, setLoaded] = useState(false);//to perfrom login()
+  const [Loaded, setLoaded] = useState(false); //to perfrom login()
 
-  const [loading,setLoading]=useState(false);//for Loader
+  const [loading, setLoading] = useState(false); //for Loader
   const [data, setData] = useState("");
 
   const childToParent = (childdata) => {
@@ -37,73 +36,55 @@ const LandingNew = () => {
     setLoaded(true);
   };
 
-  useEffect(() => {
-    if (data) {
-      setLoading(true)
-      login();
-    }
-  }, [data]);
-
   const login = () => {
     fetch(`/api/login?Email=${data.email}&Token=${data.sub}`)
       .then((response) => response.json())
       .then((DB) => {
         console.log("Success:", DB.message);
-        if(DB.message==='No user found'){
+        if (DB.message === "No user found") {
           const get = () =>
-          fetch("/api/login", {
-            method: "POST",
-            //authorisation header pass token in auth header 
-            //user google user id to connect google and our database
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              Department: null,
-              EMP_type: "Staff",
-              Email: data.email,
-              Name: data.given_name,
-              Surname: data.family_name,
-              Token: data.sub,
-            }),
-          })
-            .then((response) => response.json())
-            .then((DB) => {
-              console.log("Success:", DB);
-              setLoaded(true);
-              history.push(`/DashBoard`, { params: DB.data });
+            fetch("/api/login", {
+              method: "POST",
+              //authorisation header pass token in auth header
+              //user google user id to connect google and our database
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                Department: null,
+                EMP_type: "Staff",
+                Email: data.email,
+                Name: data.given_name,
+                Surname: data.family_name,
+                Token: data.sub,
+              }),
             })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-            get();
-
-
-
-
-
-
-
-        }
-        else{
+              .then((response) => response.json())
+              .then((DB) => {
+                console.log("Success:", DB);
+                setLoaded(true);
+                history.push(`/DashBoard`, { params: DB.data });
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          get();
+        } else {
           if (DB.data.EMP_type === "HR") {
             history.push(`/HRhome`, { params: DB.data });
           } else {
             history.push(`/DashBoard`, { params: DB.data });
           }
-
         }
-         
       })
       .catch((error) => {
         console.error("Error:", error);
       })
-      .finally(()=>{
+      .finally(() => {
         setLoading(false);
-
       });
   };
-// >>>>>>> UImakeOver
+  // >>>>>>> UImakeOver
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -134,8 +115,7 @@ const LandingNew = () => {
             </p>
           </section>
         </Header>
-      {loading && <Loader />}
-
+        {loading && <Loader />}
 
         {isDropdownOpen && (
           <DropDown>
@@ -201,27 +181,18 @@ const LandingNew = () => {
             </About>
           </DropDown>
         )}
-        {isDropdownOpen|| isAboutOpen?
-        <section className="open">
-        Connecting Teams, Boosting Productivity Together!
-        <Index child={childToParent} />
-
-      </section>
-        
-        
-        :
-        <section className="text">
-        Connecting Teams, Boosting Productivity Together!
-        <Index child={childToParent} />
-
-      </section>
-
-        
-      }
-      
-       
+        {isDropdownOpen || isAboutOpen ? (
+          <section className="open">
+            Connecting Teams, Boosting Productivity Together!
+            <Index data-testid="Login" child={childToParent} />
+          </section>
+        ) : (
+          <section className="text">
+            Connecting Teams, Boosting Productivity Together!
+            <Index data-testid="Login" child={childToParent} />
+          </section>
+        )}
       </LandingPageBack>
-
     </>
   );
 };

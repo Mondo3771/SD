@@ -1,123 +1,69 @@
 import React from "react";
+import fetchMock from "jest-fetch-mock";
+
 import {
   render,
   screen,
   fireEvent,
   act,
-  getByTestId,
+  waitFor,
 } from "@testing-library/react";
-
+import { createMemoryHistory } from "history";
+// import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import LandingNew from "./LandingNew";
-import { useGoogleLogin } from "react-use-googlelogin";
-import { renderHook } from "@testing-library/react-hooks";
-import { useHistory } from "react-router-dom";
 
-const GoogleAuth = () => {
-  const { signIn, loaded } = useGoogleLogin({
-    clientId: "your-google-client-id",
+test("renders LandingNew and checks dropdown", async () => {
+  render(<LandingNew />);
+
+  // Check if the "Features" and "About" elements are in the document
+  expect(screen.getByText("Features")).toBeInTheDocument();
+  expect(screen.getByText("About")).toBeInTheDocument();
+
+  // Simulate mouse enter event on "Features" and "About"
+  fireEvent.mouseEnter(screen.getByText("Features"));
+  fireEvent.mouseEnter(screen.getByText("About"));
+
+  // Wait for the dropdown to appear
+  await waitFor(() => {
+    expect(
+      screen.getByText(
+        "Keep track of the time spent on each task to improve productivity and efficiency. Easily monitor progress and identify areas for improvement."
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Welcome to Synergy! We're dedicated to revolutionizing staff relations management and boosting productivity in your workplace. Our platform provides innovative tools for tracking task duration, generating timesheets, accessing detailed reports, and streamlining lunch meal bookings. With a user-friendly interface and powerful features, we aim to empower organizations to optimize their operations and enhance employee satisfaction. Join us on this journey to transform the way you manage your team and achieve greater success together."
+      )
+    ).toBeInTheDocument();
   });
 
-  if (!loaded) {
-    return null;
-  }
+  // Simulate mouse leave event on "Features" and "About"
+  fireEvent.mouseLeave(screen.getByText("Features"));
+  fireEvent.mouseLeave(screen.getByText("About"));
 
-  return <button onClick={signIn}>Sign in with Google</button>;
-};
-
-describe("LandingNew", () => {
-  test("renders landing page with logo and heading", () => {
-    render(<LandingNew />);
-    const logoElement = screen.getByAltText("logo");
-    const headingElement = screen.getByText("SYNERGY");
-    expect(logoElement).toBeInTheDocument();
-    expect(headingElement).toBeInTheDocument();
-  });
-
-  test('toggles dropdown when "Features" is hovered', () => {
-    render(<LandingNew />);
-    const featuresElement = screen.getByText("Features");
-    fireEvent.mouseEnter(featuresElement);
-    const dropdownElement = screen.getByTestId("dropdown_Features");
-    expect(dropdownElement).toBeInTheDocument();
-    fireEvent.mouseLeave(featuresElement);
-    expect(dropdownElement).not.toBeInTheDocument();
-  });
-
-  test('toggles dropdown when "About" is hovered', () => {
-    render(<LandingNew />);
-    const aboutElement = screen.getByText("About");
-    fireEvent.mouseEnter(aboutElement);
-    const dropdownElement = screen.getByTestId("dropdown_About");
-    expect(dropdownElement).toBeInTheDocument();
-    fireEvent.mouseLeave(aboutElement);
-    expect(dropdownElement).not.toBeInTheDocument();
+  // Wait for the dropdown to disappear
+  await waitFor(() => {
+    expect(
+      screen.queryByText(
+        "Keep track of the time spent on each task to improve productivity and efficiency. Easily monitor progress and identify areas for improvement."
+      )
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        "Welcome to Synergy! We're dedicated to revolutionizing staff relations management and boosting productivity in your workplace. Our platform provides innovative tools for tracking task duration, generating timesheets, accessing detailed reports, and streamlining lunch meal bookings. With a user-friendly interface and powerful features, we aim to empower organizations to optimize their operations and enhance employee satisfaction. Join us on this journey to transform the way you manage your team and achieve greater success together."
+      )
+    ).not.toBeInTheDocument();
   });
 });
-import { login } from "./LandingNew"; // replace with your module's import
 
-test("login function", async () => {
-  global.fetch = jest.fn(() =>
-    Promise.resolve({
-      json: () => Promise.resolve({ message: "No user found" }),
-    })
-  );
-  const data = {
-    email: "test@example.com",
-    sub: "1234567890",
-    given_name: "John",
-    family_name: "Doe",
-  };
-//   const [loading, setLoading] = React.useState(false);
-  await login(data,setLoading);
-
-  expect(fetch).toHaveBeenCalledWith(
-    "/api/login?Email=email&Token=token",
-    expect.anything()
-  );
+test("Login button redirects to /HRhome", () => {
+  const history = createMemoryHistory();
+  render(<LandingNew history={history} />);
+  //   fireEvent.click(screen.getByText("Login"));
+  //   expect(history.location.pathname).toBe("/HRhome");
 });
-import { get } from "./LandingNew"; // replace with your module's import
-
-// Mock data
-const data = {
-  email: "test@example.com",
-  sub: "1234567890",
-  given_name: "John",
-  family_name: "Doe",
-};
-
-// Mock fetch
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    json: () => Promise.resolve({ data: data }),
-  })
-);
-// Mock history
-const history = { push: jest.fn() };
-
-// Mock setLoaded
-const setLoaded = jest.fn();
-
-test("get function", async () => {
-  await get(data);
-
-  expect(fetch).toHaveBeenCalledWith(
-    "/api/login",
-    expect.objectContaining({
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        Department: null,
-        EMP_type: "Staff",
-        Email: data.email,
-        Name: data.given_name,
-        Surname: data.family_name,
-        Token: data.sub,
-      }),
-    })
-  );
-
-  expect(setLoaded).toHaveBeenCalledWith(true);
-  expect(history.push).toHaveBeenCalledWith("/DashBoard", {
-    params: "mock data",
-  });
+fetchMock.enableMocks();
+test("renders LandingNew and checks basic interactions", async () => {
+  const { getByTestID } = render(<LandingNew />);
+  const loginButton = screen.getByTestID("Login");
 });

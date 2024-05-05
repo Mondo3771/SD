@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import background from "./Images/dashbckgrd.svg";
-import newback from "./Images/Bckgrd.svg";
+import newback from "../../Images/Bckgrd.svg";
+
 
 export const Header = styled.header`
   position: sticky;
