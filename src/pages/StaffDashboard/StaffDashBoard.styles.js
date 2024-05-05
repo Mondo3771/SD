@@ -123,7 +123,7 @@ export const CreateTaskContainer = styled.section`
   transition: all 500ms ease-in-out;
 
   button {
-    3
+    
   }
 `;
 export const LabelHolder = styled.div`
@@ -213,7 +213,6 @@ export const TaskContainer = ({
   task,
   onPause,
   onStop,
-  Sheets,
   allProjects,
 }) => {
   const [timerRunning, setTimerRunning] = useState(false);
@@ -251,7 +250,7 @@ export const TaskContainer = ({
       }}
     >
       <p>{task.Description}</p>
-      <p>{task.Date}</p>
+      <p>{formatDate(task.Date)}</p>
       <p>{time !== task.Time ? formatTime(time) : formatTime(task.Time)}</p>
       <StopStartContainer>
         <button

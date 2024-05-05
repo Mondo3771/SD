@@ -6,7 +6,6 @@ import { ClockIcon, ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outlin
 
 // StaffDashboard styles
 import {
-  allProjects,
   Card,
   CreateTaskContainer,
   Header,
@@ -66,7 +65,7 @@ const Projects = () => {
     .then((response) => response.json())
     .then((data) => {
       console.log("Success:", data);
-      const uniques = filterUniqueProjects(allProjects);
+      const uniques = filterUniqueProjects(data);
       setUniqueProjectNames(uniques);
       setAllProjects(data);
       setLoaded(true);
@@ -102,21 +101,16 @@ Projects();
         .then((data) => {
           console.log("Success:", data);
           taskToAdd["Task_ID"] = data.Task_ID;
-          setAllProjects((prevTasks) => [taskToAdd,...prevTasks]);
+          setAllProjects((prev) => {
+            setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
+            return [taskToAdd, ...prev];
+          });
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
     add(); 
-
-
-
-
-    setAllProjects((prev) => {
-      setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
-      return [taskToAdd, ...prev];
-    });
   };
 
   const projectNameChange = (event) => {
@@ -150,11 +144,6 @@ Projects();
         });
     };
     pause();
-    // setAllProjects((prev) => {
-    //   const temp = prev.filter(project => project.Task_ID === taskToPause.Task_ID)[0]
-    //   console.log(temp)
-    //   return prev
-    // })
 
   };
   const handleStop = (taskToStop) => {
@@ -202,7 +191,7 @@ Projects();
         AllProjects.filter((p) => p.Task_ID !== taskToDelete.Task_ID)
       )
     );
-    // console.log(allProjects)
+
   };
 
   return (
