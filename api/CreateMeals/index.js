@@ -27,6 +27,7 @@ module.exports = async function (context, req) {
       break;
     case "DELETE":
       try {
+        console.log(data);
         if (
           data.Meal_ID === undefined ||
           data.Meal_ID === "" ||
@@ -41,7 +42,7 @@ module.exports = async function (context, req) {
           const resultSet = await pool
             .request()
             .input("Meal_ID", sql.Int, data.Meal_ID)
-            .query(`DELETE FROM Booking WHERE Meal_ID = @Meal_ID;
+            .query(`DELETE FROM Bookings WHERE Meal_ID = @Meal_ID;
             DELETE FROM Meals WHERE Meal_ID = @Meal_ID`);
           context.res = {
             staus: 200,
@@ -103,8 +104,9 @@ module.exports = async function (context, req) {
           const resultSet = await pool
             .request()
             .input("Availability", sql.Bit, data.Availability)
+            .input("Meal_ID", sql.Bit, data.Meal_ID)
             .query(
-              `UPDATE Meals SET Availability = @Availability, WHERE Meal_ID = @Meal_ID`
+              `UPDATE Meals SET Availability = @Availability WHERE Meal_ID = @Meal_ID`
             );
 
           context.res = {
