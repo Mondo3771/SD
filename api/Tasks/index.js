@@ -89,7 +89,7 @@ module.exports = async function (context, req) {
             .request()
             .input("Task_ID", sql.Int, Task_ID)
             .query(`UPDATE Tasks SET Active = 1 WHERE Task_ID = @Task_ID`);
-           
+
           context.res = {
             status: 200,
             body: { message: "Task successfully updated" },

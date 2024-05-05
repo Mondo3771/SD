@@ -82,7 +82,8 @@ module.exports = async function (context, req) {
       }
       break;
     case "POST":
-      try { console.log(data)
+      try {
+        console.log(data);
         if (
           data.Meal_ID === undefined ||
           data.Meal_ID === "" ||
