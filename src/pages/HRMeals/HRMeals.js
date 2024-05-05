@@ -96,7 +96,7 @@ const HRMeals = () => {
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
-  const [changed, setChanged] = useState(false);
+  const [changed,  setChanged] = useState(false);;
 
   useEffect(() => {
     const getMeals = () => {
@@ -232,7 +232,7 @@ const HRMeals = () => {
             {!viewMealState ? (
               <CreateMealCard>
                 <h2>Create Meals</h2>
-                <label htmlFor="name">Name: </label>
+
                 <input
                   name="name"
                   className="input"
@@ -240,12 +240,11 @@ const HRMeals = () => {
                   type="text"
                   onChange={mealNameChange}
                 ></input>
-                <label htmlFor="description">Description</label>
                 <input
                   name="description"
                   className="input"
                   type="text"
-                  placeholder="Pizza"
+                  placeholder="Description"
                   onChange={descriptionChange}
                 ></input>
 
@@ -263,8 +262,8 @@ const HRMeals = () => {
             ) : (
               <ShowMealCard>
                 <h3>{viewMeal.Name}</h3>
-                <label>Description: </label>
-                <p>{viewMeal.Description}</p>
+                <label></label>
+                <p>Description: {viewMeal.Description}</p>
                 <section>
                   <p>{viewMeal.Available ? "Available" : "Not Available"}</p>
                   <input
@@ -272,7 +271,14 @@ const HRMeals = () => {
                     checked={viewMeal.Available}
                     onChange={changeAvailableViewMeal}
                   ></input>
+                  <p>{viewMeal.Available ? "Available" : "Not Available"}</p>
+                  <input
+                    type="checkbox"
+                    checked={viewMeal.Available}
+                    onChange={changeAvailableViewMeal}
+                  ></input>
                 </section>
+                {changed && <button> Save Changes</button>}
                 {changed && <button> Save Changes</button>}
                 <button onClick={() => setViewMealState(false)}>Back</button>
               </ShowMealCard>
