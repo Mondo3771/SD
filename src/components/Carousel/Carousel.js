@@ -15,8 +15,10 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Modal from "../Modal/Modal";
 import Loader from "../Loader/Loader";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import StaffHeader from "../StaffHeader/StaffHeader";
+import { useActionData } from "react-router";
 
 const mock = [
   {
@@ -78,7 +80,13 @@ const mock = [
 ];
 
 const Carousel = () => {
+  const location = useLocation();
+  const data = location.state.params;
+
+
+  console.log(data);
   const [Meals, setMeals] = useState(null);
+  const[empBook,setempBook]=useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false);
@@ -97,14 +105,29 @@ const Carousel = () => {
         });
       // setLoaded(true);
     };
+
+    const Employee_meal = () => {
+      fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
+        .then((response) => response.json())
+        .then((book) => {
+          setempBook(book.data)
+        });
+    };
     fetchData();
+    Employee_meal();
   }, []);
+
+  // const data={
+  //   EMP_id:1,
+
+
+  // }
 
   return (
     <>
-      <StaffHeader></StaffHeader>
+      <StaffHeader employee={data}></StaffHeader>
       {modalOpen && (
-        <Modal setOpenModal={setModalOpen} data={selectedBooking} />
+        <Modal setOpenModal={setModalOpen} data={selectedBooking} employee={data} />
       )}
 
       <Wrapper>
@@ -165,14 +188,28 @@ const Carousel = () => {
                 ))}
               </Swiper>
               <section className="text">
-                <p>
+                {/* <p>
                   Welcome to the Meals page! We take your health and
                   productivity seriously. That's why we offer a selection of
                   nutritious and delicious lunches designed to boost both your
                   energy and performance. Enjoy a delightful lunch break that
                   keeps you focused and productive throughout the day. Bon
                   appétit!
-                </p>
+                </p> */}
+                
+                
+                {empBook &&
+                  empBook.map((meal,index) => (
+                    <div key={index}>
+                      <p>{meal.Name_of_Meal}</p>
+                      <p>{meal.Description}</p>
+                    </div>
+                  ))
+                }
+
+                  
+
+                  
               </section>
             </Swrapper>
           </Main>

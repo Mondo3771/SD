@@ -214,7 +214,7 @@ export const Card = styled.article`
   background-color: var(--dark);
   color: var(--white);
   //border: solid 2px rebeccapurple;
-  height: 35vh;
+  height: 30vh;
   width: 28vw;
   border-radius: 20px;
 

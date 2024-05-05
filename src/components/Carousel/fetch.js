@@ -3,14 +3,14 @@ import Index from "../../routes/Index";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
-const Employee_meal = () => {
-  fetch(`/api/Meals?Emp_ID=${Emp_ID}`)
-    .then((response) => response.json())
-    .then((data) => {
-      // Do something with your data
-      // this returns an array of meals
-    });
-};
+// const Employee_meal = () => {
+//   fetch(`/api/Meals?Emp_ID=${Emp_ID}`)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       // Do something with your data
+//       // this returns an array of meals
+//     });
+// };
 
 const DeleteBooking = (Booking_ID) => {
   fetch(`/api/CreateMeals/${Booking_ID}`, {
@@ -26,7 +26,7 @@ const DeleteBooking = (Booking_ID) => {
     });
 };
 
-const PostBooking = (Emp_ID, Meal_ID) => {
+export const PostBooking = (Emp_ID, Meal_ID) => {
   fetch(`/api/CreateMeals`, {
     method: "POST",
     headers: {

@@ -164,13 +164,11 @@ const StaffDashboard = () => {
   }
   //gets the unique project names
 
-  const Lunch=()=>{
-    history.push('/Lunch');
-  }
+ 
 
   return (
     <Wrapper>
-      <StaffHeader></StaffHeader>
+      <StaffHeader employee={data}></StaffHeader>
       {/* <Header>
         <section className="logo">
           <img src={logo} width="55vw" height="55vh"></img>

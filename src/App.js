@@ -19,20 +19,20 @@ register();
 function App() {
   
   return (
-    // <BrowserRouter>
-    //   <Switch>
-    //     <Route exact path="/" component={LandingNew} />
-    //     <Route path="/DashBoard" component={StaffDashboard} />
-    //     <Route path="/HRhome" component={HRHome} />
-    //     <Route path="/Lunch" component={Carousel} />
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={LandingNew} />
+        <Route path="/DashBoard" component={StaffDashboard} />
+        <Route path="/HRhome" component={HRHome} />
+        <Route path="/Lunch" component={Carousel} />
 
 
-    //   </Switch>
-    // </BrowserRouter>
-    //<HRHome />
-   //<LandingNew/>
-    // <HRdatagrid/>
-    <Carousel></Carousel>
+      </Switch>
+    </BrowserRouter>
+  //   <HRHome />
+  //  <LandingNew/>
+  //   <HRdatagrid/>
+  //   <Carousel></Carousel>
 // <<<<<<< Tholwana/UIBookings
 //     // <Meals></Meals>
 // =======

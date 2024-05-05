@@ -1,10 +1,29 @@
 import React from "react";
 import "./Modal.css";
 
-function Modal({ setOpenModal, data }) {
+// import { PostBooking } from "../Carousel/fetch";
+
+function Modal({ setOpenModal, data ,employee}) {
   const confirmBooking = () => {
-    //insert into databse
-    setOpenModal(false);
+   const PostBooking = (Emp_ID, Meal_ID) => {
+      fetch(`/api/CreateMeals`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Emp_ID: Emp_ID, Meal_ID: Meal_ID }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          
+          // Do something with your data
+        });
+    };
+    PostBooking(employee.Emp_ID,data.Meal_ID);
+
+
+
+      setOpenModal(false);
   };
 
   return (

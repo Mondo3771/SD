@@ -7,13 +7,13 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 
 
 
-const StaffHeader = () => {
+const StaffHeader = ({employee}) => {
     const history=useHistory();
     const Lunch=()=>{
-        history.push('/Lunch');
+        history.push('/Lunch',{ params:employee });
     }
     const Home=()=>{
-      history.push('/DashBoard');
+      history.push('/DashBoard',{ params:employee });
 
 
     }
