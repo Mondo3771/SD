@@ -7,13 +7,17 @@ import { jwtDecode } from 'jwt-decode';
 
 const Index = ({child}) => {
   return (
-    <section>
+    <section style={{
+      color:'transparent',
+       }}>
 
 <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
 <GoogleLogin
+
   onSuccess={credentialResponse => {
     const details=jwtDecode(credentialResponse.credential);
     // console.log(details);
+    console.log(credentialResponse);
     child(details);
     
   }}

@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 
 //icons
-import { ClockIcon, ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ClockIcon, ArrowRightIcon, TrashIcon, PlusIcon } from "@heroicons/react/24/outline";
 
+import logo from "./Images/logo3.svg";
 // StaffDashboard styles
 import {
   Card,
@@ -124,20 +125,19 @@ Projects();
     console.log("pause ", taskToPause);
     // takes time from the task and task id
     const pause = () => {
-      console.log(taskToPause);
       fetch(`/api/Tasks/`, {
         method: "PUT",
         headers: {
-          "Content-Type": "applicati`on/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          time: time,
-          taskID: taskToPause.Task_ID,
+          Time: time,
+          Task_ID: taskToPause.Task_ID,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success:", data.message);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -150,7 +150,7 @@ Projects();
     // console.log(taskToStop);
     // in here we pass a task_id and
     //cahnge true to false ,,,, ACtive
-    fetch(`/api/Tasks/?task_ID=${taskToStop.Task_ID}`, {
+    fetch(`/api/Tasks/?Task_ID=${taskToStop.Task_ID}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -159,7 +159,7 @@ Projects();
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        console.log("Success:", data.message);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -168,7 +168,7 @@ Projects();
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
     const deleteTask = () => {
-      fetch(`/api/Tasks/?task_ID=${taskToDelete.Task_ID}`, {
+      fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -176,7 +176,7 @@ Projects();
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success:", data.message);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -198,7 +198,7 @@ Projects();
     <Wrapper>
       <Header>
         <section className="logo">
-          <img className="logoPic"></img>
+          <img src={logo} width="55vw" height="55vh"></img>
           <h1>
             <a href="/">SYNERGY</a>
           </h1>
@@ -218,6 +218,9 @@ Projects();
         </nav>
         <ArrowRightIcon width={24} />
       </Header>
+      <section className="titlepage">
+        <h2>Task Tracker</h2>
+      </section>
 
       <Card>
         {!createTask ? (
@@ -233,19 +236,19 @@ Projects();
         ) : (
           <CreateTaskContainer>
             <LabelHolder>
-              <label>Project Name</label>
+              {/* <label>Project Name</label> */}
               <input
                 type="text"
-                placeholder="project name"
+                placeholder="Project Name"
                 value={name}
                 onChange={projectNameChange}
               ></input>
             </LabelHolder>
             <LabelHolder>
-              <label>Task Name</label>
+              {/* <label>Task Name</label> */}
               <input
                 type="text"
-                placeholder="task name"
+                placeholder="Task Name"
                 value={task}
                 onChange={taskChange}
               ></input>
@@ -265,7 +268,8 @@ Projects();
                 return handleAdd(newTask);
               }}
             >
-              Add task{" "}
+              {/* Add Task{" "} */}
+              <PlusIcon width={30}></PlusIcon>
             </button>
           </CreateTaskContainer>
         )}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import background from "./Images/Bckgrd.svg";
 //react
 import React, { useEffect, useState } from "react";
 
@@ -9,6 +9,7 @@ import {
   PauseIcon,
   TrashIcon,
   StopIcon,
+  PlusIcon
 } from "@heroicons/react/24/outline";
 
 const formatTime = (timeInSeconds) => {
@@ -30,17 +31,56 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
   box-sizing: border-box;
-  background: var(--dark);
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  background-image: url(${background});
+  //background: var(--darkest);
+  background-size: cover;
+  background-position: top;
+
   gap: 2rem;
+
+  h1 {
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  .titlepage {
+    display: flex;
+    flex-direction: start;
+    text-align: left;
+    padding-left: 10vw;
+    padding-top: 14vh;
+    width: 80vw;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--white);
+    font-size: 1.5rem;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: start;
+    text-align: left;
+    padding-left: 0;
+    width: 80vw;
+    color: var(--white);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
 `;
 
 export const Header = styled.div`
+  //position: sticky;
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  //background-color: var(--darkest);
   display: flex;
   padding: 0.5rem 3rem;
   justify-content: space-between;
   min-height: 14vh;
   align-items: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
   // border: 1px solid black;
 
   .logo {
@@ -50,6 +90,7 @@ export const Header = styled.div`
   a {
     font-size: 1.35rem;
     text-decoration: none;
+    color: white;
     transition: all 200 ease-in-out;
   }
 
@@ -58,42 +99,49 @@ export const Header = styled.div`
     padding: 0;
     list-style: none;
     gap: 5rem;
+    color: white;
   }
 
   a:visited {
-    color: black;
+    color: white;
   }
 
   li a:hover {
-    color: var(--darker);
+    color: var(--white);
   }
 `;
-
+//whole card section
 export const Card = styled.article`
   scroll-behavior: smooth;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 50px;
   box-shadow: 10px;
-  background: var(--whiter);
-  width: 1300px;
-  height: 500px;
-  color: var(--darkest);
+  width: 80vw;
+  max-height: 80vh;
+  color: var(--white);
   flex: 1;
   padding: 40px;
   margin: 0 auto 20px auto;
   display: flex;
+  overflow-y: auto;
   flex-direction: column;
-
+  //background: linear-gradient(65deg, var(--darkest), #3f2182);
+  //background: linear-gradient(120deg, #16154e, var(--dark));
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  //background-color: var(--whiter);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   .title {
     display: flex;
     gap: 1.5rem;
     transition: all 500ms ease-in-out;
+    color: var(--darkest);
   }
 
   .createTaskButton {
     display: flex;
     border: none;
-    background: var(--darker);
+    background: var(--white);
     border-radius: 10px;
     width: 500px;
     padding: 5px 10px;
@@ -105,10 +153,17 @@ export const Card = styled.article`
     font-family: inherit;
     font-weight: 400;
     font-size: 1.1rem;
+    color: var(--darkest);
+  }
+  h3 {
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--white);
   }
   .clock {
     // background: var(--darker);
-    color: var(--darker);
+    color: var(--white);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -117,25 +172,64 @@ export const Card = styled.article`
 
 export const CreateTaskContainer = styled.section`
   display: flex;
+  flex-direction: row;
   font-family: inherit;
-  border: 1px solid black;
+  //border: 1px solid black;
   padding: 5px;
+  gap: 1.5rem;
   transition: all 500ms ease-in-out;
+  background: transparent;
+  align-items: center;
 
   button {
-    
+    height: 6vh;
+    width: fit-content;
+    font-family: inherit;
+    border-radius: 100%;
+    background-color: var(--white);
+    color: var(--darkest);
+    font-size: 1.1rem;
+
+  }
+
+  input {
+    height: 6vh;
+    font-size: 1.1rem;
+    width: 15vw;
+    border-radius: 20px;
+    font-family: inherit;
+    background-color: var(--white);
+    color: var(--darkest);
+  }
+  ::placeholder {
+    font-family: inherit;
+    color: rgba(0, 0, 0, 0.2);
+
+    font-size: 1.1rem;
+    text-align: left;
+    align-items: center;
+  }
+
+  label {
+    font-family: inherit;
+    color: var(--white);
+    font-size: 1.1rem;
+    text-align: center;
+    align-items: center;
   }
 `;
 export const LabelHolder = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: row;
+  gap: 1rem;
   margin: 0 0.5rem;
+  
+
 `;
 
 export const Sheet = styled.div`
-  background-color: var(--darker);
-  border: 2px solid var(--darker);
+  background-color: var(--white);
+  border: 2px solid var(--white);
   border-radius: 10px 0px 0px 10px;
   margin: 5px 0;
   padding: 5px 10px;
@@ -145,13 +239,14 @@ export const Sheet = styled.div`
   width: 80%;
 
   p {
-    color: white;
+    color: var(--darkest);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.1rem;
   }
   .stopButton,
   .playButton,
   .pauseButton {
-    background-color: var(--darker);
+    background-color: var(--white);
     color: white;
     cursor: pointer;
     border: none;
@@ -231,7 +326,6 @@ export const TaskContainer = ({
       }, 1000);
 
       task.Time = time;
-      console.log(task.Time);
     } else {
       clearInterval(interval); // Stop the timer
       task.Time = time;

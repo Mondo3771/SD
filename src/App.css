@@ -1,10 +1,12 @@
 :root{
 
-    --darkest: #253439;
-    --darker: #456073;
-    --backgroundColor: #CADFDF;
-    --whiter:#ECF0EF;
-    --dark:#969FAE;
+    --darkest: #13072e;
+    --darker: #16144e;
+    --backgroundColor: #13072e;
+    --whiter:#514D74;
+    --dark:#3f2182;
+    --white: #bdbdbd;
+    
     
 }
 body{
