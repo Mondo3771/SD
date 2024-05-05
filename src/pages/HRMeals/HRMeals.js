@@ -187,7 +187,7 @@ const HRMeals = () => {
                 <a href="HRMeals">Meals</a>
               </li>
               <li>
-                <a href="#">Bookings</a>
+                <a href="HRBookings">Bookings</a>
               </li>
               <li>
                 <a href="#">Car Wash</a>
