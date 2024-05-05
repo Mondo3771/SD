@@ -26,7 +26,7 @@ const HRHome = () => {
                 <a href="#">Reports</a>
               </li>
               <li>
-                <a href="#">Meals</a>
+                <a href="HRMeals">Meals</a>
               </li>
               <li>
                 <a href="#">Bookings</a>
