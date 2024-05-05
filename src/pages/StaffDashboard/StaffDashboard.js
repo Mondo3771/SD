@@ -1,14 +1,12 @@
 //react
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 //icons
-import {
-  ClockIcon,
-  ArrowRightIcon,
-  PlusIcon,
-} from "@heroicons/react/24/outline";
+import { ClockIcon, ArrowRightIcon, PlusIcon } from "@heroicons/react/24/outline";
+import logo from '../../Images/logo3.svg'
 
-import logo from "./Images/logo3.svg";
+
 // StaffDashboard styles
 import {
   Card,
@@ -22,6 +20,8 @@ import {
 
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import StaffHeader from "../../components/StaffHeader/StaffHeader";
+
 
 const pause = (taskToPause,time) => {
   fetch(`/api/Tasks/`, {
@@ -165,9 +165,15 @@ const StaffDashboard = () => {
     }, []);
   }
   //gets the unique project names
+const Lunch=()=>{
+  history.push('/Lunch',{ params:User });
+
+}
+ 
 
   return (
     <Wrapper>
+      {/* <StaffHeader employee={data}></StaffHeader> */}
       <Header>
         <section className="logo">
           <img src={logo} width="55vw" height="55vh"></img>
@@ -184,7 +190,7 @@ const StaffDashboard = () => {
               <a href="#">Reports</a>
             </li>
             <li>
-              <a href="#">Lunch</a>
+              <a onClick={Lunch}>Lunch</a>
             </li>
           </ul>
         </nav>

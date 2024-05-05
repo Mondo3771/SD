@@ -2,7 +2,7 @@
 import React from "react";
 import HRdatagrid from "../../components/HRdatagrid/HRdatagrid";
 import { Header, Wrapper, Card } from "./HRHome.styles";
-import logo from "./Images/logo3.svg";
+import logo from "../../Images/logo3.svg";
 
 const HRHome = () => {
   return (

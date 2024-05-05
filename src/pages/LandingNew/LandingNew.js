@@ -1,10 +1,11 @@
 // <<<<<<< LandingPageMakeover
 // import React, { useState } from "react";
-import logo from "./Images/logo3.svg";
+import logo from "../../Images/logo3.svg";
 import tasks from "./Images/icon2.PNG";
 import report from "./Images/reportingnew.PNG";
 import manage from "./Images/icon3.PNG";
 import book from "./Images/icon4.PNG";
+
 import {
   Header,
   DropDown,
@@ -47,7 +48,7 @@ const LandingNew = () => {
           if (DB.data.EMP_type === "HR") {
             history.push(`/HRhome`, { params: DB.data });
           } else {
-            history.push(`/DashBoard`, { params: DB.data });
+            history.push(`/Dashboard`, { params: DB.data });
           }
         }
       })
