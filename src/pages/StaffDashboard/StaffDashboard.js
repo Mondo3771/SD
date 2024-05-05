@@ -2,7 +2,11 @@
 import React, { useState } from "react";
 
 //icons
-import { ClockIcon, ArrowRightIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ClockIcon,
+  ArrowRightIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 
 import logo from "./Images/logo3.svg";
 // StaffDashboard styles
@@ -18,6 +22,74 @@ import {
 
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+const pause = () => {
+  fetch(`/api/Tasks/`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      Time: time,
+      Task_ID: taskToPause.Task_ID,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data.message);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+const add = (setAllProjects) => {
+  fetch("/api/Tasks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(taskToAdd),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+      taskToAdd["Task_ID"] = data.data.Task_ID;
+      setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+const deleteTask = () => {
+  fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data.message);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+const Projects = (setAllProjects, setLoaded, Emp_ID) => {
+  fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.data.length === 0) {
+        return;
+      } else {
+        console.log("Success:", data.message);
+        setAllProjects(data.data);
+        setLoaded(true);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
 
 const StaffDashboard = () => {
   const location = useLocation();
@@ -28,23 +100,7 @@ const StaffDashboard = () => {
   const [AllProjects, setAllProjects] = useState([]);
 
   useEffect(() => {
-    const Projects = () => {
-      fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.data.length === 0) {
-            return;
-          } else {
-            console.log("Success:", data.message);
-            setAllProjects(data.data);
-            setLoaded(true);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
-    Projects();
+    Projects(setAllProjects,setLoaded,Emp_ID);
   }, []);
 
   const [task, setTask] = useState("");
@@ -56,24 +112,6 @@ const StaffDashboard = () => {
 
   const handleAdd = (taskToAdd) => {
     taskToAdd["Emp_ID"] = Emp_ID;
-    const add = () => {
-      fetch("/api/Tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(taskToAdd),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          taskToAdd["Task_ID"] = data.data.Task_ID;
-          setAllProjects((prevTasks) => [...prevTasks, taskToAdd]);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
     add();
   };
 
@@ -86,25 +124,7 @@ const StaffDashboard = () => {
   };
   const handlePause = (taskToPause, time) => {
     // takes time from the task and task id
-    const pause = () => {
-      fetch(`/api/Tasks/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Time: time,
-          Task_ID: taskToPause.Task_ID,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data.message);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
+
     pause();
   };
   const handleStop = (taskToStop) => {
@@ -127,23 +147,7 @@ const StaffDashboard = () => {
   };
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
-    const deleteTask = () => {
-      fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data.message);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
     deleteTask();
-    // console.log(AllProjects);
     setAllProjects((prevTasks) =>
       prevTasks.filter((task) => task !== taskToDelete)
     );
@@ -265,20 +269,8 @@ const StaffDashboard = () => {
     </Wrapper>
   );
 };
-
-// export const StaffDashBoardLoader = () => {
-//   // get all task by ID
-//   const Projects = fetch(`/api/Tasks/${Emp_ID}`)
-//     .then((response) => response.json())
-//     .then((data) => {
-//       console.log("Success:", data);
-//       console.log(data);
-
-//       return data;
-//     })
-//     .catch((error) => {
-//       console.error("Error:", error);
-//     });
-//   return { Projects };
-// };
 export default StaffDashboard;
+
+export { Projects, add, pause, deleteTask };
+
+

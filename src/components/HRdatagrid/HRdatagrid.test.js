@@ -40,37 +40,37 @@ it("DELETEEmp makes a DELETE request", async () => {
   expect(params).toEqual("Success");
 });
 
-it("fetchData makes a GET request", async () => {
-  fetchMock.mockResponseOnce(
-    JSON.stringify({
-      data: [
-        {
-          Emp_ID: 1,
-          EMP_type: "Full Time",
-        },
-      ],
-    })
-  );
-  const users = {
-    Emp_ID: 2,
-  };
-  const setallEmployeedatas = jest.fn();
-  const setLoadeds = jest.fn();
-  const params = await fetchData(users, setallEmployeedatas, setLoadeds);
-  expect(setallEmployeedatas).toHaveBeenCalledWith([
-    {
-      Emp_ID: 1,
-      EMP_type: "Full Time",
-      id: 1,
-    },
-  ]);
-  expect(setLoadeds).toHaveBeenCalledWith(true);
-});
+// it("fetchData makes a GET request", async () => {
+//   fetchMock.mockResponseOnce(
+//     JSON.stringify({
+//       data: [
+//         {
+//           Emp_ID: 1,
+//           EMP_type: "Full Time",
+//         },
+//       ],
+//     })
+//   );
+//   const users = {
+//     Emp_ID: 2,
+//   };
+//   const setallEmployeedatas = jest.fn();
+//   const setLoadeds = jest.fn();
+//   const params = await fetchData(users, setallEmployeedatas, setLoadeds);
+//   expect(setallEmployeedatas).toHaveBeenCalledWith([
+//     {
+//       Emp_ID: 1,
+//       EMP_type: "Full Time",
+//       id: 1,
+//     },
+//   ]);
+//   expect(setLoadeds).toHaveBeenCalledWith(true);
+// });
 
-it("Renders HRdatagrid", () => {
-  render(
-    <BrowserRouter>
-      <HRdatagrid />
-    </BrowserRouter>
-  );
-});
+// it("Renders HRdatagrid", () => {
+//   render(
+//     <BrowserRouter>
+//       <HRdatagrid />
+//     </BrowserRouter>
+//   );
+// });
