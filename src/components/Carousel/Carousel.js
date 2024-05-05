@@ -99,6 +99,7 @@ const Carousel = () => {
 
   const Book = (booking) => {
     setSelectedBooking(booking);
+    // console.log(booking ,'hello');
     setModalOpen(true);
   };
   useEffect(() => {
@@ -176,11 +177,11 @@ const Carousel = () => {
 
                 className="swiper_container"
               >
-                {mock.map((booking, index) => (//change
+                {Meals.map((booking, index) => (//change
                   <SwiperSlide key={index}>
                     <Card onClick={() => Book(booking)} isTop={index === topCardIndex}>
                       <section className="textwrap">
-                        <h1>{booking.Meal}</h1>
+                        <h1>{booking.Name_of_Meal}</h1>
                         <p>Description: {booking.Description}</p>
                         {/* <p>Allergens: {booking.Allergens}</p> */}
                         {/* <p>Date: {booking.Date}</p> */}

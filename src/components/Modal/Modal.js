@@ -18,12 +18,13 @@ function Modal({ setOpenModal, data, employee, booking }) {
         }),
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+        .then((book) => {
+          console.log(book,'hey');
 
           // Do something with your data
         });
     };
+    // console.log(data.Meal_ID);
     PostBooking(employee.Emp_ID, data.Meal_ID);
 
     setOpenModal(false);

@@ -81,7 +81,7 @@ module.exports = async function (context, req) {
       }
       break;
     case "POST":
-      try {
+      try { console.log(data)
         if (
           data.Meal_ID === undefined ||
           data.Meal_ID === "" ||
@@ -96,7 +96,7 @@ module.exports = async function (context, req) {
             body: {},
           };
         } else {
-          console.log(data);
+          // console.log(data);
           // If the ID exists, update the Emp_type
           const resultSet = await pool
             .request()
