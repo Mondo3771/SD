@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 //icons
-import { ClockIcon, ArrowRightIcon, PlusIcon } from "@heroicons/react/24/outline";
-import logo from '../../Images/logo3.svg'
-
+import {
+  ClockIcon,
+  ArrowRightIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
+import logo from "../../Images/logo3.svg";
 
 // StaffDashboard styles
 import {
@@ -22,8 +25,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import StaffHeader from "../../components/StaffHeader/StaffHeader";
 
-
-const pause = (taskToPause,time) => {
+const pause = (taskToPause, time) => {
   fetch(`/api/Tasks/`, {
     method: "PUT",
     headers: {
@@ -94,6 +96,7 @@ const Projects = (setAllProjects, setLoaded, Emp_ID) => {
 };
 
 const StaffDashboard = () => {
+  const history = useHistory();
   const location = useLocation();
   const data = location.state.params; // Remove this line
   const User = data;
@@ -102,7 +105,7 @@ const StaffDashboard = () => {
   const [AllProjects, setAllProjects] = useState([]);
 
   useEffect(() => {
-    Projects(setAllProjects,setLoaded,Emp_ID);
+    Projects(setAllProjects, setLoaded, Emp_ID);
   }, []);
 
   const [task, setTask] = useState("");
@@ -114,7 +117,7 @@ const StaffDashboard = () => {
 
   const handleAdd = (taskToAdd) => {
     taskToAdd["Emp_ID"] = Emp_ID;
-    add(taskToAdd,setAllProjects);
+    add(taskToAdd, setAllProjects);
   };
 
   const projectNameChange = (event) => {
@@ -165,11 +168,9 @@ const StaffDashboard = () => {
     }, []);
   }
   //gets the unique project names
-const Lunch=()=>{
-  history.push('/Lunch',{ params:User });
-
-}
- 
+  const Lunch = () => {
+    history.push("/Lunch", { params: User });
+  };
 
   return (
     <Wrapper>
@@ -280,5 +281,3 @@ const Lunch=()=>{
 export default StaffDashboard;
 
 export { Projects, add, pause, deleteTask };
-
-

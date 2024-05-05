@@ -28,7 +28,6 @@ const fetchData = (setallBookings, setLoaded) => {
 
 const HRBookingsGrid = () => {
   const [rowId, setrowId] = useState(null);
-  0;
   const [allBookings, setallBookings] = useState(null);
   const [Loaded, setLoaded] = useState(false);
 
