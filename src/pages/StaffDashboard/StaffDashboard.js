@@ -59,6 +59,7 @@ const add = (taskToAdd, setAllProjects) => {
       console.error("Error:", error);
     });
 };
+
 const deleteTask = (taskToDelete) => {
   fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
     method: "DELETE",
