@@ -12,10 +12,12 @@ function Modal({ setOpenModal, data ,employee, booking}) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "Emp_ID": Emp_ID, "Meal_ID": Meal_ID, "Date": new Date()}),
+        body: JSON.stringify({ "Emp_ID": Emp_ID, "Meal_ID": Meal_ID, "Date": new Date().toISOString()}),
       })
         .then((response) => response.json())
         .then((data) => {
+
+          console.log(data);
           
           // Do something with your data
         });
