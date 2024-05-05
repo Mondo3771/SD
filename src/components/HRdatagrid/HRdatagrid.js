@@ -11,6 +11,12 @@ import {
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 
+const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
+  DELETEEmp(Emp_ID);
+  const updatedEmployees = allEmployeedata.filter((emp) => emp.id !== id);
+  setallEmployeedata(updatedEmployees);
+};
+
 const updateEmp = (params) =>
   fetch("/api/AllEmployees", {
     method: "PUT",
@@ -45,7 +51,7 @@ const fetchData = (users, setallEmployeedatas, setLoadeds) =>
       setallEmployeedatas(employeesWithId);
       setLoadeds(true);
     });
-const DELETEEmp = (Emp_ID) =>
+const DELETEEmp = (Emp_ID) => {
   fetch("/api/AllEmployees", {
     method: "DELETE",
     headers: {
@@ -64,6 +70,7 @@ const DELETEEmp = (Emp_ID) =>
       console.log(error);
       return "Error";
     });
+};
 
 const HRdatagrid = () => {
   const [rowId, setrowId] = useState(null);
@@ -82,15 +89,6 @@ const HRdatagrid = () => {
   useEffect(() => {
     fetchData(user, setallEmployeedata, setLoaded);
   }, []);
-
-  const removeEmp = (id, Emp_ID) => {
-    // need ID to remove employee
-    // query to remove email with row
-
-    DELETEEmp(Emp_ID);
-    const updatedEmployees = allEmployeedata.filter((emp) => emp.id !== id);
-    setallEmployeedata(updatedEmployees);
-  };
 
   const columns = [
     {
@@ -170,7 +168,14 @@ const HRdatagrid = () => {
             fontSize: "0.5rem",
             cursor: "pointer",
           }}
-          onClick={() => removeEmp(params.row.id, params.row.Emp_ID)}
+          onClick={() =>
+            removeEmp(
+              params.row.id,
+              params.row.Emp_ID,
+              setallEmployeedata,
+              allEmployeedata
+            )
+          }
         >
           <TrashIcon width="3vw" height="4vh" textAlign="center" />
         </button>
@@ -235,4 +240,4 @@ const HRdatagrid = () => {
 
 export default HRdatagrid;
 
-export { DELETEEmp, updateEmp, fetchData };
+export { DELETEEmp, updateEmp, fetchData, removeEmp };

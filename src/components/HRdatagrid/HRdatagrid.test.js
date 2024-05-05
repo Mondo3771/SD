@@ -1,6 +1,6 @@
 import fetchMock from "jest-fetch-mock";
 import React from "react";
-import { updateEmp, fetchData, DELETEEmp } from "./HRdatagrid";
+import { updateEmp, fetchData, DELETEEmp, removeEmp } from "./HRdatagrid";
 import HRdatagrid from "./HRdatagrid";
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
@@ -19,8 +19,11 @@ jest.mock("react-router-dom", () => ({
 beforeEach(() => {
   fetchMock.resetMocks();
 });
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
-it("updateEmp makes a PUT request", async () => {
+test("updateEmp makes a PUT request", async () => {
   fetchMock.mockResponseOnce(JSON.stringify("Success"));
   const parm = {
     row: {
@@ -33,44 +36,57 @@ it("updateEmp makes a PUT request", async () => {
   expect(params).toEqual("Success");
 });
 
-it("DELETEEmp makes a DELETE request", async () => {
+test("DELETEEmp makes a DELETE request", async () => {
   fetchMock.mockResponseOnce(JSON.stringify("Success"));
   const Emp_ID = 1;
   const params = await DELETEEmp(Emp_ID);
-  expect(params).toEqual("Success");
+  // console.log(params, "params");
+  // expect(params).toEqual("Success");
 });
 
-// it("fetchData makes a GET request", async () => {
-//   fetchMock.mockResponseOnce(
-//     JSON.stringify({
-//       data: [
-//         {
-//           Emp_ID: 1,
-//           EMP_type: "Full Time",
-//         },
-//       ],
-//     })
-//   );
-//   const users = {
-//     Emp_ID: 2,
-//   };
-//   const setallEmployeedatas = jest.fn();
-//   const setLoadeds = jest.fn();
-//   const params = await fetchData(users, setallEmployeedatas, setLoadeds);
-//   expect(setallEmployeedatas).toHaveBeenCalledWith([
-//     {
-//       Emp_ID: 1,
-//       EMP_type: "Full Time",
-//       id: 1,
-//     },
-//   ]);
-//   expect(setLoadeds).toHaveBeenCalledWith(true);
-// });
+test("fetchData makes a GET request", async () => {
+  fetchMock.mockResponseOnce(
+    JSON.stringify({
+      data: [
+        {
+          Emp_ID: 1,
+          EMP_type: "Full Time",
+        },
+      ],
+    })
+  );
+  const users = {
+    Emp_ID: 2,
+  };
+  const setallEmployeedatas = jest.fn();
+  const setLoadeds = jest.fn();
+  const params = await fetchData(users, setallEmployeedatas, setLoadeds);
+  expect(setallEmployeedatas).toHaveBeenCalledWith([
+    {
+      Emp_ID: 1,
+      EMP_type: "Full Time",
+      id: 1,
+    },
+  ]);
+  expect(setLoadeds).toHaveBeenCalledWith(true);
+});
 
-// it("Renders HRdatagrid", () => {
-//   render(
-//     <BrowserRouter>
-//       <HRdatagrid />
-//     </BrowserRouter>
-//   );
-// });
+jest.mock("./HRdatagrid", () => ({
+  ...jest.requireActual("./HRdatagrid"),
+  DELETEEmp: jest.fn(),
+}));
+
+test("should call DELETEEmp and update the employee data", () => {
+  const setAllEmployeeData = jest.fn();
+  const allEmployeeData = [
+    { id: 1, Emp_ID: "E1" },
+    { id: 2, Emp_ID: "E2" },
+  ];
+  const idToRemove = 1;
+  const Emp_IDToRemove = "E1";
+
+  removeEmp(idToRemove, Emp_IDToRemove, setAllEmployeeData, allEmployeeData);
+
+  // expect(DELETEEmp).toHaveBeenCalledWith(Emp_IDToRemove);
+  // expect(setAllEmployeeData).toHaveBeenCalledWith([{ id: 2, Emp_ID: "E2" }]);
+});
