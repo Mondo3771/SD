@@ -96,6 +96,7 @@ module.exports = async function (context, req) {
             body: {},
           };
         } else {
+          console.log(data);
           // If the ID exists, update the Emp_type
           const resultSet = await pool
             .request()
@@ -103,14 +104,14 @@ module.exports = async function (context, req) {
             .input("Meal_ID", sql.Int, data.Meal_ID)
             .input("Date_of_booking", sql.Date, data.Date_of_booking)
             .query(
-              `INSERT INTO Bookings (Emp_ID, Meal_ID, Date_of_booking) 
+              `INSERT INTO Bookings (Emp_ID, Meal_ID, Date_of_booking) OUTPUT INSERTED. *
              VALUES (@Emp_ID, @Meal_ID, @Date_of_booking)`
             );
 
           context.res = {
             status: 200,
             message: "Booking type Deleted successfully",
-            body: {},
+            body: { data: resultSet.recordset[0] },
           };
         }
       } catch (err) {
