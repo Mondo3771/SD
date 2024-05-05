@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 //icons
 import { ClockIcon, ArrowRightIcon, PlusIcon } from "@heroicons/react/24/outline";
+import logo from '../../Images/logo3.svg'
+
 
 // StaffDashboard styles
 import {
@@ -163,13 +165,16 @@ const StaffDashboard = () => {
     }, []);
   }
   //gets the unique project names
+const Lunch=()=>{
+  history.push('/Lunch',{ params:User });
 
+}
  
 
   return (
     <Wrapper>
-      <StaffHeader employee={data}></StaffHeader>
-      {/* <Header>
+      {/* <StaffHeader employee={data}></StaffHeader> */}
+      <Header>
         <section className="logo">
           <img src={logo} width="55vw" height="55vh"></img>
           <h1>
@@ -190,7 +195,7 @@ const StaffDashboard = () => {
           </ul>
         </nav>
         <ArrowRightIcon width={24} />
-      </Header> */}
+      </Header>
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>
