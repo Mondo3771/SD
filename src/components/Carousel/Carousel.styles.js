@@ -18,6 +18,16 @@ export const Wrapper = styled.section`
   align-items: center;
   /* align-items: center; */
 
+  .bookings{
+    p{
+      color: black;
+      padding-top: 1vw;
+    }
+    h2{
+      color: var(--dark);
+    }
+  }
+
   *,
   *::before,
   *::after {
@@ -70,7 +80,7 @@ export const Wrapper = styled.section`
   }
 
   .swiper_container {
-    height: 70vh;
+    height:30vh;
     width: 40vw;
     //padding-top: 17rem;
     /* position: relative; */
@@ -149,23 +159,18 @@ export const Wrapper = styled.section`
       transform: translateX(-20%) !important;
     }
   }
-  .swiper-container .swiper-button-next,
-.swiper-container .swiper-button-prev {
-  background-color: #ffffff; /* Background color */
-  color: #333333; /* Text color */
-  border-radius: 50%; /* Make buttons circular */
-  width: 40px; /* Set width */
-  height: 40px; /* Set height */
-  font-size: 24px; /* Adjust font size */
-  line-height: 40px; /* Center text vertically */
-}
+ 
 
 /* Example CSS for hover effect on navigation buttons */
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  background-color: #dddddd; /* Change background color on hover */
-  color: #555555; /* Change text color on hover */
+  /* background-color: #dddddd; Change background color on hover */
+  color: black; /* Change text color on hover */
 }
+.swiper-button-next,.swiper-button-prev{
+  color: var(--white);
+}
+
 
   .slider-controler .slider-arrow {
     background: var(--white);
@@ -207,15 +212,21 @@ export const Wrapper = styled.section`
 `;
 
 export const Card = styled.article`
+ background-color: ${({ isTop }) => isTop ? 'var(--darkpurple)' : 'var(--dark)'};
+ /* border: ${({ isTop }) => isTop ? 'solid 5px black' : '0px'}; */
+ filter: ${({ isTop }) => isTop ? 'none' : 'blur(2px)'};
+  transition: filter 0.3s ease; // Add transition for smoother blur effect
+
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--dark);
+  /* background-color: var(--dark); */
   color: var(--white);
   //border: solid 2px rebeccapurple;
   height: 30vh;
-  width: 28vw;
+  width: 26vw;
   border-radius: 20px;
 
   .textwrap {
@@ -254,9 +265,11 @@ export const Card = styled.article`
     font-size: 1.1rem;
   }
   &:hover {
-    background-color: var(
-      --darkpurple
-    ); // Change to a lighter background on hover
+    /* background-color: var( --darkpurple); // Change to a lighter background on hover */
+    transform: scale(1.05); // Scale up the card on hover
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // Add a slight shadow on hover
+    cursor: pointer;
+
   }
 `;
 

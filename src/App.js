@@ -32,7 +32,7 @@ function App() {
   //   <HRHome />
   //  <LandingNew/>
   //   <HRdatagrid/>
-  //   <Carousel></Carousel>
+    // <Carousel></Carousel>
 // <<<<<<< Tholwana/UIBookings
 //     // <Meals></Meals>
 // =======

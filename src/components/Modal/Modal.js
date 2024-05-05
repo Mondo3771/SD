@@ -3,8 +3,9 @@ import "./Modal.css";
 
 // import { PostBooking } from "../Carousel/fetch";
 
-function Modal({ setOpenModal, data ,employee}) {
+function Modal({ setOpenModal, data ,employee, booking}) {
   const confirmBooking = () => {
+
    const PostBooking = (Emp_ID, Meal_ID) => {
       fetch(`/api/CreateMeals`, {
         method: "POST",
@@ -29,7 +30,30 @@ function Modal({ setOpenModal, data ,employee}) {
   return (
     <main className="modalBackground">
       <section className="modalContainer">
-        <div className="titleCloseBtn">
+        
+        {booking?
+        <>
+        <article className="already">
+        <p className="already">You already have a booking</p>
+        <button
+            onClick={() => {
+              setOpenModal(false);
+            }}
+          >
+            Close
+          </button>
+
+        </article>
+          
+        
+
+        </>
+
+        
+      
+      :
+      <>
+         <div className="titleCloseBtn">
           <button
             onClick={() => {
               setOpenModal(false);
@@ -38,12 +62,16 @@ function Modal({ setOpenModal, data ,employee}) {
             X
           </button>
         </div>
-        <h2>{data.Name_of_Meal}</h2>
+       <h2>{data.Name_of_Meal}</h2>
         <p>Description: {data.Description}</p>
         {/* <p>Available: {data.Available ? "Yes" : "No"}</p> */}
         <section className="section">
           <button onClick={confirmBooking}>Confirm Booking</button>
         </section>
+      </>
+     
+      }
+        
       </section>
     </main>
   );

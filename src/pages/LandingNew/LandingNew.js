@@ -88,7 +88,7 @@ const LandingNew = () => {
           if (DB.data.EMP_type === "HR") {
             history.push(`/HRhome`, { params: DB.data });
           } else {
-            history.push(`/DashBoard`, { params: DB.data });
+            history.push(`/Lunch`, { params: DB.data });
           }
 
         }

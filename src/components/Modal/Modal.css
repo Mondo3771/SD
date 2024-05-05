@@ -13,6 +13,12 @@
   -webkit-backdrop-filter: blur(20px);
   
 }
+.already{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .modalContainer {
   width: 25vw;
