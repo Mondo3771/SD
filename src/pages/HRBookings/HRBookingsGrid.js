@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 
-
 // import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import Loader from "../../components/Loader/Loader";
+const formatDate = (date) => {
+  const temp = date.split("T")[0];
+  return temp;
+};
 
 const HRBookingsGrid = () => {
   const [rowId, setrowId] = useState(null);
-  // const location = useLocation();
-
-  // const user = location.state.params;
 
   const [allBookings, setallBookings] = useState(null);
   const [Loaded, setLoaded] = useState(false);
@@ -21,7 +21,13 @@ const HRBookingsGrid = () => {
         .then((response) => response.json())
         .then((Bookings) => {
           console.log(Bookings);
-          setallBookings(Bookings.data);
+          const BookingsArr = Bookings.data.map((b, index) => {
+            let temp = b;
+            temp["Date_of_booking"] = temp["Date_of_booking"] ? formatDate(temp["Date_of_booking"]) : "Null"
+            return { ...temp, id: index + 1 };
+          });
+
+          setallBookings(BookingsArr);
           setLoaded(true);
         });
     };
@@ -92,7 +98,7 @@ const HRBookingsGrid = () => {
       headerClassName: "headername",
     },
     {
-      field: "Date_of_Booking",
+      field: "Date_of_booking",
       headerName: "Date of Booking",
       flex: 1,
       headerClassName: "headername",
@@ -149,7 +155,6 @@ const HRBookingsGrid = () => {
     //     </button>
     //   ),
     // },
-    
   ];
 
   return (

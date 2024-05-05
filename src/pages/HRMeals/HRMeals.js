@@ -12,6 +12,11 @@ import {
 import logo from "../../pages/HRHome/Images/logo3.svg";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
+const formatDate = (date) => {
+  const temp = date.split("T")[0];
+  return temp;
+};
+
 const HRMeals = () => {
   const [Meals, setMeals] = useState([]);
   const [newMeal, setNewMeal] = useState({});
@@ -40,7 +45,7 @@ const HRMeals = () => {
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal, checked) =>
+  const changeAvailable = (meal) =>
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
@@ -48,19 +53,19 @@ const HRMeals = () => {
       },
       body: JSON.stringify({
         Meal_ID: meal.Meal_ID,
-        Availability: checked,
+        Availability: viewMeal.Availability,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         setViewMeal((prev) => {
           let temp = prev;
-          temp.Availability = checked;
+          temp.Availability = viewMeal.Availability;
           return temp;
         });
         setMeals((all) => {
           const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID);
-          temp.Availability = checked;
+          temp.Availability = viewMeal.Availability;
           const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
           const result = all;
           result[index] = temp;
@@ -137,7 +142,7 @@ const HRMeals = () => {
   };
 
   const changeAvailableViewMeal = (event) => {
-    changeAvailable(viewMeal, event.target.checked);
+    changeAvailable(viewMeal);
   };
 
   const deleteMeal = () => {
@@ -247,7 +252,6 @@ const HRMeals = () => {
                   <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
                   <input
                     type="checkbox"
-                    checked={viewMeal.Availability}
                     onChange={changeAvailableViewMeal}
                   ></input>
                 </section>
