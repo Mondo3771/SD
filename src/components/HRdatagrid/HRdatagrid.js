@@ -17,7 +17,10 @@ const HRdatagrid = () => {
   const [rowId, setrowId] = useState(null);
   const location = useLocation();
 
-  const user = location.state.params;
+  // const user = location.state.params;
+  const user = {
+    Emp_ID: 1,
+  };
 
   const [allEmployeedata, setallEmployeedata] = useState(null);
   const [Loaded, setLoaded] = useState(false);
@@ -215,7 +218,7 @@ const HRdatagrid = () => {
                 //border: 2,
                 color: "var(--white)",
                 fontSize: "1.1rem",
-              
+
                 background:
                   "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
                 backdropFilter: "blur(10px)",
