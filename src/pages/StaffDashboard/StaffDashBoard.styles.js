@@ -268,20 +268,23 @@ export const ProjectHolder = styled.div`
 
   .SheetHolderFin {
     display: flex;
+   
   }
-  //DELET Button 
-  .SheetHolderFin button {
+  //DELETE Button 
+  .deleteButtonFin {
     flex: 1;
     width: 50px;
-    border: 1px solid black;
-    background-color: var(--darker);
-    color: var(--whiter);
-    border: 2px solid var(--darker);
+    background-color: var(--white);
+    color: var(--darker);
+    border: 2px solid var(--white);
     border-radius: 0px 10px 10px 0 ;
     margin: 5px 0 5px 0px;
-    justify-self: right;
-    align-self: right;
-    // padding: 5px 1rem;
+    padding: 5px 100px;
+  }
+  .TrashIcon {
+  
+    margin: 0 0 0 6rem;
+   
   }
 `;
 

@@ -15,6 +15,8 @@ function App() {
         <Route path="/DashBoard" component={StaffDashboard} />
         <Route path="/HRhome" component={HRHome} />
         <Route path="/HRMeals" component={HRMeals} />
+        {/* <Route path="/" component={StaffDashboard} /> */}
+        
       </Switch>
     </BrowserRouter>
   );

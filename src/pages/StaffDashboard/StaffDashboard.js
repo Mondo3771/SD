@@ -50,9 +50,10 @@ function filterTasksByProject(Sheets, projectName) {
 
 const StaffDashboard = () => {
   const location = useLocation();
-   const data = location.state.params; // Remove this line
+  //  const data = location.state.params; // Remove this line
 
-  const Emp_ID = data.Emp_ID;
+  // const Emp_ID = data.Emp_ID;
+  const Emp_ID = 1;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
@@ -66,16 +67,17 @@ const Projects = () => {
     .then((response) => response.json())
     .then((data) => {
       console.log("Success:", data);
-      const uniques = filterUniqueProjects(data);
+      const uniques = filterUniqueProjects(data.data);
       setUniqueProjectNames(uniques);
-      setAllProjects(data);
+      setAllProjects(data.data);
       setLoaded(true);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 };
-Projects();
+// Projects();
+setLoaded(true)
    
   }, []);
 
@@ -100,8 +102,8 @@ Projects();
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
-          taskToAdd["Task_ID"] = data.Task_ID;
+          console.log("Success:", data.data);
+          taskToAdd["Task_ID"] = data.data.Task_ID;
           setAllProjects((prev) => {
             setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
             return [taskToAdd, ...prev];
@@ -111,7 +113,12 @@ Projects();
           console.error("Error:", error);
         });
     };
-    add(); 
+    // add(); 
+    setAllProjects((prev) => {
+      setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
+      return [taskToAdd, ...prev];
+    });
+
   };
 
   const projectNameChange = (event) => {
@@ -289,8 +296,8 @@ Projects();
                       onStop={handleStop}
                       allProjects={AllProjects}
                     ></TaskContainer>
-                    <button>
-                      <TrashIcon width={25} onClick={() => handleDelete(s)}/> </button>
+                    <button className="deleteButtonFin">
+                      <TrashIcon className="TrashIcon" width={25} onClick={() => handleDelete(s)}/> </button>
                   </article>
                 ))}
               </ProjectHolder>

@@ -48,9 +48,6 @@ const meals = [
   },
 ];
 
-const formatDate = (date) => {
-  return date;
-};
 
 const HRMeals = () => {
   const [Meals, setMeals] = useState(meals);
