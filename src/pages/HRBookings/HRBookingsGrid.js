@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 
-import Loader from "../Loader/Loader";
-import { useLocation } from "react-router-dom/cjs/react-router-dom";
+
+// import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 const HRBookingsGrid = () => {
   const [rowId, setrowId] = useState(null);
-  const location = useLocation();
+  // const location = useLocation();
 
-  const user = location.state.params;
+  // const user = location.state.params;
 
   const [allBookings, setallBookings] = useState(null);
   const [Loaded, setLoaded] = useState(false);

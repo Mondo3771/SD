@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import newback from "./Images/Bckgrd.svg";
+import newback from "../HRHome/Images/Bckgrd.svg";
 
 export const Header = styled.header`
   position: sticky;
