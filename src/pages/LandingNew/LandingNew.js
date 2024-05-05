@@ -20,6 +20,7 @@ import Index from "../../routes/Index";
 
 
 import Loader from "../../components/Loader/Loader";
+
 const LandingNew = () => {
   const history = useHistory();
 
@@ -34,6 +35,7 @@ const LandingNew = () => {
     setData(0);
     setLoaded(true);
   };
+  
   const login = () => {
     fetch(`/api/login?Email=${data.email}&Token=${data.sub}`)
       .then((response) => response.json())

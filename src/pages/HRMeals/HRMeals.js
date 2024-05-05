@@ -19,6 +19,8 @@ const HRMeals = () => {
   const [loaded, setLoaded] = useState(false);
   const [changed, setChanged] = useState(false);
 
+
+
   useEffect(() => {
     const getMeals = () => {
       fetch("/api/CreateMeals")
@@ -37,6 +39,7 @@ const HRMeals = () => {
     getMeals();
     // fetch all meals from database
   }, []);
+  
 
   const [viewMealState, setViewMealState] = useState(false);
 
@@ -267,3 +270,4 @@ const HRMeals = () => {
 };
 
 export default HRMeals;
+// export {ge}

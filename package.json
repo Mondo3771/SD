@@ -39,11 +39,10 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(css|less|scss|sss|styl)$": "<rootDir>/public/__mocks__/styleMock.js",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|css|less)$": "<rootDir>/public/__mocks__/fileMock.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|css|less|PNG)$": "<rootDir>/public/__mocks__/fileMock.js",
+      "\\.(css|less|scss|sss|styl)$": "<rootDir>/public/__mocks__/styleMock.js"
     },
     "testEnvironment": "jsdom",
-    
     "coverageThreshold": {
       "global": {
         "branches": 30,

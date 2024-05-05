@@ -32,7 +32,7 @@ test("updateEmp makes a PUT request", async () => {
     },
   };
   const params = await updateEmp(parm);
-  console.log(params, "params");
+  // console.log(params, "params");
   expect(params).toEqual("Success");
 });
 
