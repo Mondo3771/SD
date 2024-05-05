@@ -32,7 +32,7 @@ const LandingNew = () => {
   const [data, setData] = useState("");
 
   const childToParent = (childdata) => {
-    setData(0);
+    setData(childdata);
     setLoaded(true);
   };
 
@@ -85,7 +85,12 @@ const LandingNew = () => {
       });
   };
   // >>>>>>> UImakeOver
-
+  useEffect(() => {
+    if (data) {
+      setLoading(true);
+      login();
+    }
+  }, [data]);
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
