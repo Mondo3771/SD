@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 //icons
 import { ClockIcon, ArrowRightIcon, TrashIcon, PlusIcon } from "@heroicons/react/24/outline";
 
-import logo from "./Images/logo3.svg";
+import logo from "../../Images/logo3.svg";
 // StaffDashboard styles
 import {
   Card,
@@ -51,10 +51,11 @@ function filterTasksByProject(Sheets, projectName) {
 
 const StaffDashboard = () => {
   const location = useLocation();
-  //  const data = location.state.params; // Remove this line
-
-  // const Emp_ID = data.Emp_ID;
-  const Emp_ID = 1;
+  const history = useHistory();
+  const data = location.state.params; // Remove this line
+  const User = data.user
+  const Emp_ID = data.Emp_ID;
+  // const Emp_ID = 1;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
@@ -77,8 +78,8 @@ const Projects = () => {
       console.error("Error:", error);
     });
 };
-// Projects();
-setLoaded(true)
+Projects();
+// setLoaded(true)
    
   }, []);
 
@@ -114,7 +115,7 @@ setLoaded(true)
           console.error("Error:", error);
         });
     };
-    // add(); 
+    add(); 
     setAllProjects((prev) => {
       setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
       return [taskToAdd, ...prev];
@@ -201,7 +202,9 @@ setLoaded(true)
     );
 
   };
-
+ const Lunch =() => {
+  history.push("/Lunch" ,{params: User});
+ }
   return (
     <Wrapper>
       {/* <StaffHeader employee={data}></StaffHeader> */}
@@ -312,4 +315,4 @@ setLoaded(true)
 
 export default StaffDashboard;
 
-export { Projects, add, pause, deleteTask };
+// export { Projects, add, pause, deleteTask };
