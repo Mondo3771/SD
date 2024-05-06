@@ -203,7 +203,7 @@ Projects();
 
   };
  const Lunch =() => {
-  history.push("/Lunch" ,{params: User});
+  history.push("/Lunch" ,{params: data});
  }
   return (
     <Wrapper>

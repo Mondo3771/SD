@@ -100,7 +100,7 @@ const Carousel = () => {
   const location = useLocation();
   const data = location.state.params;
 
-  // console.log(data);
+  console.log(data);
 
   const [Meals, setMeals] = useState(null);
   const [empBook, setempBook] = useState(null);
