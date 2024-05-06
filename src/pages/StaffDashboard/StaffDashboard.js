@@ -116,11 +116,6 @@ Projects();
         });
     };
     add(); 
-    setAllProjects((prev) => {
-      setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
-      return [taskToAdd, ...prev];
-    });
-
   };
 
   const projectNameChange = (event) => {
