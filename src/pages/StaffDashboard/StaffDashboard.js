@@ -79,6 +79,10 @@ const Projects = () => {
     });
 };
 Projects();
+// const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}] 
+// const uniques = filterUniqueProjects(p);
+//       setUniqueProjectNames(uniques);
+// setAllProjects(p);
 // setLoaded(true)
    
   }, []);

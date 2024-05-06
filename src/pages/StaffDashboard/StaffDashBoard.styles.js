@@ -237,6 +237,8 @@ export const Sheet = styled.div`
   display: flex;
   justify-content: space-between;
   width: 80%;
+  height:100%;
+  align-items: center;
 
   p {
     color: var(--darkest);
@@ -268,12 +270,12 @@ export const ProjectHolder = styled.div`
 
   .SheetHolderFin {
     display: flex;
-   
   }
-  //DELETE Button 
+ 
   .deleteButtonFin {
     flex: 1;
     width: 50px;
+    height: 100%;
     background-color: var(--white);
     color: var(--darker);
     border: 2px solid var(--white);
@@ -283,7 +285,6 @@ export const ProjectHolder = styled.div`
   }
   .TrashIcon {
     margin: 0 0 0 6rem;
-   
   }
 `;
 
