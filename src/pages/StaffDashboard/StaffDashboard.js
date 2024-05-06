@@ -1,5 +1,6 @@
 //react
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 //icons
 import { ClockIcon, ArrowRightIcon, TrashIcon, PlusIcon } from "@heroicons/react/24/outline";
@@ -203,6 +204,7 @@ setLoaded(true)
 
   return (
     <Wrapper>
+      {/* <StaffHeader employee={data}></StaffHeader> */}
       <Header>
         <section className="logo">
           <img src={logo} width="55vw" height="55vh"></img>
@@ -219,7 +221,7 @@ setLoaded(true)
               <a href="#">Reports</a>
             </li>
             <li>
-              <a href="#">Lunch</a>
+              <a onClick={Lunch}>Lunch</a>
             </li>
           </ul>
         </nav>
@@ -309,3 +311,5 @@ setLoaded(true)
 };
 
 export default StaffDashboard;
+
+export { Projects, add, pause, deleteTask };

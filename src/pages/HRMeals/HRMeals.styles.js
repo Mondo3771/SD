@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import newback from "../../pages/HRHome/Images/Bckgrd.svg";
+import newback from "../../Images/Bckgrd.svg";
 
 export const Header = styled.header`
   position: sticky;
@@ -195,3 +195,11 @@ export const ShowMealCard = styled.article`
     font-size: 1.2rem;
   }
 `;
+
+export const MealCardFin = ({ meal, click }) => (
+  <MealCard key={meal.Meal_Id} onClick={() => click(meal)}>
+    <h3>{meal.Name_of_Meal}</h3>
+    <p>{meal.Description}</p>
+    <p>{meal.Available ? "Available" : "Not Available"}</p>
+  </MealCard>
+);

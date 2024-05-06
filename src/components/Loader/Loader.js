@@ -1,24 +1,23 @@
-import React from 'react'
-import { Spinner } from './Loader.styles'
+import React from "react";
+import { Spinner } from "./Loader.styles";
 
 const Loader = () => {
   return (
     <Spinner>
-    <div class="center">
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-<div class="wave"></div>
-</div>
+      <div className="center">
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
+      </div>
+    </Spinner>
+  );
+};
 
-</Spinner>
-  )
-}
-
-export default Loader
+export default Loader;
