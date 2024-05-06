@@ -20,6 +20,20 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import StaffHeader from "../StaffHeader/StaffHeader";
 import { useActionData } from "react-router";
 
+const DeleteBooking = (Booking_ID) => {
+  fetch(`/api/CreateMeals/${Booking_ID}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ Booking_ID }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Do something with your data
+    });
+};
+
 const mock = [
   {
     Meal: "Pizza",
@@ -83,19 +97,14 @@ const Carousel = () => {
   const location = useLocation();
   const data = location.state.params;
 
-
   // console.log(data);
 
   const [Meals, setMeals] = useState(null);
-  const[empBook,setempBook]=useState(
-  
-    null
-  );
+  const [empBook, setempBook] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false);
   const [topCardIndex, setTopCardIndex] = useState(0); // State to track the index of the top card
-
 
   const Book = (booking) => {
     setSelectedBooking(booking);
@@ -117,8 +126,8 @@ const Carousel = () => {
       fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
         .then((response) => response.json())
         .then((book) => {
-          console.log(book.data)
-          setempBook(book.data)
+          console.log(book.data);
+          setempBook(book.data);
         });
     };
     fetchData();
@@ -129,15 +138,18 @@ const Carousel = () => {
   //   EMP_id:1,
   //   Meal_id:12
 
-
   // }
-
 
   return (
     <>
       <StaffHeader employee={data}></StaffHeader>
       {modalOpen && (
-        <Modal setOpenModal={setModalOpen} data={selectedBooking} employee={data} booking={empBook && empBook.length > 0}/>
+        <Modal
+          setOpenModal={setModalOpen}
+          data={selectedBooking}
+          employee={data}
+          booking={empBook && empBook.length > 0}
+        />
       )}
 
       <Wrapper>
@@ -146,7 +158,6 @@ const Carousel = () => {
             <Left>
               <section className="text">
                 <h2>Something Healthy, Something Tasty!</h2>
-               
               </section>
             </Left>{" "}
             <Swrapper>
@@ -174,55 +185,53 @@ const Carousel = () => {
                 //   clickable: true,
                 // }}
                 onSlideChange={(swiper) => setTopCardIndex(swiper.realIndex)}
-
                 className="swiper_container"
               >
-                {Meals.map((booking, index) => (//change
-                  <SwiperSlide key={index}>
-                    <Card onClick={() => Book(booking)} isTop={index === topCardIndex}>
-                      <section className="textwrap">
-                        <h1>{booking.Name_of_Meal}</h1>
-                        <p>Description: {booking.Description}</p>
-                        {/* <p>Allergens: {booking.Allergens}</p> */}
-                        {/* <p>Date: {booking.Date}</p> */}
-                        {/* <button>Order</button> */}
-                      </section>
-                    </Card>
-                  </SwiperSlide>
-                ))}
+                {Meals.map(
+                  (
+                    booking,
+                    index //change
+                  ) => (
+                    <SwiperSlide key={index}>
+                      <Card
+                        onClick={() => Book(booking)}
+                        isTop={index === topCardIndex}
+                      >
+                        <section className="textwrap">
+                          <h1>{booking.Name_of_Meal}</h1>
+                          <p>Description: {booking.Description}</p>
+                          {/* <p>Allergens: {booking.Allergens}</p> */}
+                          {/* <p>Date: {booking.Date}</p> */}
+                          {/* <button>Order</button> */}
+                        </section>
+                      </Card>
+                    </SwiperSlide>
+                  )
+                )}
               </Swiper>
               <section className="bookings">
-                {!(empBook && empBook.length > 0)?
-                <p>
-                  Welcome to the Meals page! We take your health and
-                  productivity seriously. That's why we offer a selection of
-                  nutritious and delicious lunches designed to boost both your
-                  energy and performance. Enjoy a delightful lunch break that
-                  keeps you focused and productive throughout the day. Bon
-                  appétit!
-                </p>
-                :
-                <>
-                    
-               <h2>Your Booking for Today:</h2>
-                
-                
-                {empBook &&
-                  empBook.map((meal,index) => (
-                    <div key={index}>
-                      <p>Meal:{meal.Name_of_Meal}</p>
-                      <p>Description:{meal.Description}</p>
-                    </div>
-                  ))
-                }
-                </>
-            
+                {!(empBook && empBook.length > 0) ? (
+                  <p>
+                    Welcome to the Meals page! We take your health and
+                    productivity seriously. That's why we offer a selection of
+                    nutritious and delicious lunches designed to boost both your
+                    energy and performance. Enjoy a delightful lunch break that
+                    keeps you focused and productive throughout the day. Bon
+                    appétit!
+                  </p>
+                ) : (
+                  <>
+                    <h2>Your Booking for Today:</h2>
 
-              }
-
-                  
-
-                  
+                    {empBook &&
+                      empBook.map((meal, index) => (
+                        <div key={index}>
+                          <p>Meal:{meal.Name_of_Meal}</p>
+                          <p>Description:{meal.Description}</p>
+                        </div>
+                      ))}
+                  </>
+                )}
               </section>
             </Swrapper>
           </Main>
@@ -232,8 +241,6 @@ const Carousel = () => {
       </Wrapper>
     </>
   );
-
-
 };
 
 export default Carousel;

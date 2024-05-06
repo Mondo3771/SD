@@ -67,7 +67,7 @@ const DELETEEmp = (Emp_ID) => {
       return "Success";
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       return "Error";
     });
 };

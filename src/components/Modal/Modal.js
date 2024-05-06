@@ -20,8 +20,6 @@ function Modal({ setOpenModal, data, employee, booking }) {
         .then((response) => response.json())
         .then((book) => {
           console.log(book,'hey');
-
-          // Do something with your data
         });
     };
     // console.log(data.Meal_ID);

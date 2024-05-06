@@ -2,6 +2,19 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import HRHome from "./HRHome";
 
+// Import the actual component
+import HRdatagrid from "../../components/HRdatagrid/HRdatagrid";
+
+// Mock the component
+jest.mock("../../components/HRdatagrid/HRdatagrid", () => {
+  return function DummyHRdatagrid(props) {
+    return <div data-testid="HRdatagrid"></div>;
+  };
+});
+afterAll(() => {
+  jest.unmock("./path-to/HRdatagrid");
+});
+// Now, whenever HRdatagrid is used in your tests, the dummy component will be rendered instead.
 test("renders HRHome component", () => {
   render(<HRHome />);
 
