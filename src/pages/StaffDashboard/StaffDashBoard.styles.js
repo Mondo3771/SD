@@ -7,9 +7,7 @@ import React, { useEffect, useState } from "react";
 import {
   PlayIcon,
   PauseIcon,
-  TrashIcon,
   StopIcon,
-  PlusIcon
 } from "@heroicons/react/24/outline";
 
 const formatTime = (timeInSeconds) => {
@@ -131,6 +129,7 @@ export const Card = styled.article`
   //background-color: var(--whiter);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  
   .title {
     display: flex;
     gap: 1.5rem;
@@ -148,11 +147,12 @@ export const Card = styled.article`
     justify-content: flex-start;
     color: white;
     cursor: pointer;
+    height: 100%;
   }
   .createTaskButton h2 {
     font-family: inherit;
     font-weight: 400;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--darkest);
   }
   h3 {
@@ -174,13 +174,13 @@ export const CreateTaskContainer = styled.section`
   display: flex;
   flex-direction: row;
   font-family: inherit;
-  //border: 1px solid black;
   padding: 5px;
   gap: 1.5rem;
   transition: all 500ms ease-in-out;
   background: transparent;
   align-items: center;
 
+  
   button {
     height: 6vh;
     width: fit-content;
@@ -193,7 +193,7 @@ export const CreateTaskContainer = styled.section`
   }
 
   input {
-    height: 6vh;
+    height: 8vh;
     font-size: 1.1rem;
     width: 15vw;
     border-radius: 20px;
@@ -218,26 +218,25 @@ export const CreateTaskContainer = styled.section`
     align-items: center;
   }
 `;
+
 export const LabelHolder = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1rem;
   margin: 0 0.5rem;
-  
-
 `;
 
 export const Sheet = styled.div`
   background-color: var(--white);
   border: 2px solid var(--white);
   border-radius: 10px 0px 0px 10px;
-  margin: 5px 0;
+  margin: 10px 0;
   padding: 5px 10px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   width: 80%;
-  height:100%;
+  height:80%;
   align-items: center;
 
   p {
@@ -275,12 +274,12 @@ export const ProjectHolder = styled.div`
   .deleteButtonFin {
     flex: 1;
     width: 50px;
-    height: 100%;
+    height: 80%;
     background-color: var(--white);
     color: var(--darker);
     border: 2px solid var(--white);
     border-radius: 0px 10px 10px 0 ;
-    margin: 5px 0 5px 0px;
+    margin: 10px 0 10px 0px;
     padding: 5px 100px;
   }
   .TrashIcon {
@@ -409,7 +408,7 @@ export const allProjects = [
   {
     Task_ID: 1,
     Emp_ID: 0,
-    Project: "Project2",
+    Project: "Project",
     Description: "SDW",
     Acitve: true,
     Time: 0,

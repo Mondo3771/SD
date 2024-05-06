@@ -8,6 +8,7 @@ import { ClockIcon, ArrowRightIcon, TrashIcon, PlusIcon } from "@heroicons/react
 import logo from "../../Images/logo3.svg";
 // StaffDashboard styles
 import {
+  allProjects,
   Card,
   CreateTaskContainer,
   Header,
@@ -80,9 +81,9 @@ const Projects = () => {
 };
 Projects();
 // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}] 
-// const uniques = filterUniqueProjects(p);
+// const uniques = filterUniqueProjects(allProjects);
 //       setUniqueProjectNames(uniques);
-// setAllProjects(p);
+// setAllProjects(allProjects);
 // setLoaded(true)
    
   }, []);
@@ -223,6 +224,7 @@ Projects();
               <a href="#">Reports</a>
             </li>
             <li>
+              {/* <a>Lunch</a> */}
               <a onClick={Lunch}>Lunch</a>
             </li>
           </ul>
@@ -256,7 +258,6 @@ Projects();
               ></input>
             </LabelHolder>
             <LabelHolder>
-              {/* <label>Task Name</label> */}
               <input
                 type="text"
                 placeholder="Task Name"
@@ -279,7 +280,6 @@ Projects();
                 return handleAdd(newTask);
               }}
             >
-              {/* Add Task{" "} */}
               <PlusIcon width={30}></PlusIcon>
             </button>
           </CreateTaskContainer>
