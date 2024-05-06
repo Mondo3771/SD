@@ -30,7 +30,7 @@ module.exports = async function (context, req) {
             .request()
             .input("Emp_ID", sql.Int, req.query.Emp_ID)
             .query(
-              `SELECT Meals.* From Bookings JOIN Meals ON Bookings.Meal_ID = Meals.Meal_ID Where Bookings.Emp_ID = @Emp_ID `
+              `SELECT Meals.* From Bookings JOIN Meals ON Bookings.Meal_ID = Meals.Meal_ID Where Bookings.Emp_ID = @Emp_ID`
             );
           context.res = {
             status: 200,
