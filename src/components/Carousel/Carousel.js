@@ -21,7 +21,7 @@ import StaffHeader from "../StaffHeader/StaffHeader";
 import { useActionData } from "react-router";
 
 const DeleteBooking = (Booking_ID) => {
-  fetch(`/api/CreateMeals/${Booking_ID}`, {
+  fetch(`/api/Meals/${Booking_ID}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

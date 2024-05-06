@@ -6,7 +6,7 @@ import "./Modal.css";
 function Modal({ setOpenModal, data, employee, booking }) {
   const confirmBooking = () => {
     const PostBooking = (Emp_ID, Meal_ID) => {
-      fetch(`/api/CreateMeals`, {
+      fetch(`/api/Meals`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -19,7 +19,7 @@ function Modal({ setOpenModal, data, employee, booking }) {
       })
         .then((response) => response.json())
         .then((book) => {
-          console.log(book,'hey');
+          console.log(book, "hey");
         });
     };
     // console.log(data.Meal_ID);
