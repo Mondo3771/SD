@@ -4,6 +4,7 @@ const sql = require("mssql");
 module.exports = async function (context, req) {
   const pool = await getPool();
   const data = req.body;
+  // console.log(req.body);
   switch (req.method) {
     case "GET":
       try {
@@ -100,11 +101,12 @@ module.exports = async function (context, req) {
             body: {},
           };
         } else {
+          
           // If the ID exists, update the Emp_type
           const resultSet = await pool
             .request()
             .input("Availability", sql.Bit, data.Availability)
-            .input("Meal_ID", sql.Bit, data.Meal_ID)
+            .input("Meal_ID", sql.Int, data.Meal_ID)
             .query(
               `UPDATE Meals SET Availability = @Availability WHERE Meal_ID = @Meal_ID`
             );

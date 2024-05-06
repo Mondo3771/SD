@@ -88,10 +88,16 @@ export const Card = styled.article`
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   max-width: 60vw;
   //background-color: #31174b;//dark purple
-  background-color: var(--white);
+  /* background-color: var(--white); */
+  background-color: transparent;
   /* backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); */
   border: 1px solid white;
+  :hover{
+    cursor: pointer;
+    background-color: var(--darkpurple);
+
+  }
 `;
 
 export const CreateMealCard = styled.div`
@@ -108,11 +114,16 @@ export const CreateMealCard = styled.div`
   padding: 20px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 20px;
-  background-color: var(--white);
+  /* background-color: var(--white); */
+  background-color: transparent;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   /* backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); */
   overflow-y: auto;
+
+  h2,p{
+    color: var(--white);
+  }
 
   .input {
     height: 6vh;
@@ -126,7 +137,13 @@ export const CreateMealCard = styled.div`
 
   .available {
     display: flex;
+    align-items: center;
     gap: 0.5rem;
+    input{
+      width: 2vw;
+    height: 2vh;
+    }
+    
   }
   ::placeholder {
     font-family: inherit;
@@ -200,6 +217,6 @@ export const MealCardFin = ({ meal, click }) => (
   <MealCard key={meal.Meal_Id} onClick={() => click(meal)}>
     <h3>{meal.Name_of_Meal}</h3>
     <p>{meal.Description}</p>
-    <p>{meal.Available ? "Available" : "Not Available"}</p>
+    <p>{meal.Availability ? "Available" : "Not Available"}</p>
   </MealCard>
 );
