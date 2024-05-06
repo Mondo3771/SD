@@ -25,12 +25,13 @@ module.exports = async function (context, req) {
           console.error("Error running query", err);
         }
       } else {
+        console.log(req.query);
         try {
           const resultSet = await pool
             .request()
             .input("Emp_ID", sql.Int, req.query.Emp_ID)
             .query(
-              `SELECT Meals.* From Bookings JOIN Meals ON Bookings.Meal_ID = Meals.Meal_ID Where Bookings.Emp_ID = @Emp_ID`
+              `SELECT Meals.*, Bookings.Booking_ID From Bookings JOIN Meals ON Bookings.Meal_ID = Meals.Meal_ID Where Bookings.Emp_ID = @Emp_ID`
             );
           context.res = {
             status: 200,

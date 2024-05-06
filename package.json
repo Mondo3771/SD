@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=False react-scripts build",
+    "build": "react-scripts build",
     "test": "jest --coverage || exit 0",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage && type .\\coverage\\lcov-report\\lcov.info | coveralls",
