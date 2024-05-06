@@ -18,17 +18,17 @@ import { register } from "swiper/element/bundle";
 register();
 function App() {
   return (
-    // <BrowserRouter>
-    //   <Switch>
-    //     <Route exact path="/" component={LandingNew} index />
-    //     <Route path="/DashBoard" component={StaffDashboard} />
-    //     <Route path="/HRhome" component={HRHome} />
-    //     <Route path="/HRMeals" component={HRMeals} />
-    //     <Route path="/HRBookings" component={HRBookings} />
-    //     <Route path="/Lunch" component={Carousel} />
-    //   </Switch>
-    // </BrowserRouter>
-    <StaffDashboard/>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={LandingNew} index />
+        <Route path="/DashBoard" component={StaffDashboard} />
+        <Route path="/HRhome" component={HRHome} />
+        <Route path="/HRMeals" component={HRMeals} />
+        <Route path="/HRBookings" component={HRBookings} />
+        <Route path="/Lunch" component={Carousel} />
+      </Switch>
+    </BrowserRouter>
+    // <StaffDashboard/>
   );
 }
 
