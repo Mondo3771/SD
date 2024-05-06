@@ -48,21 +48,22 @@ const HRMeals = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        Meal_ID: meal.Meal_ID,
+        Meal_ID: viewMeal.Meal_ID,
         Availability: !viewMeal.Availability,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log()
         setViewMeal((prev) => {
           let temp = prev;
           temp.Availability = !viewMeal.Availability;
           return temp;
         });
         setMeals((all) => {
-          const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID);
+          const temp = all.filter((a) => a.Meal_ID === viewMeal.Meal_ID);
           temp.Availability = !viewMeal.Availability;
-          const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
+          const index = all.findIndex((a) => a.Meal_ID === viewMeal.Meal_ID);
           const result = all;
           result[index] = temp;
           return result;

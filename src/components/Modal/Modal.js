@@ -14,12 +14,13 @@ function Modal({ setOpenModal, data, employee, booking }) {
         body: JSON.stringify({
           Emp_ID: Emp_ID,
           Meal_ID: Meal_ID,
-          Date_of_Booking: new Date().toISOString(),
+          Date_of_booking: new Date().toISOString(),
         }),
       })
         .then((response) => response.json())
         .then((book) => {
-          console.log(book, "hey");
+          console.log(book.data, "hey");
+          
         });
     };
     // console.log(data.Meal_ID);

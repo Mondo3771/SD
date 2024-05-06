@@ -20,19 +20,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import StaffHeader from "../StaffHeader/StaffHeader";
 import { useActionData } from "react-router";
 
-const DeleteBooking = (Booking_ID) => {
-  fetch(`/api/Meals/${Booking_ID}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ Booking_ID }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // Do something with your data
-    });
-};
+
 
 const mock = [
   {
@@ -92,6 +80,21 @@ const mock = [
     Allergens: "Contains Milk",
   },
 ];
+const DeleteBooking = (Booking_ID) => {
+
+  fetch(`/api/Meals?Booking_ID=${Booking_ID}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ Booking_ID }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Do something with your data
+    });
+
+};
 
 const Carousel = () => {
   const location = useLocation();
@@ -105,6 +108,7 @@ const Carousel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false);
   const [topCardIndex, setTopCardIndex] = useState(0); // State to track the index of the top card
+  const [b_ID,setb_ID]=useState(null);
 
   const Book = (booking) => {
     setSelectedBooking(booking);
@@ -122,23 +126,38 @@ const Carousel = () => {
       // setLoaded(true);
     };
 
-    const Employee_meal = () => {
+   
+    fetchData();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchEmployeeMeal = () => {
       fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
         .then((response) => response.json())
         .then((book) => {
-          console.log(book.data);
+          console.log(book.data,"noooooooo");
           setempBook(book.data);
+          setb_ID(book.data[0].Booking_ID)
+          console.log(book.data[0].Name_of_Meal,"meal")
+          console.log(book.data[0].Booking_ID,"book")
+
         });
     };
-    fetchData();
-    Employee_meal();
+  
+    // Run the fetchEmployeeMeal function initially
+    fetchEmployeeMeal();
+  
+    // Set interval to run fetchEmployeeMeal every 2 seconds
+    const intervalId = setInterval(fetchEmployeeMeal, 2000);
+  
+    // Cleanup function to clear interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []);
 
-  // const data={
-  //   EMP_id:1,
-  //   Meal_id:12
 
-  // }
+
+  
 
   return (
     <>
@@ -146,6 +165,7 @@ const Carousel = () => {
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
+          
           data={selectedBooking}
           employee={data}
           booking={empBook && empBook.length > 0}
@@ -228,8 +248,11 @@ const Carousel = () => {
                         <div key={index}>
                           <p>Meal:{meal.Name_of_Meal}</p>
                           <p>Description:{meal.Description}</p>
+                         
                         </div>
                       ))}
+
+                  {/* <button onClick={DeleteBooking(b_ID)}>Cancel</button> */}
                   </>
                 )}
               </section>
