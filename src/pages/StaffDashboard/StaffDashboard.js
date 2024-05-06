@@ -312,4 +312,4 @@ setLoaded(true)
 
 export default StaffDashboard;
 
-export { Projects, add, pause, deleteTask };
+// export { Projects, add, pause, deleteTask };
