@@ -8,7 +8,9 @@ module.exports = async function (context, req) {
     case "GET":
       if (req.query.Emp_ID === undefined || req.query.Emp_ID === null) {
         try {
-          const resultSet = await pool.request().query(`SELECT * FROM Meals`);
+          const resultSet = await pool
+            .request()
+            .query(`SELECT * FROM Meals where Availability = 1`);
           context.res = {
             status: 200,
             body: {
