@@ -5,6 +5,8 @@ import "./Modal.css";
 
 function Modal({ setOpenModal, data, employee, booking }) {
   const confirmBooking = () => {
+    const date = new Date().toISOString();
+    console.log(date);
     const PostBooking = (Emp_ID, Meal_ID) => {
       fetch(`/api/Meals`, {
         method: "POST",
@@ -14,7 +16,7 @@ function Modal({ setOpenModal, data, employee, booking }) {
         body: JSON.stringify({
           Emp_ID: Emp_ID,
           Meal_ID: Meal_ID,
-          Date_of_Booking: new Date().toISOString(),
+          Date_of_Booking: date,
         }),
       })
         .then((response) => response.json())

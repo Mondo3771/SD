@@ -45,7 +45,7 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/App.js",
-      "!<rootDir>/src/Index.js",
+      "!<rootDir>/src/index.js",
       "!<rootDir>/src/reportWebVitals*",
       "!<rootDir>/src/setupTests.js"
     ],

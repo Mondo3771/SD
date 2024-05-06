@@ -1,7 +1,15 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import HRBookings from "./HRBookings";
-
+import HRBookingsGrid from "./HRBookingsGrid";
+jest.mock("./HRBookingsGrid", () => {
+  return function DummyHRBookingGrid(props) {
+    return <div data-testid="HRBookingGrid"></div>;
+  };
+});
+afterAll(() => {
+  jest.unmock("./HRBookingGrid");
+});
 test("renders HRBookings component", () => {
   render(<HRBookings />);
 
