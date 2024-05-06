@@ -1,9 +1,8 @@
-import React from "react";
-import HRdatagrid from "../../components/HRdatagrid/HRdatagrid";
-import { Header, Wrapper, Card } from "./HRHome.styles";
 import logo from "../../Images/logo3.svg";
+import { Card, Header, Wrapper } from "./HRBookings.styles";
+import HRBookingsGrid from "./HRBookingsGrid";
 
-const HRHome = () => {
+const HRBookings = () => {
   return (
     <>
       <Wrapper>
@@ -23,7 +22,7 @@ const HRHome = () => {
                 <a href="HRMeals">Meals</a>
               </li>
               <li>
-                <a href="HRBookings">Bookings</a>
+                <a href="#">Bookings</a>
               </li>
               <li>
                 <a href="#">Car Wash</a>
@@ -38,11 +37,11 @@ const HRHome = () => {
           <h2>Manage Users</h2>
         </section>
         <Card>
-          <HRdatagrid></HRdatagrid>
+          <HRBookingsGrid></HRBookingsGrid>
         </Card>
       </Wrapper>
     </>
   );
 };
 
-export default HRHome;
+export default HRBookings;

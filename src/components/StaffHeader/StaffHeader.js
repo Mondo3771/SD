@@ -4,9 +4,6 @@ import logo from '../../Images/logo3.svg'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 
-
-
-
 const StaffHeader = ({employee}) => {
     const history=useHistory();
     const Lunch=()=>{
