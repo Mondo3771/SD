@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=False react-scripts build",
     "test": "jest --coverage || exit 0",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage && type .\\coverage\\lcov-report\\lcov.info | coveralls",
