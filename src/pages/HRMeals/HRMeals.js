@@ -18,7 +18,6 @@ const HRMeals = () => {
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
-  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
     const getMeals = () => {
