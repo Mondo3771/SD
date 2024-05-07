@@ -83,6 +83,7 @@ module.exports = async function (context, req) {
             .input("Emp_ID", sql.Int, data.Emp_ID)
             .query(
               `DELETE FROM Tasks WHERE Emp_ID = @Emp_ID ;
+              DELETE FROM Bookings WHERE Emp_ID = @Emp_ID ;
                 DELETE FROM Employees WHERE Emp_ID = @Emp_ID`
             );
           context.res = {
