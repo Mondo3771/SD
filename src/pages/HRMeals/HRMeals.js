@@ -41,15 +41,15 @@ const HRMeals = () => {
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal) =>
+  const changeAvailable = (meal,bool) =>
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        Meal_ID: viewMeal.Meal_ID,
-        Availability: !viewMeal.Availability,
+        Meal_ID: meal.Meal_ID,
+        Availability: bool,
       }),
     })
       .then((response) => response.json())
@@ -57,13 +57,15 @@ const HRMeals = () => {
         console.log()
         setViewMeal((prev) => {
           let temp = prev;
-          temp.Availability = !viewMeal.Availability;
+          temp.Availability = bool;
           return temp;
         });
         setMeals((all) => {
           const temp = all.filter((a) => a.Meal_ID === viewMeal.Meal_ID);
-          temp.Availability = !viewMeal.Availability;
+          temp.Availability = bool;
+          console.log("Temp",temp);
           const index = all.findIndex((a) => a.Meal_ID === viewMeal.Meal_ID);
+          console.log("Temp Index: " , index)
           const result = all;
           result[index] = temp;
           return result;
@@ -139,7 +141,7 @@ const HRMeals = () => {
   };
 
   const changeAvailableViewMeal = (event) => {
-    changeAvailable(viewMeal);
+    changeAvailable(viewMeal,event.target.checked);
   };
 
   const deleteMeal = () => {
@@ -257,7 +259,9 @@ const HRMeals = () => {
                 <button onClick={deleteMeal}>
                   <TrashIcon width={25} />
                 </button>
-                <button onClick={() => setViewMealState(false)}>Back</button>
+                <button onClick={() => {
+                  console.log("Meals",Meals);
+                  setViewMealState(false)}}>Back</button>
               </ShowMealCard>
             )}
           </section>
