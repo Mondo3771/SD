@@ -54,19 +54,18 @@ const HRMeals = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log()
         setViewMeal((prev) => {
-          let temp = prev;
+          console.log(prev);
+          let temp = meal;
           temp.Availability = bool;
+          console.log(temp);
           return temp;
         });
         setMeals((all) => {
-          const temp = all.filter((a) => a.Meal_ID === viewMeal.Meal_ID);
-          temp.Availability = bool;
-          console.log("Temp",temp);
-          const index = all.findIndex((a) => a.Meal_ID === viewMeal.Meal_ID);
-          console.log("Temp Index: " , index)
+          const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID)[0];
           const result = all;
+          temp.Availability = bool;
+          const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
           result[index] = temp;
           return result;
         });
@@ -254,8 +253,7 @@ const HRMeals = () => {
                     onChange={changeAvailableViewMeal}
                   ></input>
                 </section>
-                {changed && <button> Save Changes</button>}
-                {changed && <button> Save Changes</button>}
+                {/* {changed && <button onClick={() => setChanged(p => !p)}> Save Changes</button>} */}
                 <button onClick={deleteMeal}>
                   <TrashIcon width={25} />
                 </button>
