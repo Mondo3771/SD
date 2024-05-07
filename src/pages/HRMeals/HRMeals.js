@@ -4,7 +4,6 @@ import {
   Card,
   CreateMealCard,
   Header,
-  MealCard,
   MealCardFin,
   ShowMealCard,
   Wrapper,
@@ -34,6 +33,7 @@ const HRMeals = () => {
           console.log(error);
         });
     };
+
     getMeals();
     // fetch all meals from database
   }, []);
@@ -245,7 +245,7 @@ const HRMeals = () => {
                 <h3>{viewMeal.Name_of_Meal}</h3>
                 <label></label>
                 <p>Description: {viewMeal.Description}</p>
-                <section>
+                <section className=".available">
                   <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
                   <input
                     type="checkbox"
