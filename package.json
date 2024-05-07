@@ -46,9 +46,6 @@
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/App.js",
       "!<rootDir>/src/index.js",
-      "!<rootDir>/src/pages/StaffDashboard/StaffDashboard.js",
-      "!<rootDir>/src/pages/LandingPage/LandingPage.js",
-      "!<rootDir>/src/components/Carousel/Carousel.js",
       "!<rootDir>/src/reportWebVitals*",
       "!<rootDir>/src/setupTests.js"
     ],
