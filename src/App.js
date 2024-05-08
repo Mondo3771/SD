@@ -14,21 +14,26 @@ import HRBookings from "./pages/HRBookings/HRBookings";
 import Carousel from "./components/Carousel/Carousel";
 
 import { register } from "swiper/element/bundle";
+import { ShowUsers } from "./components/ShowUsers/ShowUsers";
+
+
+import { MockUsers } from "./components/ShowUsers/ShowUsers.styles";
 // register Swiper custom elements
 register();
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={LandingNew} index />
-        <Route path="/DashBoard" component={StaffDashboard} />
-        <Route path="/HRhome" component={HRHome} />
-        <Route path="/HRMeals" component={HRMeals} />
-        <Route path="/HRBookings" component={HRBookings} />
-        <Route path="/Lunch" component={Carousel} />
-      </Switch>
-    </BrowserRouter>
+    // <BrowserRouter>
+    //   <Switch>
+    //     <Route exact path="/" component={LandingNew} index />
+    //     <Route path="/DashBoard" component={StaffDashboard} />
+    //     <Route path="/HRhome" component={HRHome} />
+    //     <Route path="/HRMeals" component={HRMeals} />
+    //     <Route path="/HRBookings" component={HRBookings} />
+    //     <Route path="/Lunch" component={Carousel} />
+    //   </Switch>
+    // </BrowserRouter>
     // <StaffDashboard/>
+    <ShowUsers Users={MockUsers}/>
   );
 }
 

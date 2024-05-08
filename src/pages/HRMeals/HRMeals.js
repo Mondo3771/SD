@@ -4,7 +4,6 @@ import {
   Card,
   CreateMealCard,
   Header,
-  MealCard,
   MealCardFin,
   ShowMealCard,
   Wrapper,
@@ -18,7 +17,6 @@ const HRMeals = () => {
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
-  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
     const getMeals = () => {
@@ -35,36 +33,38 @@ const HRMeals = () => {
           console.log(error);
         });
     };
+
     getMeals();
     // fetch all meals from database
   }, []);
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal) =>
+  const changeAvailable = (meal,bool) =>
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        Meal_ID: viewMeal.Meal_ID,
-        Availability: !viewMeal.Availability,
+        Meal_ID: meal.Meal_ID,
+        Availability: bool,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log()
         setViewMeal((prev) => {
-          let temp = prev;
-          temp.Availability = !viewMeal.Availability;
+          console.log(prev);
+          let temp = meal;
+          temp.Availability = bool;
+          console.log(temp);
           return temp;
         });
         setMeals((all) => {
-          const temp = all.filter((a) => a.Meal_ID === viewMeal.Meal_ID);
-          temp.Availability = !viewMeal.Availability;
-          const index = all.findIndex((a) => a.Meal_ID === viewMeal.Meal_ID);
+          const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID)[0];
           const result = all;
+          temp.Availability = bool;
+          const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
           result[index] = temp;
           return result;
         });
@@ -139,7 +139,7 @@ const HRMeals = () => {
   };
 
   const changeAvailableViewMeal = (event) => {
-    changeAvailable(viewMeal);
+    changeAvailable(viewMeal,event.target.checked);
   };
 
   const deleteMeal = () => {
@@ -245,19 +245,20 @@ const HRMeals = () => {
                 <h3>{viewMeal.Name_of_Meal}</h3>
                 <label></label>
                 <p>Description: {viewMeal.Description}</p>
-                <section>
+                <section className=".available">
                   <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
                   <input
                     type="checkbox"
                     onChange={changeAvailableViewMeal}
                   ></input>
                 </section>
-                {changed && <button> Save Changes</button>}
-                {changed && <button> Save Changes</button>}
+                {/* {changed && <button onClick={() => setChanged(p => !p)}> Save Changes</button>} */}
                 <button onClick={deleteMeal}>
                   <TrashIcon width={25} />
                 </button>
-                <button onClick={() => setViewMealState(false)}>Back</button>
+                <button onClick={() => {
+                  console.log("Meals",Meals);
+                  setViewMealState(false)}}>Back</button>
               </ShowMealCard>
             )}
           </section>
