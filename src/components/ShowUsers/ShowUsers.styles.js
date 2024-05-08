@@ -5,15 +5,18 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
   width: 500px;
-  border: 1px solid black;
+  outline: 3px solid gray;
+  outline-offset: 5px;
+  border-radius: 5px;
 //   height: auto;
 overflow: scroll;
 overflow-x: hidden;
-  max-height: 500px;
+  max-height: 400px;
   margin: 0 auto;
   padding: 12px;
   flex: 0.5;
   align-items: center; 
+
   
   .ProfileImage {
     width: 60px;
@@ -34,16 +37,15 @@ export const User = styled.article`
   align-items: center;
   min-height: 60px;
   width: 90%;
-  border: 1px solid black;
+  border-radius: 10px;
+  transition: 250ms ease-in-out;
+//   border: 1px solid black;
   padding: 5px;
   cursor: pointer;
   padding:10px;
   cursor: pointer;
   margin: 0  0 10px 0;
 
-  ::hover {
-    background-color: var(-darker);
-  }
 `;
 
 export const InfoContainer = styled.section`
