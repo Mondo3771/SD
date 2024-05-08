@@ -2,17 +2,13 @@ import React from "react";
 import { InfoContainer, User, Wrapper } from "./ShowUsers.styles";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 
-export const ShowUsers = ({ Users }) => {
-  const handleClickUser = (user) => {
-    console.log(user);
-  };
+export const ShowUsers = ({ Users, onUserClick }) => {
 
   return (
-    <>
-      <h2>Users</h2>
+  
       <Wrapper>
         {Users.map((user) => (
-          <User className="User" key={user.Emp_ID} onClick={() => handleClickUser(user)}>
+          <User className="User" key={user.Emp_ID} onClick={() => onUserClick(user)}>
             <UserCircleIcon className="ProfileImage"></UserCircleIcon>
 
             <InfoContainer>
@@ -25,6 +21,5 @@ export const ShowUsers = ({ Users }) => {
           </User>
         ))}
       </Wrapper>
-    </>
   );
 };

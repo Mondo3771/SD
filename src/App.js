@@ -14,12 +14,9 @@ import HRBookings from "./pages/HRBookings/HRBookings";
 import Carousel from "./components/Carousel/Carousel";
 
 import { register } from "swiper/element/bundle";
-import { FeedBack } from "./components/FeedBackComponent/FeedBack";
-import { MockFeedBack, MockUser } from "./components/FeedBackComponent/FeedBack.styles";
-import { ShowUsers } from "./components/ShowUsers/ShowUsers";
-
-
-import { MockUsers } from "./components/ShowUsers/ShowUsers.styles";
+import { TempReportPage } from "./pages/TempReportPage/TempReportPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // register Swiper custom elements
 register();
 function App() {
@@ -35,6 +32,10 @@ function App() {
     //   </Switch>
     // </BrowserRouter>
     // <StaffDashboard/>
+    <>
+    <TempReportPage/>
+    <ToastContainer/>
+    </>
   );
 }
 

@@ -2,27 +2,24 @@ import styled from "styled-components";
 
 export const Wrap = styled.body`
   display: flex;
-  padding: 1rem;
-  width: 950px;
-  margin: auto;
-  border: 2px solid black;
-  gap: 1rem;
+  width: 900px;
+  // border: 2px solid black;
+  height: 100%;
+  gap: 1.5rem;
 `;
 
 export const Wrapper = styled.section`
   scroll-behavior: smooth;
   display: flex;
   flex-flow: column;
-  width: 500px;
   outline: 3px solid black;
-  outline-offset: 5px;
+  outline-offset: 3px 0 1px 0;
   border-radius: 5px;
   overflow: scroll;
   overflow-x: hidden;
-  max-height: 400px;
   margin: 0 auto;
   padding: 12px;
-  flex: 0.5;
+  flex: 1;
   align-items: center;
   transition: 250ms ease-in-out;
 
@@ -30,23 +27,24 @@ export const Wrapper = styled.section`
     background: gray;
     color: black;
   }
+  .Green {
+    border: 5px solid green;
+  }
 `;
 
 export const SendFeedBackWrapper = styled.section`
   scroll-behavior: smooth;
   display: flex;
   flex-flow: column;
-  width: 500px;
+  flex: 1;
   outline: 3px solid black;
-  outline-offset: 5px;
+  outline-offset: 3px 0 1px 0;
   border-radius: 5px;
-  max-height: 400px;
   margin: 0 auto;
   padding: 12px;
-  flex: 0.5;
   transition: 250ms ease-in-out;
 
-  .MessageInput{
+  .MessageInput {
     height: 75%;
     font: inherit;
     font-size: 1.5rem;
@@ -66,16 +64,18 @@ export const SendFeedBackWrapper = styled.section`
     align-items: center;
     width: fit-content;
     padding: 1rem;
-    background-color:
+    background-color: green ;
   }
   .SaveButton:hover {
     color: white;
-    background-color: var(--dark);
-    border: 2px solid white;
+    background-color: gray;
+    // border: 2px solid white;
   }
-
-
-
+  .SaveButton:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+    background-color : gray;
+  }
 `;
 
 export const Message = styled.article`
@@ -110,35 +110,43 @@ export const Message = styled.article`
 
 export const MockFeedBack = [
   {
-    Sent_ID: 1,
+    Message_ID: 0,
+    Send_ID: 1,
     Receive_ID: 2,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
     Message: "Well Done",
   },
   {
-    Sent_ID: 3,
+    Message_ID: 1,
+
+    Send_ID: 3,
     Receive_ID: 2,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
     Message: "Godspeed to you",
   },
   {
-    Sent_ID: 3,
+    Message_ID: 2,
+
+    Send_ID: 3,
     Receive_ID: 2,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
     Message: "Shut up bruv",
   },
   {
-    Sent_ID: 5,
+    Message_ID: 3,
+
+    Send_ID: 5,
     Receive_ID: 2,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
     Message: "Wasteman",
   },
   {
-    Sent_ID: 6,
+    Message_ID: 4,
+    Send_ID: 6,
     Receive_ID: 2,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
@@ -149,6 +157,6 @@ export const MockFeedBack = [
 export const MockUser = {
   Name: "Tapiwa",
   Surname: "Mazarura",
-  Emp_ID: 2,
+  Emp_ID: 10,
   Department: "Home Affairs",
 };
