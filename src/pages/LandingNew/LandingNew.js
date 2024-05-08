@@ -5,7 +5,9 @@ import tasks from "./Images/icon2.PNG";
 import report from "./Images/reportingnew.PNG";
 import manage from "./Images/icon3.PNG";
 import book from "./Images/icon4.PNG";
-
+import LoginButton from "../../components/Log/LoginButton";
+import LogoutButton from "../../components/Log/LogoutButton";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Header,
   DropDown,
@@ -23,7 +25,7 @@ import Loader from "../../components/Loader/Loader";
 
 const LandingNew = () => {
   const history = useHistory();
-
+  const { isAuthenticated, user } = useAuth0();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false); //to perfrom login()
@@ -32,9 +34,14 @@ const LandingNew = () => {
   const [data, setData] = useState("");
 
   const childToParent = (childdata) => {
+    console.log("childToParent", childdata);
     setData(childdata);
     setLoaded(true);
   };
+
+  // if (isAuthenticated && !Loaded) {
+  //   childToParent(user);
+  // }
 
   const login = () => {
     fetch(`/api/login?Email=${data.email}&Token=${data.sub}`)
@@ -97,6 +104,8 @@ const LandingNew = () => {
 
   return (
     <>
+      <LoginButton />
+      <LogoutButton />
       <LandingPageBack>
         <Header>
           <section className="heading">
