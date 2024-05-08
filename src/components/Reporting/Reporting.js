@@ -2,85 +2,103 @@ import React, { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { usePDF } from 'react-to-pdf';
 
-import { Feedback,Main, Summary ,Block} from './Reporting.styles';
+import { Feedback,Main, Summary ,Block,Progress} from './Reporting.styles';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+
 
 const mockGraph = [
     {
         Project: "Standard bank App",
-        Time: 234409, //this is in seconds
-        Date: '2024-04-02 00:00:00.000'
+        Time: 234409,
+        Date: '2024-04-02 00:00:00.000',
+        Active: 1
     },
     {
         Project: "Finance Management System",
         Time: 187602,
-        Date: '2024-04-04 00:00:00.000'
+        Date: '2024-04-04 00:00:00.000',
+        Active: 0
     },
     {
         Project: "E-commerce Platform",
         Time: 291754,
-        Date: '2024-04-07 00:00:00.000'
+        Date: '2024-04-07 00:00:00.000',
+        Active: 0
     },
     {
         Project: "Standard bank App",
         Time: 1823,
-        Date: '2024-04-09 00:00:00.000'
+        Date: '2024-04-09 00:00:00.000',
+        Active: 1
     },
     {
         Project: "Healthcare Management App",
         Time: 219301,
-        Date: '2024-04-12 00:00:00.000'
+        Date: '2024-04-12 00:00:00.000',
+        Active: 0
     },
     {
         Project: "Standard bank App",
         Time: 409,
-        Date: '2024-04-14 00:00:00.000'
+        Date: '2024-04-14 00:00:00.000',
+        Active: 1
     },
     {
         Project: "Online Learning Platform",
         Time: 245830,
-        Date: '2024-04-17 00:00:00.000'
+        Date: '2024-04-17 00:00:00.000',
+        Active: 0
     },
     {
         Project: "Standard bank App",
         Time: 173509,
-        Date: '2024-04-19 00:00:00.000'
+        Date: '2024-04-19 00:00:00.000',
+        Active: 1
     },
     {
         Project: "Inventory Management System",
         Time: 196845,
-        Date: '2024-04-22 00:00:00.000'
+        Date: '2024-04-22 00:00:00.000',
+        Active: 0
     },
     {
         Project: "Standard bank App",
         Time: 2173,
-        Date: '2024-04-24 00:00:00.000'
+        Date: '2024-04-24 00:00:00.000',
+        Active: 1
     },
     {
         Project: "HR Management Software",
         Time: 183729,
-        Date: '2024-04-27 00:00:00.000'
+        Date: '2024-04-27 00:00:00.000',
+        Active: 0
     },
     {
         Project: "Standard bank App",
         Time: 2501,
-        Date: '2024-04-29 00:00:00.000'
+        Date: '2024-04-29 00:00:00.000',
+        Active: 1
     },
     {
         Project: "Standard bank App",
         Time: 25602,
-        Date: '2024-04-06 00:00:00.000'
+        Date: '2024-04-06 00:00:00.000',
+        Active: 1
     },
     {
         Project: "Data Analysis Platform",
         Time: 176804,
-        Date: '2024-04-11 00:00:00.000'
+        Date: '2024-04-11 00:00:00.000',
+        Active: 0
     },
     {
         Project: "Project Management Tool",
         Time: 229013,
-        Date: '2024-04-16 00:00:00.000'
+        Date: '2024-04-16 00:00:00.000',
+        Active: 0
     }
 ];
+
 
 // a query that joins employee with feedback for specfic employee
 const mockFeed = [
@@ -134,6 +152,8 @@ const Reporting = () => {
     const [projectTimeMap, setProjectTimeMap] = useState({});
     const [hours, setHours] = useState(null);
     const[feedback,setfeedback]=useState(null);
+    const[Active,setActive]=useState(0);
+    const[inActive,setinActive]=useState(0)
 
 //use effect for get timeSheets
 
@@ -147,7 +167,11 @@ const Reporting = () => {
 
     useEffect(() => {
         const projectMap = {};
+        let activecount=0;
+        let inactivecount=0;
+
         mockGraph.forEach(task => {
+            task.Active===1?activecount++:inactivecount++;
             if (!projectMap[task.Project]) {
                 projectMap[task.Project] = 0;
             }
@@ -155,6 +179,8 @@ const Reporting = () => {
         });
         setProjects(new Set(Object.keys(projectMap)));
         setProjectTimeMap(projectMap);
+        setActive(activecount)
+        setinActive(inactivecount)
     }, []);
 
 
@@ -162,7 +188,7 @@ const Reporting = () => {
         x: [project],
         y: [projectTimeMap[project] / 3600], // Convert seconds to hours
         type: 'bar',
-        marker: { color: 'purple' },
+        marker: { color: 'purple' }
     }));
 
     // Layout options for the plot
@@ -171,6 +197,20 @@ const Reporting = () => {
         xaxis: { title: 'Projects' },
         yaxis: { title: 'Time Spent (hours)' },
         showlegend:false
+    };
+    const datapie = [
+        {
+            values: [Active, inActive],
+            labels: ['Active', 'Inactive'],
+            type: 'pie',
+            marker: { colors: ['green', 'red'] }
+        }
+    ];
+
+    // Layout options for the plot
+    const layoutpie = {
+        title: 'Task Status Distribution',
+        showlegend: true
     };
 
     const { toPDF, targetRef } = usePDF({ filename: 'report.pdf' });
@@ -182,7 +222,7 @@ const Reporting = () => {
         setfeedback(sortedFeedback);
     }, []);
     
-
+    const percentage=14;
     return (
         <>
          
@@ -209,7 +249,30 @@ const Reporting = () => {
 
                 
             </Main>
-            <Summary><h2>NONOO</h2></Summary>
+            <Summary>
+                <Plot
+                    data={datapie}
+                    layout={layoutpie}
+                    style={{ width: '60%', height: '100%',margin:'40px' }}
+                />
+
+
+            </Summary>
+        <Progress>
+
+            <CircularProgressbar
+                    value={percentage}
+                    text={`${percentage}%`}
+                    styles={buildStyles({
+                        
+                        pathColor: 'red',
+                        textColor: '#f88',
+                        trailColor: 'rgb(125,125,125)',
+                        backgroundColor: 'pink',
+                    })}
+                />;
+            </Progress>
+
 
             </main>
            
