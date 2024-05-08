@@ -14,6 +14,8 @@ import HRBookings from "./pages/HRBookings/HRBookings";
 import Carousel from "./components/Carousel/Carousel";
 
 import { register } from "swiper/element/bundle";
+import { FeedBack } from "./components/FeedBackComponent/FeedBack";
+import { MockFeedBack, MockUser } from "./components/FeedBackComponent/FeedBack.styles";
 import { ShowUsers } from "./components/ShowUsers/ShowUsers";
 
 
@@ -33,7 +35,6 @@ function App() {
     //   </Switch>
     // </BrowserRouter>
     // <StaffDashboard/>
-    <ShowUsers Users={MockUsers}/>
   );
 }
 
