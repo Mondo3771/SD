@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const Feedback=styled.article`
 
     background-color:red;
-    height: inherit;
+    height: 60vh;
+    width: 30vw;
     color: red;
     display: flex;
     flex-direction: column;
@@ -18,7 +19,7 @@ export const Main=styled.section`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 100vh
+    height: 70vh
 
 
 `;
@@ -29,7 +30,7 @@ background-color: green;
 width: 60%;
 justify-content: center;
 margin-top: 20px;
-
+height: 60vh;
 `;
 
 export const Block=styled.section`
@@ -39,6 +40,28 @@ export const Block=styled.section`
 
 `
 export const Progress=styled.article`
-    height: 100px;
-    width: 100px;
+    height: 50vh;
+    width: 60vh;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p{
+        color: red;
+    }
+`
+
+export const Bottom=styled.article`
+
+    display: flex;
+    flex-direction: row;
+
+`
+
+export const Dater=styled.form`
+    display: flex;
+    flex-direction: column;
+    color: white;
+
 `
