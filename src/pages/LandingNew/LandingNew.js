@@ -38,6 +38,10 @@ const LandingNew = () => {
     setData(childdata);
     setLoaded(true);
   };
+  console.log(user);
+
+// we are working on gewtting the users Role from Auh0
+const login
 
   // if (isAuthenticated && !Loaded) {
   //   childToParent(user);
