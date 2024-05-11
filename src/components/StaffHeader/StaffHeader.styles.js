@@ -62,8 +62,8 @@ export const Header = styled.div`
     padding: 0.5rem 0.5rem;
 
     .logo img {
-      width: 30px;
-      height: 30px;
+      width: 20vw;
+      height: 20px;
     }
 
     a {
