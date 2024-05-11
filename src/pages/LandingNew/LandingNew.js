@@ -59,6 +59,7 @@ const LandingNew = () => {
 
   const getRoles = () => {
     fetch(`https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/roles`, {
+      method: "POST",
       headers: {},
       body: JSON.stringify({
         client_id: "Re9lqXCcNYY2RuF4xhbNtNdyN3wdYsmc",
@@ -67,12 +68,14 @@ const LandingNew = () => {
         audience: "https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/",
         grant_type: "client_credentials",
       }),
-    }).then((response) => response.json()).then((Role) => {
-      console.log(Role);
-    }).catch((error) => {
-      console.error("Error:", error);
-    }
-    );
+    })
+      .then((response) => response.json())
+      .then((Role) => {
+        console.log(Role);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   if (isAuthenticated && !Loaded) {
