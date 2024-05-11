@@ -79,7 +79,7 @@ const LandingNew = () => {
   };
 
   if (isAuthenticated && !Loaded) {
-    // childToParent(user);
+    childToParent(user);
     console.log("user", user.sub);
     getRoles();
     getUsers(token);
