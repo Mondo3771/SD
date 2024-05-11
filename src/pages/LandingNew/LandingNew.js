@@ -75,6 +75,7 @@ const LandingNew = () => {
           } else {
             history.push(`/DashBoard`, { params: DB.data });
           }
+          // x
         }
       })
       .catch((error) => {
