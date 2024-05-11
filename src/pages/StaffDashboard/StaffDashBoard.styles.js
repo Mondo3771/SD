@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
   background-image: url(${background});
   //background: var(--darkest);
   background-size: cover;
-  background-position: top;
+  background-position: left;
 
   gap: 2rem;
 
@@ -60,50 +60,25 @@ export const Wrapper = styled.div`
     color: var(--white);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
-`;
 
-export const Header = styled.div`
-  //position: sticky;
-  position: fixed;
-  z-index: 9999;
-  width: 100%;
-  //background-color: var(--darkest);
-  display: flex;
-  padding: 0.5rem 3rem;
-  justify-content: space-between;
-  min-height: 14vh;
-  align-items: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-
-  // border: 1px solid black;
-
-  .logo {
-    display: flex;
-  }
-
-  a {
-    font-size: 1.35rem;
-    text-decoration: none;
-    color: white;
-    transition: all 200 ease-in-out;
-  }
-
-  ul {
-    display: flex;
-    padding: 0;
-    list-style: none;
-    gap: 5rem;
-    color: white;
-  }
-
-  a:visited {
-    color: white;
-  }
-
-  li a:hover {
-    color: var(--white);
+  @media screen and (max-width: 480px) {
+    .titlepage {
+      padding-top: 8vh;
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+    .title {
+      padding-left: 0;
+      width: 80vw;
+      height: 5vh;
+      color: var(--white);
+      align-items: center;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
   }
 `;
+
 //whole card section
 export const Card = styled.article`
   scroll-behavior: smooth;
@@ -165,6 +140,21 @@ export const Card = styled.article`
     height: 60px;
     border-radius: 50%;
   }
+
+  @media screen and (max-width: 480px) {
+    width: 70vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+
+    .createTaskButton h2 {
+      font-family: inherit;
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: var(--darkest);
+    }
+  }
 `;
 
 export const CreateTaskContainer = styled.section`
@@ -212,6 +202,43 @@ export const CreateTaskContainer = styled.section`
     text-align: center;
     align-items: center;
   }
+
+  @media screen and (max-width: 480px) {
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: left;
+    padding: 0;
+  }
+  input {
+    height: 4vh;
+    font-size: 1rem;
+    width: 28vw;
+    border-radius: 12px;
+    font-family: inherit;
+    background-color: var(--white);
+    color: var(--darkest);
+  }
+  ::placeholder {
+    font-family: inherit;
+    color: rgba(0, 0, 0, 0.2);
+
+    font-size: 0.9rem;
+    text-align: left;
+    align-items: center;
+  }
+
+  button {
+    height: 5vh;
+    width: fit-content;
+    font-family: inherit;
+    //border-radius: 100%;
+    background-color: var(--white);
+    color: var(--darkest);
+    font-size: 0.7rem;
+    padding: 0.3rem;
+  }
 `;
 
 export const LabelHolder = styled.div`
@@ -223,12 +250,13 @@ export const LabelHolder = styled.div`
 
 export const Sheet = styled.div`
   background-color: var(--white);
-  border: 2px solid var(--dark);
+  //border: 2px solid var(--dark);
   border-radius: 10px 0px 0px 10px;
   margin: 10px 0;
   padding: 5px 10px;
   box-sizing: border-box;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   width: 80%;
   height: 80%;
@@ -255,6 +283,36 @@ export const Sheet = styled.div`
     border-radius: 50%;
     border: none;
   }
+
+  @media screen and (max-width: 480px) {
+    margin: 10px 0;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+
+    width: 78vw;
+    height: auto;
+    align-items: center;
+
+    p {
+      font-size: 0.8rem;
+    }
+    .stopButton,
+    .playButton,
+    .pauseButton {
+      background-color: var(--white);
+      color: white;
+      cursor: pointer;
+      border: none;
+      width: 1rem;
+      height: 1rem;
+      svg {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
 `;
 
 export const ProjectHolder = styled.div`
@@ -268,8 +326,8 @@ export const ProjectHolder = styled.div`
 
   .deleteButtonFin {
     //flex: 1;
-    width: 50px;
-    height: 80%;
+    width: 78vw;
+    height: auto;
     background-color: var(--white);
     color: var(--darker);
     border: 2px solid var(--white);
@@ -278,7 +336,37 @@ export const ProjectHolder = styled.div`
     padding: 5px 100px;
   }
   .TrashIcon {
-    margin: 0 0 0 6rem;
+    // margin: 0 0 0 6rem;
+  }
+
+  .deleteButtonFin {
+    //flex: 1;
+    width: 6vw;
+    height: auto;
+    background-color: var(--white);
+    color: var(--darker);
+    border: 2px solid var(--white);
+    border-radius: 0px 10px 10px 0;
+    margin: 10px 0;
+    padding: 5px 10px;
+  }
+  @media screen and (max-width: 480px) {
+    .SheetHolderFin {
+      display: flex;
+      width: 30vw;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+    .deleteButtonFin {
+      width: 8vw;
+      height: auto;
+      svg {
+        width: 3.5vw;
+        height: 4vh;
+      }
+    }
   }
 `;
 
@@ -293,11 +381,26 @@ export const StopStartContainer = styled.div`
     border-radius: 50%;
     transition: all 300ms ease-in-out;
   }
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    justify-content: flex-end;
+    width: 10vw;
+    gap: 10px;
+    min-width: 15vw;
+  }
 `;
 
 export const SheetContainer = styled.div`
   display: flex;
   flex-flow: column;
+`;
+
+export const TaskDescription = styled.section`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 60vw;
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -335,9 +438,12 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
         console.log(allProjects.length);
       }}
     >
-      <p>{task.Description}</p>
-      <p>{formatDate(task.Date)}</p>
-      <p>{time !== task.Time ? formatTime(time) : formatTime(task.Time)}</p>
+      <TaskDescription>
+        <p>{task.Description}</p>
+        <p>{formatDate(task.Date)}</p>
+        <p>{time !== task.Time ? formatTime(time) : formatTime(task.Time)}</p>
+      </TaskDescription>
+
       <StopStartContainer>
         <button
           type="button"

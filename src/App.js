@@ -28,8 +28,8 @@ function App() {
     //     <Route path="/Lunch" component={Carousel} />
     //   </Switch>
     // </BrowserRouter>
-    //<StaffDashboard />
-    <LandingNew />
+    <StaffDashboard />
+    //<LandingNew />
   );
 }
 
