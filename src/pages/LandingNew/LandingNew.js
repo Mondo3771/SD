@@ -146,8 +146,6 @@ const LandingNew = () => {
 
   return (
     <>
-      <LoginButton />
-      <LogoutButton />
       <LandingPageBack>
         <Header>
           <section className="heading">
@@ -240,12 +238,16 @@ const LandingNew = () => {
         {isDropdownOpen || isAboutOpen ? (
           <section className="open">
             Connecting Teams, Boosting Productivity Together!
-            <Index data-testid="Login" child={childToParent} />
+            {/* <Index data-testid="Login" child={childToParent} /> */}
+            <LoginButton />
+            <LogoutButton />
           </section>
         ) : (
           <section className="text">
             Connecting Teams, Boosting Productivity Together!
-            <Index data-testid="Login" child={childToParent} />
+            {/* <Index data-testid="Login" child={childToParent} /> */}
+            <LoginButton />
+            <LogoutButton />
           </section>
         )}
       </LandingPageBack>
