@@ -58,7 +58,7 @@ const LandingNew = () => {
   };
 
   const getRoles = () => {
-    fetch(`https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/roles`, {
+    fetch(`https://dev-1ycr2f4brea4mqn0.us.auth0.com/oauth/token`, {
       method: "POST",
       headers: {},
       body: JSON.stringify({
