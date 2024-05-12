@@ -22,6 +22,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Index from "../../routes/Index";
 
 import Loader from "../../components/Loader/Loader";
+// import { jwt } from "jsonwebtoken";
 
 const LandingNew = () => {
   const history = useHistory();
@@ -29,30 +30,30 @@ const LandingNew = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false); //to perfrom login()
-
+  const { getAccessTokenSilently } = useAuth0();
   const [loading, setLoading] = useState(false); //for Loader
   const [data, setData] = useState("");
-
   const childToParent = (childdata) => {
     // console.log("childToParent", childdata);
     setData(childdata);
     setLoaded(true);
   };
-  console.log(user);
-  // Need to find a way to get the Management API token
-  const token =
-    "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkxlQmsyZXlFWUR0MGNram9QT1EzUSJ9.eyJpc3MiOiJodHRwczovL2Rldi0xeWNyMmY0YnJlYTRtcW4wLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJSZTlscVhDY05ZWTJSdUY0eGhiTnROZHlOM3dkWXNtY0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9kZXYtMXljcjJmNGJyZWE0bXFuMC51cy5hdXRoMC5jb20vYXBpL3YyLyIsImlhdCI6MTcxNTQyMjM4NSwiZXhwIjoxNzE1NTA4Nzg1LCJzY29wZSI6InJlYWQ6dXNlcnMgdXBkYXRlOnVzZXJzIHJlYWQ6cm9sZXMgY3JlYXRlOnJvbGVzIGRlbGV0ZTpyb2xlcyB1cGRhdGU6cm9sZXMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJSZTlscVhDY05ZWTJSdUY0eGhiTnROZHlOM3dkWXNtYyJ9.SE0CVCoHOYyVYc4GEGMoQfzo6EhsDf04iDbHG86ku16Fm3H8eyMNkiVQ7rnkE2eCkwo7pi9lb_iUPlfhUf1PjUXG-3lTSjbiGM4hMiOzdOBHlybwr_gcpLEdR2jXR-E6GyusiLn0TBMCsJO7DFkHL_llVCkht0zX8dEQI0ZWcxwEuAHFY0eyLgt9Rvhkww6o1XqA3RywI7AOB-o8fG7dXl1yds5xPA1yN_rKgh6JI-4NCgy5J478YycdD05aHX_1D0abrcak-PQ4bNP7y8AZmek_kZ-NJ7LMFnxLAx8NRwOlU3X5gHW_D-JBGMxxY10317lugXTviv_Ak3PFBCdzLw";
-  // we are working on gewtting the users Role from Auh0
-
+  // console.log(user);
   if (isAuthenticated && !Loaded) {
     childToParent(user);
-    console.log("user", user.sub);
-    
-    // console.log("token", token);
+    // token = gettoke();
+    // console.log(token);
   }
 
-  const login = () => {
-    fetch(`/api/login?Token=${data.sub}`)
+  const login = async () => {
+    const token = await getAccessTokenSilently();
+    console.log("token", token);
+    localStorage.setItem("token", token);
+    fetch(`/api/login?Token=${data.sub}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((DB) => {
         console.log("Success:", DB.message);
@@ -62,6 +63,7 @@ const LandingNew = () => {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
               },
               body: JSON.stringify({
                 Department: null,
