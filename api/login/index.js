@@ -51,13 +51,12 @@ module.exports = async function (context, req) {
       const data = req.body;
       try {
         if (
-          data.token === undefined ||
-          data.token === "" ||
-          data.token === null
+          data.Token === undefined ||
+          data.Token === "" ||
+          data.Token === null
         ) {
           context.res = {
             status: 400,
-
             bode: { message: "Email cannot be null or empty" },
           };
         } else {

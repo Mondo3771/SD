@@ -3,6 +3,7 @@ const fetch = require("node-fetch");
 module.exports = async function (context, req) {
   const userId = req.query.userId || (req.body && req.body.userId);
   const newRoleId = req.query.newRoleId || (req.body && req.body.newRoleId);
+
   // Get management API token
   const tokenResponse = await fetch(
     "https://dev-1ycr2f4brea4mqn0.us.auth0.com/oauth/token",
@@ -29,7 +30,7 @@ module.exports = async function (context, req) {
     case "GET":
       // Get user roles
       const rolesResponse = await fetch(
-        `https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/users/${userId} `,
+        `https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/users `,
         {
           headers: {
             Authorization: `Bearer ${managementApiToken}`,
