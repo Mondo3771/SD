@@ -16,13 +16,8 @@ module.exports = async function (context, req) {
           },
         };
 
-        let context = {
-          res: {},
-        };
-
         // Call the function
         const emp = await Getemps(context, req).then(() => {
-          // console.log(context.res);
           return context.res.body;
         });
 
@@ -36,9 +31,11 @@ module.exports = async function (context, req) {
           if (obj2) {
             return {
               Emp_ID: obj1.Emp_ID,
+              Department: obj1.Department,
+              EMP_type: obj1.EMP_type,
               token: obj1.token,
-              name: obj2.name,
-              family_name: obj2.family_name,
+              Name: obj2.name,
+              Surname: obj2.family_name,
             };
           } else {
             return { Emp_ID: obj1.Emp_ID, token: obj1.token };
@@ -46,17 +43,14 @@ module.exports = async function (context, req) {
         });
 
         console.log(result);
-
-        console.log(result);
-
-        // console.log(employees);
         context.res = {
           status: 200,
           body: {
-            data: resultSet.recordset,
+            data: result,
             message: "Successfully retrieved employees",
           },
         };
+        console.log(context.res);
       } catch (err) {
         context.res = {
           status: 500,
@@ -125,6 +119,7 @@ module.exports = async function (context, req) {
             .input("Emp_ID", sql.Int, data.Emp_ID)
             .query(
               `DELETE FROM Tasks WHERE Emp_ID = @Emp_ID ;
+              DELETE FROM Bookings WHERE Emp_ID = @Emp_ID ;
                 DELETE FROM Employees WHERE Emp_ID = @Emp_ID`
             );
           context.res = {

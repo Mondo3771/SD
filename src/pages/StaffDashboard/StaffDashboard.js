@@ -109,6 +109,7 @@ const StaffDashboard = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Autherization: "",
         },
         body: JSON.stringify(taskToAdd),
       })

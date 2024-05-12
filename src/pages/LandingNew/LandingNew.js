@@ -7,7 +7,7 @@ import manage from "./Images/icon3.PNG";
 import book from "./Images/icon4.PNG";
 import LoginButton from "../../components/Log/LoginButton";
 import LogoutButton from "../../components/Log/LogoutButton";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0, getAccessTokenSilently } from "@auth0/auth0-react";
 import {
   Header,
   DropDown,
@@ -43,18 +43,11 @@ const LandingNew = () => {
   const token =
     "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkxlQmsyZXlFWUR0MGNram9QT1EzUSJ9.eyJpc3MiOiJodHRwczovL2Rldi0xeWNyMmY0YnJlYTRtcW4wLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJSZTlscVhDY05ZWTJSdUY0eGhiTnROZHlOM3dkWXNtY0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9kZXYtMXljcjJmNGJyZWE0bXFuMC51cy5hdXRoMC5jb20vYXBpL3YyLyIsImlhdCI6MTcxNTQyMjM4NSwiZXhwIjoxNzE1NTA4Nzg1LCJzY29wZSI6InJlYWQ6dXNlcnMgdXBkYXRlOnVzZXJzIHJlYWQ6cm9sZXMgY3JlYXRlOnJvbGVzIGRlbGV0ZTpyb2xlcyB1cGRhdGU6cm9sZXMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJSZTlscVhDY05ZWTJSdUY0eGhiTnROZHlOM3dkWXNtYyJ9.SE0CVCoHOYyVYc4GEGMoQfzo6EhsDf04iDbHG86ku16Fm3H8eyMNkiVQ7rnkE2eCkwo7pi9lb_iUPlfhUf1PjUXG-3lTSjbiGM4hMiOzdOBHlybwr_gcpLEdR2jXR-E6GyusiLn0TBMCsJO7DFkHL_llVCkht0zX8dEQI0ZWcxwEuAHFY0eyLgt9Rvhkww6o1XqA3RywI7AOB-o8fG7dXl1yds5xPA1yN_rKgh6JI-4NCgy5J478YycdD05aHX_1D0abrcak-PQ4bNP7y8AZmek_kZ-NJ7LMFnxLAx8NRwOlU3X5gHW_D-JBGMxxY10317lugXTviv_Ak3PFBCdzLw";
   // we are working on gewtting the users Role from Auh0
-  const getToken = async () => {
-    const tokenResponse = await fetch("/api/Authenticate");
-
-    const tokenData = await tokenResponse.json();
-    const managementApiToken = tokenData.access_token;
-    return managementApiToken;
-  };
 
   if (isAuthenticated && !Loaded) {
     childToParent(user);
     console.log("user", user.sub);
-    const token = getToken();
+    
     // console.log("token", token);
   }
 
