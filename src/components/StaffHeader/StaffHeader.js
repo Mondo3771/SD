@@ -36,7 +36,7 @@ const StaffHeader = ({employee}) => {
       </ul>
     </nav>
     <ArrowRightIcon width={24} />
-
+    
    
   </Header>
     
