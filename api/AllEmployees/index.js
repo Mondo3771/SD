@@ -10,17 +10,11 @@ module.exports = async function (context, req) {
         const resultSet = await pool.request().query(`SELECT * FROM Employees`);
         let req = {
           method: "GET",
-          query: {
-            userId: "123",
-            newRoleId: "456",
-          },
         };
-
         // Call the function
         const emp = await Getemps(context, req).then(() => {
           return context.res.body;
         });
-
         let lookup = emp.reduce((acc, obj) => {
           acc[obj.user_id] = obj;
           return acc;
@@ -34,7 +28,7 @@ module.exports = async function (context, req) {
               Department: obj1.Department,
               EMP_type: obj1.EMP_type,
               token: obj1.token,
-              Name: obj2.name,
+              Name: obj2.given_name,
               Surname: obj2.family_name,
             };
           } else {
@@ -42,7 +36,7 @@ module.exports = async function (context, req) {
           }
         });
 
-        console.log(result);
+        // console.log(result);
         context.res = {
           status: 200,
           body: {
@@ -50,7 +44,7 @@ module.exports = async function (context, req) {
             message: "Successfully retrieved employees",
           },
         };
-        console.log(context.res);
+        // console.log(context.res);
       } catch (err) {
         context.res = {
           status: 500,

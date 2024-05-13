@@ -16,6 +16,7 @@
     "eslint": "^8.57.0",
     "google-auth-library": "^9.7.0",
     "jsonwebtoken": "^9.0.2",
+    "jwks-rsa": "^3.1.0",
     "jwt-decode": "^4.0.0",
     "mssql": "^10.0.2",
     "prop-types": "^15.8.1",
@@ -32,7 +33,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=False react-scripts build",
+    "build": " react-scripts build",
     "test": "jest --coverage || exit 0",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage && type .\\coverage\\lcov-report\\lcov.info | coveralls",
