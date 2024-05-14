@@ -35,8 +35,8 @@ function App() {
     //   </Switch>
     // </BrowserRouter>
     // <StaffDashboard/>
-    // <Reporting></Reporting>
-    <StaffCarWash></StaffCarWash>
+    <Reporting></Reporting>
+    // <StaffCarWash></StaffCarWash>
   );
 }
 

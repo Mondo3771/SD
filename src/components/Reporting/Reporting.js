@@ -150,6 +150,7 @@ const mockFeed = [
 
 
 const Reporting = () => {
+    const [tasks,settasks]=useState(null);
     const [Projects, setProjects] = useState(new Set());
     const [projectTimeMap, setProjectTimeMap] = useState({});
     const [hours, setHours] = useState(null);
@@ -164,32 +165,59 @@ const Reporting = () => {
     const[chooseHour,setchooseHour]=useState(150);
     const[percentage,setpercentage]=useState(0);
 
+    useEffect(()=>{
+        const GetAllTasks = (Emp_ID) => {
+            fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+              .then((response) => response.json())
+              .then((data) => {
+                console.log("Success:", data.data);
+                settasks(data.data);
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          };
+          GetAllTasks(83)
+
+    },[])
+
+  
+
     useEffect(() => {
         const projectMap = {};
         let activecount = 0;
         let inactivecount = 0;
         let hours = 0;
 
-        mockGraph.forEach(task => {
-            const taskDate = new Date(task.Date);
-            const taskYear = taskDate.getFullYear();
-            const taskMonth = taskDate.getMonth() + 1; 
-
-            if (taskYear === selectedYear && taskMonth === selectedMonth) {
-                task.Active === 1 ? activecount++ : inactivecount++;
-                if (!projectMap[task.Project]) {
-                    projectMap[task.Project] = 0;
+    
+          if(tasks){
+            tasks.forEach(task => {
+                console.log(task);
+                const taskDate = new Date(task.Date);
+                const taskYear = taskDate.getFullYear();
+                const taskMonth = taskDate.getMonth() + 1; 
+    
+                if (taskYear === selectedYear && taskMonth === selectedMonth) {
+                    task.Active === true ? activecount++ : inactivecount++;
+                    if (!projectMap[task.Project]) {
+                        projectMap[task.Project] = 0;
+                    }
+                    projectMap[task.Project] += task.Time;
+                    hours += task.Time;
                 }
-                projectMap[task.Project] += task.Time;
-                hours += task.Time;
-            }
-        });
-        setProjects(new Set(Object.keys(projectMap)));
-        setProjectTimeMap(projectMap);
-        setActive(activecount);
-        setinActive(inactivecount);
-        setTotalHours(hours);
-    }, [selectedYear, selectedMonth]); 
+            });
+            setProjects(new Set(Object.keys(projectMap)));
+            setProjectTimeMap(projectMap);
+            setActive(activecount);
+            console.log(activecount,'no');
+            setinActive(inactivecount);
+            console.log(activecount,'nocap');
+
+            setTotalHours(hours);
+
+          }
+      
+    }, [selectedYear, selectedMonth,tasks]); 
 
     const handleYearChange = event => {
         setSelectedYear(parseInt(event.target.value));
@@ -357,3 +385,6 @@ const Reporting = () => {
 };
 
 export default Reporting;
+
+
+

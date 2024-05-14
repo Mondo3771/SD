@@ -1,11 +1,18 @@
 import React,{useEffect,useState} from 'react'
+import { Wrapper,Weather,Booking,Card } from './StaffCarWash.styles';
+
 
 
 const StaffCarWash = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  const [MondayQuant,setMondayQuant]=useState(11);
+  const [ThursdayQuant,setThursdayQuant]=useState(11);
+
+
+
+  useEffect(() => {// Weather api
     const fetchWeather = async (latitude, longitude) => {
       const apiKey = '364463030b5dcb4c6b6f92bbaab6ab21 ';
       const apiUrl = `https://api.openweathermap.org/data/2.5//weather/?lat=${latitude}&lon=${longitude}&units=metric&APPID=${apiKey}`;
@@ -22,7 +29,7 @@ const StaffCarWash = () => {
       }
     };
 
-    const getLocation = () => {
+    const getLocation = () => {//gets location of device
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -41,19 +48,61 @@ const StaffCarWash = () => {
     getLocation();
   }, []);
 
+  const mondayBook=()=>{
+    console.log('mon');
+
+  }
+
+  const tuesdayBook=()=>{
+    console.log('tues');
+
+  }
+
   return (
-    <div>
-      {error && <p>{error}</p>}
-      {weatherData && (
-        <div>
-          {console.log(weatherData)}
-          <h2>Current Weather</h2>
-          <p>Location: {weatherData.name}</p>
-          <p>Temperature: {weatherData.main.temp} °C</p>
-          <p>Description: {weatherData.weather[0].description}</p>
-        </div>
-      )}
-    </div>
+    <Wrapper>
+
+      <Booking>
+        <Card>
+         <p>Monday</p> 
+         <p>Quantity: {MondayQuant}</p> 
+          <button onClick={mondayBook}>
+            Book
+
+          </button>
+
+        </Card>
+        <Card>
+        <p>Thursday</p> 
+        <p>Quantity: {ThursdayQuant}</p> 
+          <button onClick={tuesdayBook}>
+            Book
+
+          </button>
+
+
+        </Card>
+
+      </Booking>
+      <Weather>
+          {error && <p>{error}</p>}
+          {weatherData && (
+            <div>
+              {console.log(weatherData)}
+              <h2>Current Weather</h2>
+              <p>Location: {weatherData.name}</p>
+              <p>Temperature: {weatherData.main.temp} °C</p>
+              <p>Description: {weatherData.weather[0].description}</p>
+            </div>
+
+          )}
+
+      </Weather>
+
+    
+
+
+
+    </Wrapper>
   );
 };
 
