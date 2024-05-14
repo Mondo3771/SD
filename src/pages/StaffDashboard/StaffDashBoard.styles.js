@@ -9,21 +9,9 @@ import {
   PauseIcon,
   StopIcon,
 } from "@heroicons/react/24/outline";
+import { formatDate, formatTime } from "../../helper";
 
-const formatTime = (timeInSeconds) => {
-  const hours = Math.floor(timeInSeconds / 3600);
-  const minutes = Math.floor((timeInSeconds % 3600) / 60);
-  const seconds = timeInSeconds % 60;
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-    2,
-    "0"
-  )}:${String(seconds).padStart(2, "0")}`;
-};
 
-const formatDate = (date) => {
-  const temp = date.split("T")[0];
-  return temp;
-};
 
 export const Wrapper = styled.div`
   display: flex;

@@ -9,7 +9,7 @@ import {
 } from "../../components/FeedBackComponent/FeedBack.styles";
 import { useState } from "react";
 import { Body } from "./TempReportPage.styles";
-import { fetchStorageData, setLocalStorage } from "../../helper";
+import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
 
 export const TempReportPage = () => {
@@ -18,20 +18,8 @@ export const TempReportPage = () => {
   const [AllFeedback, setAllFeedBack] = useState([]);
   const [firstLoad, setFirstLoad] = useState(false);
   const Emp_ID = 83;
-  const PostFeedback = (feedback) => {
-    fetch("/api/feedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Message: feedback.Message,
-        Send_ID: feedback.Sent_ID,
-        Rec_ID: feedback.Receive_ID,
-        Date: feedback.Date,
-      }),
-    });
-  };
+
+  
 
   useEffect(() => {
     // Get All the info you need on this page once (AllFeedback,AllUsers)
@@ -63,36 +51,55 @@ export const TempReportPage = () => {
     // Filter allfeedback users
     const fullFeedback = fetchStorageData({ key: "Feedback" }) ?? [];
     // fullFeedback.filter(f => f.Send_ID === user.Emp_ID);
-    const t = [
-      ...fullFeedback.filter((f) => f.Sent_ID === user.Emp_ID),
-      ...fullFeedback.filter((f) => f.Receive_ID === user.Emp_ID),
-    ];
+    const t =
+      fullFeedback.filter((f) => f.Sent_ID === user.Emp_ID || f.Receive_ID === user.Emp_ID);
     console.log(t);
     setAllFeedBack(t);
     setReceiver(user);
   };
 
-  const handleSendFeedback = (sender, receiver, message) => {
-    //create new message to be sent into the database
-    // Database should give back the Message_ID
-    const Message_ID = Math.random() * 1000;
-    const Date = "2015-08-08";
+  const handleSendFeedback = (sender,receiver, feedback) => {
     console.log("Sender", sender);
     console.log("Receiver", receiver);
-
-    const feedback = {
-      Message_ID: Message_ID,
+    const today = new Date().toISOString().slice(0, 10);
+    const newMessage = {
+      Message: feedback,
       Sent_ID: sender.Emp_ID,
       Receive_ID: receiver.Emp_ID,
-      Send_Name: sender.Name,
-      Date: Date,
-      Message: message,
-    };
-    const storageChange = [...fetchStorageData({ key: "Feedback" }), feedback];
-    setLocalStorage({ key: "Feedback", value: storageChange });
-    setAllFeedBack((prev) => [feedback, ...prev]);
-    toast.success(`Message successfully sent to ${receiver.Name}!`);
+      Date: today ,
+      Message_ID: Math.random() * 1000,
+    }
+
+    fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Message: feedback,
+        Sent_ID: sender.Emp_ID,
+        Rec_ID: receiver.Emp_ID,
+        Date: today,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        newMessage.Message_ID = data.Message_ID;
+        newMessage.Date = formatDate(newMessage.Date)
+        const storageChange = [
+          ...fetchStorageData({ key: "Feedback" }),
+          newMessage,
+        ];
+        setLocalStorage({ key: "Feedback", value: storageChange });
+        setAllFeedBack((prev) => [newMessage, ...prev]);
+        toast.success(`Message successfully sent!`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
 
   return (
     <Body>

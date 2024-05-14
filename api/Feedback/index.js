@@ -37,9 +37,6 @@ module.exports = async function (context, req) {
       try {
         console.log(data);
         if (
-          data.Meal_ID === undefined ||
-          data.Meal_ID === "" ||
-          data.Meal_ID === null ||
           data.Rec_ID === undefined ||
           data.Rec_ID === "" ||
           data.Rec_ID === null
@@ -50,6 +47,7 @@ module.exports = async function (context, req) {
             body: {},
           };
         } else {
+          console.log(data);
           const resultSet = await pool
             .request()
             .input("Send_ID", sql.Int, data.Send_ID)
@@ -58,7 +56,7 @@ module.exports = async function (context, req) {
             .input("Message", sql.VarChar, data.Message)
             .query(
               `INSERT INTO Messages (Sent_ID, Receive_ID, Date,Message) OUTPUT INSERTED. *
-             VALUES (@Send_ID, @Receive_ID, @Date, @Message)`
+             VALUES (@Send_ID, @Rec_ID, @Date, @Message)`
             );
           console.log(resultSet.recordset[0]);
           context.res = {
@@ -66,6 +64,7 @@ module.exports = async function (context, req) {
             message: "Message added successfully",
             body: { data: resultSet.recordset[0] },
           };
+
         }
       } catch (err) {
         context.res = {
