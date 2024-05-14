@@ -15,6 +15,8 @@ import LandingNew from "./pages/LandingNew/LandingNew";
 import HRMeals from "./pages/HRMeals/HRMeals";
 import HRBookings from "./pages/HRBookings/HRBookings";
 import Carousel from "./components/Carousel/Carousel";
+import StaffCarWash from "./components/StaffCarWash/StaffCarWash";
+
 
 // import { register } from "swiper/element/bundle";
 
@@ -33,7 +35,8 @@ function App() {
     //   </Switch>
     // </BrowserRouter>
     // <StaffDashboard/>
-    <Reporting></Reporting>
+    // <Reporting></Reporting>
+    <StaffCarWash></StaffCarWash>
   );
 }
 

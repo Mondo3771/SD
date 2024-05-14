@@ -256,7 +256,7 @@ const Reporting = () => {
     
     
     useEffect(()=>{
-        const total=Math.ceil((TotalHours/3600)/ chooseHour*100);
+        const total=TotalHours?Math.floor((TotalHours/3600)/ chooseHour*100):0;
 
         setpercentage( total>100?100:total);
 
@@ -323,7 +323,7 @@ const Reporting = () => {
     styles={buildStyles({
         
         pathTransition: 'linear',
-        pathTransitionDuration: 4,
+        pathTransitionDuration: 0.5,
         rotation: 0.5 + (1 - percentage / 100) / 2,
 
 
