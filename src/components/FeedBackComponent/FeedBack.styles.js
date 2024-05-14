@@ -111,7 +111,7 @@ export const Message = styled.article`
 export const MockFeedBack = [
   {
     Message_ID: 0,
-    Send_ID: 83,
+    Sent_ID: 83,
     Receive_ID: 84,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
@@ -120,7 +120,7 @@ export const MockFeedBack = [
   {
     Message_ID: 1,
 
-    Send_ID: 3,
+    Sent_ID: 3,
     Receive_ID: 84,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
@@ -129,7 +129,7 @@ export const MockFeedBack = [
   {
     Message_ID: 2,
 
-    Send_ID: 3,
+    Sent_ID: 3,
     Receive_ID: 2,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
@@ -138,7 +138,7 @@ export const MockFeedBack = [
   {
     Message_ID: 3,
 
-    Send_ID: 5,
+    Sent_ID: 5,
     Receive_ID: 2,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
@@ -146,7 +146,7 @@ export const MockFeedBack = [
   },
   {
     Message_ID: 4,
-    Send_ID: 6,
+    Sent_ID: 6,
     Receive_ID: 2,
     Send_Name: "Dmitry",
     Date: "2015-08-08",

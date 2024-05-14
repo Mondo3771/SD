@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 export const TempReportPage = () => {
   const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
-  const [AllFeedback, setAllFeedBack] = useState(MockFeedBack);
+  const [AllFeedback, setAllFeedBack] = useState([]);
   const [firstLoad, setFirstLoad] = useState(false);
   const Emp_ID = 83;
   const PostFeedback = (feedback) => {
@@ -26,7 +26,7 @@ export const TempReportPage = () => {
       },
       body: JSON.stringify({
         Message: feedback.Message,
-        Send_ID: feedback.Send_ID,
+        Send_ID: feedback.Sent_ID,
         Rec_ID: feedback.Receive_ID,
         Date: feedback.Date,
       }),
@@ -82,7 +82,7 @@ export const TempReportPage = () => {
 
     const feedback = {
       Message_ID: Message_ID,
-      Send_ID: sender.Emp_ID,
+      Sent_ID: sender.Emp_ID,
       Receive_ID: receiver.Emp_ID,
       Send_Name: sender.Name,
       Date: Date,
@@ -96,13 +96,17 @@ export const TempReportPage = () => {
 
   return (
     <Body>
-      <ShowUsers Users={Users} onUserClick={handleUserClick} />
-      <FeedBack
-        FeedBackArray={AllFeedback}
-        User={MockUser}
-        Receiver={Receiver}
-        onSendFeedBack={handleSendFeedback}
-      />
+      {firstLoad && (
+        <>
+          <ShowUsers Users={Users} onUserClick={handleUserClick} />
+          <FeedBack
+            FeedBackArray={AllFeedback}
+            User={MockUser}
+            Receiver={Receiver}
+            onSendFeedBack={handleSendFeedback}
+          />
+        </>
+      )}
     </Body>
   );
 };

@@ -13,6 +13,8 @@ export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
   const [InputMessage, setInputMessage] = useState("");
   const [changed, setChanged] = useState(false);
 
+  console.log(FeedBackArray);
+
   const handleInputMessageChange = (event) => {
     if (event.target.value.length === 0) {
       setChanged(false);
@@ -25,9 +27,9 @@ export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
   return (
     <Wrap>
       <Wrapper>
-        {FeedBackArray.length > 0 &&
+        {
           FeedBackArray.map((p) => {
-            if (p.Send_ID !== User.Emp_ID) {
+            if (p.Sent_ID !== User.Emp_ID) {
               return (
                 <Message key={p.Message_ID} className="Message">
                   {/* <h4>{p.Send_Name}</h4> */}
@@ -45,7 +47,6 @@ export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
               );
             }
           })}
-        {!FeedBack.length}
       </Wrapper>
       <SendFeedBackWrapper className="SendFeebackSection">
         <textarea
