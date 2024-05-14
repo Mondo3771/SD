@@ -26,19 +26,19 @@ import LogoutButton from "./components/Log/LogoutButton";
 function App() {
   return (
     <>
-      // <BrowserRouter>
-      //   <Switch>
-      //     <Route exact path="/" component={LandingNew} index />
-      //     <Route path="/DashBoard" component={StaffDashboard} />
-      //     <Route path="/HRhome" component={HRHome} />
-      //     <Route path="/HRMeals" component={HRMeals} />
-      //     <Route path="/HRBookings" component={HRBookings} />
-      //     <Route path="/Lunch" component={Carousel} />
-      //   </Switch>
-      // </BrowserRouter>
+     <BrowserRouter>
+       <Switch>
+         <Route exact path="/" component={LandingNew} index />
+         <Route path="/DashBoard" component={StaffDashboard} />
+         <Route path="/HRhome" component={HRHome} />
+         <Route path="/HRMeals" component={HRMeals} />
+         <Route path="/HRBookings" component={HRBookings} />
+         <Route path="/Lunch" component={Carousel} />
+       </Switch>
+     </BrowserRouter>
     </> // <StaffDashboard/>
     // <Reporting></Reporting>
-    <StaffCarWash></StaffCarWash>
+    // <StaffCarWash></StaffCarWash>
   );
 }
 
