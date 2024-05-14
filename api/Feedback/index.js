@@ -7,9 +7,10 @@ module.exports = async function (context, req) {
   switch (req.method) {
     case "GET":
       try {
+        const Emp_ID = req.query.Emp_ID;
         const resultSet = await pool
           .request()
-          .input("Emp_ID", sql.Int, data.Emp_ID)
+          .input("Emp_ID", sql.Int, Emp_ID)
           .query(
             `SELECT * FROM Messages where Sent_ID = @Emp_ID or Receive_ID = @Emp_ID ORDER BY Date DESC`
           );
