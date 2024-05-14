@@ -20,8 +20,12 @@ import StaffCarWash from "./components/StaffCarWash/StaffCarWash";
 
 // import { register } from "swiper/element/bundle";
 
-// // register Swiper custom elements
-// register();
+import { register } from "swiper/element/bundle";
+import { TempReportPage } from "./pages/TempReportPage/TempReportPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// register Swiper custom elements
+register();
 function App() {
   return (
     // <BrowserRouter>
@@ -35,8 +39,10 @@ function App() {
     //   </Switch>
     // </BrowserRouter>
     // <StaffDashboard/>
-    <Reporting></Reporting>
-    // <StaffCarWash></StaffCarWash>
+    <>
+    <TempReportPage/>
+    <ToastContainer/>
+    </>
   );
 }
 

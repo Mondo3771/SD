@@ -129,10 +129,11 @@ export const CreateMealCard = styled.div`
     height: 6vh;
     font-size: 1.1rem;
     width: 17vw;
-    border-radius: 20px;
+    border-radius: 15px;
     font-family: inherit;
     background-color: var(--white);
     color: var(--darkest);
+    padding: 0 5px;
   }
 
   .available {
@@ -147,8 +148,7 @@ export const CreateMealCard = styled.div`
   }
   ::placeholder {
     font-family: inherit;
-    color: rgba(0, 0, 0, 0.2);
-
+    color: rgba(0, 0, 0, 0.4);
     font-size: 1.1rem;
     text-align: left;
     align-items: center;
@@ -202,10 +202,19 @@ export const ShowMealCard = styled.article`
 
   button {
     border-radius: 10px;
-    width: 7vw;
-    height: 4vh;
+    width: 8vw;
+    height: 5vh;
+    font-size: 1rem;
     background-color: var(--white);
     color: var(--dark);
+  }
+  .available {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    input{
+      width: 2vw;
+    height: 2vh;
   }
 
   h3 {
@@ -220,3 +229,13 @@ export const MealCardFin = ({ meal, click }) => (
     <p>{meal.Availability ? "Available" : "Not Available"}</p>
   </MealCard>
 );
+
+export const MockMeals = 
+[
+  {
+  Meal_Id:1,
+  Name_of_Meal: "Masala",
+  Availability: true,
+  Description: "lorem ipsum dolor sit amet dolor",
+  }
+]
