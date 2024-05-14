@@ -4,12 +4,11 @@ const jwksClient = require("jwks-rsa");
 const client = jwksClient({
   jwksUri: `https://${process.env.domain}/.well-known/jwks.json`,
 });
-
-console.log("");
 module.exports = async function (context, req) {
-  const token =
-    req.headers.authorization;
-  console.log(token);
+  //   console.log("Helo", client.getSigningKey);
+
+  const token = req.headers.authorization;
+  //   console.log(token);
   console.log(req.headers.authorization);
   if (!token) {
     context.res = {
@@ -18,18 +17,20 @@ module.exports = async function (context, req) {
     };
     return;
   }
+  console.log(jwt.decode(token, { complete: true }));
 
   const { header } = jwt.decode(token, { complete: true });
-
   client.getSigningKey(header.kid, (err, key) => {
+    console.log("hello", key);
     if (err) {
+      console.log(err);
       context.res = {
         status: 500,
         body: "Error getting signing key",
       };
       return;
     }
-
+    console.log(jwt);
     jwt.verify(
       token,
       key.publicKey,
@@ -42,7 +43,7 @@ module.exports = async function (context, req) {
           };
           return;
         }
-
+        console.log(decoded);
         // Token is valid, continue processing the request
         context.res = {
           status: 200,

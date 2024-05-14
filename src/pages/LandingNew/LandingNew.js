@@ -8,6 +8,8 @@ import book from "./Images/icon4.PNG";
 import LoginButton from "../../components/Log/LoginButton";
 import LogoutButton from "../../components/Log/LogoutButton";
 import { useAuth0, getAccessTokenSilently } from "@auth0/auth0-react";
+import Auth0Lock from "auth0-lock";
+
 import {
   Header,
   DropDown,
@@ -42,13 +44,13 @@ const LandingNew = () => {
   if (isAuthenticated && !Loaded) {
     childToParent(user);
     // token = gettoke();
-    // console.log(token);
+    // console.log(token);\]
+    
   }
 
   const login = async () => {
     const token = await getAccessTokenSilently();
-    console.log("token", token);
-    localStorage.setItem("token", token);
+    // localStorage.setItem("token", token)
     fetch(`/api/login?Token=${data.sub}`, {
       headers: {
         Authorization: `Bearer ${token}`,
