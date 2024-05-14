@@ -58,14 +58,14 @@ export const InfoContainer = styled.section`
 
 export const MockUsers = [
   {
-    Emp_ID: 1,
+    Emp_ID: 84,
     Name: "Tapiwa",
     Surname: "Mazarura",
     Department: "Finance",
     EMP_Type: "Staff",
   },
   {
-    Emp_ID: 2,
+    Emp_ID: 84,
     Name: "Candace",
     Surname: "Flinn",
     Department: "Animation",

@@ -18,6 +18,21 @@ export const TempReportPage = () => {
   const [AllFeedback, setAllFeedBack] = useState(MockFeedBack);
   const [firstLoad, setFirstLoad] = useState(false);
   const Emp_ID = 83;
+  const PostFeedback = (feedback) => {
+    fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Message: feedback.Message,
+        Send_ID: feedback.Send_ID,
+        Rec_ID: feedback.Receive_ID,
+        Date: feedback.Date,
+      }),
+    });
+  };
+
   useEffect(() => {
     // Get All the info you need on this page once (AllFeedback,AllUsers)
     // Get from storage
@@ -32,24 +47,28 @@ export const TempReportPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          setAllFeedBack(data);
-          setLocalStorage({ key: "Feedback", value: data });
+          console.log(data.data);
+          setAllFeedBack(data.data);
+          setLocalStorage({ key: "Feedback", value: data.data });
+          setFirstLoad(true);
+          setUsers(MockUsers);
         });
     };
     feedback();
 
     // setReceiver(MockUsers[2]);
-    setUsers(MockUsers);
-    setFirstLoad(true);
   }, []);
 
   const handleUserClick = (user) => {
     // Filter allfeedback users
     const fullFeedback = fetchStorageData({ key: "Feedback" }) ?? [];
-    // console.log(fullFeedback.filter);
     // fullFeedback.filter(f => f.Send_ID === user.Emp_ID);
-    setAllFeedBack(fullFeedback.filter((f) => f.Receive_ID === user.Emp_ID));
+    const t = [
+      ...fullFeedback.filter((f) => f.Sent_ID === user.Emp_ID),
+      ...fullFeedback.filter((f) => f.Receive_ID === user.Emp_ID),
+    ];
+    console.log(t);
+    setAllFeedBack(t);
     setReceiver(user);
   };
 

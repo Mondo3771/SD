@@ -64,7 +64,7 @@ export const SendFeedBackWrapper = styled.section`
     align-items: center;
     width: fit-content;
     padding: 1rem;
-    background-color: green ;
+    background-color: green;
   }
   .SaveButton:hover {
     color: white;
@@ -74,7 +74,7 @@ export const SendFeedBackWrapper = styled.section`
   .SaveButton:disabled {
     color: #ccc;
     cursor: not-allowed;
-    background-color : gray;
+    background-color: gray;
   }
 `;
 
@@ -111,8 +111,8 @@ export const Message = styled.article`
 export const MockFeedBack = [
   {
     Message_ID: 0,
-    Send_ID: 1,
-    Receive_ID: 2,
+    Send_ID: 83,
+    Receive_ID: 84,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
     Message: "Well Done",
@@ -121,7 +121,7 @@ export const MockFeedBack = [
     Message_ID: 1,
 
     Send_ID: 3,
-    Receive_ID: 2,
+    Receive_ID: 84,
     Send_Name: "Dmitry",
     Date: "2015-08-08",
     Message: "Godspeed to you",
