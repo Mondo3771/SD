@@ -192,7 +192,6 @@ const Reporting = () => {
     
           if(tasks){
             tasks.forEach(task => {
-                console.log(task);
                 const taskDate = new Date(task.Date);
                 const taskYear = taskDate.getFullYear();
                 const taskMonth = taskDate.getMonth() + 1; 

@@ -11,6 +11,7 @@ import { useState } from "react";
 import { Body } from "./TempReportPage.styles";
 import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
+import Reporting from "../../components/Reporting/Reporting";
 
 export const TempReportPage = () => {
   const [Users, setUsers] = useState(MockUsers);
@@ -102,18 +103,31 @@ export const TempReportPage = () => {
 
 
   return (
-    <Body>
-      {firstLoad && (
-        <>
-          <ShowUsers Users={Users} onUserClick={handleUserClick} />
-          <FeedBack
-            FeedBackArray={AllFeedback}
-            User={MockUser}
-            Receiver={Receiver}
-            onSendFeedBack={handleSendFeedback}
-          />
-        </>
+    <>
+    {firstLoad && (
+      
+      <>
+         <Reporting></Reporting>
+      <Body>
+       
+            <ShowUsers Users={Users} onUserClick={handleUserClick} />
+            <FeedBack
+              FeedBackArray={AllFeedback}
+              User={MockUser}
+              Receiver={Receiver}
+              onSendFeedBack={handleSendFeedback}
+            />
+          
+       
+      </Body>
+      </>
+   
+
+    
       )}
-    </Body>
+    
+    </>
+     
+
   );
 };
