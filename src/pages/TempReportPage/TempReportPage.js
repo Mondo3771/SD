@@ -12,12 +12,16 @@ import { Body } from "./TempReportPage.styles";
 import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
 import Reporting from "../../components/Reporting/Reporting";
+import Loader from "../../components/Loader/Loader";
 
 export const TempReportPage = () => {
   const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
   const [AllFeedback, setAllFeedBack] = useState([]);
   const [firstLoad, setFirstLoad] = useState(false);
+
+  const[ UserClicked,setuserClicked]=useState(false);
+  const[ReportUser,setReportUser]=useState(null);
   const Emp_ID = 83;
 
   
@@ -50,6 +54,9 @@ export const TempReportPage = () => {
 
   const handleUserClick = (user) => {
     // Filter allfeedback users
+    console.log(user,'user');
+    setuserClicked(true);
+    setReportUser(user);
     const fullFeedback = fetchStorageData({ key: "Feedback" }) ?? [];
     // fullFeedback.filter(f => f.Send_ID === user.Emp_ID);
     const t =
@@ -101,13 +108,16 @@ export const TempReportPage = () => {
       });
   };
 
+  const closeReport=()=>{
+    setuserClicked(false);
+  }
 
   return (
     <>
-    {firstLoad && (
+    {firstLoad ? (
       
       <>
-         <Reporting></Reporting>
+         <Reporting User={MockUser}></Reporting>
       <Body>
        
             <ShowUsers Users={Users} onUserClick={handleUserClick} />
@@ -117,14 +127,32 @@ export const TempReportPage = () => {
               Receiver={Receiver}
               onSendFeedBack={handleSendFeedback}
             />
+
+            
           
        
       </Body>
+      {UserClicked && MockUser.Emp_type==='Manager'?
+      <>
+
+            <Reporting User={ReportUser}>
+
+            </Reporting>
+            <button onClick={closeReport}>
+              close
+            </button>
+
+        </>    
+          :
+          null
+          
+          }
       </>
+      
    
 
     
-      )}
+      ):<Loader></Loader>}
     
     </>
      

@@ -159,4 +159,5 @@ export const MockUser = {
   Surname: "Mazarura",
   Emp_ID: 83,
   Department: "Home Affairs",
+  Emp_type:"Manager"
 };

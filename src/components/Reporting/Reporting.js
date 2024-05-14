@@ -149,7 +149,7 @@ const mockFeed = [
 
 
 
-const Reporting = () => {
+const Reporting = ({User}) => {
     const [tasks,settasks]=useState(null);
     const [Projects, setProjects] = useState(new Set());
     const [projectTimeMap, setProjectTimeMap] = useState({});
@@ -177,7 +177,7 @@ const Reporting = () => {
                 console.error("Error:", error);
               });
           };
-          GetAllTasks(83)
+          GetAllTasks(User.Emp_ID)
 
     },[])
 
@@ -258,7 +258,7 @@ const Reporting = () => {
         showlegend: true
     };
 
-    const { toPDF, targetRef } = usePDF({ filename: 'report.pdf' });
+    const { toPDF, targetRef } = usePDF({ filename: User.Name+"-Report.pdf" });
 
     useEffect(() => {
         // Sort comments by date in descending order (from latest to earliest)
@@ -298,7 +298,7 @@ const Reporting = () => {
         <>
          
             <main ref={targetRef}>
-            <h2>My report</h2>
+            <h2>Report for {User.Name}</h2>
            
 
             <Main  >
