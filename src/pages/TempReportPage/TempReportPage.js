@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 import { ShowUsers } from "../../components/ShowUsers/ShowUsers";
 import { MockUsers } from "../../components/ShowUsers/ShowUsers.styles";
@@ -14,7 +15,14 @@ import { toast } from "react-toastify";
 import Reporting from "../../components/Reporting/Reporting";
 import Loader from "../../components/Loader/Loader";
 
+import StaffHeader from "../../components/StaffHeader/StaffHeader";
+
 export const TempReportPage = () => {
+  // const location = useLocation();
+  // const employee = location.state.params;
+  const employee=fetchStorageData({key:"User"})
+
+
   const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
   const [AllFeedback, setAllFeedBack] = useState([]);
@@ -22,7 +30,7 @@ export const TempReportPage = () => {
 
   const[ UserClicked,setuserClicked]=useState(false);
   const[ReportUser,setReportUser]=useState(null);
-  const Emp_ID = 83;
+  const Emp_ID = employee.Emp_ID;
 
   
 
@@ -114,16 +122,18 @@ export const TempReportPage = () => {
 
   return (
     <>
+    <StaffHeader></StaffHeader>
     {firstLoad ? (
       
       <>
-         <Reporting User={MockUser}></Reporting>
+         <Reporting User={employee}></Reporting>
+         {console.log(employee)}
       <Body>
        
             <ShowUsers Users={Users} onUserClick={handleUserClick} />
             <FeedBack
               FeedBackArray={AllFeedback}
-              User={MockUser}
+              User={employee}
               Receiver={Receiver}
               onSendFeedBack={handleSendFeedback}
             />
@@ -132,7 +142,7 @@ export const TempReportPage = () => {
           
        
       </Body>
-      {UserClicked && MockUser.Emp_type==='Manager'?
+      {UserClicked && employee.EMP_type==='Manager'?
       <>
 
             <Reporting User={ReportUser}>

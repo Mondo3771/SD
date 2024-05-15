@@ -19,6 +19,8 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 import StaffHeader from "../StaffHeader/StaffHeader";
 import { useActionData } from "react-router";
+import { fetchStorageData, setLocalStorage } from "../../helper";
+
 
 
 
@@ -97,10 +99,11 @@ const DeleteBooking = (Booking_ID) => {
 };
 
 const Carousel = () => {
-  const location = useLocation();
-  const data = location.state.params;
+  // const location = useLocation();
+  // const data = location.state.params;
 
-  console.log(data);
+  // console.log(data);
+  const data=fetchStorageData({key:"User"})
 
   const [Meals, setMeals] = useState(null);
   const [empBook, setempBook] = useState(null);
@@ -161,7 +164,7 @@ const Carousel = () => {
 
   return (
     <>
-      <StaffHeader employee={data}></StaffHeader>
+      <StaffHeader ></StaffHeader>
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}

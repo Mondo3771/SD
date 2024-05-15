@@ -11,14 +11,30 @@ import {
 // import logo from "../../pages/HRHome/Images/logo3.svg";
 import logo from "../../Images/logo3.svg";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { fetchStorageData } from "../../helper";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const HRMeals = () => {
   const [Meals, setMeals] = useState([]);
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
+  const history = useHistory();
+
 
   useEffect(() => {
+    const User = fetchStorageData({key:"User"}); 
+    console.log(User)
+
+    if (!User) {
+      // Go back to landing page
+      history.push("/");
+      console.log("user",User)
+
+    }else 
+    if(User.Emp_Type !== "HR"){
+      // Go back to their home page depending on whether they are a staff or manager
+    }
     const getMeals = () => {
       fetch("/api/CreateMeals")
         .then((response) => {

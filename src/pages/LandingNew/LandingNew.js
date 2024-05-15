@@ -24,6 +24,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Index from "../../routes/Index";
 
 import Loader from "../../components/Loader/Loader";
+import { fetchStorageData, setLocalStorage } from "../../helper";
 // import { jwt } from "jsonwebtoken";
 
 const LandingNew = () => {
@@ -84,7 +85,11 @@ const LandingNew = () => {
               });
           get();
         } else {
+            setLocalStorage({key: "User", value:DB.data})
+            const Us = fetchStorageData({key:"User"})
+          console.log(DB.data);
           if (DB.data.EMP_type === "HR") {
+            // localStorage.setItem("User", data);
             history.push(`/HRhome`, { params: DB.data });
           } else {
             history.push(`/DashBoard`, { params: DB.data });

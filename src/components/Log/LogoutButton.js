@@ -1,10 +1,12 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Profile from "./Profile";
+import { clearStorage, deleteStorage } from "../../helper";
 
 const LogoutButton = ({ child }) => {
   const { logout, isAuthenticated, user } = useAuth0();
   console.log(isAuthenticated);
+  
 
   if (isAuthenticated) {
     return (
@@ -15,6 +17,7 @@ const LogoutButton = ({ child }) => {
           onClick={() => {
             logout({ returnTo: window.location.origin });
             // child(user);
+            clearStorage();
           }}
         >
           Log Out
