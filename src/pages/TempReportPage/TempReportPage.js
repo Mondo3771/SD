@@ -20,13 +20,16 @@ import StaffHeader from "../../components/StaffHeader/StaffHeader";
 export const TempReportPage = () => {
   // const location = useLocation();
   // const employee = location.state.params;
+  setLocalStorage({ key: "User", value: MockUser });
+
+
   const employee=fetchStorageData({key:"User"})
 
 
   const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
   const [AllFeedback, setAllFeedBack] = useState([]);
-  const [firstLoad, setFirstLoad] = useState(false);
+  const [firstLoad, setFirstLoad] = useState(true); //change
 
   const[ UserClicked,setuserClicked]=useState(false);
   const[ReportUser,setReportUser]=useState(null);
@@ -142,7 +145,7 @@ export const TempReportPage = () => {
           
        
       </Body>
-      {UserClicked && employee.EMP_type==='Manager'?
+      {UserClicked && MockUser.EMP_type==='Manager'?//change
       <>
 
             <Reporting User={ReportUser}>

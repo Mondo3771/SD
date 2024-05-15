@@ -45,10 +45,10 @@ function App() {
 
   return (
     <>
-     <BrowserRouter>
+     {/* <BrowserRouter>
        <Switch>
          <Route exact path="/" component={LandingNew} index />
-         {/* <Route path="/DashBoard" component={StaffDashboard} /> */}
+         <Route path="/DashBoard" component={StaffDashboard} />
          <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={true} />
          <GuardedRoute path="/HRhome" component={HRHome} auth ={true} />
          <GuardedRoute path="/HRMeals" component={HRMeals} auth ={true} />
@@ -56,7 +56,8 @@ function App() {
          <GuardedRoute path="/Lunch" component={Carousel} auth ={true}/>
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={true}/>
        </Switch>
-     </BrowserRouter>
+     </BrowserRouter> */}
+     <TempReportPage></TempReportPage>
     </> // <StaffDashboard/>
     // <Reporting></Reporting>
     
