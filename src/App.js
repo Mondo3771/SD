@@ -19,7 +19,8 @@ import StaffCarWash from "./components/StaffCarWash/StaffCarWash";
 
 
 // import { register } from "swiper/element/bundle";
-
+import LoginButton from "./components/Log/LoginButton";
+import LogoutButton from "./components/Log/LogoutButton";
 import { register } from "swiper/element/bundle";
 import { TempReportPage } from "./pages/TempReportPage/TempReportPage";
 import { ToastContainer } from "react-toastify";
@@ -28,21 +29,20 @@ import "react-toastify/dist/ReactToastify.css";
 register();
 function App() {
   return (
-    // <BrowserRouter>
-    //   <Switch>
-    //     <Route exact path="/" component={LandingNew} index />
-    //     <Route path="/DashBoard" component={StaffDashboard} />
-    //     <Route path="/HRhome" component={HRHome} />
-    //     <Route path="/HRMeals" component={HRMeals} />
-    //     <Route path="/HRBookings" component={HRBookings} />
-    //     <Route path="/Lunch" component={Carousel} />
-    //   </Switch>
-    // </BrowserRouter>
-    // <StaffDashboard/>
     <>
-    <TempReportPage/>
-    <ToastContainer/>
-    </>
+     <BrowserRouter>
+       <Switch>
+         <Route exact path="/" component={LandingNew} index />
+         <Route path="/DashBoard" component={StaffDashboard} />
+         <Route path="/HRhome" component={HRHome} />
+         <Route path="/HRMeals" component={HRMeals} />
+         <Route path="/HRBookings" component={HRBookings} />
+         <Route path="/Lunch" component={Carousel} />
+       </Switch>
+     </BrowserRouter>
+    </> // <StaffDashboard/>
+    // <Reporting></Reporting>
+    // <StaffCarWash></StaffCarWash>
   );
 }
 

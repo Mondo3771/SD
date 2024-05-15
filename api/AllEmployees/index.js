@@ -1,6 +1,6 @@
 const getPool = require("../db");
 const sql = require("mssql");
-
+const Getemps = require("../Authenticate");
 module.exports = async function (context, req) {
   const pool = await getPool();
   const data = req.body;
@@ -8,13 +8,43 @@ module.exports = async function (context, req) {
     case "GET":
       try {
         const resultSet = await pool.request().query(`SELECT * FROM Employees`);
+        let req = {
+          method: "GET",
+        };
+        // Call the function
+        const emp = await Getemps(context, req).then(() => {
+          return context.res.body;
+        });
+        let lookup = emp.reduce((acc, obj) => {
+          acc[obj.user_id] = obj;
+          return acc;
+        }, {});
+
+        let result = resultSet.recordset.map((obj1) => {
+          let obj2 = lookup[obj1.token];
+          if (obj2) {
+            return {
+              Emp_ID: obj1.Emp_ID,
+              Department: obj1.Department,
+              EMP_type: obj1.EMP_type,
+              token: obj1.token,
+              Name: obj2.given_name,
+              Surname: obj2.family_name,
+            };
+          } else {
+            return { Emp_ID: obj1.Emp_ID, token: obj1.token };
+          }
+        });
+
+        // console.log(result);
         context.res = {
           status: 200,
           body: {
-            data: resultSet.recordset,
+            data: result,
             message: "Successfully retrieved employees",
           },
         };
+        // console.log(context.res);
       } catch (err) {
         context.res = {
           status: 500,
