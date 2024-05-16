@@ -30,7 +30,7 @@ module.exports = async function (context, req) {
     case "GET":
       // Get user roles
       const rolesResponse = await fetch(
-        `https://${process.env.DOMAIN}/api/v2/users `,
+        `https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/users `,
         {
           headers: {
             Authorization: `Bearer ${managementApiToken}`,
