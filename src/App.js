@@ -2,14 +2,12 @@ import "./App.css";
 import ReactDOM from "react-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
-
-import { Route, BrowserRouter, Switch ,Redirect} from "react-router-dom";
+import { Route, BrowserRouter, Switch, Redirect } from "react-router-dom";
 import HRHome from "./pages/HRHome/HRHome";
 
 import StaffDashboard, {
   StaffDashBoardLoader,
 } from "./pages/StaffDashboard/StaffDashboard";
-
 
 import Reporting from "./components/Reporting/Reporting";
 
@@ -19,7 +17,7 @@ import HRBookings from "./pages/HRBookings/HRBookings";
 import Carousel from "./components/Carousel/Carousel";
 import StaffCarWash from "./components/StaffCarWash/StaffCarWash";
 import { TempReportPage } from "./pages/TempReportPage/TempReportPage";
-
+import StaffBookings from "./pages/StaffBookings/StaffBookings";
 
 // import { register } from "swiper/element/bundle";
 import LoginButton from "./components/Log/LoginButton";
@@ -30,22 +28,21 @@ import "react-toastify/dist/ReactToastify.css";
 // register Swiper custom elements
 register();
 
-
-
 const GuardedRoute = ({ component: Component, auth, ...rest }) => (
-  <Route {...rest} render={(props) => (
-      auth === true
-          ? <Component {...props} />
-          : <Redirect to='/' />
-  )} />
-)
+  <Route
+    {...rest}
+    render={(props) =>
+      auth === true ? <Component {...props} /> : <Redirect to="/" />
+    }
+  />
+);
 
 function App() {
   const { logout, isAuthenticated, user } = useAuth0();
 
   return (
     <>
-     {/* <BrowserRouter>
+      {/* <BrowserRouter>
        <Switch>
          <Route exact path="/" component={LandingNew} index />
          <Route path="/DashBoard" component={StaffDashboard} />
@@ -57,11 +54,11 @@ function App() {
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={true}/>
        </Switch>
      </BrowserRouter> */}
-     <TempReportPage></TempReportPage>
+      <StaffCarWash></StaffCarWash>
+      {/* <TempReportPage></TempReportPage> */}
+      {/* <StaffBookings></StaffBookings> */}
     </> // <StaffDashboard/>
     // <Reporting></Reporting>
-    
-    // <StaffCarWash></StaffCarWash>
   );
 }
 
