@@ -1,20 +1,20 @@
-const { Portal } = require("@mui/material");
+// const { Portal } = require("@mui/material");
 const fetch = require("node-fetch");
 // import { fetch } from "node-fetch";
 module.exports = async function (context, req) {
 
   // Get management API token
   const tokenResponse = await fetch(
-    `https://${process.env.domain}/oauth/token`,
+    `https://${process.env.DOMAIN}/oauth/token`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        client_id: process.env.client_id,
-        client_secret: process.env.client_secret,
-        audience: `https://${process.env.domain}/api/v2/`,
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
+        audience: `https://${process.env.DOMAIN}/api/v2/`,
         grant_type: "client_credentials",
       }),
     }
@@ -22,13 +22,13 @@ module.exports = async function (context, req) {
 
   const tokenData = await tokenResponse.json();
 
-  const managementApiToken = tokenData.access_token;
+  const managementApiToken = tokenData.ACCESS_TOKEN;
   //   console.log(managementApiToken);
   switch (req.method) {
     case "GET":
       // Get user roles
       const rolesResponse = await fetch(
-        `https://${process.env.domain}/api/v2/users `,
+        `https://${process.env.DOMAIN}/api/v2/users `,
         {
           headers: {
             Authorization: `Bearer ${managementApiToken}`,
