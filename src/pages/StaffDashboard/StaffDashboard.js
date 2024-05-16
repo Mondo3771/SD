@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 //icons
-import { ClockIcon, ArrowRightIcon, TrashIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ClockIcon,
+  ArrowRightIcon,
+  TrashIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 
 import logo from "../../Images/logo3.svg";
 // StaffDashboard styles
@@ -20,6 +25,8 @@ import {
 
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import LoginButton from "../../components/Log/LoginButton";
+import LogoutButton from "../../components/Log/LogoutButton";
 // import sheet from "styled-components/dist/sheet";
 
 // Function to filter unique Project values and return an array of unique projects
@@ -54,38 +61,36 @@ const StaffDashboard = () => {
   const location = useLocation();
   const history = useHistory();
   const data = location.state.params; // Remove this line
-  const User = data.user
+  const User = data.user;
   const Emp_ID = data.Emp_ID;
   // const Emp_ID = 1;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
 
-
   useEffect(() => {
-//replace allprojects with data from fetch
+    //replace allprojects with data from fetch
 
-const Projects = () => {
-  fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-      const uniques = filterUniqueProjects(data.data);
-      setUniqueProjectNames(uniques);
-      setAllProjects(data.data);
-      setLoaded(true);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-};
-Projects();
-// const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}] 
-// const uniques = filterUniqueProjects(allProjects);
-//       setUniqueProjectNames(uniques);
-// setAllProjects(allProjects);
-// setLoaded(true)
-   
+    const Projects = () => {
+      fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          const uniques = filterUniqueProjects(data.data);
+          setUniqueProjectNames(uniques);
+          setAllProjects(data.data);
+          setLoaded(true);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    Projects();
+    // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}]
+    // const uniques = filterUniqueProjects(allProjects);
+    //       setUniqueProjectNames(uniques);
+    // setAllProjects(allProjects);
+    // setLoaded(true)
   }, []);
 
   const [task, setTask] = useState("");
@@ -104,6 +109,7 @@ Projects();
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Autherization: "",
         },
         body: JSON.stringify(taskToAdd),
       })
@@ -120,7 +126,7 @@ Projects();
           console.error("Error:", error);
         });
     };
-    add(); 
+    add();
   };
 
   const projectNameChange = (event) => {
@@ -153,7 +159,6 @@ Projects();
         });
     };
     pause();
-
   };
   const handleStop = (taskToStop) => {
     // console.log(taskToStop);
@@ -191,7 +196,7 @@ Projects();
           console.error("Error:", error);
         });
     };
-    deleteTask()
+    deleteTask();
     setAllProjects((a) => a.filter((p) => p.Task_ID !== taskToDelete.Task_ID));
 
     // setSheets(updatedSheets);
@@ -200,11 +205,10 @@ Projects();
         AllProjects.filter((p) => p.Task_ID !== taskToDelete.Task_ID)
       )
     );
-
   };
- const Lunch =() => {
-  history.push("/Lunch" ,{params: data});
- }
+  const Lunch = () => {
+    history.push("/Lunch", { params: data });
+  };
   return (
     <Wrapper>
       {/* <StaffHeader employee={data}></StaffHeader> */}
@@ -301,13 +305,20 @@ Projects();
                       allProjects={AllProjects}
                     ></TaskContainer>
                     <button className="deleteButtonFin">
-                      <TrashIcon className="TrashIcon" width={25} onClick={() => handleDelete(s)}/> </button>
+                      <TrashIcon
+                        className="TrashIcon"
+                        width={25}
+                        onClick={() => handleDelete(s)}
+                      />{" "}
+                    </button>
                   </article>
                 ))}
               </ProjectHolder>
             );
           })}
       </Card>
+      <LoginButton />
+      <LogoutButton />
     </Wrapper>
   );
 };

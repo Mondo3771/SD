@@ -27,7 +27,6 @@ const HRMeals = () => {
           return response.json();
         })
         .then((data) => {
-          console.log("Success (GetMeals): ", data);
           setLoaded(true);
           setMeals(data.data);
         })
@@ -41,31 +40,32 @@ const HRMeals = () => {
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal) =>
+  const changeAvailable = (meal) => {
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        Meal_ID: viewMeal.Meal_ID,
-        Availability: !viewMeal.Availability,
+        Meal_ID: meal.Meal_ID,
+        Availability: !meal.Availability,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log()
         setViewMeal((prev) => {
           let temp = prev;
-          temp.Availability = !viewMeal.Availability;
+          temp.Availability = !meal.Availability;
           return temp;
         });
         setMeals((all) => {
-          const temp = all.filter((a) => a.Meal_ID === viewMeal.Meal_ID);
-          temp.Availability = !viewMeal.Availability;
-          const index = all.findIndex((a) => a.Meal_ID === viewMeal.Meal_ID);
+          console.log(all);
+          const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID);
+          temp.Availability = !meal.Availability;
+          const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
           const result = all;
           result[index] = temp;
+          console.log(result);
           return result;
         });
 
@@ -74,7 +74,7 @@ const HRMeals = () => {
       .catch((error) => {
         console.log("Error", error);
       });
-
+  };
   const mealNameChange = (event) => {
     setNewMeal((prev) => ({
       Meal_ID: prev.Meal_ID,
@@ -103,8 +103,6 @@ const HRMeals = () => {
   };
 
   const mealClick = (meal) => {
-    console.log(meal);
-
     setViewMeal(meal);
     setViewMealState(true);
   };
@@ -206,9 +204,15 @@ const HRMeals = () => {
         {loaded && (
           <section className="container">
             <Card>
-              {Meals.map((meal) => (
-                <MealCardFin meal={meal} click={mealClick} />
-              ))}
+              {Meals.map((meal) => {
+                return (
+                  <MealCardFin
+                    key={meal.Meal_ID}
+                    meal={meal}
+                    click={mealClick}
+                  />
+                );
+              })}
             </Card>
             {!viewMealState ? (
               <CreateMealCard>
@@ -233,12 +237,15 @@ const HRMeals = () => {
                   <p>Available</p>
                   <input
                     type="checkbox"
+                    aria-label="Available"
                     onClick={(e) => {
                       availableChange(e);
                     }}
                   ></input>
                 </section>
-                <button onClick={createMeal}>Create</button>
+                <button onClick={createMeal} data-test-id="Create Meal">
+                  Create
+                </button>
               </CreateMealCard>
             ) : (
               <ShowMealCard>
