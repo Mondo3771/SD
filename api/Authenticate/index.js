@@ -12,9 +12,10 @@ module.exports = async function (context, req) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET,
-        audience: `https://${process.env.DOMAIN}/api/v2/`,
+        client_id: "Re9lqXCcNYY2RuF4xhbNtNdyN3wdYsmc",
+        client_secret:
+          "HA5q43MvPquaMAPXe8XsNODTTkG4_NcSuYBDt7LZ4C_b5xoZoUdxWqOsZlHf7w-a",
+        audience: "https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/",
         grant_type: "client_credentials",
       }),
     }
