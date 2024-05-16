@@ -1,4 +1,4 @@
-// fetch = require("node-fetch");
+fetch = require("node-fetch");
 // import { fetch } from "node-fetch"
 module.exports = async function (context, req) {
   // Get management API token
