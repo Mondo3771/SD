@@ -1,6 +1,10 @@
-fetch = require("node-fetch");
 // import { fetch } from "node-fetch"
 module.exports = async function (context, req) {
+  let fetch;
+  (async () => {
+    fetch = (await import("node-fetch")).default;
+  })();
+
   // Get management API token
   const tokenResponse = await fetch(
     `https://${process.env.DOMAIN}/oauth/token`,
