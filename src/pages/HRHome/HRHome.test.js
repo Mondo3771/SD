@@ -12,7 +12,7 @@ jest.mock("../../components/HRdatagrid/HRdatagrid", () => {
   };
 });
 afterAll(() => {
-  jest.unmock("./path-to/HRdatagrid");
+  jest.unmock("../../components/HRdatagrid/HRdatagrid");
 });
 // Now, whenever HRdatagrid is used in your tests, the dummy component will be rendered instead.
 test("renders HRHome component", () => {
