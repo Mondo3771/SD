@@ -1,5 +1,3 @@
-const getPool = require("../db");
-const sql = require("mssql");
 // fetch = require("node-fetch");
 // import { fetch } from "node-fetch"
 module.exports = async function (context, req) {
