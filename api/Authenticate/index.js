@@ -1,8 +1,8 @@
-// const { Portal } = require("@mui/material");
-const fetch = require("node-fetch");
-// import { fetch } from "node-fetch";
+const getPool = require("../db");
+const sql = require("mssql");
+// fetch = require("node-fetch");
+// import { fetch } from "node-fetch"
 module.exports = async function (context, req) {
-
   // Get management API token
   const tokenResponse = await fetch(
     `https://${process.env.DOMAIN}/oauth/token`,
