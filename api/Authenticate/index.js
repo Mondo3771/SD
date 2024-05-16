@@ -1,7 +1,8 @@
 // import { fetch } from "node-fetch"
-fetch = require("node-fetch");
+// fetch = require("node-fetch");
 module.exports = async function (context, req) {
-
+  const nodeFetch = await import("node-fetch");
+  const fetch = nodeFetch.default;
   // Get management API token
   const tokenResponse = await fetch(
     `https://${process.env.DOMAIN}/oauth/token`,
@@ -20,8 +21,9 @@ module.exports = async function (context, req) {
   );
 
   const tokenData = await tokenResponse.json();
+  // console.log(tokenData);
 
-  const managementApiToken = tokenData.ACCESS_TOKEN;
+  const managementApiToken = tokenData.access_token;
   //   console.log(managementApiToken);
   switch (req.method) {
     case "GET":
@@ -36,12 +38,11 @@ module.exports = async function (context, req) {
       );
 
       const rolesData = await rolesResponse.json();
-
       context.res = {
         // status: 200, /* Defaults to 200 */
         body: rolesData,
       };
-      console.log(body);
+      // console.log(context);
       break;
     // case "DELETE":
     //   const deleteResponse = await fetch(
