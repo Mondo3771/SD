@@ -1,6 +1,6 @@
 // import { fetch } from "node-fetch"
 module.exports = async function (context, req) {
-fetch = require("node-fetch");
+  fetch = require("node-fetch");
 
   // Get management API token
   const tokenResponse = await fetch(
@@ -41,6 +41,7 @@ fetch = require("node-fetch");
         // status: 200, /* Defaults to 200 */
         body: rolesData,
       };
+      console.log(body);
       break;
     // case "DELETE":
     //   const deleteResponse = await fetch(
