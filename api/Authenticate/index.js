@@ -5,7 +5,7 @@ module.exports = async function (context, req) {
   const fetch = nodeFetch.default;
   // Get management API token
   const tokenResponse = await fetch(
-    `https://${process.env.DOMAIN}/oauth/token`,
+    `https://dev-1ycr2f4brea4mqn0.us.auth0.com/oauth/token`,
     {
       method: "POST",
       headers: {
