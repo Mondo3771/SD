@@ -1,9 +1,6 @@
 // import { fetch } from "node-fetch"
 module.exports = async function (context, req) {
-  let fetch;
-  (async () => {
-    fetch = (await import("node-fetch")).default;
-  })();
+fetch = require("node-fetch");
 
   // Get management API token
   const tokenResponse = await fetch(
