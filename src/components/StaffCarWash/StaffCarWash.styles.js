@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import meal from "../../Images/Meals.svg";
-import carwash from "../../Images/Carwash.svg";
+import carwashimg from "../../Images/Carwash.svg";
 export const Wrapper = styled.main`
   display: flex;
   flex-direction: row;
@@ -19,7 +18,7 @@ export const Wrapper = styled.main`
   gap: 5vw;
 `;
 export const ImageSec = styled.section`
-  background-image: url(${carwash});
+  background-image: url(${carwashimg});
   background-size: cover;
   background-position: center;
   border-radius: 20px;
@@ -40,25 +39,62 @@ export const ImageSec = styled.section`
     margin-top: 25vh;
   }
 `;
+
 export const Weather = styled.section`
-  h2,
-  p {
-    color: var(--dark);
-  }
-  border: 2px solid;
+  /* border: 2px solid;
   border-color: var(--dark);
-  border-radius: 20px;
-  padding: 2vh;
+  border-radius: 20px; */
+
+  padding: 0;
   align-items: center;
-  height: 30vh;
+  height: 22vh;
   width: 20vw;
   border-radius: 10%;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  .MapPinIcon {
+    width: 0.1 vw;
+    height: 0.1 vh;
+  }
+  .WeatherText {
+    background-color: aliceblue;
+    border-radius: 10%;
+    margin: 1vh;
+    padding: 1vw;
+
+    p {
+      color: var(--dark);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 1.1rem;
+    }
+    h2 {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 1.8rem;
+      color: var(--dark);
+    }
+    h5 {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 1rem;
+      color: var(--dark);
+      padding: 0;
+      margin: 0;
+    }
+    h6 {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 2rem;
+      color: var(--dark);
+      font-weight: 0;
+      padding: 0;
+      margin: 0;
+    }
+  }
+  //background-color: red;
 `;
 export const Text = styled.section`
-  height: 30vh;
+  padding: 2vh;
+  align-items: center;
+  height: 22vh;
   width: 20vw;
-  font-size: 3.1rem;
+  border-radius: 10%;
 `;
 export const Main = styled.body`
   display: flex;
@@ -79,10 +115,39 @@ export const Booking = styled.section`
   }
 `;
 
+export const WeatherSec = styled.section`
+  height: 35vh;
+  width: 45vw;
+  //background-color: red;
+  display: flex;
+  flex-direction: row;
+
+  .text {
+    height: 35vh;
+    width: 23vw;
+    font-size: 1rem;
+    color: var(--dark);
+    //background: blue;
+  }
+  h5 {
+    margin: 2vh;
+    padding-top: 0.8rem;
+    font-size: 1.8rem;
+    color: var(--dark);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  li {
+    font-size: 1.2rem;
+    color: var(--dark);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 1vh;
+  }
+`;
 export const Card = styled.article`
   height: 30vh;
   width: 20vw;
-  background-color: var(--darkpurple);
+  background-color: #9b67a8;
   border-radius: 10%;
   display: flex;
   flex-direction: column;

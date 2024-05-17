@@ -7,8 +7,9 @@ import {
   ImageSec,
   Main,
   Text,
+  WeatherSec,
 } from "./StaffCarWash.styles";
-
+import { MapPinIcon } from "@heroicons/react/24/outline";
 const StaffCarWash = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState(null);
@@ -69,18 +70,36 @@ const StaffCarWash = () => {
       </ImageSec>
       <Main>
         {/* <Text>Car Wash</Text> */}
-        <Weather>
-          {error && <p>{error}</p>}
-          {weatherData && (
-            <div>
-              {console.log(weatherData)}
-              <h2>Current Weather</h2>
-              <p>Location: {weatherData.name}</p>
-              <p>Temperature: {weatherData.main.temp} °C</p>
-              <p>Description: {weatherData.weather[0].description}</p>
-            </div>
-          )}
-        </Weather>
+        <WeatherSec>
+          <Text>
+            <section className="text">
+              <h5>Our Services</h5>
+              <ul>
+                <li> Car wash</li>
+                <li> Vaccuuming</li>
+                <li> Window washing</li>
+                <li> Cleaning tires and rims</li>
+                <li> Air Freshner</li>
+              </ul>
+            </section>
+          </Text>
+
+          <Weather>
+            {error && <p>{error}</p>}
+            {weatherData && (
+              <section className="WeatherText">
+                {console.log(weatherData)}
+                <h2>Current Weather</h2>
+                <p>{weatherData.name}</p>
+
+                <h6>{weatherData.main.temp} °C</h6>
+                <p> {weatherData.weather[0].description}</p>
+                <p>Feels like:{weatherData.main.feels_like}</p>
+                <p></p>
+              </section>
+            )}
+          </Weather>
+        </WeatherSec>
 
         <Booking>
           <Card>
