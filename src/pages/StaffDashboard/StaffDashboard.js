@@ -1,8 +1,6 @@
 //react
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
-//icons
 import {
   ClockIcon,
   ArrowRightIcon,
@@ -11,7 +9,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 import logo from "../../Images/logo3.svg";
-// StaffDashboard styles
 import {
   allProjects,
   Card,
@@ -26,10 +23,6 @@ import {
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
-import LogoutButton from "../../components/Log/LogoutButton";
-// import sheet from "styled-components/dist/sheet";
-
-// Function to filter unique Project values and return an array of unique projects
 function filterUniqueProjects(projects) {
   const uniqueProjects = {};
   const result = [];
@@ -318,7 +311,6 @@ const StaffDashboard = () => {
           })}
       </Card>
       <LoginButton />
-      <LogoutButton />
     </Wrapper>
   );
 };

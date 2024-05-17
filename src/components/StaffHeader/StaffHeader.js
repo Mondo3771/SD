@@ -16,10 +16,10 @@ const StaffHeader = ({employee}) => {
     }
   return (
     <Header>
-    <section className="logo">
+    <section className="logo" alt = "SYNERGY Logo">
       <img src={logo} width="55vw" height="55vh"></img>
       <h1>
-        <a href="/">SYNERGY</a>
+        <a href="/" >SYNERGY</a>
       </h1>
     </section>
     <nav className="links">

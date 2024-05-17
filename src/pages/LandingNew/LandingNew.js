@@ -1,14 +1,10 @@
-// <<<<<<< LandingPageMakeover
-// import React, { useState } from "react";
 import logo from "../../Images/logo3.svg";
 import tasks from "./Images/icon2.PNG";
 import report from "./Images/reportingnew.PNG";
 import manage from "./Images/icon3.PNG";
 import book from "./Images/icon4.PNG";
 import LoginButton from "../../components/Log/LoginButton";
-import LogoutButton from "../../components/Log/LogoutButton";
 import { useAuth0, getAccessTokenSilently } from "@auth0/auth0-react";
-import Auth0Lock from "auth0-lock";
 
 import {
   Header,
@@ -21,8 +17,6 @@ import {
 // =======
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Index from "../../routes/Index";
-
 import Loader from "../../components/Loader/Loader";
 // import { jwt } from "jsonwebtoken";
 
@@ -45,7 +39,6 @@ const LandingNew = () => {
     childToParent(user);
     // token = gettoke();
     // console.log(token);\]
-    
   }
 
   const login = async () => {
@@ -202,14 +195,12 @@ const LandingNew = () => {
             Connecting Teams, Boosting Productivity Together!
             {/* <Index data-testid="Login" child={childToParent} /> */}
             <LoginButton />
-            <LogoutButton />
           </section>
         ) : (
           <section className="text">
             Connecting Teams, Boosting Productivity Together!
             {/* <Index data-testid="Login" child={childToParent} /> */}
             <LoginButton />
-            <LogoutButton />
           </section>
         )}
       </LandingPageBack>

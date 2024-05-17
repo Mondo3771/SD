@@ -3,9 +3,7 @@ import HRdatagrid from "../../components/HRdatagrid/HRdatagrid";
 import { Header, Wrapper, Card } from "./HRHome.styles";
 import logo from "../../Images/logo3.svg";
 import LoginButton from "../../components/Log/LoginButton";
-import LogoutButton from "../../components/Log/LogoutButton";
 const HRHome = () => {
-  
   return (
     <>
       <Wrapper>
@@ -43,8 +41,6 @@ const HRHome = () => {
           <HRdatagrid></HRdatagrid>
         </Card>
         <LoginButton />
-        <LogoutButton />
-      
       </Wrapper>
     </>
   );
