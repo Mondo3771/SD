@@ -20,19 +20,31 @@ import StaffHeader from "../../components/StaffHeader/StaffHeader";
 export const TempReportPage = () => {
   // const location = useLocation();
   // const employee = location.state.params;
-  const employee=fetchStorageData({key:"User"})
-
+  const employee = fetchStorageData({ key: "User" });
 
   const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
   const [AllFeedback, setAllFeedBack] = useState([]);
   const [firstLoad, setFirstLoad] = useState(false);
 
-  const[ UserClicked,setuserClicked]=useState(false);
-  const[ReportUser,setReportUser]=useState(null);
+  const [UserClicked, setuserClicked] = useState(false);
+  const [ReportUser, setReportUser] = useState(null);
   const Emp_ID = employee.Emp_ID;
 
-  
+  const get = () => {
+    fetch(`/api/AllEmployees`, {
+      method: "Get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data);
+        setUsers(data.data)
+      })
+      .catch();
+  };
 
   useEffect(() => {
     // Get All the info you need on this page once (AllFeedback,AllUsers)
@@ -48,11 +60,11 @@ export const TempReportPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.data);
+          // console.log(data.data);
+          get();
           setAllFeedBack(data.data);
           setLocalStorage({ key: "Feedback", value: data.data });
           setFirstLoad(true);
-          setUsers(MockUsers);
         });
     };
     feedback();
@@ -62,19 +74,20 @@ export const TempReportPage = () => {
 
   const handleUserClick = (user) => {
     // Filter allfeedback users
-    console.log(user,'user');
+    console.log(user, "user");
     setuserClicked(true);
     setReportUser(user);
     const fullFeedback = fetchStorageData({ key: "Feedback" }) ?? [];
     // fullFeedback.filter(f => f.Send_ID === user.Emp_ID);
-    const t =
-      fullFeedback.filter((f) => f.Sent_ID === user.Emp_ID || f.Receive_ID === user.Emp_ID);
+    const t = fullFeedback.filter(
+      (f) => f.Sent_ID === user.Emp_ID || f.Receive_ID === user.Emp_ID
+    );
     console.log(t);
     setAllFeedBack(t);
     setReceiver(user);
   };
 
-  const handleSendFeedback = (sender,receiver, feedback) => {
+  const handleSendFeedback = (sender, receiver, feedback) => {
     console.log("Sender", sender);
     console.log("Receiver", receiver);
     const today = new Date().toISOString().slice(0, 10);
@@ -82,9 +95,9 @@ export const TempReportPage = () => {
       Message: feedback,
       Sent_ID: sender.Emp_ID,
       Receive_ID: receiver.Emp_ID,
-      Date: today ,
+      Date: today,
       Message_ID: Math.random() * 1000,
-    }
+    };
 
     fetch("/api/feedback", {
       method: "POST",
@@ -102,7 +115,7 @@ export const TempReportPage = () => {
       .then((data) => {
         console.log(data);
         newMessage.Message_ID = data.Message_ID;
-        newMessage.Date = formatDate(newMessage.Date)
+        newMessage.Date = formatDate(newMessage.Date);
         const storageChange = [
           ...fetchStorageData({ key: "Feedback" }),
           newMessage,
@@ -116,20 +129,18 @@ export const TempReportPage = () => {
       });
   };
 
-  const closeReport=()=>{
+  const closeReport = () => {
     setuserClicked(false);
-  }
+  };
 
   return (
     <>
-    <StaffHeader></StaffHeader>
-    {firstLoad ? (
-      
-      <>
-         <Reporting User={employee}></Reporting>
-         {console.log(employee)}
-      <Body>
-       
+      <StaffHeader></StaffHeader>
+      {firstLoad ? (
+        <>
+          <Reporting User={employee}></Reporting>
+          {console.log(employee)}
+          <Body>
             <ShowUsers Users={Users} onUserClick={handleUserClick} />
             <FeedBack
               FeedBackArray={AllFeedback}
@@ -137,35 +148,17 @@ export const TempReportPage = () => {
               Receiver={Receiver}
               onSendFeedBack={handleSendFeedback}
             />
-
-            
-          
-       
-      </Body>
-      {UserClicked && employee.EMP_type==='Manager'?
-      <>
-
-            <Reporting User={ReportUser}>
-
-            </Reporting>
-            <button onClick={closeReport}>
-              close
-            </button>
-
-        </>    
-          :
-          null
-          
-          }
-      </>
-      
-   
-
-    
-      ):<Loader></Loader>}
-    
+          </Body>
+          {UserClicked && employee.EMP_type === "Manager" ? (
+            <>
+              <Reporting User={ReportUser}></Reporting>
+              <button onClick={closeReport}>close</button>
+            </>
+          ) : null}
+        </>
+      ) : (
+        <Loader></Loader>
+      )}
     </>
-     
-
   );
 };
