@@ -70,19 +70,41 @@ module.exports = async function (context, req) {
           };
         } else {
           // If the ID exists, update the Emp_type
-          const resultSet = await pool
-            .request()
-            .input("Emp_ID", sql.Int, data.Emp_ID)
-            .input("Emp_type", sql.NVarChar, data.EMP_type)
-            .query(
-              `UPDATE Employees SET EMP_type = @Emp_type WHERE Emp_ID = @Emp_ID`
-            );
-
-          context.res = {
-            status: 200,
-            message: "Employee type updated successfully",
-            body: {},
-          };
+          if (!!data.EMP_type) {
+            const resultSet = await pool
+              .request()
+              .input("Emp_ID", sql.Int, data.Emp_ID)
+              .input("Emp_type", sql.NVarChar, data.EMP_type)
+              .query(
+                `UPDATE Employees SET EMP_type = @Emp_type WHERE Emp_ID = @Emp_ID`
+              );
+            context.res = {
+              status: 200,
+              message: "Employee type updated successfully",
+              body: {},
+            };
+          }
+          else if (!!data.Department) {
+            const resultSet = await pool
+              .request()
+              .input("Emp_ID", sql.Int, data.Emp_ID)
+              .input("Department", sql.NVarChar, data.Department)
+              .query(
+                `UPDATE Employees SET Department = @Department WHERE Emp_ID = @Emp_ID`
+              );
+            context.res = {
+              status: 200,
+              message: "Department updated successfully",
+              body: {},
+            };
+          }
+          else {
+            context.res = {
+              status: 400,
+              message: "Please provide the data to update",
+              body: {},
+            };
+          }
         }
       } catch (err) {
         context.res = {
