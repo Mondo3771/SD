@@ -10,6 +10,8 @@ import {
   StopIcon,
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
+import { type } from "@testing-library/user-event/dist/type";
+import Reporting from "../Reporting/Reporting";
 
 const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
   DELETEEmp(Emp_ID);
@@ -17,7 +19,7 @@ const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
   setallEmployeedata(updatedEmployees);
 };
 
-const updateEmp = (params) =>
+const updateEmp = (params) =>{
   fetch("/api/AllEmployees", {
     method: "PUT",
     headers: {
@@ -37,6 +39,24 @@ const updateEmp = (params) =>
       console.error("Error:", error);
       return "Error";
     });
+    const updateDep = () =>{
+  fetch(`/api/AllEmployees`, {
+    method:"Put", 
+    headers:{
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      Emp_ID: params.row.Emp_ID,
+      Department: params.row.Department
+    })
+  }).then((res) => res.json()).then((data) =>{
+  console.log(data);}
+  ).catch((err)=> console.log(err))
+} 
+updateDep();
+
+}
+
 
 const fetchData = (users, setallEmployeedatas, setLoadeds) =>
   fetch("/api/AllEmployees")
@@ -74,6 +94,8 @@ const DELETEEmp = (Emp_ID) => {
 
 const HRdatagrid = () => {
   const [rowId, setrowId] = useState(null);
+  const [OpenReport,setOpenReport]=useState(false);
+  const [userReportpageinfo,setuserReportpageinfo]=useState(null);
   const location = useLocation();
 
   console.log(location, "location");
@@ -89,6 +111,14 @@ const HRdatagrid = () => {
   useEffect(() => {
     fetchData(user, setallEmployeedata, setLoaded);
   }, []);
+
+
+  const userReport=(user)=>{
+    setOpenReport(true)
+    setuserReportpageinfo(user);
+
+
+  }
 
   const columns = [
     {
@@ -116,6 +146,44 @@ const HRdatagrid = () => {
       editable: true,
       headerClassName: "headername",
     },
+    {
+      field:"Department",
+      headerName:" Department",
+      flex:1,
+      editable: true,
+      headerClassName: "headername",
+
+    },
+    {
+      field:"Reports",
+      headerName:" Report",
+      type:"actions",
+      flex:1,
+      headerClassName: "headername",
+      renderCell: (params) => (
+        <button
+          {...(params, rowId, setrowId)}
+          style={{
+            backgroundColor: "var(--white)",
+            color: "var(--darkest)",
+            border: "none",
+            borderRadius: "30px",
+            //padding: "8px 16px",
+            height: "6vh",
+            width: "4vw",
+            fontSize: "0.5rem",
+            cursor: "pointer",
+          }}
+          onClick={() =>
+            userReport(params.row)
+          }
+        >
+          <TrashIcon width="3vw" height="4vh" textAlign="center" />
+        </button>
+      )
+
+    },
+    
 
     {
       field: "actions",
@@ -182,6 +250,14 @@ const HRdatagrid = () => {
       ),
     },
   ];
+  // const [data, setData] = useState(allEmployeedata);
+
+  const handleProcessRowUpdate = (newRow, oldRow) => {
+    // Update the row data with the new value
+    const updatedRows = allEmployeedata.map(row => (row.id === oldRow.id ? newRow : row));
+    setallEmployeedata(updatedRows);
+    return newRow;
+  };
 
   return (
     <>
@@ -211,6 +287,7 @@ const HRdatagrid = () => {
             <DataGrid
               rows={allEmployeedata}
               columns={columns}
+              processRowUpdate={handleProcessRowUpdate}
               sx={{
                 height: "80vh",
                 width: "80vw",
@@ -230,6 +307,8 @@ const HRdatagrid = () => {
               }}
             />
           </Box>
+          {OpenReport?<Reporting User={userReportpageinfo}></Reporting>:null}
+          
         </>
       ) : (
         <Loader></Loader>
