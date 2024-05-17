@@ -7,7 +7,10 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "mssql": "^10.0.2"
+    "mssql": "^10.0.2",
+    "node-fetch": "2.6.6",
+    "@mui/material": "^5.15.17",
+    "@mui/x-data-grid": "^7.3.0"
   },
   "devDependencies": {}
 }

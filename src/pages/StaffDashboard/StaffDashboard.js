@@ -13,7 +13,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 import logo from "../../Images/logo3.svg";
-// StaffDashboard styles
 import {
   allProjects,
   Card,
@@ -302,7 +301,6 @@ const StaffDashboard = () => {
           })}
       </Card>
       <LoginButton />
-      <LogoutButton />
     </Wrapper>
   );
 };

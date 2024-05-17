@@ -41,7 +41,6 @@ const HRMeals = () => {
           return response.json();
         })
         .then((data) => {
-          console.log("Success (GetMeals): ", data);
           setLoaded(true);
           setMeals(data.data);
         })
@@ -82,6 +81,7 @@ const HRMeals = () => {
           temp.Availability = bool;
           const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
           result[index] = temp;
+          console.log(result);
           return result;
         });
 
@@ -90,7 +90,7 @@ const HRMeals = () => {
       .catch((error) => {
         console.log("Error", error);
       });
-
+  };
   const mealNameChange = (event) => {
     setNewMeal((prev) => ({
       Meal_ID: prev.Meal_ID,
@@ -119,8 +119,6 @@ const HRMeals = () => {
   };
 
   const mealClick = (meal) => {
-    console.log(meal);
-
     setViewMeal(meal);
     setViewMealState(true);
   };
@@ -222,9 +220,15 @@ const HRMeals = () => {
         {loaded && (
           <section className="container">
             <Card>
-              {Meals.map((meal) => (
-                <MealCardFin meal={meal} click={mealClick} />
-              ))}
+              {Meals.map((meal) => {
+                return (
+                  <MealCardFin
+                    key={meal.Meal_ID}
+                    meal={meal}
+                    click={mealClick}
+                  />
+                );
+              })}
             </Card>
             {!viewMealState ? (
               <CreateMealCard>
@@ -249,12 +253,15 @@ const HRMeals = () => {
                   <p>Available</p>
                   <input
                     type="checkbox"
+                    aria-label="Available"
                     onClick={(e) => {
                       availableChange(e);
                     }}
                   ></input>
                 </section>
-                <button onClick={createMeal}>Create</button>
+                <button onClick={createMeal} data-test-id="Create Meal">
+                  Create
+                </button>
               </CreateMealCard>
             ) : (
               <ShowMealCard>

@@ -1,6 +1,19 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import HRBookings from "./HRBookings";
+import "@testing-library/jest-dom/extend-expect";
+
+// Add this if a file needs to use another component that we are cyrrently not testinh
+
+jest.mock("../../pages/HRBookings/HRBookingsGrid", () => {
+  return function DummyHRBookingGrid(props) {
+    return <div data-testid="HRBookingsGrid"></div>;
+  };
+});
+afterAll(() => {
+  jest.unmock("../../pages/HRBookings/HRBookingsGrid");
+});
+
 
 test("renders HRBookings component", () => {
   render(<HRBookings />);
@@ -38,6 +51,6 @@ test("renders HRBookings component", () => {
   expect(manageUsersHeading).toBeInTheDocument();
 
   // Assert that the HRBookingsGrid component is rendered
-  const hrBookingsGrid = screen.getByTestId("hr-bookings-grid");
+  const hrBookingsGrid = screen.getByTestId("HRBookingsGrid");
   expect(hrBookingsGrid).toBeInTheDocument();
 });
