@@ -41,7 +41,11 @@ export const TempReportPage = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.data);
-        setUsers(data.data)
+        const mainUser = fetchStorageData({ key: "User" });
+        const arr = data.data.filter(
+          (p) => p.Department === mainUser.Department
+        );
+        setUsers(arr);
       })
       .catch();
   };

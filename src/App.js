@@ -57,6 +57,7 @@ function App() {
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
        </Switch>
      </BrowserRouter>
+     <ToastContainer/>
     </> // <StaffDashboard/>
     // <Reporting></Reporting>
     

@@ -52,6 +52,17 @@ export const Wrapper = styled.div`
     color: var(--white);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
+  /* .sheet:hover,
+  .deleteButtonFin:hover,
+  .sheet:hover ~ .deleteButtonFin,
+  .sheet:hover  ~  
+  
+  {
+    background-color: gray;
+    cursor: pointer;
+    border: 2px solid gray;
+    color: var(--white);
+  } */
 `;
 
 export const Header = styled.div`
@@ -270,6 +281,10 @@ export const ProjectHolder = styled.div`
     margin: 10px 0 10px 0px;
     padding: 5px 100px;
   }
+
+  .deleteButtonFin:hover {
+    background-color: gray;
+  }
   .TrashIcon {
     margin: 0 0 0 6rem;
   }
@@ -326,7 +341,8 @@ export const TaskContainer = ({
   }, [timerRunning, stop]);
 
   return (
-    <Sheet
+    <Sheet 
+    className="sheet"
       id={task.Task_ID.toString()}
       key={task.Task_ID}
       onClick={() => {
