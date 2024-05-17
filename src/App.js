@@ -49,12 +49,12 @@ function App() {
        <Switch>
          <Route exact path="/" component={LandingNew} index />
          {/* <Route path="/DashBoard" component={StaffDashboard} /> */}
-         <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={true} />
-         <GuardedRoute path="/HRhome" component={HRHome} auth ={true} />
-         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={true} />
-         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={true} />
-         <GuardedRoute path="/Lunch" component={Carousel} auth ={true}/>
-         <GuardedRoute path="/Reports" component={TempReportPage} auth ={true}/>
+         <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
+         <GuardedRoute path="/HRhome" component={HRHome} auth ={isAuthenticated} />
+         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={isAuthenticated} />
+         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={isAuthenticated} />
+         <GuardedRoute path="/Lunch" component={Carousel} auth ={isAuthenticated}/>
+         <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
        </Switch>
      </BrowserRouter>
     </> // <StaffDashboard/>
