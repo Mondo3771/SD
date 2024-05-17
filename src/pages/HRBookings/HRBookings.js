@@ -1,6 +1,7 @@
 import logo from "../../Images/logo3.svg";
 import { Card, Header, Wrapper } from "./HRBookings.styles";
 import HRBookingsGrid from "./HRBookingsGrid";
+import React from "react";
 
 const HRBookings = () => {
   return (

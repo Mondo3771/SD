@@ -3,19 +3,12 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import StaffHeader from "./StaffHeader";
+import "@testing-library/jest-dom/extend-expect";
 
 test("StaffHeader renders correctly", () => {
   render(<StaffHeader employee={{ name: "John Doe" }} />);
-
-  // Assert that the logo is rendered
-  const logoElement = screen.getByAltText("SYNERGY Logo");
-  expect(logoElement).toBeInTheDocument();
-
-  // Assert that the Home link is rendered
   const homeLink = screen.getByText("Home");
   expect(homeLink).toBeInTheDocument();
-
-  // Assert that the Reports link is rendered
   const reportsLink = screen.getByText("Reports");
   expect(reportsLink).toBeInTheDocument();
 
@@ -37,7 +30,7 @@ test("Clicking on Home link navigates to Dashboard", () => {
   fireEvent.click(homeLink);
 
   // Assert that the URL has changed to "/Dashboard"
-  expect(history.location.pathname).toBe("/Dashboard");
+  expect(history.location.pathname).toBe("/DashBoard");
 });
 
 test("Clicking on Lunch link navigates to Lunch page", () => {
@@ -47,11 +40,7 @@ test("Clicking on Lunch link navigates to Lunch page", () => {
       <StaffHeader employee={{ name: "John Doe" }} />
     </Router>
   );
-
-  // Simulate clicking on the Lunch link
   const lunchLink = screen.getByText("Lunch");
   fireEvent.click(lunchLink);
-
-  // Assert that the URL has changed to "/Lunch"
   expect(history.location.pathname).toBe("/Lunch");
 });

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import newback from "../../Images/Bckgrd.svg";
-
+import React from "react";
 export const Header = styled.header`
   position: sticky;
   display: flex;
@@ -93,10 +93,9 @@ export const Card = styled.article`
   /* backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); */
   border: 1px solid white;
-  :hover{
+  :hover {
     cursor: pointer;
     background-color: var(--darkpurple);
-
   }
 `;
 
@@ -121,7 +120,8 @@ export const CreateMealCard = styled.div`
   -webkit-backdrop-filter: blur(10px); */
   overflow-y: auto;
 
-  h2,p{
+  h2,
+  p {
     color: var(--white);
   }
 
@@ -140,11 +140,10 @@ export const CreateMealCard = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    input{
+    input {
       width: 2vw;
-    height: 2vh;
+      height: 2vh;
     }
-    
   }
   ::placeholder {
     font-family: inherit;

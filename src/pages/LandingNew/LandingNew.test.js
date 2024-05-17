@@ -1,5 +1,6 @@
 import React from "react";
 import fetchMock from "jest-fetch-mock";
+import "@testing-library/jest-dom/extend-expect";
 
 import {
   render,
@@ -59,8 +60,6 @@ test("renders LandingNew and checks dropdown", async () => {
 test("Login button redirects to /HRhome", () => {
   const history = createMemoryHistory();
   render(<LandingNew history={history} />);
-  //   fireEvent.click(screen.getByText("Login"));
-  //   expect(history.location.pathname).toBe("/HRhome");
 });
 fetchMock.enableMocks();
 test("renders LandingNew and checks basic interactions", async () => {

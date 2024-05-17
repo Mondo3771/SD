@@ -1,26 +1,28 @@
-const { Portal } = require("@mui/material");
-const fetch = require("node-fetch");
-// import { fetch } from "node-fetch";
+// import { fetch } from "node-fetch"
+// fetch = require("node-fetch");
 module.exports = async function (context, req) {
-
+  const nodeFetch = await import("node-fetch");
+  const fetch = nodeFetch.default;
   // Get management API token
   const tokenResponse = await fetch(
-    `https://${process.env.domain}/oauth/token`,
+    `https://dev-1ycr2f4brea4mqn0.us.auth0.com/oauth/token`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        client_id: process.env.client_id,
-        client_secret: process.env.client_secret,
-        audience: `https://${process.env.domain}/api/v2/`,
+        client_id: "Re9lqXCcNYY2RuF4xhbNtNdyN3wdYsmc",
+        client_secret:
+          "HA5q43MvPquaMAPXe8XsNODTTkG4_NcSuYBDt7LZ4C_b5xoZoUdxWqOsZlHf7w-a",
+        audience: `https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/`,
         grant_type: "client_credentials",
       }),
     }
   );
 
   const tokenData = await tokenResponse.json();
+  // console.log(tokenData);
 
   const managementApiToken = tokenData.access_token;
   //   console.log(managementApiToken);
@@ -28,7 +30,7 @@ module.exports = async function (context, req) {
     case "GET":
       // Get user roles
       const rolesResponse = await fetch(
-        `https://${process.env.domain}/api/v2/users `,
+        `https://${process.env.DOMAIN}/api/v2/users `,
         {
           headers: {
             Authorization: `Bearer ${managementApiToken}`,
@@ -37,11 +39,11 @@ module.exports = async function (context, req) {
       );
 
       const rolesData = await rolesResponse.json();
-
       context.res = {
         // status: 200, /* Defaults to 200 */
         body: rolesData,
       };
+      // console.log(context);
       break;
     // case "DELETE":
     //   const deleteResponse = await fetch(
