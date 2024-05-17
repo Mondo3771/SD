@@ -5,7 +5,7 @@ module.exports = async function (context, req) {
   const fetch = nodeFetch.default;
   // Get management API token
   const tokenResponse = await fetch(
-    `https://${process.env.DOMAIN}/oauth/token`,
+    `https://dev-1ycr2f4brea4mqn0.us.auth0.com/oauth/token`,
     {
       method: "POST",
       headers: {
@@ -15,7 +15,7 @@ module.exports = async function (context, req) {
         client_id: "Re9lqXCcNYY2RuF4xhbNtNdyN3wdYsmc",
         client_secret:
           "HA5q43MvPquaMAPXe8XsNODTTkG4_NcSuYBDt7LZ4C_b5xoZoUdxWqOsZlHf7w-a",
-        audience: `/https://${process.env.DOMAIN}/api/v2/`,
+        audience: `https://dev-1ycr2f4brea4mqn0.us.auth0.com/api/v2/`,
         grant_type: "client_credentials",
       }),
     }
