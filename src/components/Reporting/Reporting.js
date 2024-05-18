@@ -298,7 +298,7 @@ const Reporting = ({User}) => {
         <>
          
             <main ref={targetRef}>
-            <h2> {User.Name? 'Report for ' + User.Name: 'MyReport'}</h2>
+            <h2> {User.Name? 'Report for ' + User.Name: 'My Report'}</h2>
            
 
             <Main  >

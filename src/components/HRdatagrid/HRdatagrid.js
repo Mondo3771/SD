@@ -3,11 +3,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import Loader from "../Loader/Loader";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import { toast } from "react-toastify";
+
 import {
   TrashIcon,
   CheckCircleIcon,
   DocumentIcon,
-  XCircleIcon
+  XCircleIcon,
+  XMarkIcon
   
 
   
@@ -25,6 +28,8 @@ const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
 };
 
 const updateEmp = (params) =>{
+  toast.success("Changes saved")
+
   fetch("/api/AllEmployees", {
     method: "PUT",
     headers: {
@@ -220,7 +225,7 @@ const HRdatagrid = () => {
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
-            color: "inherit",
+            color: "white",
             border: "none",
             borderRadius: "30px",
             //padding: "8px 16px",
@@ -259,8 +264,21 @@ const HRdatagrid = () => {
         
         {OpenReport?
           <>
-            <button onClick={closeReport}>
-            <XCircleIcon width="2vw" height="3vh" textAlign="center" />
+            <button 
+            style={{
+
+              backgroundColor: "transparent",
+              color: "white",
+              border: "none",
+              borderRadius: "30px",
+              height: "6vh",
+              width: "4vw",
+              fontSize: "0.5rem",
+              cursor: "pointer",
+            }}
+            
+            onClick={closeReport}>
+            <XMarkIcon width="2vw" height="3vh" textAlign="center" />
 
              </button>
              <Reporting User={userReportpageinfo}></Reporting>
