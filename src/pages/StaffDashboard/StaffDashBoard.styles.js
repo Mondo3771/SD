@@ -120,7 +120,7 @@ export const Card = styled.article`
   padding: 40px;
   margin: 0 auto 20px auto;
   display: flex;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   flex-direction: column;
   //background: linear-gradient(65deg, var(--darkest), #3f2182);
   //background: linear-gradient(120deg, #16154e, var(--dark));
