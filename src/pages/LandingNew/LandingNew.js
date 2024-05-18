@@ -4,7 +4,7 @@ import report from "./Images/reportingnew.PNG";
 import manage from "./Images/icon3.PNG";
 import book from "./Images/icon4.PNG";
 import LoginButton from "../../components/Log/LoginButton";
-import { useAuth0} from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Header,
   DropDown,
@@ -27,7 +27,6 @@ const LandingNew = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState("");
 
-
   const childToParent = (childdata) => {
     setData(childdata);
     setLoaded(true);
@@ -44,7 +43,9 @@ const LandingNew = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => {return response.json()})
+      .then((response) => {
+        return response.json();
+      })
       .then((DB) => {
         console.log("Success:", DB.message);
         if (DB.message === "No user found") {
@@ -76,8 +77,9 @@ const LandingNew = () => {
             console.log(history);
             history.push(`/HRhome`, { params: DB.data });
           } else {
+            console.log(history);
             history.push(`/DashBoard`, { params: DB.data });
-         }
+          }
         }
       })
       .catch((error) => {
@@ -188,13 +190,13 @@ const LandingNew = () => {
           <section className="open">
             Connecting Teams, Boosting Productivity Together!
             {/* <Index data-testid="Login" child={childToParent} /> */}
-            <LoginButton alt ="Log In" />
+            <LoginButton alt="Log In" />
           </section>
         ) : (
           <section className="text">
             Connecting Teams, Boosting Productivity Together!
             {/* <Index data-testid="Login" child={childToParent} /> */}
-            <LoginButton alt = "Log In"/>
+            <LoginButton alt="Log In" />
           </section>
         )}
       </LandingPageBack>
