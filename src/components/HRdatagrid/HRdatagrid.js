@@ -227,7 +227,7 @@ const HRdatagrid = () => {
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
-            color: "var(--white)",
+            color: "inherit",
             border: "none",
             borderRadius: "30px",
             height: "6vh",

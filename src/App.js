@@ -72,7 +72,7 @@ function App() {
          <GuardedRoute path="/HRBookings" component={HRBookings} auth ={HRallowed()} />
          <GuardedRoute path="/staffBooking" component={Carousel} auth ={isAuthenticated}/>
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
-       </Switch>
+      </Switch>
      </BrowserRouter>
      {/* <ToastContainer/> */}
     </> // <StaffDashboard/>
