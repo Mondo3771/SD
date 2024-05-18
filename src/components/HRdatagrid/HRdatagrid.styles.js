@@ -28,6 +28,18 @@ export const Card = styled.article`
     transition: all 500ms ease-in-out;
     color: var(--darkest);
   }
+
+  .css-yrdy0g-MuiDataGrid-columnHeaderRow, .MuiDataGrid-topContainer {
+    background: var(--darkest);
+    border-radius: 20px 20px 0 0; 
+  }
+
+  .MuiDataGrid-row:hover {
+    cursor: pointer;
+    background: white;
+    color: white;
+    font-size: 1.2rem;
+  }
 `;
 
 export const Title=styled.h2`
