@@ -1,21 +1,22 @@
 import styled from "styled-components";
 import carwashimg from "../../Images/Carwash.svg";
 export const Wrapper = styled.main`
-  display: flex;
-  flex-direction: row;
-  background: var(--white);
-  /* background-color: transparent; */
-  /* backdrop-filter:blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
-  border-radius: 30px;
+  // background: var(--white);
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  /* border-radius: 30px; */
   height: 80vh;
   width: 80vw;
-  margin: 80px;
+  //margin: 80px;
+  align-items: center;
   text-align: justify;
   padding: 2rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   gap: 5vw;
+
+  justify-content: center;
 `;
 export const ImageSec = styled.section`
   background-image: url(${carwashimg});
@@ -45,10 +46,10 @@ export const Weather = styled.section`
   border-color: var(--dark);
   border-radius: 20px; */
 
-  padding: 0;
+  padding-top: 3vh;
   align-items: center;
   height: 22vh;
-  width: 20vw;
+  width: 23vw;
   border-radius: 10%;
   font-size: 1rem;
   .MapPinIcon {
@@ -56,19 +57,24 @@ export const Weather = styled.section`
     height: 0.1 vh;
   }
   .WeatherText {
-    background-color: aliceblue;
+    background-color: var(--white);
     border-radius: 10%;
     margin: 1vh;
     padding: 1vw;
+    width: fit-content;
+    height: fit-content;
+    gap: 3rem;
+    text-align: center;
 
     p {
       color: var(--dark);
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 1.1rem;
+      padding: 1vh;
     }
     h2 {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       color: var(--dark);
     }
     h5 {
@@ -93,10 +99,10 @@ export const Text = styled.section`
   padding: 2vh;
   align-items: center;
   height: 22vh;
-  width: 20vw;
+  width: 25vw;
   border-radius: 10%;
 `;
-export const Main = styled.body`
+export const Right = styled.body`
   display: flex;
   flex-direction: column;
   gap: 10vh;
@@ -129,17 +135,18 @@ export const WeatherSec = styled.section`
     color: var(--dark);
     //background: blue;
   }
+
   h5 {
-    margin: 2vh;
-    padding-top: 0.8rem;
-    font-size: 1.8rem;
-    color: var(--dark);
+    font-size: 3rem;
+    text-align: left;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--white);
+    width: 10vw;
   }
 
   li {
     font-size: 1.2rem;
-    color: var(--dark);
+    color: var(--white);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 1vh;
   }
@@ -147,18 +154,21 @@ export const WeatherSec = styled.section`
 export const Card = styled.article`
   height: 30vh;
   width: 20vw;
-  background-color: #9b67a8;
+  //background-color: #9b67a8;
+  background-color: var(--dark);
   border-radius: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 6vh;
 
   button {
-    height: 5vh;
+    height: 4vh;
     width: 7vw;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1rem;
+
     :hover {
       background-color: var(--darkest);
       cursor: pointer;

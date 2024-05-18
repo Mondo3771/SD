@@ -54,9 +54,10 @@ function App() {
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={true}/>
        </Switch>
      </BrowserRouter> */}
-      <StaffCarWash></StaffCarWash>
+      {/* <StaffCarWash></StaffCarWash> */}
       {/* <TempReportPage></TempReportPage> */}
-      {/* <StaffBookings></StaffBookings> */}
+      {/* <Carousel></Carousel> */}
+      <StaffBookings></StaffBookings>
     </> // <StaffDashboard/>
     // <Reporting></Reporting>
   );

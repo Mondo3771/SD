@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import background from "../../Images/Bckgrd.svg";
 
 export const Header = styled.div`
-  position: fixed;
+  position: sticky;
   z-index: 9999;
   width: 100%;
-  background-color: transparent;
+
+  background-image: url(${background});
+  background-position: top;
   display: flex;
   padding: 0.5rem 3rem;
   justify-content: space-between;
@@ -28,7 +31,6 @@ export const Header = styled.div`
     padding: 0;
     list-style: none;
     gap: 5rem;
-    color: white;
   }
 
   a:visited {

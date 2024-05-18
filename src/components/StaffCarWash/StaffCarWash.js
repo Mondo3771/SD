@@ -5,7 +5,7 @@ import {
   Booking,
   Card,
   ImageSec,
-  Main,
+  Right,
   Text,
   WeatherSec,
 } from "./StaffCarWash.styles";
@@ -68,12 +68,12 @@ const StaffCarWash = () => {
       <ImageSec>
         <h3>Professional Cleaning Service</h3>
       </ImageSec>
-      <Main>
+      <Right>
         {/* <Text>Car Wash</Text> */}
         <WeatherSec>
           <Text>
             <section className="text">
-              <h5>Our Services</h5>
+              <h5>Services</h5>
               <ul>
                 <li> Car wash</li>
                 <li> Vaccuuming</li>
@@ -113,7 +113,7 @@ const StaffCarWash = () => {
             <button onClick={tuesdayBook}>Book</button>
           </Card>
         </Booking>
-      </Main>
+      </Right>
     </Wrapper>
   );
 };
