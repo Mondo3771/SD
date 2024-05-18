@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import background from "../../Images/Bckgrd.svg";
 
 export const Header = styled.div`
-  position: fixed;
+  position: sticky;
   z-index: 9999;
   width: 100%;
-  background-color: transparent;
+
+  background-image: url(${background});
+  background-position: top;
   display: flex;
   padding: 0.5rem 3rem;
   justify-content: space-between;
@@ -33,7 +36,6 @@ export const Header = styled.div`
     padding: 0;
     list-style: none;
     gap: 5rem;
-    color: white;
   }
 
   a:visited {
@@ -88,4 +90,37 @@ export const Header = styled.div`
       gap: 1rem;
     }
   }
+  .profile{
+    background-color: transparent;
+    color: white;
+    border: none;
+    
+  }
 `;
+
+export const Aside=styled.aside`
+
+img{
+  border-radius: 100%;
+
+}
+color: white;
+ul{
+  text-decoration: none;
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+padding-top:14vh;
+margin-top:0;
+background-color: hsl(242deg 39.34% 20.67%);
+display: flex;
+justify-content: center;
+
+
+
+`

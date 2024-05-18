@@ -24,12 +24,13 @@ import StaffHeader from "../../components/StaffHeader/StaffHeader";
 export const TempReportPage = () => {
   // const location = useLocation();
   // const employee = location.state.params;
-  const employee = fetchStorageData({ key: "User" });
+  const employee=fetchStorageData({key:"User"})
 
-  const [Users, setUsers] = useState([]);
+
+  const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
-  const [AllFeedback, setAllFeedBack] = useState([]);
-  const [firstLoad, setFirstLoad] = useState(false);
+  const [AllFeedback, setAllFeedBack] = useState(MockFeedBack);
+  const [firstLoad, setFirstLoad] = useState(true); //change
 
   const [UserClicked, setuserClicked] = useState(false);
   const [ReportUser, setReportUser] = useState(null);
@@ -58,6 +59,9 @@ export const TempReportPage = () => {
     // Get All the info you need on this page once (AllFeedback,AllUsers)
     // Get from storage
     setLocalStorage({ key: "Users", value: MockUsers });
+    setFirstLoad(true);
+    setAllFeedBack(MockFeedBack);
+    setLocalStorage({ key: "Feedback", value: MockFeedBack });
 
     const feedback = () => {
       fetch(`/api/feedback?Emp_ID=${Emp_ID}`, {
@@ -75,7 +79,7 @@ export const TempReportPage = () => {
           setFirstLoad(true);
         });
     };
-    feedback();
+    // feedback();
 
     // setReceiver(MockUsers[2]);
   }, []);
@@ -94,8 +98,7 @@ export const TempReportPage = () => {
     setAllFeedBack(t);
     setReceiver(user);
   };
-
-  const handleSendFeedback = (sender, receiver, feedback) => {
+  const handleSendFeedback = (sender,  receiver, feedback) => {
     console.log("Sender", sender);
     console.log("Receiver", receiver);
     const today = new Date().toISOString().slice(0, 10);
@@ -107,34 +110,44 @@ export const TempReportPage = () => {
       Message_ID: Math.random() * 1000,
     };
 
-    fetch("/api/feedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Message: feedback,
-        Sent_ID: sender.Emp_ID,
-        Rec_ID: receiver.Emp_ID,
-        Date: today,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        newMessage.Message_ID = data.Message_ID;
-        newMessage.Date = formatDate(newMessage.Date);
-        const storageChange = [
-          ...fetchStorageData({ key: "Feedback" }),
-          newMessage,
-        ];
-        setLocalStorage({ key: "Feedback", value: storageChange });
-        setAllFeedBack((prev) => [newMessage, ...prev]);
-        toast.success(`Message successfully sent!`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // newMessage.Message_ID = data.Message_ID;
+    newMessage.Date = formatDate(newMessage.Date);;
+    const storageChange = [
+      ...fetchStorageData({ key: "Feedback" }),
+      newMessage,
+    ];
+    setLocalStorage({ key: "Feedback", value: storageChange });
+    setAllFeedBack((prev) => [newMessage, ...prev]);
+    toast.success(`Message successfully sent!`);
+
+    // fetch("/api/feedback", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     Message: feedback,
+    //     Sent_ID: sender.Emp_ID,
+    //     Rec_ID: receiver.Emp_ID,
+    //     Date: today,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     newMessage.Message_ID = data.Message_ID;
+    //     newMessage.Date = formatDate(newMessage.Date)
+    //     const storageChange = [
+    //       ...fetchStorageData({ key: "Feedback" }),
+    //       newMessage,
+    //     ];
+    //     setLocalStorage({ key: "Feedback", value: storageChange });
+    //     setAllFeedBack((prev) => [newMessage, ...prev]);
+    //     toast.success(`Message successfully sent!`);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const closeReport = () => {
