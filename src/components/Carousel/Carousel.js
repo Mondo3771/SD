@@ -5,10 +5,11 @@ import {
   Card,
   Left,
   textwrap,
-  Main,
+  MealsMain,
   Swrapper,
+  PageSec,
 } from "./Carousel.styles";
-
+import StaffCarWash from "../StaffCarWash/StaffCarWash";
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -190,16 +191,17 @@ const Carousel = () => {
 
       <Wrapper>
         {Loaded ? (
-          <Main>
-            <Left>
-              <section className="text">
-                <h2>Something Healthy, Something Tasty!</h2>
-              </section>
-            </Left>
-            <Swrapper>
-              <section className="text">
-                <h3>Our Menu</h3>
-              </section>
+          <PageSec>
+            <MealsMain>
+              <Left>
+                <section className="text">
+                  <h2>Something Healthy, Something Tasty!</h2>
+                </section>
+              </Left>
+              <Swrapper>
+                <section className="text">
+                  <h3>Our Menu</h3>
+                </section>
 
               <Swiper
                 effect={"coverflow"}
@@ -215,22 +217,35 @@ const Carousel = () => {
                 }}
                 pagination={{ el: ".swiper-pagination", clickable: true }}
                 navigation
+                // ={{
+                //   nextEl: '.swiper-button-next',
+                //   prevEl: '.swiper-button-prev',
+                //   clickable: true,
+                // }}
                 onSlideChange={(swiper) => setTopCardIndex(swiper.realIndex)}
                 className="swiper_container"
               >
-                {Meals.map((booking, index) => (
-                  <SwiperSlide key={index}>
-                    <Card
-                      onClick={() => Book(booking)}
-                      isTop={index === topCardIndex}
-                    >
-                      <section className="textwrap">
-                        <h1>{booking.Name_of_Meal}</h1>
-                        <p>Description: {booking.Description}</p>
-                      </section>
-                    </Card>
-                  </SwiperSlide>
-                ))}
+                {Meals.map(
+                  (
+                    booking,
+                    index //change
+                  ) => (
+                    <SwiperSlide key={index}>
+                      <Card
+                        onClick={() => Book(booking)}
+                        isTop={index === topCardIndex}
+                      >
+                        <section className="textwrap">
+                          <h1>{booking.Name_of_Meal}</h1>
+                          <p>Description: {booking.Description}</p>
+                          {/* <p>Allergens: {booking.Allergens}</p> */}
+                          {/* <p>Date: {booking.Date}</p> */}
+                          {/* <button>Order</button> */}
+                        </section>
+                      </Card>
+                    </SwiperSlide>
+                  )
+                )}
               </Swiper>
               <section className="bookings">
                 {!(empBook && empBook.length > 0) ? (
@@ -245,27 +260,31 @@ const Carousel = () => {
                 ) : (
                   <>
                     <h2>Your Booking for Today:</h2>
+
                     {empBook &&
                       empBook.map((meal, index) => (
                         <div key={index}>
-                          <p>Meal: {meal.Name_of_Meal}</p>
-                          <p>Description: {meal.Description}</p>
+                          <p>Meal:{meal.Name_of_Meal}</p>
+                          <p>Description:{meal.Description}</p>
                           <button
                             onClick={() => {
                               DeleteBooking(meal.Booking_ID);
                               setdelBook((prev) => !prev); // Trigger state change to refresh data
                               setActionTriggered(true)
                             }}
-                          >
-                            Delete
-                          </button>
+                          ></button>
+                         
                         </div>
                       ))}
+
+                  {/* <button onClick={DeleteBooking(b_ID)}>Cancel</button> */}
                   </>
                 )}
               </section>
             </Swrapper>
-          </Main>
+            </MealsMain>
+            <StaffCarWash></StaffCarWash>
+          </PageSec>
         ) : (
           <Loader />
         )}

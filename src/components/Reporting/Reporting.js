@@ -190,14 +190,14 @@ const Reporting = ({User}) => {
         let hours = 0;
 
     
-          if(tasks){
-            tasks.forEach(task => {
+        //   if(tasks){
+            mockGraph.forEach(task => {
                 const taskDate = new Date(task.Date);
                 const taskYear = taskDate.getFullYear();
                 const taskMonth = taskDate.getMonth() + 1; 
     
                 if (taskYear === selectedYear && taskMonth === selectedMonth) {
-                    task.Active === true ? activecount++ : inactivecount++;
+                    task.Active === 1 ? activecount++ : inactivecount++;//chnage
                     if (!projectMap[task.Project]) {
                         projectMap[task.Project] = 0;
                     }
@@ -214,7 +214,7 @@ const Reporting = ({User}) => {
 
             setTotalHours(hours);
 
-          }
+        //   }
       
     }, [selectedYear, selectedMonth,tasks]); 
 
