@@ -10,7 +10,7 @@ const StaffHeader = ({employee}) => {
         history.push('/Lunch');
     }
     const Home=()=>{
-      history.push('/DashBoard');
+      history.push('/Dashboard');
 
 
     }

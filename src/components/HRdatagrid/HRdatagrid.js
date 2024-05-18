@@ -17,6 +17,7 @@ import { type } from "@testing-library/user-event/dist/type";
 import Reporting from "../Reporting/Reporting";
 import { Card ,Title} from "./HRdatagrid.styles";
 
+
 const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
   DELETEEmp(Emp_ID);
   const updatedEmployees = allEmployeedata.filter((emp) => emp.id !== id);
@@ -44,8 +45,6 @@ const updateEmp = (params) =>{
       console.error("Error:", error);
       return "Error";
     });
-   
-
 }
 
 
@@ -117,19 +116,18 @@ const HRdatagrid = () => {
 
   }
 
+
+
   const columns = [
     {
       field: "Name",
       headerName: "Name",
-      headerClassName: "headername",
-      //width: "16vh",
-      //headerAlign: 'center',
+      headerClassName: "headername name",
       flex: 1,
     },
     {
       field: "Surname",
       headerName: "Surname",
-      //width: "16vh",
       headerClassName: "headername",
       flex: 1,
     },
@@ -137,7 +135,6 @@ const HRdatagrid = () => {
       field: "EMP_type",
       headerName: "Employee Type",
       flex: 1,
-      //width: "16vh",
       type: "singleSelect",
       valueOptions: ["Staff", "Manager", "HR"],
       editable: true,
@@ -162,10 +159,9 @@ const HRdatagrid = () => {
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
-            color: "var(--white)",
+            color: "inherit",
             border: "none",
             borderRadius: "30px",
-            //padding: "8px 16px",
             height: "6vh",
             width: "4vw",
             fontSize: "0.5rem",
@@ -195,7 +191,7 @@ const HRdatagrid = () => {
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
-            color: "var(--white)",
+            color: "inherit",
             border: "none",
             borderRadius: "30px",
             //padding: "8px 16px",
@@ -216,7 +212,7 @@ const HRdatagrid = () => {
       type: "actions",
       flex: 1,
       // width: "16vh",
-      headerClassName: "headername",
+      headerClassName: "headername remove",
 
       //renderCell: (params) => <AdminActions {...(params, rowId, setrowId)} />,
       renderCell: (params) => (
@@ -224,7 +220,7 @@ const HRdatagrid = () => {
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
-            color: "var(--white)",
+            color: "inherit",
             border: "none",
             borderRadius: "30px",
             //padding: "8px 16px",
@@ -287,13 +283,15 @@ const HRdatagrid = () => {
               borderRadius: "0",
               color: "var(--white)",
               "& .headername": {
-                backgroundColor: "var(--dark)",
-                //background: "transparent",
-                // borderTopLeftRadius: "20px",
-                // borderTopRightRadius: "20px",
+                backgroundColor: "var(--darker)",
                 color: "var(--white)",
-                //backgroundColor: "linear-gradient(120deg, transparent, white)",
               },
+              "& .name":{
+                  borderRadius: "20px 0 0 0",
+              },
+              "& .remove":{
+                borderRadius: " 0 20px 0 0",
+            }
             }}
           >
             <DataGrid
@@ -307,15 +305,13 @@ const HRdatagrid = () => {
                 textAlign: "center",
                 boxShadow: 2,
                 borderRadius: "20px",
-                //border: 2,
                 color: "var(--white)",
                 fontSize: "1.1rem",
 
-                background:
-                  "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
-                backdropFilter: "blur(10px)",
-                WebkitBackdropFilter: "blur(10px)",
-                fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+                background: "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
+                // backdropFilter: "blur(10px)",
+                // WebkitBackdropFilter: "blur(10px)",
+                // fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
               }}
             />
           </Box>
