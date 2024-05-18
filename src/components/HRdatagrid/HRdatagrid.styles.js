@@ -29,9 +29,18 @@ export const Card = styled.article`
     color: var(--darkest);
   }
 
-  .css-yrdy0g-MuiDataGrid-columnHeaderRow, .MuiDataGrid-topContainer {
+  .css-yrdy0g-MuiDataGrid-columnHeaderRow,
+  .MuiDataGrid-topContainer {
     background: var(--darkest);
-    border-radius: 20px 20px 0 0; 
+    border-radius: 20px 20px 0 0;
+  }
+  .MuiBox-root,
+  .MuiDataGrid-main {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .MuiDataGrid-row {
+    transition: all 50ms ease-in-out;
   }
 
   .MuiDataGrid-row:hover {
@@ -42,7 +51,7 @@ export const Card = styled.article`
   }
 `;
 
-export const Title=styled.h2`
+export const Title = styled.h2`
   display: flex;
   flex-direction: start;
   text-align: left;
@@ -51,4 +60,4 @@ export const Title=styled.h2`
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: var(--white);
   font-size: 1.5rem;
-`
+`;
