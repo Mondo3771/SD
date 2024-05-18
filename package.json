@@ -55,12 +55,6 @@
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/App.js",
       "!<rootDir>/src/index.js",
-      "!<rootDir>/src/pages/HRHome/HRHome.js",
-      "!<rootDir>/src/pages/StaffDashboard/*",
-      "!<rootDir>/src/components/HRdatagrid/*",
-      "!<rootDir>/src/components/Modal/Modal.js",
-      "!<rootDir>/src/components/Reporting/Reporting.js",
-      "!<rootDir>/src/components/StaffCarWash/StaffCarWash.js",
       "!<rootDir>/src/reportWebVitals*",
       "!<rootDir>/src/setupTests.js"
     ],

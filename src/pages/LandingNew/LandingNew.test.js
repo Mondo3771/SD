@@ -1,7 +1,8 @@
 import React from "react";
 import fetchMock from "jest-fetch-mock";
 import "@testing-library/jest-dom/extend-expect";
-
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "../../components/Log/LoginButton";
 import {
   render,
   screen,
@@ -9,11 +10,26 @@ import {
   act,
   waitFor,
 } from "@testing-library/react";
-import { createMemoryHistory } from "history";
+import { useHistory } from 'react-router-dom';
+
+
+
+// Your component's tests here
 // import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import LandingNew from "./LandingNew";
+fetchMock.enableMocks();
 
 test("renders LandingNew and checks dropdown", async () => {
+  const mockLoginWithRedirect = jest.fn();
+  const mockLogout = jest.fn();
+  const mockUser = { name: "Test User" };
+
+  useAuth0.mockReturnValue({
+    isAuthenticated: false,
+    loginWithRedirect: mockLoginWithRedirect,
+    logout: mockLogout,
+    user: {},
+  });
   render(<LandingNew />);
 
   // Check if the "Features" and "About" elements are in the document
@@ -57,12 +73,109 @@ test("renders LandingNew and checks dropdown", async () => {
   });
 });
 
-test("Login button redirects to /HRhome", () => {
-  const history = createMemoryHistory();
-  render(<LandingNew history={history} />);
+jest.mock("@auth0/auth0-react");
+
+test("clicks login button and returns with Authenticated user", () => {
+  const mockLoginWithRedirect = jest.fn();
+  const mockLogout = jest.fn();
+  const mockGEttoken = jest.fn();
+  const mockUser = { name: "Test User" };
+
+  useAuth0.mockReturnValue({
+    isAuthenticated: false,
+    loginWithRedirect: mockLoginWithRedirect,
+    logout: mockLogout,
+    getAccesTokenSilently: mockGEttoken,
+    user: {},
+  });
+
+  const { rerender } = render(<LoginButton />);
+  const loginButton = screen.getByText("Log In");
+  fireEvent.click(loginButton);
+
+  expect(mockLoginWithRedirect).toHaveBeenCalled();
+
+  useAuth0.mockReturnValue({
+    isAuthenticated: true,
+    loginWithRedirect: mockLoginWithRedirect,
+    logout: mockLogout,
+    user: mockUser,
+  });
+
+  rerender(<LoginButton />);
+
+  const logoutButton = screen.getByText("Log Out");
+  expect(logoutButton).toBeInTheDocument();
+  fireEvent.click(logoutButton);
+
+  expect(mockLogout).toHaveBeenCalled();
 });
-fetchMock.enableMocks();
-test("renders LandingNew and checks basic interactions", async () => {
-  const { getByTestID } = render(<LandingNew />);
-  const loginButton = screen.getByTestID("Login");
+
+test("clicks login button and returns with Authenticated user", () => {
+  const mockLoginWithRedirect = jest.fn();
+  const mockLogout = jest.fn();
+  const mockUser = { name: "Test User" };
+
+  useAuth0.mockReturnValue({
+    isAuthenticated: false,
+    loginWithRedirect: mockLoginWithRedirect,
+    logout: mockLogout,
+    user: {},
+  });
+
+  const { rerender } = render(<LoginButton />);
+  const loginButton = screen.getByText("Log In");
+  fireEvent.click(loginButton);
+
+  expect(mockLoginWithRedirect).toHaveBeenCalled();
+
+  useAuth0.mockReturnValue({
+    isAuthenticated: true,
+    loginWithRedirect: mockLoginWithRedirect,
+    logout: mockLogout,
+    user: mockUser,
+  });
+
+  rerender(<LoginButton />);
+
+  const logoutButton = screen.getByText("Log Out");
+  expect(logoutButton).toBeInTheDocument();
+  fireEvent.click(logoutButton);
+
+  expect(mockLogout).toHaveBeenCalled();
+});
+
+test("If user is authenticated and exists then checks the Data type and it is Staff", async () => {
+  const mockUser = { sub: "1234" };
+  const mockLogin = jest.fn();
+  const mockget = jest.fn();
+  const mockgetToken = jest.fn().mockResolvedValue("mocked_token");
+  useAuth0.mockReturnValue({
+    isAuthenticated: true,
+    getAccessTokenSilently: mockgetToken, // corrected here
+    user: mockUser,
+  });
+  global.fetch = jest
+    .fn()
+    .mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            message: "Mocked response 1",
+            data: { EMP_type: "Staff" },
+          }),
+      })
+    )
+    .mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ message: "Mocked response 2" }), // dont need this
+      })
+    );
+    jest.mock('react-router-dom', () => ({
+      ...jest.requireActual('react-router-dom'), // use actual for all non-hook parts
+      useHistory: () => ({
+        push: jest.fn(),
+      }),
+    }));
+  render(<LandingNew />);
 });
