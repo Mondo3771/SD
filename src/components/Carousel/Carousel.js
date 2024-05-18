@@ -179,8 +179,7 @@ const Carousel = () => {
 
   return (
     <>
-      <StaffHeader />
-      {modalOpen && (
+    {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
           data={selectedBooking}
@@ -188,6 +187,8 @@ const Carousel = () => {
           booking={empBook && empBook.length > 0}
         />
       )}
+      <StaffHeader />
+      
 
       <Wrapper>
         {Loaded ? (
@@ -272,7 +273,9 @@ const Carousel = () => {
                               setdelBook((prev) => !prev); // Trigger state change to refresh data
                               setActionTriggered(true)
                             }}
-                          ></button>
+                          >
+                            Cancel
+                          </button>
                          
                         </div>
                       ))}

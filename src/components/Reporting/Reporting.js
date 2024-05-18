@@ -149,12 +149,19 @@ const mockFeed = [
 
 
 
+
+
+
 const Reporting = ({User}) => {
     const [tasks,settasks]=useState(null);
     const [Projects, setProjects] = useState(new Set());
     const [projectTimeMap, setProjectTimeMap] = useState({});
     const [hours, setHours] = useState(null);
+
     const[feedback,setfeedback]=useState(null);
+    const[sortFeed,setSortfeed]=useState(null);
+
+
     const[Active,setActive]=useState(0);
     const[inActive,setinActive]=useState(0)
     const[TotalHours,setTotalHours]=useState(0)
@@ -178,8 +185,33 @@ const Reporting = ({User}) => {
               });
           };
           GetAllTasks(User.Emp_ID)
+          const fetchFeedback = (Emp_ID) => {
+            fetch(`/api/feedback?Emp_ID=${Emp_ID}`, {
+              method: "Get",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                // console.log(data.data);
+                // setLocalStorage({ key: "Feedback", value: data.data });
+                // setFirstLoad(true);
+
+                
+                const filteredFeedback = data.data.filter(feedback => feedback.Receive_ID=== Emp_ID);
+
+
+                // Set the filtered feedback data to state
+                setfeedback(filteredFeedback);
+                setSortfeed(filteredFeedback);
+              });
+          };
+          fetchFeedback(User.Emp_ID)
 
     },[User])
+
+    
 
   
 
@@ -190,14 +222,14 @@ const Reporting = ({User}) => {
         let hours = 0;
 
     
-        //   if(tasks){
-            mockGraph.forEach(task => {
+          if(tasks){
+            tasks.forEach(task => {
                 const taskDate = new Date(task.Date);
                 const taskYear = taskDate.getFullYear();
                 const taskMonth = taskDate.getMonth() + 1; 
     
                 if (taskYear === selectedYear && taskMonth === selectedMonth) {
-                    task.Active === 1 ? activecount++ : inactivecount++;//chnage
+                    task.Active === true ? activecount++ : inactivecount++;//chnage
                     if (!projectMap[task.Project]) {
                         projectMap[task.Project] = 0;
                     }
@@ -214,7 +246,7 @@ const Reporting = ({User}) => {
 
             setTotalHours(hours);
 
-        //   }
+          }
       
     }, [selectedYear, selectedMonth,tasks]); 
 
@@ -264,8 +296,10 @@ const Reporting = ({User}) => {
         // Sort comments by date in descending order (from latest to earliest)
         
         const monthFeed=[];
-        mockFeed.forEach(comment=>{
-            const comDate = new Date(comment.date);
+        if(feedback){
+            
+            feedback.forEach(comment=>{
+            const comDate = new Date(comment.Date);
             const comYear = comDate.getFullYear();
             const comMonth = comDate.getMonth() + 1; 
             if (comYear === selectedYear && comMonth === selectedMonth) {
@@ -275,10 +309,10 @@ const Reporting = ({User}) => {
             }
             
 
-        });
+        });}
         const sortedFeedback = [...monthFeed].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        setfeedback(sortedFeedback);
+        setSortfeed(sortedFeedback);
     }, [selectedYear, selectedMonth]);
     
     
@@ -321,9 +355,10 @@ const Reporting = ({User}) => {
                 />
                 <Feedback>
                 <h2>Hello</h2> 
-                {feedback?feedback.map((item, index) => (
+                {sortFeed?sortFeed.map((item, index) => (
                     <p key={index}>
-                        <p><strong>{item.Name}:</strong> {item.Comment}. date:{item.date}</p>
+                        {console.log(item,"nah")}
+                        <p><strong>{item.Name}:</strong> {item.Message}. date:{item.Date}</p>
                     </p>
                 )):null}
 

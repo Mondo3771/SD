@@ -105,7 +105,7 @@ export const Text = styled.section`
 export const Right = styled.body`
   display: flex;
   flex-direction: column;
-  gap: 10vh;
+  gap: 4vh;
 `;
 export const Booking = styled.section`
   display: flex;
