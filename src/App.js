@@ -45,6 +45,8 @@ const GuardedRoute = ({ component: Component, auth, ...rest }) => (
 function App() {
   const { logout, isAuthenticated, user } = useAuth0();
   console.log(isAuthenticated,"authen");
+  console.log(user,"user");
+
   const employee = fetchStorageData({ key: "User" });
 
   const HRallowed=()=>{

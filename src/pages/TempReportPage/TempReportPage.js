@@ -9,7 +9,9 @@ import {
   MockUser,
 } from "../../components/FeedBackComponent/FeedBack.styles";
 import { useState } from "react";
-import { Body } from "./TempReportPage.styles";
+import { XMarkIcon } from '@heroicons/react/24/outline';
+
+import { Body,UserReport } from "./TempReportPage.styles";
 import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
 import Reporting from "../../components/Reporting/Reporting";
@@ -157,8 +159,16 @@ export const TempReportPage = () => {
           </Body>
           {UserClicked && employee.EMP_type === "Manager" ? (
             <>
+            {/* {toast.success("Scroll below to see their report")} */}
+              <UserReport>
+              <button className="close" onClick={closeReport}>    
+                <XMarkIcon width="24" height="24" />
+              </button>
+
               <Reporting User={ReportUser}></Reporting>
-              <button onClick={closeReport}>close</button>
+
+              </UserReport>
+              
             </>
           ) : null}
         </>
