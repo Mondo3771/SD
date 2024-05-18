@@ -26,15 +26,15 @@ const HRMeals = () => {
     const User = fetchStorageData({key:"User"}); 
     console.log(User)
 
-    if (!User) {
-      // Go back to landing page
-      history.push("/");
-      console.log("user",User)
+    // if (!User) {
+    //   // Go back to landing page
+    //   history.push("/");
+    //   console.log("user",User)
 
-    }else 
-    if(User.Emp_Type !== "HR"){
-      // Go back to their home page depending on whether they are a staff or manager
-    }
+    // }else 
+    // if(User.Emp_Type !== "HR"){
+    //   // Go back to their home page depending on whether they are a staff or manager
+    // }
     const getMeals = () => {
       fetch("/api/CreateMeals")
         .then((response) => {
@@ -55,7 +55,7 @@ const HRMeals = () => {
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal,bool) =>
+  const changeAvailable = (meal,bool) =>{
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
@@ -197,19 +197,14 @@ const HRMeals = () => {
           <nav className="links" alt="">
             <ul>
               <li>
-                <a href="#">Reports</a>
-              </li>
-              <li>
                 <a href="HRMeals">Meals</a>
               </li>
               <li>
                 <a href="HRBookings">Bookings</a>
               </li>
+              
               <li>
-                <a href="#">Car Wash</a>
-              </li>
-              <li>
-                <a href="#">Users</a>
+                <a href="HRhome">Users</a>
               </li>
             </ul>
           </nav>

@@ -17,19 +17,14 @@ const HRBookings = () => {
           <nav className="links">
             <ul>
               <li>
-                <a href="#">Reports</a>
-              </li>
-              <li>
                 <a href="HRMeals">Meals</a>
               </li>
               <li>
-                <a href="#">Bookings</a>
+                <a href="HRBookings">Bookings</a>
               </li>
+              
               <li>
-                <a href="#">Car Wash</a>
-              </li>
-              <li>
-                <a href="#">Users</a>
+                <a href="HRhome">Users</a>
               </li>
             </ul>
           </nav>

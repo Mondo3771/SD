@@ -129,7 +129,9 @@ const LandingNew = () => {
             </p>
           </section>
         </Header>
-        {loading && <Loader />}
+        {loading?
+         <Loader />:
+         <>
 
         {isDropdownOpen && (
           <DropDown>
@@ -208,6 +210,10 @@ const LandingNew = () => {
             <LoginButton />
           </section>
         )}
+                 </>
+
+      }
+
       </LandingPageBack>
     </>
   );

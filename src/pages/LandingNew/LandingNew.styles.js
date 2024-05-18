@@ -204,6 +204,7 @@ export const Features = styled.section`
   width: 25vw;
   height: 50vh;
   border-right: solid white 3px;
+  align-items: center;
   P {
     padding-top: 0;
     justify-content: center;

@@ -27,6 +27,8 @@ import LogoutButton from "./components/Log/LogoutButton";
 import { register } from "swiper/element/bundle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { fetchStorageData } from "./helper";
 // register Swiper custom elements
 register();
 
@@ -42,6 +44,21 @@ const GuardedRoute = ({ component: Component, auth, ...rest }) => (
 
 function App() {
   const { logout, isAuthenticated, user } = useAuth0();
+  console.log(isAuthenticated,"authen");
+  const employee = fetchStorageData({ key: "User" });
+
+  const HRallowed=()=>{
+      if(employee.EMP_type==='HR' || isAuthenticated){
+          return true
+      }
+      else{
+        return false;
+      }
+
+
+
+  }
+
 
   return (
     <>
@@ -50,9 +67,9 @@ function App() {
          <Route exact path="/" component={LandingNew} index />
          {/* <Route path="/DashBoard" component={StaffDashboard} /> */}
          <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
-         <GuardedRoute path="/HRhome" component={HRHome} auth ={isAuthenticated} />
-         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={isAuthenticated} />
-         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={isAuthenticated} />
+         <GuardedRoute path="/HRhome" component={HRHome} auth ={HRallowed()} />
+         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={HRallowed()} />
+         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={HRallowed()} />
          <GuardedRoute path="/Lunch" component={Carousel} auth ={isAuthenticated}/>
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
        </Switch>

@@ -4,14 +4,18 @@ import Box from "@mui/material/Box";
 import Loader from "../Loader/Loader";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import {
-  PlayIcon,
-  PauseIcon,
   TrashIcon,
-  StopIcon,
   CheckCircleIcon,
+  DocumentIcon,
+  XCircleIcon
+  
+
+  
+  
 } from "@heroicons/react/24/outline";
 import { type } from "@testing-library/user-event/dist/type";
 import Reporting from "../Reporting/Reporting";
+import { Card ,Title} from "./HRdatagrid.styles";
 
 const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
   DELETEEmp(Emp_ID);
@@ -28,6 +32,7 @@ const updateEmp = (params) =>{
     body: JSON.stringify({
       Emp_ID: params.row.Emp_ID,
       EMP_type: params.row.EMP_type,
+      Department: params.row.Department
     }),
   })
     .then((response) => response.json())
@@ -39,21 +44,7 @@ const updateEmp = (params) =>{
       console.error("Error:", error);
       return "Error";
     });
-    const updateDep = () =>{
-  fetch(`/api/AllEmployees`, {
-    method:"Put", 
-    headers:{
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      Emp_ID: params.row.Emp_ID,
-      Department: params.row.Department
-    })
-  }).then((res) => res.json()).then((data) =>{
-  console.log(data);}
-  ).catch((err)=> console.log(err))
-} 
-updateDep();
+   
 
 }
 
@@ -114,9 +105,15 @@ const HRdatagrid = () => {
 
 
   const userReport=(user)=>{
+    closeReport();
     setOpenReport(true)
     setuserReportpageinfo(user);
 
+
+  }
+  const closeReport=()=>{
+    setOpenReport(false)
+    setuserReportpageinfo(true);
 
   }
 
@@ -164,8 +161,8 @@ const HRdatagrid = () => {
         <button
           {...(params, rowId, setrowId)}
           style={{
-            backgroundColor: "var(--white)",
-            color: "var(--darkest)",
+            backgroundColor: "transparent",
+            color: "var(--white)",
             border: "none",
             borderRadius: "30px",
             //padding: "8px 16px",
@@ -178,7 +175,7 @@ const HRdatagrid = () => {
             userReport(params.row)
           }
         >
-          <TrashIcon width="3vw" height="4vh" textAlign="center" />
+          <DocumentIcon width="2vw" height="3vh" textAlign="center" />
         </button>
       )
 
@@ -197,8 +194,8 @@ const HRdatagrid = () => {
         <button
           {...(params, rowId, setrowId)}
           style={{
-            backgroundColor: "var(--white)",
-            color: "var(--darkest)",
+            backgroundColor: "transparent",
+            color: "var(--white)",
             border: "none",
             borderRadius: "30px",
             //padding: "8px 16px",
@@ -209,7 +206,7 @@ const HRdatagrid = () => {
           }}
           onClick={() => updateEmp(params)}
         >
-          <CheckCircleIcon width="3vw" height="4vh" />
+          <CheckCircleIcon width="2vw" height="3vh" />
         </button>
       ),
     },
@@ -226,8 +223,8 @@ const HRdatagrid = () => {
         <button
           {...(params, rowId, setrowId)}
           style={{
-            backgroundColor: "var(--white)",
-            color: "var(--darkest)",
+            backgroundColor: "transparent",
+            color: "var(--white)",
             border: "none",
             borderRadius: "30px",
             //padding: "8px 16px",
@@ -245,7 +242,7 @@ const HRdatagrid = () => {
             )
           }
         >
-          <TrashIcon width="3vw" height="4vh" textAlign="center" />
+          <TrashIcon width="2vw" height="3vh" textAlign="center" />
         </button>
       ),
     },
@@ -263,9 +260,24 @@ const HRdatagrid = () => {
     <>
       {Loaded ? (
         <>
-          {/* <Typography variant="h3" align="center" gutterBottom="false">
+        
+        {OpenReport?
+          <>
+            <button onClick={closeReport}>
+            <XCircleIcon width="2vw" height="3vh" textAlign="center" />
+
+             </button>
+             <Reporting User={userReportpageinfo}></Reporting>
+           
+
+          </>:
+          <>
+          <Title className="titlepage">
             Manage Users
-          </Typography> */}
+          </Title>
+          
+          <Card>
+
 
           <Box
             sx={{
@@ -307,7 +319,13 @@ const HRdatagrid = () => {
               }}
             />
           </Box>
-          {OpenReport?<Reporting User={userReportpageinfo}></Reporting>:null}
+          </Card>
+
+          
+          </>
+
+          
+          }
           
         </>
       ) : (
