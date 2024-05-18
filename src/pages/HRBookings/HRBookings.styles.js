@@ -61,6 +61,17 @@ export const Wrapper = styled.div`
     color: var(--white);
     font-size: 1.5rem;
   }
+  .css-yrdy0g-MuiDataGrid-columnHeaderRow, .MuiDataGrid-topContainer {
+    background: var(--darkest);
+    border-radius: 20px 20px 0 0; 
+  }
+
+  .MuiDataGrid-row:hover {
+    cursor: pointer;
+    background: white;
+    color: white;
+    font-size: 1.2rem;
+  }
 `;
 export const Card = styled.article`
   //scroll-behavior: smooth;
