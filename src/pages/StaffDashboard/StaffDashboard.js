@@ -60,98 +60,60 @@ const StaffDashboard = () => {
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
-
-  useEffect(() => {
-    //replace allprojects with data from fetch
-
-    const Projects = () => {
-      fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          const uniques = filterUniqueProjects(data.data);
-          setUniqueProjectNames(uniques);
-          setAllProjects(data.data);
-          setLoaded(true);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
-    Projects();
-    // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}]
-    // const uniques = filterUniqueProjects(allProjects);
-    //       setUniqueProjectNames(uniques);
-    // setAllProjects(allProjects);
-    // setLoaded(true)
-  }, []);
-
-  const [task, setTask] = useState("");
-  const [name, setName] = useState("");
-
-  const [createTask, setCreate] = useState(false);
-
-  const handleClick = (prev) => !prev;
-
-  const handleAdd = (taskToAdd) => {
-    taskToAdd["Emp_ID"] = Emp_ID;
-    taskToAdd["Task_ID"] = Math.random() * 100;
-
-    const add = () => {
-      fetch("/api/Tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Autherization: "",
-        },
-        body: JSON.stringify(taskToAdd),
+  const pause = () => {
+    fetch(`/api/Tasks/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Time: time,
+        Task_ID: taskToPause.Task_ID,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data.message);
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data.data);
-          taskToAdd["Task_ID"] = data.data.Task_ID;
-          setAllProjects((prev) => {
-            setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
-            return [taskToAdd, ...prev];
-          });
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
-    add();
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
-  const projectNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const taskChange = (event) => {
-    setTask(event.target.value);
-  };
-  const handlePause = (taskToPause, time) => {
-    console.log("pause ", taskToPause);
-    // takes time from the task and task id
-    const pause = () => {
-      fetch(`/api/Tasks/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Time: time,
-          Task_ID: taskToPause.Task_ID,
-        }),
+  const Projects = () => {
+    fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        const uniques = filterUniqueProjects(data.data);
+        setUniqueProjectNames(uniques);
+        setAllProjects(data.data);
+        setLoaded(true);
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data.message);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+  const add = () => {
+    fetch("/api/Tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Autherization: "",
+      },
+      body: JSON.stringify(taskToAdd),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        taskToAdd["Task_ID"] = data.data.Task_ID;
+        setAllProjects((prev) => {
+          setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
+          return [taskToAdd, ...prev];
         });
-    };
-    pause();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
   const handleStop = (taskToStop) => {
     // console.log(taskToStop);
@@ -172,23 +134,53 @@ const StaffDashboard = () => {
         console.error("Error:", error);
       });
   };
+  const deleteTask = () => {
+    fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  useEffect(() => {
+    Projects();
+  }, []);
+
+  const [task, setTask] = useState("");
+  const [name, setName] = useState("");
+
+  const [createTask, setCreate] = useState(false);
+
+  const handleClick = (prev) => !prev;
+
+  const handleAdd = (taskToAdd) => {
+    taskToAdd["Emp_ID"] = Emp_ID;
+    taskToAdd["Task_ID"] = Math.random() * 100;
+    add();
+  };
+
+  const projectNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const taskChange = (event) => {
+    setTask(event.target.value);
+  };
+  const handlePause = (taskToPause, time) => {
+    console.log("pause ", taskToPause);
+    // takes time from the task and task id
+    pause();
+  };
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
-    const deleteTask = () => {
-      fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data.message);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
     deleteTask();
     setAllProjects((a) => a.filter((p) => p.Task_ID !== taskToDelete.Task_ID));
 
@@ -277,7 +269,7 @@ const StaffDashboard = () => {
                 return handleAdd(newTask);
               }}
             >
-              <PlusIcon width={30}></PlusIcon>
+              <PlusIcon alt="Plus Icon" width={30}></PlusIcon>
             </button>
           </CreateTaskContainer>
         )}
@@ -302,6 +294,7 @@ const StaffDashboard = () => {
                         className="TrashIcon"
                         width={25}
                         onClick={() => handleDelete(s)}
+                        alt = "Delete Icon"
                       />{" "}
                     </button>
                   </article>
