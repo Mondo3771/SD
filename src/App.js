@@ -64,18 +64,17 @@ function App() {
   return (
     <>
        <BrowserRouter>
-      
+       <Switch>
          <Route exact path="/" component={LandingNew} index />
-         {/* <Route path="/DashBoard" component={StaffDashboard} /> */}
          <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
          <GuardedRoute path="/HRhome" component={HRHome} auth ={true} />
          <GuardedRoute path="/HRMeals" component={HRMeals} auth ={true} />
          <GuardedRoute path="/HRBookings" component={HRBookings} auth ={true} />
          <GuardedRoute path="/Lunch" component={Carousel} auth ={isAuthenticated}/>
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
-     
+      <
      </BrowserRouter>
-     <ToastContainer/>
+     {/* <ToastContainer/> */}
     </> // <StaffDashboard/>
     // <Reporting></Reporting>
   );

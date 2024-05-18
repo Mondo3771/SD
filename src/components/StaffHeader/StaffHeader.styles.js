@@ -6,7 +6,8 @@ export const Header = styled.div`
   z-index: 9999;
   width: 100%;
 
-  background-image: url(${background});
+  /* background-image: url(${background}); */
+  background-color: #17154d;
   background-position: top;
   display: flex;
   padding: 0.5rem 3rem;
@@ -100,26 +101,25 @@ export const Header = styled.div`
 
 export const Aside=styled.aside`
 
-img{
-  border-radius: 100%;
+        img{
+          border-radius: 100%;
 
-}
-color: white;
-ul{
-  text-decoration: none;
-    list-style-type: none;
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    align-items: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
+        }
+        color: white;
+        ul{
+          text-decoration: none;
+            list-style-type: none;
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
+            align-items: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+          }
 
-padding-top:14vh;
-margin-top:0;
-background-color: hsl(242deg 39.34% 20.67%);
-display: flex;
-justify-content: center;
+        margin-top:0;
+        background-color: #17154d;
+        display: flex;
+        justify-content: center;
 
 
 
