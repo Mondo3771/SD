@@ -31,7 +31,7 @@ module.exports = async function (context, req) {
         const { Booking_ID } = req.body;
         const resultSet = await pool
           .request()
-          .input("Booking_ID", sql.Int, id)
+          .input("Booking_ID", sql.Int,Booking_ID)
           .query(`DELETE FROM Bookings WHERE Booking_id = @Booking_ID`);
         context.res = {
           status: 200,

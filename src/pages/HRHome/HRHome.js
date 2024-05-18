@@ -3,7 +3,29 @@ import HRdatagrid from "../../components/HRdatagrid/HRdatagrid";
 import { Header, Wrapper, Card } from "./HRHome.styles";
 import logo from "../../Images/logo3.svg";
 import LoginButton from "../../components/Log/LoginButton";
+import { useEffect } from "react";
+import { setLocalStorage } from "../../helper";
+
+const getMeals = () => {
+  fetch("/api/CreateMeals")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+        setLocalStorage({key:"Meals",value:data.data})
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 const HRHome = () => {
+
+  useEffect(() =>{
+    getMeals();
+  },[])
+ 
+  
   return (
     <>
       <Wrapper>

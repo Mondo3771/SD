@@ -19,6 +19,7 @@ import {
 import { type } from "@testing-library/user-event/dist/type";
 import Reporting from "../Reporting/Reporting";
 import { Card ,Title} from "./HRdatagrid.styles";
+import { setLocalStorage } from "../../helper";
 
 
 const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
@@ -57,6 +58,7 @@ const fetchData = (users, setallEmployeedatas, setLoadeds) =>
   fetch("/api/AllEmployees")
     .then((response) => response.json())
     .then((employees) => {
+      setLocalStorage({key: "AllUsers", value: employees.data})
       const employeesWithId = employees.data
         .filter((employee) => employee.Emp_ID !== users.Emp_ID)
         .map((employee, index) => ({
@@ -225,10 +227,9 @@ const HRdatagrid = () => {
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
-            color: "white",
+            color: "var(--white)",
             border: "none",
             borderRadius: "30px",
-            //padding: "8px 16px",
             height: "6vh",
             width: "4vw",
             fontSize: "0.5rem",
@@ -301,7 +302,7 @@ const HRdatagrid = () => {
               borderRadius: "0",
               color: "var(--white)",
               "& .headername": {
-                backgroundColor: "var(--darker)",
+                backgroundColor: "var(--darkest)",
                 color: "var(--white)",
               },
               "& .name":{

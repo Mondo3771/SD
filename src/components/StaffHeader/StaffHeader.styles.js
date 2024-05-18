@@ -18,6 +18,11 @@ export const Header = styled.div`
 
   .logo {
     display: flex;
+    transition: all 100ms ease-in-out;
+  }
+  .logo:hover {
+    width:"57vw";
+    height:"57vh";
   }
 
   a {
@@ -37,10 +42,19 @@ export const Header = styled.div`
   a:visited {
     color: white;
   }
+  li:hover{
+    color: var(--white);
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+  }
 
   li a:hover {
     color: var(--white);
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
   }
+
+  
 
   /* Media query for screens smaller than 768px */
   @media screen and (max-width: 768px) {
