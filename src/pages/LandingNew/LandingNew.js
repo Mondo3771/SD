@@ -74,10 +74,8 @@ const LandingNew = () => {
           get();
         } else {
           if (DB.data.EMP_type === "HR") {
-            console.log(history);
             history.push(`/HRhome`, { params: DB.data });
           } else {
-            console.log(history);
             history.push(`/DashBoard`, { params: DB.data });
           }
         }

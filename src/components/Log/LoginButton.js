@@ -28,7 +28,6 @@ const LoginButton = ({ child }) => {
       </>
     );
   }
-  return null;
 };
 
 export default LoginButton;
