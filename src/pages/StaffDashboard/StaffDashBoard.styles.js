@@ -17,7 +17,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
   box-sizing: border-box;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   width: 100vw;
   background-image: url(${background});
   //background: var(--darkest);
@@ -36,7 +37,7 @@ export const Wrapper = styled.div`
     flex-direction: start;
     text-align: left;
     padding-left: 10vw;
-    padding-top: 14vh;
+    padding-top: 17vh;
     width: 80vw;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--white);
@@ -273,13 +274,13 @@ export const ProjectHolder = styled.div`
   .deleteButtonFin {
     flex: 1;
     width: 50px;
-    height: 80%;
+    height: inherit;
     background-color: var(--white);
     color: var(--darker);
     border: 2px solid var(--white);
     border-radius: 0px 10px 10px 0 ;
-    margin: 10px 0 10px 0px;
-    padding: 5px 100px;
+    margin: 10px 0px;
+    padding: 5px 2px;
   }
 
   .deleteButtonFin:hover {

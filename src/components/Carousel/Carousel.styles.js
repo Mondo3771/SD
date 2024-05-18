@@ -326,7 +326,7 @@ export const Main = styled.section`
   border-radius: 30px;
   height: 80vh;
   width: 80vw;
-  margin: 80px;
+  margin: 17vh;
   text-align: justify;
   padding: 2rem;
   display: flex;
