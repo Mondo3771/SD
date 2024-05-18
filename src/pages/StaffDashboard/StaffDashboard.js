@@ -29,6 +29,11 @@ import StaffHeader from "../../components/StaffHeader/StaffHeader";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
+import LogoutButton from "../../components/Log/LogoutButton";
+import { toast } from "react-toastify";
+// import sheet from "styled-components/dist/sheet";
+
+// Function to filter unique Project values and return an array of unique projects
 function filterUniqueProjects(projects) {
   const uniqueProjects = {};
   const result = [];
@@ -120,12 +125,14 @@ const StaffDashboard = () => {
             setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
             return [taskToAdd, ...prev];
           });
+          toast.success(`${taskToAdd.Description} successfully created!`)
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
     add();
+    setCreate(handleClick)
   };
 
   const projectNameChange = (event) => {
@@ -211,29 +218,6 @@ const StaffDashboard = () => {
   return (
     <Wrapper>
       <StaffHeader employee={data}></StaffHeader>
-      {/* <Header>
-        <section className="logo">
-          <img src={logo} width="55vw" height="55vh"></img>
-          <h1>
-            <a href="/">SYNERGY</a>
-          </h1>
-        </section>
-        <nav className="links">
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">Reports</a>
-            </li>
-            <li>
-              <a>Lunch</a>
-              <a onClick={Lunch}>Lunch</a>
-            </li>
-          </ul>
-        </nav>
-        <ArrowRightIcon width={24} />
-      </Header> */}
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>
