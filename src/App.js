@@ -63,10 +63,9 @@ function App() {
 
   return (
     <>
-      {/* <BrowserRouter>
+       <BrowserRouter>
        <Switch>
          <Route exact path="/" component={LandingNew} index />
-         {/* <Route path="/DashBoard" component={StaffDashboard} /> */}
          <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
          <GuardedRoute path="/HRhome" component={HRHome} auth ={HRallowed()} />
          <GuardedRoute path="/HRMeals" component={HRMeals} auth ={HRallowed()} />
@@ -75,7 +74,7 @@ function App() {
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
        </Switch>
      </BrowserRouter>
-     <ToastContainer/>
+     {/* <ToastContainer/> */}
     </> // <StaffDashboard/>
     // <Reporting></Reporting>
   );

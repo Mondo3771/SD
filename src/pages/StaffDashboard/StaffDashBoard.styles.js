@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
   background-size: cover;
   background-position: top;
 
-  gap: 2rem;
+  /* gap: 2rem; */
 
   h1 {
     color: white;
@@ -37,7 +37,7 @@ export const Wrapper = styled.div`
     flex-direction: start;
     text-align: left;
     padding-left: 10vw;
-    padding-top: 17vh;
+    padding-top: 0;
     width: 80vw;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--white);
@@ -115,7 +115,8 @@ export const Card = styled.article`
   border-radius: 50px;
   box-shadow: 10px;
   width: 80vw;
-  max-height: 80vh;
+  min-height: 80vh;
+  height: auto;
   color: var(--white);
   flex: 1;
   padding: 40px;
