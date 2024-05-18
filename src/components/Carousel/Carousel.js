@@ -1,3 +1,5 @@
+
+
 import {
   Wrapper,
   Card,
@@ -20,9 +22,6 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import StaffHeader from "../StaffHeader/StaffHeader";
 import { useActionData } from "react-router";
 import { fetchStorageData, setLocalStorage } from "../../helper";
-
-
-
 
 const mock = [
   {
@@ -82,42 +81,44 @@ const mock = [
     Allergens: "Contains Milk",
   },
 ];
-const DeleteBooking = (Booking_ID) => {
 
+const DeleteBooking = (Booking_ID) => {
   fetch(`/api/Meals?Booking_ID=${Booking_ID}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ Booking_ID }),
   })
     .then((response) => response.json())
     .then((data) => {
-      // Do something with your data
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
     });
-
 };
 
 const Carousel = () => {
-  // const location = useLocation();
-  // const data = location.state.params;
-
-  // console.log(data);
-  const data=fetchStorageData({key:"User"})
+  const data = fetchStorageData({ key: "User" });
 
   const [Meals, setMeals] = useState(null);
   const [empBook, setempBook] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false);
-  const [topCardIndex, setTopCardIndex] = useState(0); // State to track the index of the top card
-  const [b_ID,setb_ID]=useState(null);
+  const [topCardIndex, setTopCardIndex] = useState(0);
+  const [b_ID, setb_ID] = useState(null);
+  const [delBook, setdelBook] = useState(false);
+
+  const [actionTriggered, setActionTriggered] = useState(false); //i want to refresh 1 second after an action
+
 
   const Book = (booking) => {
     setSelectedBooking(booking);
-    // console.log(booking ,'hello');
     setModalOpen(true);
+    setActionTriggered(true)
   };
+
   useEffect(() => {
     const fetchData = () => {
       fetch("/api/Meals")
@@ -126,49 +127,61 @@ const Carousel = () => {
           setMeals(meals.data);
           setLoaded(true);
         });
-      // setLoaded(true);
     };
 
-   
     fetchData();
   }, []);
-
 
   useEffect(() => {
     const fetchEmployeeMeal = () => {
       fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
         .then((response) => response.json())
         .then((book) => {
-          console.log(book.data,"noooooooo");
+          console.log(book.data, "noooooooo");
           setempBook(book.data);
-          setb_ID(book.data[0].Booking_ID)
-          console.log(book.data[0].Name_of_Meal,"meal")
-          console.log(book.data[0].Booking_ID,"book")
-
+          setb_ID(book.data[0].Booking_ID);
+          console.log(book.data[0].Name_of_Meal, "meal");
+          console.log(book.data[0].Booking_ID, "book");
         });
     };
-  
-    // Run the fetchEmployeeMeal function initially
+
     fetchEmployeeMeal();
-  
-    // Set interval to run fetchEmployeeMeal every 2 seconds
-    const intervalId = setInterval(fetchEmployeeMeal, 2000);
-  
-    // Cleanup function to clear interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, []);
+  }, [data.Emp_ID, modalOpen, delBook]);
 
 
+  useEffect(() => {
+    if (actionTriggered) {
+      const timer = setTimeout(() => {
+        // Action to be performed 1 second after modal is closed or delete button is clicked
+        console.log("Action triggered 1 second later");
+        const fetchEmployeeMeal = () => {
+          fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
+            .then((response) => response.json())
+            .then((book) => {
+              console.log(book.data, "noooooooo");
+              setempBook(book.data);
+              setb_ID(book.data[0].Booking_ID);
+              console.log(book.data[0].Name_of_Meal, "meal");
+              console.log(book.data[0].Booking_ID, "book");
+            });
+        };
+    
+        fetchEmployeeMeal();
 
-  
+        // Reset actionTriggered state
+        setActionTriggered(false);
+      }, 1000);
+
+      return () => clearTimeout(timer); // Clear timeout if the component is unmounted or actionTriggered changes
+    }
+  }, [actionTriggered]);
 
   return (
     <>
-      <StaffHeader ></StaffHeader>
+      <StaffHeader />
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
-          
           data={selectedBooking}
           employee={data}
           booking={empBook && empBook.length > 0}
@@ -182,7 +195,7 @@ const Carousel = () => {
               <section className="text">
                 <h2>Something Healthy, Something Tasty!</h2>
               </section>
-            </Left>{" "}
+            </Left>
             <Swrapper>
               <section className="text">
                 <h3>Our Menu</h3>
@@ -202,35 +215,22 @@ const Carousel = () => {
                 }}
                 pagination={{ el: ".swiper-pagination", clickable: true }}
                 navigation
-                // ={{
-                //   nextEl: '.swiper-button-next',
-                //   prevEl: '.swiper-button-prev',
-                //   clickable: true,
-                // }}
                 onSlideChange={(swiper) => setTopCardIndex(swiper.realIndex)}
                 className="swiper_container"
               >
-                {Meals.map(
-                  (
-                    booking,
-                    index //change
-                  ) => (
-                    <SwiperSlide key={index}>
-                      <Card
-                        onClick={() => Book(booking)}
-                        isTop={index === topCardIndex}
-                      >
-                        <section className="textwrap">
-                          <h1>{booking.Name_of_Meal}</h1>
-                          <p>Description: {booking.Description}</p>
-                          {/* <p>Allergens: {booking.Allergens}</p> */}
-                          {/* <p>Date: {booking.Date}</p> */}
-                          {/* <button>Order</button> */}
-                        </section>
-                      </Card>
-                    </SwiperSlide>
-                  )
-                )}
+                {Meals.map((booking, index) => (
+                  <SwiperSlide key={index}>
+                    <Card
+                      onClick={() => Book(booking)}
+                      isTop={index === topCardIndex}
+                    >
+                      <section className="textwrap">
+                        <h1>{booking.Name_of_Meal}</h1>
+                        <p>Description: {booking.Description}</p>
+                      </section>
+                    </Card>
+                  </SwiperSlide>
+                ))}
               </Swiper>
               <section className="bookings">
                 {!(empBook && empBook.length > 0) ? (
@@ -245,24 +245,29 @@ const Carousel = () => {
                 ) : (
                   <>
                     <h2>Your Booking for Today:</h2>
-
                     {empBook &&
                       empBook.map((meal, index) => (
                         <div key={index}>
-                          <p>Meal:{meal.Name_of_Meal}</p>
-                          <p>Description:{meal.Description}</p>
-                         
+                          <p>Meal: {meal.Name_of_Meal}</p>
+                          <p>Description: {meal.Description}</p>
+                          <button
+                            onClick={() => {
+                              DeleteBooking(meal.Booking_ID);
+                              setdelBook((prev) => !prev); // Trigger state change to refresh data
+                              setActionTriggered(true)
+                            }}
+                          >
+                            Delete
+                          </button>
                         </div>
                       ))}
-
-                  {/* <button onClick={DeleteBooking(b_ID)}>Cancel</button> */}
                   </>
                 )}
               </section>
             </Swrapper>
           </Main>
         ) : (
-          <Loader></Loader>
+          <Loader />
         )}
       </Wrapper>
     </>
