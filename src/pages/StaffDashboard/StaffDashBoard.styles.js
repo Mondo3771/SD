@@ -4,11 +4,7 @@ import background from "../../Images/Bckgrd.svg";
 import React, { useEffect, useState } from "react";
 
 //icons
-import {
-  PlayIcon,
-  PauseIcon,
-  StopIcon,
-} from "@heroicons/react/24/outline";
+import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
 
 const formatTime = (timeInSeconds) => {
   const hours = Math.floor(timeInSeconds / 3600);
@@ -129,7 +125,7 @@ export const Card = styled.article`
   //background-color: var(--whiter);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  
+
   .title {
     display: flex;
     gap: 1.5rem;
@@ -180,7 +176,6 @@ export const CreateTaskContainer = styled.section`
   background: transparent;
   align-items: center;
 
-  
   button {
     height: 6vh;
     width: fit-content;
@@ -189,7 +184,6 @@ export const CreateTaskContainer = styled.section`
     background-color: var(--white);
     color: var(--darkest);
     font-size: 1.1rem;
-
   }
 
   input {
@@ -236,7 +230,7 @@ export const Sheet = styled.div`
   display: flex;
   justify-content: space-between;
   width: 80%;
-  height:80%;
+  height: 80%;
   align-items: center;
 
   p {
@@ -270,7 +264,7 @@ export const ProjectHolder = styled.div`
   .SheetHolderFin {
     display: flex;
   }
- 
+
   .deleteButtonFin {
     flex: 1;
     width: 50px;
@@ -278,7 +272,7 @@ export const ProjectHolder = styled.div`
     background-color: var(--white);
     color: var(--darker);
     border: 2px solid var(--white);
-    border-radius: 0px 10px 10px 0 ;
+    border-radius: 0px 10px 10px 0;
     margin: 10px 0 10px 0px;
     padding: 5px 100px;
   }
@@ -306,12 +300,7 @@ export const SheetContainer = styled.div`
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export const TaskContainer = ({
-  task,
-  onPause,
-  onStop,
-  allProjects,
-}) => {
+export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
   const [timerRunning, setTimerRunning] = useState(false);
   const [stop, setStop] = useState(task.Active);
   const [time, setTime] = useState(task.Time);
@@ -352,6 +341,7 @@ export const TaskContainer = ({
         <button
           type="button"
           className="playButton"
+          aria-label="Play Button"
           style={{
             color: !timerRunning ? "var(--whiter)" : "gray",
           }}
@@ -364,6 +354,7 @@ export const TaskContainer = ({
         <button
           type="button"
           className="pauseButton"
+          aria-label="Pause Button"
           style={{
             color: timerRunning ? "var(--whiter)" : "gray",
           }}

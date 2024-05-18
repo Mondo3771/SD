@@ -94,7 +94,7 @@ const StaffDashboard = () => {
         console.error("Error:", error);
       });
   };
-  const add = () => {
+  const add = (taskToAdd) => {
     fetch("/api/Tasks", {
       method: "POST",
       headers: {
@@ -164,19 +164,20 @@ const StaffDashboard = () => {
   const handleAdd = (taskToAdd) => {
     taskToAdd["Emp_ID"] = Emp_ID;
     taskToAdd["Task_ID"] = Math.random() * 100;
-    add();
+    add(taskToAdd);
   };
 
   const projectNameChange = (event) => {
+    console.log(event.target.value);
     setName(event.target.value);
   };
 
   const taskChange = (event) => {
+    console.log(event.target.value);
     setTask(event.target.value);
   };
   const handlePause = (taskToPause, time) => {
     console.log("pause ", taskToPause);
-    // takes time from the task and task id
     pause();
   };
   const handleDelete = (taskToDelete) => {
@@ -229,7 +230,10 @@ const StaffDashboard = () => {
           <section className="title">
             <button
               className="createTaskButton"
-              onClick={() => setCreate(handleClick)}
+              onClick={() => {
+                setCreate(handleClick);
+              }}
+              aria-label="Create Task Button"
             >
               <h2>Create a task</h2>
             </button>
@@ -242,6 +246,7 @@ const StaffDashboard = () => {
               <input
                 type="text"
                 placeholder="Project Name"
+                aria-label="Project Place Holder"
                 value={name}
                 onChange={projectNameChange}
               ></input>
@@ -250,12 +255,14 @@ const StaffDashboard = () => {
               <input
                 type="text"
                 placeholder="Task Name"
+                aria-label="Task Name Place Holder"
                 value={task}
                 onChange={taskChange}
               ></input>
             </LabelHolder>
             <button
               type="button"
+              aria-label="Add Task"
               onClick={() => {
                 const today = new Date().toISOString().slice(0, 10);
                 const newTask = {
@@ -294,7 +301,7 @@ const StaffDashboard = () => {
                         className="TrashIcon"
                         width={25}
                         onClick={() => handleDelete(s)}
-                        alt = "Delete Icon"
+                        alt="Delete Icon"
                       />{" "}
                     </button>
                   </article>
