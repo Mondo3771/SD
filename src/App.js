@@ -55,11 +55,11 @@ function App() {
        </Switch>
      </BrowserRouter> */}
       {/* <StaffCarWash></StaffCarWash> */}
-      {/* <TempReportPage></TempReportPage> */}
+      <TempReportPage></TempReportPage>
       {/* <Carousel></Carousel> */}
-      <StaffBookings></StaffBookings>
+      {/* <StaffBookings></StaffBookings> */}
+      {/* <Reporting></Reporting> */}
     </> // <StaffDashboard/>
-    // <Reporting></Reporting>
   );
 }
 

@@ -9,7 +9,7 @@ import {
   MockUser,
 } from "../../components/FeedBackComponent/FeedBack.styles";
 import { useState } from "react";
-import { Body } from "./TempReportPage.styles";
+import { Body, Wrapper } from "./TempReportPage.styles";
 import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
 import Reporting from "../../components/Reporting/Reporting";
@@ -135,8 +135,9 @@ export const TempReportPage = () => {
   return (
     <>
       <StaffHeader></StaffHeader>
+
       {firstLoad ? (
-        <>
+        <Wrapper>
           <Reporting User={employee}></Reporting>
           {console.log(employee)}
           <Body>
@@ -154,7 +155,7 @@ export const TempReportPage = () => {
               <button onClick={closeReport}>close</button>
             </>
           ) : null}
-        </>
+        </Wrapper>
       ) : (
         <Loader></Loader>
       )}
