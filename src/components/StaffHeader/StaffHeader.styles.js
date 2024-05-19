@@ -10,6 +10,7 @@ export const Header = styled.div`
   background-color: #17154d;
   background-position: top;
   display: flex;
+  flex-direction: row;
   padding: 0.5rem 3rem;
   justify-content: space-between;
   min-height: 14vh;
@@ -18,6 +19,17 @@ export const Header = styled.div`
 
   .logo {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    h1 {
+      font-size: x-large;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    img {
+      width: 100px;
+      height: 40px;
+    }
     transition: all 100ms ease-in-out;
   }
   .logo:hover {
@@ -60,9 +72,19 @@ export const Header = styled.div`
   @media screen and (max-width: 768px) {
     padding: 0.5rem 1rem;
 
-    .logo img {
-      width: 40px;
-      height: 40px;
+    .logo {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      h1 {
+        font-size: x-large;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      img {
+        width: 100px;
+        height: 40px;
+      }
     }
 
     a {
@@ -77,10 +99,15 @@ export const Header = styled.div`
   /* Media query for screens smaller than 480px */
   @media screen and (max-width: 480px) {
     padding: 0.5rem 0.5rem;
-
-    .logo img {
-      width: 30px;
-      height: 30px;
+    min-height: 10vh;
+    .logo {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      img {
+        width: 80px;
+        height: 40px;
+      }
     }
 
     a {
