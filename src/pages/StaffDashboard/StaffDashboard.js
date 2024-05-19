@@ -31,6 +31,7 @@ import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
 import LogoutButton from "../../components/Log/LogoutButton";
 import { toast } from "react-toastify";
+import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
 // import sheet from "styled-components/dist/sheet";
 
 // Function to filter unique Project values and return an array of unique projects
@@ -64,10 +65,10 @@ function filterTasksByProject(Sheets, projectName) {
 const StaffDashboard = () => {
   // const location = useLocation();
   const history = useHistory();
-  const data=fetchStorageData({key:"User"})
-  console.log(data,'fetching data');
-  const Emp_ID = data.Emp_ID;
-  // const Emp_ID = 87;
+  // const data=fetchStorageData({key:"User"})
+  // console.log(data,'fetching data');
+  // const Emp_ID = data.Emp_ID;
+  const Emp_ID = 87;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
@@ -89,12 +90,12 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    Projects();
+    // Projects();
     // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}]
-    // const uniques = filterUniqueProjects(allProjects);
-    //       setUniqueProjectNames(uniques);
-    // setAllProjects(allProjects);
-    // setLoaded(true)
+    const uniques = filterUniqueProjects(allProjects);
+          setUniqueProjectNames(uniques);
+    setAllProjects(allProjects);
+    setLoaded(true)
   }, []);
 
   const [task, setTask] = useState("");
@@ -212,12 +213,13 @@ const StaffDashboard = () => {
       )
     );
   };
+  const data = ""
   const Lunch = () => {
     history.push("/Lunch", { params: data });
   };
   return (
     <Wrapper>
-      <StaffHeader employee={data}></StaffHeader>
+      <StaffHeader employee={MockUser}></StaffHeader>
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>
@@ -290,7 +292,7 @@ const StaffDashboard = () => {
                     <button className="deleteButtonFin">
                       <TrashIcon
                         className="TrashIcon"
-                        width={25}
+                        width= {"25px"}
                         onClick={() => handleDelete(s)}
                       />{" "}
                     </button>

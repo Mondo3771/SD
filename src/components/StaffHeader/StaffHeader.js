@@ -5,12 +5,13 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon,UserIcon } from '@heroicons/react/24/outline';
 import { fetchStorageData } from '../../helper';
+// import {MockUser} from '../../';
 
 const StaffHeader = ({ employee }) => {
   const history = useHistory();
   const [isAsideOpen, setIsAsideOpen] = useState(false);
-  const user = fetchStorageData({ key: "User" });
-  const Profile= fetchStorageData({ key: "Profile" });
+  const user = fetchStorageData({ key: "User" }) ?? employee;
+  // const Profile= fetchStorageData({ key: "Profile" });
 
 
   const Lunch = () => {
@@ -61,9 +62,9 @@ const StaffHeader = ({ employee }) => {
           </button> */}
           <nav>
             <ul>
-              <img src={Profile.picture}/>
+              {/* <img src={Profile.picture}/>
               <li>{Profile.name}</li>
-              <li>{Profile.email}</li>
+              <li>{Profile.email}</li> */}
               <li>{user.EMP_type}</li>
               {/* Add more items as needed */}
             </ul>

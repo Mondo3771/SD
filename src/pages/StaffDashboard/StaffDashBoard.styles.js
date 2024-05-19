@@ -4,14 +4,8 @@ import background from "../../Images/Bckgrd.svg";
 import React, { useEffect, useState } from "react";
 
 //icons
-import {
-  PlayIcon,
-  PauseIcon,
-  StopIcon,
-} from "@heroicons/react/24/outline";
+import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
 import { formatDate, formatTime } from "../../helper";
-
-
 
 export const Wrapper = styled.div`
   display: flex;
@@ -21,11 +15,8 @@ export const Wrapper = styled.div`
   height: auto;
   width: 100vw;
   background-image: url(${background});
-  //background: var(--darkest);
   background-size: cover;
   background-position: top;
-
-  /* gap: 2rem; */
 
   h1 {
     color: white;
@@ -53,17 +44,42 @@ export const Wrapper = styled.div`
     color: var(--white);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
-  /* .sheet:hover,
-  .deleteButtonFin:hover,
+  .sheet:hover,
   .sheet:hover ~ .deleteButtonFin,
-  .sheet:hover  ~  
-  
-  {
-    background-color: gray;
+  .sheet:hover ~ .stopButton,
+  .sheet:hover ~ .playButton,
+  .sheet:hover ~ .pauseButton,
+  .deleteButtonFin + .sheet {
+    background-color: white;
     cursor: pointer;
-    border: 2px solid gray;
-    color: var(--white);
-  } */
+  }
+  .sheet:hover ~ .deleteButtonFin {
+    background-color: white;
+    border: 2px solid white;
+  }
+
+  @media (max-width: 760px) {
+    .sheet p {
+      font-size: 0.5rem;
+      margin: 0;
+      /* outline: 1px saddlebrown solid; */
+    }
+    .sheet {
+      margin: 0;
+      height: 50px;
+    }
+    .removeButton,
+    .pauseButton,
+    .playButton,
+    .stopButton {
+      width: 25px;
+    }
+
+    h2 {
+      font-size: 1rem;
+     
+    }
+  }
 `;
 
 export const Header = styled.div`
@@ -130,12 +146,13 @@ export const Card = styled.article`
   //background-color: var(--whiter);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  
+
   .title {
     display: flex;
     gap: 1.5rem;
     transition: all 500ms ease-in-out;
     color: var(--darkest);
+    align-items: center;
   }
 
   .createTaskButton {
@@ -149,7 +166,16 @@ export const Card = styled.article`
     color: white;
     cursor: pointer;
     height: 100%;
+    transition: all 100ms ease-in-out;
   }
+
+  .createTaskButton:hover {
+    background: white;
+  }
+  .createTaskButton:hover ~ .clock {
+    color: white;
+  }
+
   .createTaskButton h2 {
     font-family: inherit;
     font-weight: 400;
@@ -163,12 +189,31 @@ export const Card = styled.article`
     color: var(--white);
   }
   .clock {
-    // background: var(--darker);
     color: var(--white);
     width: 60px;
     height: 60px;
     border-radius: 50%;
   }
+
+@media (max-width:760px){
+
+
+    .createTaskButton {
+    }
+
+    .createTaskButton h2 {
+      font-size: 0.8rem;
+    }
+
+    .title {
+      font-size: 0.5rem;
+    }
+  
+  .clock {
+    height: 40px;
+  }
+}
+
 `;
 
 export const CreateTaskContainer = styled.section`
@@ -181,7 +226,6 @@ export const CreateTaskContainer = styled.section`
   background: transparent;
   align-items: center;
 
-  
   button {
     height: 6vh;
     width: fit-content;
@@ -190,7 +234,6 @@ export const CreateTaskContainer = styled.section`
     background-color: var(--white);
     color: var(--darkest);
     font-size: 1.1rem;
-
   }
 
   input {
@@ -206,7 +249,7 @@ export const CreateTaskContainer = styled.section`
     font-family: inherit;
     color: rgba(0, 0, 0, 0.2);
 
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-align: left;
     align-items: center;
   }
@@ -214,9 +257,25 @@ export const CreateTaskContainer = styled.section`
   label {
     font-family: inherit;
     color: var(--white);
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-align: center;
     align-items: center;
+  }
+
+  @media (max-width: 760px){
+    gap: 0.5rem;
+
+    button {
+      height: 40px;
+    }
+    input{
+      height: 40px;
+      font-size: 0.6rem;
+      border: none;
+    }
+    ::placeholder {
+      font-size: 0.6rem;
+    }
   }
 `;
 
@@ -229,7 +288,6 @@ export const LabelHolder = styled.div`
 
 export const Sheet = styled.div`
   background-color: var(--white);
-  border: 2px solid var(--white);
   border-radius: 10px 0px 0px 10px;
   margin: 10px 0;
   padding: 5px 10px;
@@ -237,21 +295,22 @@ export const Sheet = styled.div`
   display: flex;
   justify-content: space-between;
   width: 80%;
-  height:80%;
+  height: 60px;
   align-items: center;
 
   p {
     color: var(--darkest);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.1rem;
+    font-size: inherit;
   }
   .stopButton,
   .playButton,
   .pauseButton {
-    background-color: var(--white);
+    background-color: inherit;
     color: white;
     cursor: pointer;
     border: none;
+    transition: all 200ms ease-in-out;
   }
 
   .removeButton {
@@ -270,25 +329,51 @@ export const ProjectHolder = styled.div`
 
   .SheetHolderFin {
     display: flex;
+    align-items: center;
   }
- 
+
   .deleteButtonFin {
     flex: 1;
     width: 50px;
-    height: inherit;
+    height: 60px;
     background-color: var(--white);
     color: var(--darker);
+    border-radius: 0px 10px 10px 0;
+    margin: 10px 0;
     border: 2px solid var(--white);
-    border-radius: 0px 10px 10px 0 ;
-    margin: 10px 0px;
     padding: 5px 2px;
   }
 
   .deleteButtonFin:hover {
-    background-color: gray;
+    cursor: pointer;
   }
+  .deleteButtonFin:hover + .sheet {
+    background-color: var(--white);
+    /* border: 2px solid var(--white); */
+  }
+
   .TrashIcon {
     margin: 0 0 0 6rem;
+    transition: 200ms ease-in-out;
+    /* width: inherit; */
+  }
+
+  .TrashIcon:hover {
+    width: 30px;
+    color: red;
+  }
+  @media (max-width: 760px) {
+    .SheetHolderFin {
+      padding: 0;
+      margin: 0;
+    }
+    .TrashIcon {
+      width: 15px;
+      margin: 0;
+    }
+    .deleteButtonFin {
+      height: 50px;
+    }
   }
 `;
 
@@ -303,6 +388,23 @@ export const StopStartContainer = styled.div`
     border-radius: 50%;
     transition: all 300ms ease-in-out;
   }
+  .pauseIcon,
+  .playIcon,
+  .stopIcon {
+    width: 25px;
+  }
+
+  @media (max-width: 760px) {
+    padding: 0;
+    margin: 0;
+    min-width: 10px;
+
+    .pauseIcon,
+    .playIcon,
+    .stopIcon {
+      width: 15px;
+    }
+  }
 `;
 
 export const SheetContainer = styled.div`
@@ -311,12 +413,7 @@ export const SheetContainer = styled.div`
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export const TaskContainer = ({
-  task,
-  onPause,
-  onStop,
-  allProjects,
-}) => {
+export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
   const [timerRunning, setTimerRunning] = useState(false);
   const [stop, setStop] = useState(task.Active);
   const [time, setTime] = useState(task.Time);
@@ -343,8 +440,8 @@ export const TaskContainer = ({
   }, [timerRunning, stop]);
 
   return (
-    <Sheet 
-    className="sheet"
+    <Sheet
+      className="sheet"
       id={task.Task_ID.toString()}
       key={task.Task_ID}
       onClick={() => {
@@ -365,7 +462,7 @@ export const TaskContainer = ({
           disabled={timerRunning}
           hidden={task.Active || stop}
         >
-          <PlayIcon width={25} />
+          <PlayIcon width="inherit" className="playIcon" />
         </button>
         <button
           type="button"
@@ -380,7 +477,7 @@ export const TaskContainer = ({
           disabled={!timerRunning}
           hidden={task.Active || stop}
         >
-          <PauseIcon width={25} />
+          <PauseIcon width="inherit" className="pauseIcon" />
         </button>
         <button
           type="button"
@@ -392,9 +489,10 @@ export const TaskContainer = ({
             onStop(task, time);
             setStop(handleButtonClick(stop));
           }}
-          disabled={task.Active || stop || timerRunning}
+          disabled={timerRunning}
+          hidden={task.Active || stop}
         >
-          <StopIcon width={25} />
+          <StopIcon width="inherit" className="stopIcon" />
         </button>
       </StopStartContainer>
     </Sheet>

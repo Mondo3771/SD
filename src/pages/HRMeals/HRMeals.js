@@ -13,6 +13,7 @@ import logo from "../../Images/logo3.svg";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { fetchStorageData } from "../../helper";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import LoginButton from "../../components/Log/LoginButton";
 
 const HRMeals = () => {
   const [Meals, setMeals] = useState([]);
@@ -279,6 +280,7 @@ const HRMeals = () => {
                   setViewMealState(false)}}>Back</button>
               </ShowMealCard>
             )}
+            <LoginButton/>
           </section>
         )}
       </Wrapper>
