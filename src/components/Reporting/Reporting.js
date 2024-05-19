@@ -376,7 +376,7 @@ const Reporting = ({ User }) => {
                 height: "70vh",
                 margin: "3vw",
                 border: "2px solid white",
-                borderRadius: "8%",
+                borderRadius: "20px",
               }}
             />
             <Feedback>
@@ -406,7 +406,7 @@ const Reporting = ({ User }) => {
                   height: "50vh",
                   margin: "40px",
                   border: "2px solid white",
-                  borderRadius: "8%",
+                  borderRadius: "20px",
                 }}
               />
             </Summary>
