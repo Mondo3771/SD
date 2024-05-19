@@ -3,7 +3,7 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { clearStorage } from "../../helper";
 const LoginButton = ({ child }) => {
-  const { loginWithRedirect, isAuthenticated, user,logout } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
   if (!isAuthenticated) {
     return (
       <button

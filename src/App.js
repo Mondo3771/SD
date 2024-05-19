@@ -9,7 +9,6 @@ import StaffDashboard, {
   StaffDashBoardLoader,
 } from "./pages/StaffDashboard/StaffDashboard";
 
-
 import LandingNew from "./pages/LandingNew/LandingNew";
 import HRMeals from "./pages/HRMeals/HRMeals";
 import HRBookings from "./pages/HRBookings/HRBookings";
@@ -37,15 +36,36 @@ const GuardedRoute = ({ component: Component, auth, ...rest }) => (
 
 function App() {
   const { logout, isAuthenticated, user } = useAuth0();
-  console.log(isAuthenticated, "authen");
-  console.log(user, "user");
   setLocalStorage({ key: "Profile", value: user });
 
   const employee = fetchStorageData({ key: "User" });
-
+  let emp;
   const HRallowed = () => {
-    if (isAuthenticated && employee.EMP_type === "HR") {
-      return true;
+    if (isAuthenticated) {
+      if (!employee) {
+        fetch(`/api/login?Token =${user.sub}`, {})
+          .then((response) => response.json())
+          .then((DB) => {
+            console.log("Success:", DB);
+            emp = DB.data;
+            employee = emp;
+            if (emp.EMP_type === "HR") {
+              setLocalStorage({ key: "User", value: emp });
+              return true;
+            } else {
+              return false;
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      } else {
+        if (employee.EMP_type === "HR") {
+          return true;
+        } else {
+          return false;
+        }
+      }
     } else {
       return false;
     }

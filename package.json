@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "auth0-lock": "^12.5.0",
     "bootstrap": "^5.3.3",
+    "canvas": "^2.11.2",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "google-auth-library": "^9.7.0",
@@ -47,6 +48,9 @@
     "eject": "react-scripts eject"
   },
   "jest": {
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
     "coverageThreshold": {
       "global": {
         "lines": 30

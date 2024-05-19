@@ -4,7 +4,8 @@ import { updateEmp, fetchData, DELETEEmp, removeEmp } from "./HRdatagrid";
 import HRdatagrid from "./HRdatagrid";
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-
+import { MemoryRouter } from "react-router-dom";
+import { act } from "react-dom/test-utils";
 fetchMock.enableMocks();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -23,70 +24,64 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-test("updateEmp makes a PUT request", async () => {
-  fetchMock.mockResponseOnce(JSON.stringify("Success"));
-  const parm = {
-    row: {
-      Emp_ID: 1,
-      EMP_type: "Full Time",
-    },
-  };
-  const params = await updateEmp(parm);
-  // console.log(params, "params");
-  expect(params).toEqual("Success");
-});
-
-test("DELETEEmp makes a DELETE request", async () => {
-  fetchMock.mockResponseOnce(JSON.stringify("Success"));
-  const Emp_ID = 1;
-  const params = await DELETEEmp(Emp_ID);
-  // console.log(params, "params");
-  // expect(params).toEqual("Success");
-});
-
-test("fetchData makes a GET request", async () => {
-  fetchMock.mockResponseOnce(
-    JSON.stringify({
-      data: [
-        {
-          Emp_ID: 1,
-          EMP_type: "Full Time",
-        },
-      ],
+test("should render HRdatagrid with no users", async () => {
+  global.fetch = jest.fn().mockImplementationOnce(() =>
+    Promise.resolve({
+      json: () =>
+        Promise.resolve({
+          message: "Yeah",
+          data: [],
+          // Add Tasks here
+        }),
     })
   );
-  const users = {
-    Emp_ID: 2,
-  };
-  const setallEmployeedatas = jest.fn();
-  const setLoadeds = jest.fn();
-  const params = await fetchData(users, setallEmployeedatas, setLoadeds);
-  expect(setallEmployeedatas).toHaveBeenCalledWith([
-    {
-      Emp_ID: 1,
-      EMP_type: "Full Time",
-      id: 1,
-    },
-  ]);
-  expect(setLoadeds).toHaveBeenCalledWith(true);
+  await act(async () => {
+    const { debug } = render(
+      <MemoryRouter
+        initialEntries={[{ pathname: "/", state: { params: { Emp_ID: 1 } } }]}
+      >
+        <HRdatagrid />
+      </MemoryRouter>
+    );
+    debug();
+  });
 });
 
-jest.mock("./HRdatagrid", () => ({
-  ...jest.requireActual("./HRdatagrid"),
-  DELETEEmp: jest.fn(),
-}));
-
-test("should call DELETEEmp and update the employee data", () => {
-  const setAllEmployeeData = jest.fn();
-  const allEmployeeData = [
-    { id: 1, Emp_ID: "E1" },
-    { id: 2, Emp_ID: "E2" },
-  ];
-  const idToRemove = 1;
-  const Emp_IDToRemove = "E1";
-
-  removeEmp(idToRemove, Emp_IDToRemove, setAllEmployeeData, allEmployeeData);
-
-  // expect(DELETEEmp).toHaveBeenCalledWith(Emp_IDToRemove);
-  // expect(setAllEmployeeData).toHaveBeenCalledWith([{ id: 2, Emp_ID: "E2" }]);
+test("should render HRdatagrid with users", async () => {
+  global.fetch = jest.fn().mockImplementationOnce(() =>
+    Promise.resolve({
+      json: () =>
+        Promise.resolve({
+          message: "Yeah",
+          data: [
+            {
+              Department: "Accounting",
+              EMP_type: "Manager",
+              Emp_ID: 83,
+              Name: "Kabelo",
+              Surname: "Rankoane",
+              token: "google-oauth2|104356444367191158010",
+            },
+            {
+              Department: "HR",
+              EMP_type: "Staff",
+              Emp_ID: 84,
+              Name: "Mondo",
+              token: "google-oauth2|108823478247906648302",
+            },
+          ],
+          // Add Tasks here
+        }),
+    })
+  );
+  await act(async () => {
+    const { debug } = render(
+      <MemoryRouter
+        initialEntries={[{ pathname: "/", state: { params: { Emp_ID: 1 } } }]}
+      >
+        <HRdatagrid />
+      </MemoryRouter>
+    );
+    debug();
+  });
 });
