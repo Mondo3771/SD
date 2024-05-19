@@ -24,16 +24,13 @@ import {
   Wrapper,
 } from "./StaffDashBoard.styles";
 
-import StaffHeader from "../../components/StaffHeader/StaffHeader";
 
-import StaffHeader from "../../components/StaffHeader/StaffHeader";
 
 //import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
 import LogoutButton from "../../components/Log/LogoutButton";
 import { toast } from "react-toastify";
-import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
 import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
 // import sheet from "styled-components/dist/sheet";
 

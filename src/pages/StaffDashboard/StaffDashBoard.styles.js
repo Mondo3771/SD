@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 
 //icons
 import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
-import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
 import { formatDate, formatTime } from "../../helper";
 
 export const Wrapper = styled.div`
