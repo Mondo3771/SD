@@ -96,7 +96,7 @@ export const Progress = styled.article`
 
   margin: 0;
   p {
-    color: var(--darkpurple);
+    color: white;
   }
 `;
 
@@ -105,14 +105,14 @@ export const Bottom = styled.article`
   flex-direction: row;
   //background-color: transparent;
   //background-color: var(--white);
-  justify-content: space-evenly;
+  //justify-content: space-evenly;
   align-items: center;
   background-color: transparent;
   //backdrop-filter: blur(10px);
   // -webkit-backdrop-filter: blur(10px);
   margin: 0;
-  gap: 4vh;
-  justify-content: center;
+  gap: 18vh;
+  justify-content: space-between;
   align-items: center;
 `;
 

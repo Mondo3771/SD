@@ -375,7 +375,7 @@ const Reporting = ({ User }) => {
                 width: "100vh",
                 height: "70vh",
                 margin: "3vw",
-                border: "2px solid black",
+                border: "2px solid white",
                 borderRadius: "8%",
               }}
             />
@@ -405,14 +405,14 @@ const Reporting = ({ User }) => {
                   width: "100%",
                   height: "50vh",
                   margin: "40px",
-                  // border: "2px solid black",
-                  //borderRadius: "8%",
+                  border: "2px solid white",
+                  borderRadius: "8%",
                 }}
               />
             </Summary>
 
             <Progress>
-              <p>Did they Complete {chooseHour} hours this month</p>
+              <p>Productivity rate per {chooseHour} hours</p>
 
               <CircularProgressbar
                 value={percentage}

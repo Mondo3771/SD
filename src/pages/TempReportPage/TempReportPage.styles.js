@@ -5,13 +5,20 @@ export const Body = styled.body`
   //margin: 1rem;
   // border : 2px solid black;
   height: 70vh;
-  // width: 80vw;
+  width: 80vw;
   //margin: 1rem auto;
   //padding: 1rem;
   justify-content: space-between;
   background-color: transparent;
-`;
 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+`;
+export const Feedback = styled.section`
+  height: 70vh;
+  width: 97vw;
+  display: flex;
+`;
 export const Wrapper = styled.section`
   background-image: url(${background});
   // background-color: blue;
@@ -20,7 +27,7 @@ export const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  gap: 10vh;
   width: 100vw;
   height: fit-content;
   align-items: center;
