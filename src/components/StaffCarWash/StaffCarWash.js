@@ -65,6 +65,7 @@ const StaffCarWash = ({onOpenModal}) => {
   const [dates,setDates]=useState(null);
   const[IDmonday,setIDmonday]=useState(null);
   const[IDthursday,setIDthursday]=useState(null);
+  const[bookingID,setBookingID]=useState(null);
 
 
 
@@ -104,6 +105,7 @@ const StaffCarWash = ({onOpenModal}) => {
     const calculateNearestMonday = () => {
       const today = new Date();
       const dayOfWeek = today.getDay(); // Sunday - Saturday : 0 - 6
+      console.log(dayOfWeek);
   
       // If today is Sunday (0), add 1 day. If it's Monday (1), add 0 days.
       // Otherwise, calculate how many days to add to reach next Monday.
@@ -144,8 +146,8 @@ const StaffCarWash = ({onOpenModal}) => {
       const mondayItem = dates? dates.find(item => item.date === MondayDate):null;
       const thursdayItem = dates?dates.find(item => item.date === ThursdayDate):null;
 
-      setIDmonday(mondayItem.Car_wash);
-      setIDthursday(thursdayItem.Car_wash);
+      setIDmonday(mondayItem?mondayItem.Car_wash:null);
+      setIDthursday(thursdayItem?thursdayItem.Car_wash:null);
 
 
 
@@ -276,20 +278,87 @@ const StaffCarWash = ({onOpenModal}) => {
   const employee = fetchStorageData({ key: "User" });
 
   useEffect(() => {
-    const fetchEmployeeCar = () => {
-      // fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
-      //   .then((response) => response.json())
-      //   .then((book) => {
-      //     console.log(book.data, "noooooooo");
-          setempBook("");
-      //     setb_ID(book.data[0].Booking_ID);
-      //     console.log(book.data[0].Name_of_Meal, "meal");
-      //     console.log(book.data[0].Booking_ID, "book");
-      //   });
-    };
+    const timer = setTimeout(() => {
+      // Action to be performed 1 second after modal is closed or delete button is clicked
+      console.log("Action triggered 1 second later");
+      const getcarwashbooking = (data) => {
+        // this is what data should have atleast
+        // {
+        //     "Emp_ID": 85
+        //   }
+        // this is what comes back
+        // {
+        //     "data": [
+        //       {
+        //         "booking_id": 1,
+        //         "Car_wash": 1,
+        //         "Emp_ID": 85,
+        //         "date": "2024-05-07T00:00:00.000Z"
+        //       },
+        //       {
+        //         "booking_id": 2,
+        //         "Car_wash": 2,
+        //         "Emp_ID": 85,
+        //         "date": "2024-05-07T00:00:00.000Z"
+        //       },
+        //       {
+        //         "booking_id": 3,
+        //         "Car_wash": 3,
+        //         "Emp_ID": 85,
+        //         "date": "2024-05-07T00:00:00.000Z"
+        //       }
+        //     ],
+        //     "message": "Successfully retrieved Carwashs"
+        //   }
+        fetch(`/api/CarBookings?Emp_ID=${data.Emp_ID}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setempBook(data.data[0])
+            setBookingID(data.data[0].booking_id)
+            console.log(data);
+            return data;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            return "Error";
+          });
+      };
+      getcarwashbooking({Emp_ID:employee.Emp_ID})
 
-    fetchEmployeeCar();
-  }, [modalOpen ]);
+      // Reset actionTriggered state
+      setActionTriggered(false);
+    }, 500);
+
+    return () => clearTimeout(timer); // Clear timeout if the component is unmounted or actionTriggered changes
+  
+}, [actionTriggered]);
+
+const deletecarwashbooking = (data) => {
+  // this is what data should have atleast
+  // {
+  //     "booking_id": 2
+  //   }
+  let newdata={booking_id:data}
+  console.log(newdata);
+  
+  fetch("/api/CarBookings", {
+      method: "DELETE",
+      headers: {
+      "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newdata),
+  })
+      .then((response) => response.json())
+      .then((data) => {
+      console.log("Success:", data.message);
+      return "Success";
+      })
+      .catch((error) => {
+      console.error("Error:", error);
+      return "Error";
+      });
+
+};
 
 
   return (
@@ -310,6 +379,17 @@ const StaffCarWash = ({onOpenModal}) => {
         {/* <Text>Car Wash</Text> */}
         <WeatherSec>
           <Text>
+            {empBook?
+            <>
+             <h5>Your Booking</h5>
+                  <p> {empBook.date.split('T')[0]}</p>
+                  <button onClick={deletecarwashbooking(empBook.booking_id)}>delete</button>
+            </>
+                 
+
+              
+            :
+
             <section className="text">
               <h5>Services</h5>
               <ul>
@@ -320,6 +400,8 @@ const StaffCarWash = ({onOpenModal}) => {
                 <li> Air Freshner</li>
               </ul>
             </section>
+                        }
+
           </Text>
 
           <Weather>

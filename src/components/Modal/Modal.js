@@ -30,33 +30,46 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
     setOpenModal(false);
   };
   const confirmCarBooking=()=>{
-    const postcarwashbooking = (data) => {
-      // this is what data should have atleast
-      // {
-      //     "Car_wash":2, this is the carwash id
-      //     "Emp_ID": 85,
-      //     "Date": "2024-05-07"
-      //   }
+    const postcarwashbooking = (info) => {
     
-      // { this is what comes back
-      //     "data": {
-      //       "booking_id": 6,
-      //       "Car_wash": 2,
-      //       "Emp_ID": 85,
-      //       "date": "2024-05-07T00:00:00.000Z"
-      //     },
-      //     "message": "Successfully inserted data"
-      //   }
-      fetch("/api/CarWashBooking", {
+      fetch("/api/CarBookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(info),
       })
         .then((response) => response.json())
-        .then((data) => {
+        .then((book) => {
+          const Updatecarwash = (data) => {
+            // this is what data should have atleast
+            // {
+            // "Car_wash": 13,
+            //      "Quantity": 2
+            //     }
+          
+            fetch("/api/CarWash", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                return "Success";
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                return "Error";
+              });
+          };
+          console.log(info);
+          console.log({Car_wash:info.Car_wash,Quantity:data.Quantity-1});
+          Updatecarwash({Car_wash:info.Car_wash,Quantity:data.Quantity-1})
           console.log("Success:", data.message);
+          setActionTriggered(prev=>prev);
+
           return "Success";
         })
         .catch((error) => {

@@ -175,7 +175,7 @@ const getcarwashbooking = (data) => {
   //     ],
   //     "message": "Successfully retrieved Carwashs"
   //   }
-  fetch(`/api/CarWashBooking?Emp_ID=${data.Emp_ID}`)
+  fetch(`/api/CarBookings?Emp_ID=${data.Emp_ID}`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -190,10 +190,10 @@ const getcarwashbooking = (data) => {
 const deletecarwashbooking = (data) => {
     // this is what data should have atleast
     // {
-    //     "Car_wash": 2
+    //     "booking_id": 2
     //   }
     
-    fetch("/api/CarWashBooking", {
+    fetch("/api/CarBookings", {
         method: "DELETE",
         headers: {
         "Content-Type": "application/json",
@@ -229,7 +229,7 @@ const postcarwashbooking = (data) => {
   //     },
   //     "message": "Successfully inserted data"
   //   }
-  fetch("/api/CarWashBooking", {
+  fetch("/api/CarBookings", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
