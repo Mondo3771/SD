@@ -34,6 +34,7 @@ import LoginButton from "../../components/Log/LoginButton";
 import LogoutButton from "../../components/Log/LogoutButton";
 import { toast } from "react-toastify";
 import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
+import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
 // import sheet from "styled-components/dist/sheet";
 
 // Function to filter unique Project values and return an array of unique projects
@@ -66,12 +67,11 @@ function filterTasksByProject(Sheets, projectName) {
 
 const StaffDashboard = () => {
   // const location = useLocation();
-  // const history = useHistory();
-  // const data = location.state.params; // Remove this line
-  const data = { Name: "Tholwana", Surname: "Seboni", Emp_ID: 1 };
-  // const User = data.user
+  const history = useHistory();
+  // const data=fetchStorageData({key:"User"})
+  // console.log(data,'fetching data');
   // const Emp_ID = data.Emp_ID;
-  const Emp_ID = 1;
+  const Emp_ID = 87;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
@@ -93,14 +93,12 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    //Projects();
-    const p = [
-      { Project: "s", Description: "s", Time: 0, Date: "2014", Task_ID: 1 },
-    ];
+    // Projects();
+    // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}]
     const uniques = filterUniqueProjects(allProjects);
-    setUniqueProjectNames(uniques);
+          setUniqueProjectNames(uniques);
     setAllProjects(allProjects);
-    setLoaded(true);
+    setLoaded(true)
   }, []);
 
   const [task, setTask] = useState("");
@@ -224,33 +222,7 @@ const StaffDashboard = () => {
   };
   return (
     <Wrapper>
-      <section className="header">
-        <StaffHeader employee={data}></StaffHeader>
-      </section>
-
-      {/* <Header>
-        <section className="logo">
-          <img src={logo} width="55vw" height="55vh"></img>
-          <h1>
-            <a href="/">SYNERGY</a>
-          </h1>
-        </section>
-        <nav className="links">
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">Reports</a>
-            </li>
-            <li>
-              {/* <a>Lunch</a> *
-              <a onClick={Lunch}>Lunch</a>
-            </li>
-          </ul>
-        </nav>
-        <ArrowRightIcon width={24} />
-      </Header> */}
+      <StaffHeader employee={MockUser}></StaffHeader>
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>
@@ -323,7 +295,7 @@ const StaffDashboard = () => {
                     <button className="deleteButtonFin">
                       <TrashIcon
                         className="TrashIcon"
-                        width={25}
+                        width= {"25px"}
                         onClick={() => handleDelete(s)}
                       />{" "}
                     </button>

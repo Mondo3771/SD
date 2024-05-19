@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 
 //icons
 import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
+import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
 import { formatDate, formatTime } from "../../helper";
 
 export const Wrapper = styled.div`
@@ -82,22 +83,48 @@ export const Wrapper = styled.div`
      
     }
   }
+`;
 
-  @media screen and (max-width: 480px) {
-    .titlepage {
-      padding-top: 8vh;
-      h2 {
-        font-size: 1.2rem;
-      }
-    }
-    .title {
-      padding-left: 0;
-      width: 80vw;
-      height: 5vh;
-      color: var(--white);
-      align-items: center;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
+export const Header = styled.div`
+  //position: sticky;
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  //background-color: var(--darkest);
+  display: flex;
+  padding: 0.5rem 3rem;
+  justify-content: space-between;
+  min-height: 14vh;
+  align-items: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  // border: 1px solid black;
+
+  .logo {
+    display: flex;
+  }
+
+  a {
+    font-size: 1.35rem;
+    text-decoration: none;
+    color: white;
+    transition: all 200 ease-in-out;
+  }
+
+  ul {
+    display: flex;
+    padding: 0;
+    list-style: none;
+    gap: 5rem;
+    color: white;
+  }
+
+  a:visited {
+    color: white;
+  }
+
+  li a:hover {
+    color: var(--white);
   }
 `;
 
@@ -192,21 +219,6 @@ export const Card = styled.article`
   }
 }
 
-
-  @media screen and (max-width: 480px) {
-    width: 70vw;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    border-radius: 30px;
-
-    .createTaskButton h2 {
-      font-family: inherit;
-      font-weight: 400;
-      font-size: 0.9rem;
-      color: var(--darkest);
-    }
-  }
 `;
 
 export const CreateTaskContainer = styled.section`
@@ -269,43 +281,6 @@ export const CreateTaskContainer = styled.section`
     ::placeholder {
       font-size: 0.6rem;
     }
-  }
-
-  @media screen and (max-width: 480px) {
-    gap: 1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: left;
-    padding: 0;
-  }
-  input {
-    height: 4vh;
-    font-size: 1rem;
-    width: 28vw;
-    border-radius: 12px;
-    font-family: inherit;
-    background-color: var(--white);
-    color: var(--darkest);
-  }
-  ::placeholder {
-    font-family: inherit;
-    color: rgba(0, 0, 0, 0.2);
-
-    font-size: 0.9rem;
-    text-align: left;
-    align-items: center;
-  }
-
-  button {
-    height: 5vh;
-    width: fit-content;
-    font-family: inherit;
-    //border-radius: 100%;
-    background-color: var(--white);
-    color: var(--darkest);
-    font-size: 0.7rem;
-    padding: 0.3rem;
   }
 `;
 
@@ -394,17 +369,15 @@ export const ProjectHolder = styled.div`
   }
 
   .deleteButtonFin {
-    //flex: 1;
-    width: 78vw;
-    height: auto;
+    flex: 1;
+    width: 50px;
+    height: 60px;
     background-color: var(--white);
     color: var(--darker);
     border-radius: 0px 10px 10px 0;
     margin: 10px 0;
     border: 2px solid var(--white);
-    border-radius: 0px 10px 10px 0;
-    margin: 10px 0 10px 0px;
-    padding: 5px 100px;
+    padding: 5px 2px;
   }
 
   .deleteButtonFin:hover {
@@ -416,7 +389,7 @@ export const ProjectHolder = styled.div`
   }
 
   .TrashIcon {
-    // margin: 0 0 0 6rem;
+    margin: 0 0 0 6rem;
     transition: 200ms ease-in-out;
     /* width: inherit; */
   }
@@ -436,36 +409,6 @@ export const ProjectHolder = styled.div`
     }
     .deleteButtonFin {
       height: 50px;
-    }
-  }
-
-  .deleteButtonFin {
-    //flex: 1;
-    width: 6vw;
-    height: auto;
-    background-color: var(--white);
-    color: var(--darker);
-    border: 2px solid var(--white);
-    border-radius: 0px 10px 10px 0;
-    margin: 10px 0;
-    padding: 5px 10px;
-  }
-  @media screen and (max-width: 480px) {
-    .SheetHolderFin {
-      display: flex;
-      width: 30vw;
-    }
-
-    h2 {
-      font-size: 1.2rem;
-    }
-    .deleteButtonFin {
-      width: 8vw;
-      height: auto;
-      svg {
-        width: 3.5vw;
-        height: 4vh;
-      }
     }
   }
 `;
@@ -497,14 +440,6 @@ export const StopStartContainer = styled.div`
     .stopIcon {
       width: 15px;
     }
-  }
-
-  @media screen and (max-width: 480px) {
-    display: flex;
-    justify-content: flex-end;
-    width: 10vw;
-    gap: 10px;
-    min-width: 15vw;
   }
 `;
 
