@@ -16,6 +16,10 @@ export const Header = styled.div`
   align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
+  .icons{
+    margin-right: 2vh;
+    gap:2rem
+  }
   .logo {
     display: flex;
     transition: all 100ms ease-in-out;

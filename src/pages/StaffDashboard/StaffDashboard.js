@@ -300,7 +300,7 @@ const StaffDashboard = () => {
             );
           })}
       </Card>
-      <LoginButton />
+      {/* <LoginButton /> */}
     </Wrapper>
   );
 };

@@ -90,8 +90,8 @@ export const Card = styled.article`
   //background-color: #31174b;//dark purple
   /* background-color: var(--white); */
   background-color: transparent;
-  /* backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid white;
   :hover {
     cursor: pointer;
@@ -116,8 +116,8 @@ export const CreateMealCard = styled.div`
   /* background-color: var(--white); */
   background-color: transparent;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  /* backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   overflow-y: auto;
 
   h2,
@@ -214,7 +214,7 @@ export const ShowMealCard = styled.article`
     input{
       width: 2vw;
     height: 2vh;
-  }
+  }}
 
   h3 {
     font-size: 1.2rem;

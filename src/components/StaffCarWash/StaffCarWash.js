@@ -60,6 +60,8 @@ const StaffCarWash = ({onOpenModal}) => {
   const [selectedBooking,setSelectedBooking]=useState(null);
   const [empBook,setempBook]=useState(null);
 
+  
+
 
 
   const Book = () => {
@@ -174,7 +176,7 @@ const StaffCarWash = ({onOpenModal}) => {
 
   const mondayBook = () => {
     setSelectedBooking({Date:MondayDate,Quantity:MondayQuant,Day:'Monday'});
-    onOpenModal({Date:MondayDate,Quantity:MondayQuant,Day:'Monday'}, employee,empBook);
+    onOpenModal({Date:MondayDate,Quantity:MondayQuant,Day:'Monday'}, employee,empBook,actionTriggered);
 
     // setModalOpen(true);
     setActionTriggered(true)
@@ -182,7 +184,7 @@ const StaffCarWash = ({onOpenModal}) => {
 
   const thursdayBook = () => {
     setSelectedBooking({Date:ThursdayDate,Quantity:ThursdayQuant,Day:'Thursday'});
-    onOpenModal({Date:ThursdayDate,Quantity:ThursdayQuant,Day:'Thursday'}, employee,empBook);
+    onOpenModal({Date:ThursdayDate,Quantity:ThursdayQuant,Day:'Thursday'}, employee,empBook,actionTriggered);
 
     // setModalOpen(true);
     setActionTriggered(true)

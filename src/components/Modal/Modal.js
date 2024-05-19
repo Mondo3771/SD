@@ -3,7 +3,7 @@ import "./Modal.css";
 
 // import { PostBooking } from "../Carousel/fetch";
 
-function Modal({ setOpenModal, data, employee, booking }) {
+function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
   const confirmBooking = () => {
     const PostBooking = (Emp_ID, Meal_ID) => {
       fetch(`/api/Meals`, {
@@ -20,6 +20,7 @@ function Modal({ setOpenModal, data, employee, booking }) {
         .then((response) => response.json())
         .then((book) => {
           console.log(book.data, "hey");
+          setActionTriggered(prev=>prev);
           
         });
     };
