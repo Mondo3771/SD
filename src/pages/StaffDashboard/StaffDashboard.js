@@ -1,6 +1,6 @@
 //react
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchStorageData, setLocalStorage } from "../../helper";
 
 import StaffHeader from "../../components/StaffHeader/StaffHeader";
@@ -63,12 +63,12 @@ function filterTasksByProject(Sheets, projectName) {
 }
 
 const StaffDashboard = () => {
-  // const location = useLocation();
+  const location = useLocation();
   const history = useHistory();
-  // const data=fetchStorageData({key:"User"})
-  // console.log(data,'fetching data');
-  // const Emp_ID = data.Emp_ID;
-  const Emp_ID = 87;
+  const data=fetchStorageData({key:"User"})
+  console.log(data,'fetching data');
+  const Emp_ID = data.Emp_ID;
+  // const Emp_ID = 87;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
@@ -90,12 +90,12 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    // Projects();
+    Projects();
     // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}]
-    const uniques = filterUniqueProjects(allProjects);
-          setUniqueProjectNames(uniques);
-    setAllProjects(allProjects);
-    setLoaded(true)
+    // const uniques = filterUniqueProjects(allProjects);
+    //       setUniqueProjectNames(uniques);
+    // setAllProjects(allProjects);
+    // setLoaded(true)
   }, []);
 
   const [task, setTask] = useState("");
@@ -213,13 +213,13 @@ const StaffDashboard = () => {
       )
     );
   };
-  const data = ""
+  // const data = ""
   const Lunch = () => {
     history.push("/Lunch", { params: data });
   };
   return (
     <Wrapper>
-      <StaffHeader employee={MockUser}></StaffHeader>
+      <StaffHeader employee={data}></StaffHeader>
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>

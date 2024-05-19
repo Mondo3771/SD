@@ -22,10 +22,9 @@ import StaffHeader from "../../components/StaffHeader/StaffHeader";
 
 
 export const TempReportPage = () => {
-  // const location = useLocation();
-  // const employee = location.state.params;
-  const employee=fetchStorageData({key:"User"})
+  const location = useLocation();
 
+  const employee=fetchStorageData({key:"User"})
 
   const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
@@ -79,7 +78,7 @@ export const TempReportPage = () => {
           setFirstLoad(true);
         });
     };
-    // feedback();
+    feedback();
 
     // setReceiver(MockUsers[2]);
   }, []);
@@ -120,34 +119,6 @@ export const TempReportPage = () => {
     setAllFeedBack((prev) => [newMessage, ...prev]);
     toast.success(`Message successfully sent!`);
 
-    // fetch("/api/feedback", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     Message: feedback,
-    //     Sent_ID: sender.Emp_ID,
-    //     Rec_ID: receiver.Emp_ID,
-    //     Date: today,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     newMessage.Message_ID = data.Message_ID;
-    //     newMessage.Date = formatDate(newMessage.Date)
-    //     const storageChange = [
-    //       ...fetchStorageData({ key: "Feedback" }),
-    //       newMessage,
-    //     ];
-    //     setLocalStorage({ key: "Feedback", value: storageChange });
-    //     setAllFeedBack((prev) => [newMessage, ...prev]);
-    //     toast.success(`Message successfully sent!`);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
 
   const closeReport = () => {

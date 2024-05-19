@@ -9,16 +9,17 @@ import { formatDate, formatTime } from "../../helper";
 
 export const Wrapper = styled.div`
   display: flex;
+
   flex-flow: column;
   box-sizing: border-box;
   min-height: 100vh;
   height: auto;
-  width: 100vw;
+  width: 100%;
   background-image: url(${background});
   background-size: cover;
   background-position: left;
 
-  gap: 2rem;
+  gap: 1rem;
 
   h1 {
     color: white;
@@ -51,16 +52,12 @@ export const Wrapper = styled.div`
   .sheet:hover ~ .stopButton,
   .sheet:hover ~ .playButton,
   .sheet:hover ~ .pauseButton,
-  .deleteButtonFin + .sheet {
-    background-color: white;
-    cursor: pointer;
-  }
   .sheet:hover ~ .deleteButtonFin {
     background-color: white;
     border: 2px solid white;
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 768px) {
     .sheet p {
       font-size: 0.5rem;
       margin: 0;
@@ -79,25 +76,41 @@ export const Wrapper = styled.div`
 
     h2 {
       font-size: 1rem;
-     
+    }
+  }
+  @media (max-width: 480px) {
+    .sheet p {
+      font-size: 0.3rem;
+      margin: 0;
+      /* outline: 1px saddlebrown solid; */
+    }
+    .sheet {
+      margin: 0;
+      height: 30px;
+    }
+    .removeButton,
+    .pauseButton,
+    .playButton,
+    .stopButton {
+      width: 15px;
+    }
+
+    h2 {
+      font-size: 0.7rem;
     }
   }
 `;
 
 export const Header = styled.div`
-  //position: sticky;
   position: fixed;
   z-index: 9999;
   width: 100%;
-  //background-color: var(--darkest);
   display: flex;
   padding: 0.5rem 3rem;
   justify-content: space-between;
   min-height: 14vh;
   align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-
-  // border: 1px solid black;
 
   .logo {
     display: flex;
@@ -125,11 +138,16 @@ export const Header = styled.div`
   li a:hover {
     color: var(--white);
   }
+  /* 
+  @media (max-width: 460px){
+    border: 5px solid red;
+  } */
 `;
 
 //whole card section
 export const Card = styled.article`
   scroll-behavior: smooth;
+
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 50px;
   box-shadow: 10px;
@@ -199,9 +217,8 @@ export const Card = styled.article`
     border-radius: 50%;
   }
 
-@media (max-width:760px){
-
-
+  @media (max-width: 768px) {
+    margin : 0;
     .createTaskButton {
     }
 
@@ -212,12 +229,27 @@ export const Card = styled.article`
     .title {
       font-size: 0.5rem;
     }
-  
-  .clock {
-    height: 40px;
-  }
-}
 
+    .clock {
+      height: 40px;
+    }
+  }
+  @media (max-width: 480px) {
+    .createTaskButton {
+    }
+
+    .createTaskButton h2 {
+      font-size: 0.4rem;
+    }
+
+    .title {
+      font-size: 0.3rem;
+    }
+
+    .clock {
+      height: 20px;
+    }
+  }
 `;
 
 export const CreateTaskContainer = styled.section`
@@ -266,19 +298,32 @@ export const CreateTaskContainer = styled.section`
     align-items: center;
   }
 
-  @media (max-width: 760px){
+  @media (max-width: 768px) {
     gap: 0.5rem;
 
     button {
       height: 40px;
     }
-    input{
+    input {
       height: 40px;
       font-size: 0.6rem;
       border: none;
     }
     ::placeholder {
       font-size: 0.6rem;
+    }
+  }
+  @media (max-width: 480px) {
+    button {
+      height: 20px;
+    }
+    input {
+      height: 20px;
+      font-size: 0.4rem;
+      border: none;
+    }
+    ::placeholder {
+      font-size: 0.4rem;
     }
   }
 `;
@@ -311,7 +356,8 @@ export const Sheet = styled.div`
   .stopButton,
   .playButton,
   .pauseButton {
-    background-color: inherit;
+    background: inherit;
+    border: 1px saddlebrown solid;
     color: white;
     cursor: pointer;
     border: none;
@@ -326,6 +372,31 @@ export const Sheet = styled.div`
     border: none;
   }
 
+  @media screen and (max-width: 768px) {
+    margin: 10px 0;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+
+    /* width: 78vw; */
+    height: auto;
+    align-items: center;
+
+    p {
+      font-size: 0.4rem;
+    }
+    .stopButton,
+    .playButton,
+    .pauseButton {
+      /* background-color: var(--white); */
+      color: white;
+      cursor: pointer;
+      border: none;
+      width: 25px;
+      height: 25px;
+    }
+  }
   @media screen and (max-width: 480px) {
     margin: 10px 0;
     padding: 5px 10px;
@@ -338,21 +409,16 @@ export const Sheet = styled.div`
     align-items: center;
 
     p {
-      font-size: 0.8rem;
+      font-size: 0.4rem;
     }
     .stopButton,
     .playButton,
     .pauseButton {
-      background-color: var(--white);
+      /* background-color: var(--white); */
       color: white;
       cursor: pointer;
       border: none;
-      width: 1rem;
-      height: 1rem;
-      svg {
-        width: 1rem;
-        height: 1rem;
-      }
+      /* width: 15px; */
     }
   }
 `;
@@ -397,7 +463,7 @@ export const ProjectHolder = styled.div`
     width: 30px;
     color: red;
   }
-  @media (max-width: 760px) {
+  @media (max-width: 768px) {
     .SheetHolderFin {
       padding: 0;
       margin: 0;
@@ -408,6 +474,19 @@ export const ProjectHolder = styled.div`
     }
     .deleteButtonFin {
       height: 50px;
+    }
+  }
+  @media (max-width: 480px) {
+    .SheetHolderFin {
+      padding: 0;
+      margin: 0;
+    }
+    .TrashIcon {
+      width: 10px;
+      margin: 0;
+    }
+    .deleteButtonFin {
+      height: 30px;
     }
   }
 `;
@@ -429,7 +508,16 @@ export const StopStartContainer = styled.div`
     width: 25px;
   }
 
-  @media (max-width: 760px) {
+  .sheet:hover ~ .pauseIcon,
+  .sheet:hover ~ .playIcon {
+    background-color: white;
+    cursor: pointer;
+  }
+  .sheet:hover ~.pauseButton {
+  background-color: white
+  }
+
+  @media (max-width: 768px) {
     padding: 0;
     margin: 0;
     min-width: 10px;
@@ -438,6 +526,18 @@ export const StopStartContainer = styled.div`
     .playIcon,
     .stopIcon {
       width: 15px;
+    }
+  }
+
+  @media (max-width: 460px) {
+    padding: 0;
+    margin: 0;
+    min-width: 10px;
+
+    .pauseIcon,
+    .playIcon,
+    .stopIcon {
+      width: 10px;
     }
   }
 `;

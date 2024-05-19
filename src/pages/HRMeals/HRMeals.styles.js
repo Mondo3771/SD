@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import newback from "../../Images/Bckgrd.svg";
 import React from "react";
+
 export const Header = styled.header`
   position: sticky;
   display: flex;
@@ -211,13 +212,18 @@ export const ShowMealCard = styled.article`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    input{
+    input {
       width: 2vw;
-    height: 2vh;
+      height: 2vh;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+    }
   }
 
-  h3 {
-    font-size: 1.2rem;
+  @media (max-width: 768px){
+    
   }
 `;
 
@@ -229,12 +235,17 @@ export const MealCardFin = ({ meal, click }) => (
   </MealCard>
 );
 
-export const MockMeals = 
-[
+export const MockMeals = [
   {
-  Meal_Id:1,
-  Name_of_Meal: "Masala",
-  Availability: true,
-  Description: "lorem ipsum dolor sit amet dolor",
-  }
-]
+    Meal_Id: 1,
+    Name_of_Meal: "Masala",
+    Availability: true,
+    Description: "lorem ipsum dolor sit amet dolor",
+  },
+  {
+    Meal_Id: 2,
+    Name_of_Meal: "Masala",
+    Availability: true,
+    Description: "lorem ipsum dolor sit amet dolor",
+  },
+];

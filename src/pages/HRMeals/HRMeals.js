@@ -5,10 +5,11 @@ import {
   CreateMealCard,
   Header,
   MealCardFin,
+  MockMeals,
   ShowMealCard,
   Wrapper,
 } from "./HRMeals.styles";
-// import logo from "../../pages/HRHome/Images/logo3.svg";
+
 import logo from "../../Images/logo3.svg";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { fetchStorageData } from "../../helper";
@@ -24,18 +25,9 @@ const HRMeals = () => {
 
 
   useEffect(() => {
-    const User = fetchStorageData({key:"User"}); 
-    console.log(User)
+    // const User = fetchStorageData({key:"User"}); 
+    // console.log(User)
 
-    // if (!User) {
-    //   // Go back to landing page
-    //   history.push("/");
-    //   console.log("user",User)
-
-    // }else 
-    // if(User.Emp_Type !== "HR"){
-    //   // Go back to their home page depending on whether they are a staff or manager
-    // }
     const getMeals = () => {
       fetch("/api/CreateMeals")
         .then((response) => {
@@ -50,7 +42,9 @@ const HRMeals = () => {
         });
     };
 
-    getMeals();
+    // getMeals();
+    setMeals(MockMeals)
+    setLoaded(true)
     // fetch all meals from database
   }, []);
 
