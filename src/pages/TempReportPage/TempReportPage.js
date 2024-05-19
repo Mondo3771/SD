@@ -110,15 +110,7 @@ export const TempReportPage = () => {
       Message_ID: Math.random() * 1000,
     };
 
-    // newMessage.Message_ID = data.Message_ID;
     newMessage.Date = formatDate(newMessage.Date);;
-    const storageChange = [
-      ...fetchStorageData({ key: "Feedback" }),
-      newMessage,
-    ];
-    setLocalStorage({ key: "Feedback", value: storageChange });
-    setAllFeedBack((prev) => [newMessage, ...prev]);
-    toast.success(`Message successfully sent!`);
 
     fetch("/api/feedback", {
       method: "POST",
