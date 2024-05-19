@@ -55,7 +55,6 @@
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/App.js",
       "!<rootDir>/src/components/Log/LogoutButton.js",
-
       "!<rootDir>/src/index.js",
       "!<rootDir>/src/reportWebVitals*",
       "!<rootDir>/src/setupTests.js"

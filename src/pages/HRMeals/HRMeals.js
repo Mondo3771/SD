@@ -221,6 +221,7 @@ const HRMeals = () => {
                 <input
                   name="name"
                   className="input"
+                  aria-label="Name of meal"
                   placeholder="Name"
                   type="text"
                   onChange={mealNameChange}
@@ -229,6 +230,7 @@ const HRMeals = () => {
                   name="description"
                   className="input"
                   type="text"
+                  aria-label="Descriptoin of Meal"
                   placeholder="Description"
                   onChange={descriptionChange}
                 ></input>
@@ -256,6 +258,7 @@ const HRMeals = () => {
                   <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
                   <input
                     type="checkbox"
+                    aria-label="Chamge Availabel"
                     onChange={changeAvailableViewMeal}
                   ></input>
                 </section>

@@ -23,6 +23,7 @@ test("renders HRHome component", () => {
 
   const mealsLink = screen.getByText("Meals");
   expect(mealsLink).toBeInTheDocument();
+  // expect(mealsLink).toHaveAttribute()
 
   const bookingsLink = screen.getByText("Bookings");
   expect(bookingsLink).toBeInTheDocument();
