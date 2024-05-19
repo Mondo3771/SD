@@ -179,7 +179,7 @@ const Reporting = ({User}) => {
           };
           GetAllTasks(User.Emp_ID)
 
-    },[])
+    },[User])
 
   
 
@@ -258,7 +258,7 @@ const Reporting = ({User}) => {
         showlegend: true
     };
 
-    const { toPDF, targetRef } = usePDF({ filename: User.Name+"-Report.pdf" });
+    const { toPDF, targetRef } = usePDF({ filename: User.Name? User.Name+"-Report.pdf" : "My Report.pdf" });
 
     useEffect(() => {
         // Sort comments by date in descending order (from latest to earliest)
@@ -298,7 +298,7 @@ const Reporting = ({User}) => {
         <>
          
             <main ref={targetRef}>
-            <h2>Report for {User.Name}</h2>
+            <h2> {User.Name? 'Report for ' + User.Name: 'My Report'}</h2>
            
 
             <Main  >

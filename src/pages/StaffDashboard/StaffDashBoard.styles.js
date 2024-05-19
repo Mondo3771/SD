@@ -13,12 +13,12 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
   box-sizing: border-box;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   width: 100vw;
   background-image: url(${background});
-  //background: var(--darkest);
   background-size: cover;
-  background-position: top;
+  background-position: left;
 
   gap: 2rem;
 
@@ -32,7 +32,7 @@ export const Wrapper = styled.div`
     flex-direction: start;
     text-align: left;
     padding-left: 10vw;
-    padding-top: 14vh;
+    padding-top: 0;
     width: 80vw;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--white);
@@ -47,6 +47,42 @@ export const Wrapper = styled.div`
     width: 80vw;
     color: var(--white);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  .sheet:hover,
+  .sheet:hover ~ .deleteButtonFin,
+  .sheet:hover ~ .stopButton,
+  .sheet:hover ~ .playButton,
+  .sheet:hover ~ .pauseButton,
+  .deleteButtonFin + .sheet {
+    background-color: white;
+    cursor: pointer;
+  }
+  .sheet:hover ~ .deleteButtonFin {
+    background-color: white;
+    border: 2px solid white;
+  }
+
+  @media (max-width: 760px) {
+    .sheet p {
+      font-size: 0.5rem;
+      margin: 0;
+      /* outline: 1px saddlebrown solid; */
+    }
+    .sheet {
+      margin: 0;
+      height: 50px;
+    }
+    .removeButton,
+    .pauseButton,
+    .playButton,
+    .stopButton {
+      width: 25px;
+    }
+
+    h2 {
+      font-size: 1rem;
+     
+    }
   }
 `;
 
@@ -92,6 +128,7 @@ export const Header = styled.div`
     color: var(--white);
   }
 `;
+
 //whole card section
 export const Card = styled.article`
   scroll-behavior: smooth;
@@ -99,14 +136,16 @@ export const Card = styled.article`
   border-radius: 50px;
   box-shadow: 10px;
   width: 80vw;
-  max-height: 80vh;
+  min-height: 80vh;
+  height: auto;
   color: var(--white);
   flex: 1;
   padding: 40px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 7vh auto;
   display: flex;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   flex-direction: column;
+
   //background: linear-gradient(65deg, var(--darkest), #3f2182);
   //background: linear-gradient(120deg, #16154e, var(--dark));
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -119,6 +158,7 @@ export const Card = styled.article`
     gap: 1.5rem;
     transition: all 500ms ease-in-out;
     color: var(--darkest);
+    align-items: center;
   }
 
   .createTaskButton {
@@ -132,7 +172,16 @@ export const Card = styled.article`
     color: white;
     cursor: pointer;
     height: 100%;
+    transition: all 100ms ease-in-out;
   }
+
+  .createTaskButton:hover {
+    background: white;
+  }
+  .createTaskButton:hover ~ .clock {
+    color: white;
+  }
+
   .createTaskButton h2 {
     font-family: inherit;
     font-weight: 400;
@@ -146,12 +195,31 @@ export const Card = styled.article`
     color: var(--white);
   }
   .clock {
-    // background: var(--darker);
     color: var(--white);
     width: 60px;
     height: 60px;
     border-radius: 50%;
   }
+
+@media (max-width:760px){
+
+
+    .createTaskButton {
+    }
+
+    .createTaskButton h2 {
+      font-size: 0.8rem;
+    }
+
+    .title {
+      font-size: 0.5rem;
+    }
+  
+  .clock {
+    height: 40px;
+  }
+}
+
 `;
 
 export const CreateTaskContainer = styled.section`
@@ -187,7 +255,7 @@ export const CreateTaskContainer = styled.section`
     font-family: inherit;
     color: rgba(0, 0, 0, 0.2);
 
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-align: left;
     align-items: center;
   }
@@ -195,9 +263,25 @@ export const CreateTaskContainer = styled.section`
   label {
     font-family: inherit;
     color: var(--white);
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-align: center;
     align-items: center;
+  }
+
+  @media (max-width: 760px){
+    gap: 0.5rem;
+
+    button {
+      height: 40px;
+    }
+    input{
+      height: 40px;
+      font-size: 0.6rem;
+      border: none;
+    }
+    ::placeholder {
+      font-size: 0.6rem;
+    }
   }
 `;
 
@@ -210,29 +294,30 @@ export const LabelHolder = styled.div`
 
 export const Sheet = styled.div`
   background-color: var(--white);
-  border: 2px solid var(--white);
   border-radius: 10px 0px 0px 10px;
   margin: 10px 0;
   padding: 5px 10px;
   box-sizing: border-box;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   width: 80%;
-  height: 80%;
+  height: 60px;
   align-items: center;
 
   p {
     color: var(--darkest);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.1rem;
+    font-size: inherit;
   }
   .stopButton,
   .playButton,
   .pauseButton {
-    background-color: var(--white);
+    background-color: inherit;
     color: white;
     cursor: pointer;
     border: none;
+    transition: all 200ms ease-in-out;
   }
 
   .removeButton {
@@ -241,6 +326,36 @@ export const Sheet = styled.div`
     width: 50px;
     border-radius: 50%;
     border: none;
+  }
+
+  @media screen and (max-width: 480px) {
+    margin: 10px 0;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+
+    width: 78vw;
+    height: auto;
+    align-items: center;
+
+    p {
+      font-size: 0.8rem;
+    }
+    .stopButton,
+    .playButton,
+    .pauseButton {
+      background-color: var(--white);
+      color: white;
+      cursor: pointer;
+      border: none;
+      width: 1rem;
+      height: 1rem;
+      svg {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
   }
 `;
 
@@ -251,21 +366,53 @@ export const ProjectHolder = styled.div`
 
   .SheetHolderFin {
     display: flex;
+    align-items: center;
   }
 
   .deleteButtonFin {
     flex: 1;
     width: 50px;
-    height: 80%;
+    height: 60px;
     background-color: var(--white);
     color: var(--darker);
+    border-radius: 0px 10px 10px 0;
+    margin: 10px 0;
     border: 2px solid var(--white);
     border-radius: 0px 10px 10px 0;
     margin: 10px 0 10px 0px;
     padding: 5px 100px;
   }
+
+  .deleteButtonFin:hover {
+    cursor: pointer;
+  }
+  .deleteButtonFin:hover + .sheet {
+    background-color: var(--white);
+    /* border: 2px solid var(--white); */
+  }
+
   .TrashIcon {
     margin: 0 0 0 6rem;
+    transition: 200ms ease-in-out;
+    /* width: inherit; */
+  }
+
+  .TrashIcon:hover {
+    width: 30px;
+    color: red;
+  }
+  @media (max-width: 760px) {
+    .SheetHolderFin {
+      padding: 0;
+      margin: 0;
+    }
+    .TrashIcon {
+      width: 15px;
+      margin: 0;
+    }
+    .deleteButtonFin {
+      height: 50px;
+    }
   }
 `;
 
@@ -280,11 +427,35 @@ export const StopStartContainer = styled.div`
     border-radius: 50%;
     transition: all 300ms ease-in-out;
   }
+  .pauseIcon,
+  .playIcon,
+  .stopIcon {
+    width: 25px;
+  }
+
+  @media (max-width: 760px) {
+    padding: 0;
+    margin: 0;
+    min-width: 10px;
+
+    .pauseIcon,
+    .playIcon,
+    .stopIcon {
+      width: 15px;
+    }
+  }
 `;
 
 export const SheetContainer = styled.div`
   display: flex;
   flex-flow: column;
+`;
+
+export const TaskDescription = styled.section`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 60vw;
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -316,15 +487,19 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
 
   return (
     <Sheet
+      className="sheet"
       id={task.Task_ID.toString()}
       key={task.Task_ID}
       onClick={() => {
         console.log(allProjects.length);
       }}
     >
-      <p>{task.Description}</p>
-      <p>{formatDate(task.Date)}</p>
-      <p>{time !== task.Time ? formatTime(time) : formatTime(task.Time)}</p>
+      <TaskDescription>
+        <p>{task.Description}</p>
+        <p>{formatDate(task.Date)}</p>
+        <p>{time !== task.Time ? formatTime(time) : formatTime(task.Time)}</p>
+      </TaskDescription>
+
       <StopStartContainer>
         <button
           type="button"
@@ -337,7 +512,7 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
           disabled={timerRunning}
           hidden={task.Active || stop}
         >
-          <PlayIcon width={25} />
+          <PlayIcon width="inherit" className="playIcon" />
         </button>
         <button
           type="button"
@@ -353,7 +528,7 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
           disabled={!timerRunning}
           hidden={task.Active || stop}
         >
-          <PauseIcon width={25} />
+          <PauseIcon width="inherit" className="pauseIcon" />
         </button>
         <button
           type="button"
@@ -366,9 +541,10 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
             onStop(task, time);
             setStop(handleButtonClick(stop));
           }}
-          disabled={task.Active || stop || timerRunning}
+          disabled={timerRunning}
+          hidden={task.Active || stop}
         >
-          <StopIcon width={25} />
+          <StopIcon width="inherit" className="stopIcon" />
         </button>
       </StopStartContainer>
     </Sheet>

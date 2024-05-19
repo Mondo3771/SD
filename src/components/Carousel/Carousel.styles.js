@@ -261,12 +261,14 @@ export const Card = styled.article`
   }
 
   button {
-    width: 8vw;
+    padding-top: 5px;
+    width: 5vw;
     height: 20vh;
     background-color: var(--white);
     color: var(--darkest);
     border-radius: 10px;
     font-size: 1.1rem;
+    cursor: pointer;
   }
   &:hover {
     /* background-color: var( --darkpurple); // Change to a lighter background on hover */

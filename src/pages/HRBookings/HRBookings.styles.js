@@ -1,5 +1,5 @@
-import styled from "styled-components";import newback from "../../Images/Bckgrd.svg";
-
+import styled from "styled-components";
+import newback from "../../Images/Bckgrd.svg";
 
 export const Header = styled.header`
   position: sticky;
@@ -37,15 +37,15 @@ export const Header = styled.header`
 
   li a:hover {
     color: var(--white);
+    cursor: pointer;
+    transition: all 200 ease-in-out;
   }
 `;
 
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
-  //box-sizing: border-box;
   background-image: url(${newback});
-  //background: var(--darkest);
   background-size: cover;
   background-position: top;
 
@@ -60,6 +60,24 @@ export const Wrapper = styled.div`
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--white);
     font-size: 1.5rem;
+  }
+  .css-yrdy0g-MuiDataGrid-columnHeaderRow,
+  .MuiDataGrid-topContainer {
+    background: var(--darkest);
+    border-radius: 20px 20px 0 0;
+  }
+  .MuiBox-root,
+  .MuiDataGrid-main {
+    border-radius: 20px 20px 0 0;
+  }
+  .MuiDataGrid-row {
+    transition: all 50ms ease-in-out;
+  }
+  .MuiDataGrid-row:hover {
+    cursor: pointer;
+    background: white;
+    color: white;
+    font-size: 1.2rem;
   }
 `;
 export const Card = styled.article`

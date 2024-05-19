@@ -1,3 +1,4 @@
+import LoginButton from "../../components/Log/LoginButton";
 import logo from "../../Images/logo3.svg";
 import { Card, Header, Wrapper } from "./HRBookings.styles";
 import HRBookingsGrid from "./HRBookingsGrid";
@@ -17,19 +18,14 @@ const HRBookings = () => {
           <nav className="links">
             <ul>
               <li>
-                <a href="#">Reports</a>
-              </li>
-              <li>
                 <a href="HRMeals">Meals</a>
               </li>
               <li>
-                <a href="#">Bookings</a>
+                <a href="HRBookings">Bookings</a>
               </li>
+              
               <li>
-                <a href="#">Car Wash</a>
-              </li>
-              <li>
-                <a href="#">Users</a>
+                <a href="HRhome">Users</a>
               </li>
             </ul>
           </nav>
@@ -40,6 +36,7 @@ const HRBookings = () => {
         <Card>
           <HRBookingsGrid></HRBookingsGrid>
         </Card>
+        <LoginButton/>
       </Wrapper>
     </>
   );

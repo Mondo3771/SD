@@ -68,6 +68,7 @@ const LandingNew = () => {
               .then((response) => response.json())
               .then((DB) => {
                 console.log("Success:", DB);
+                setLocalStorage({key: "User", value:DB.data})
                 setLoaded(true);
                 history.push(`/DashBoard`, { params: DB.data });
               })
@@ -125,7 +126,9 @@ const LandingNew = () => {
             </p>
           </section>
         </Header>
-        {loading && <Loader />}
+        {loading?
+         <Loader />:
+         <>
 
         {isDropdownOpen && (
           <DropDown>
@@ -204,6 +207,10 @@ const LandingNew = () => {
             <LoginButton alt="Log In" />
           </section>
         )}
+                 </>
+
+      }
+
       </LandingPageBack>
     </>
   );

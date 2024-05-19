@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchStorageData, setLocalStorage } from "../../helper";
+
+import StaffHeader from "../../components/StaffHeader/StaffHeader";
+//icons
 import {
   ClockIcon,
   ArrowRightIcon,
@@ -22,6 +25,12 @@ import {
 import StaffHeader from "../../components/StaffHeader/StaffHeader";
 import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
+import LogoutButton from "../../components/Log/LogoutButton";
+import { toast } from "react-toastify";
+import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
+// import sheet from "styled-components/dist/sheet";
+
+// Function to filter unique Project values and return an array of unique projects
 function filterUniqueProjects(projects) {
   const uniqueProjects = {};
   const result = [];
@@ -58,60 +67,100 @@ const StaffDashboard = () => {
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
-  const pause = (taskToPause, time) => {
-    fetch(`/api/Tasks/`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Time: time,
-        Task_ID: taskToPause.Task_ID,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data.message);
+
+  useEffect(() => {
+    //replace allprojects with data from fetch
+
+    const Projects = () => {
+      fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          const uniques = filterUniqueProjects(data.data);
+          setUniqueProjectNames(uniques);
+          setAllProjects(data.data);
+          setLoaded(true);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    // Projects();
+    // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}]
+    const uniques = filterUniqueProjects(allProjects);
+          setUniqueProjectNames(uniques);
+    setAllProjects(allProjects);
+    setLoaded(true)
+  }, []);
+
+  const [task, setTask] = useState("");
+  const [name, setName] = useState("");
+
+  const [createTask, setCreate] = useState(false);
+
+  const handleClick = (prev) => !prev;
+
+  const handleAdd = (taskToAdd) => {
+    taskToAdd["Emp_ID"] = Emp_ID;
+    taskToAdd["Task_ID"] = Math.random() * 100;
+
+    const add = () => {
+      fetch("/api/Tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Autherization: "",
+        },
+        body: JSON.stringify(taskToAdd),
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data.data);
+          taskToAdd["Task_ID"] = data.data.Task_ID;
+          setAllProjects((prev) => {
+            setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
+            return [taskToAdd, ...prev];
+          });
+          toast.success(`${taskToAdd.Description} successfully created!`)
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    add();
+    setCreate(handleClick)
   };
 
-  const Projects = () => {
-    fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:");
-        const uniques = filterUniqueProjects(data.data);
-        setUniqueProjectNames(uniques);
-        setAllProjects(data.data);
-        setLoaded(true);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  const projectNameChange = (event) => {
+    setName(event.target.value);
   };
-  const add = (taskToAdd) => {
-    fetch("/api/Tasks", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Autherization: "",
-      },
-      body: JSON.stringify(taskToAdd),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        taskToAdd["Task_ID"] = data.data.Task_ID;
-        setAllProjects((prev) => {
-          setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
-          return [taskToAdd, ...prev];
-        });
+
+  const taskChange = (event) => {
+    setTask(event.target.value);
+  };
+  const handlePause = (taskToPause, time) => {
+    console.log("pause ", taskToPause);
+    // takes time from the task and task id
+    const pause = () => {
+      fetch(`/api/Tasks/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Time: time,
+          Task_ID: taskToPause.Task_ID,
+        }),
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data.message);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+    pause();
   };
   const handleStop = (taskToStop) => {
     // console.log(taskToStop);
@@ -187,35 +236,13 @@ const StaffDashboard = () => {
       )
     );
   };
+  const data = ""
   const Lunch = () => {
     history.push("/Lunch", { params: data });
   };
   return (
     <Wrapper>
-      <StaffHeader employee={data}></StaffHeader>
-      {/* <Header>
-        <section className="logo">
-          <img src={logo} width="55vw" height="55vh"></img>
-          <h1>
-            <a href="/">SYNERGY</a>
-          </h1>
-        </section>
-        <nav className="links">
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">Reports</a>
-            </li>
-            <li>
-              <a>Lunch</a>
-              <a onClick={Lunch}>Lunch</a>
-            </li>
-          </ul>
-        </nav>
-        <ArrowRightIcon width={24} />
-      </Header> */}
+      <StaffHeader employee={MockUser}></StaffHeader>
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>
@@ -295,7 +322,7 @@ const StaffDashboard = () => {
                       <TrashIcon
                         className="TrashIcon"
                         aria-label="Delete Button"
-                        width={25}
+                        width= {"25px"}
                         onClick={() => handleDelete(s)}
                         alt="Delete Icon"
                       />{" "}

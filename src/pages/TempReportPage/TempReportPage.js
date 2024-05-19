@@ -9,7 +9,9 @@ import {
   MockUser,
 } from "../../components/FeedBackComponent/FeedBack.styles";
 import { useState } from "react";
-import { Body } from "./TempReportPage.styles";
+import { XMarkIcon } from '@heroicons/react/24/outline';
+
+import { Body,UserReport } from "./TempReportPage.styles";
 import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
 import Reporting from "../../components/Reporting/Reporting";
@@ -17,12 +19,13 @@ import Loader from "../../components/Loader/Loader";
 
 import StaffHeader from "../../components/StaffHeader/StaffHeader";
 
+
+
 export const TempReportPage = () => {
   // const location = useLocation();
   // const employee = location.state.params;
-  setLocalStorage({ key: "User", value: MockUser });
+  const employee=fetchStorageData({key:"User"})
 
-  const employee = fetchStorageData({ key: "User" });
 
   const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
@@ -32,6 +35,25 @@ export const TempReportPage = () => {
   const [UserClicked, setuserClicked] = useState(false);
   const [ReportUser, setReportUser] = useState(null);
   const Emp_ID = employee.Emp_ID;
+
+  const get = () => {
+    fetch(`/api/AllEmployees`, {
+      method: "Get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data);
+        const mainUser = fetchStorageData({ key: "User" });
+        const arr = data.data.filter(
+          (p) => p.Department === mainUser.Department
+        );
+        setUsers(arr);
+      })
+      .catch();
+  };
 
   useEffect(() => {
     // Get All the info you need on this page once (AllFeedback,AllUsers)
@@ -50,11 +72,11 @@ export const TempReportPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.data);
+          // console.log(data.data);
+          get();
           setAllFeedBack(data.data);
           setLocalStorage({ key: "Feedback", value: data.data });
           setFirstLoad(true);
-          setUsers(MockUsers);
         });
     };
     // feedback();
@@ -76,7 +98,7 @@ export const TempReportPage = () => {
     setAllFeedBack(t);
     setReceiver(user);
   };
-  const handleSendFeedback = (sender, receiver, feedback) => {
+  const handleSendFeedback = (sender,  receiver, feedback) => {
     console.log("Sender", sender);
     console.log("Receiver", receiver);
     const today = new Date().toISOString().slice(0, 10);
@@ -89,7 +111,7 @@ export const TempReportPage = () => {
     };
 
     // newMessage.Message_ID = data.Message_ID;
-    newMessage.Date = formatDate(newMessage.Date);
+    newMessage.Date = formatDate(newMessage.Date);;
     const storageChange = [
       ...fetchStorageData({ key: "Feedback" }),
       newMessage,
@@ -148,10 +170,18 @@ export const TempReportPage = () => {
               onSendFeedBack={handleSendFeedback}
             />
           </Body>
-          {UserClicked && MockUser.EMP_type === "Manager" ? ( //change
+          {UserClicked && employee.EMP_type === "Manager" ? (
             <>
+            {/* {toast.success("Scroll below to see their report")} */}
+              <UserReport>
+              <button className="close" onClick={closeReport}>    
+                <XMarkIcon width="24" height="24" />
+              </button>
+
               <Reporting User={ReportUser}></Reporting>
-              <button onClick={closeReport}>close</button>
+
+              </UserReport>
+              
             </>
           ) : null}
         </>

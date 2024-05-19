@@ -10,3 +10,21 @@ export const Body = styled.body`
   padding : 1rem;
   justify-content : space-between;
   `;
+
+  export const UserReport=styled.section`
+    display: flex;
+    flex-direction: column;
+    .close{
+      padding: 5px;
+    width: 5vw;
+    height: 4vh;
+    background-color: var(--white);
+    color: var(--darkest);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    }
+
+  
+  
+  `

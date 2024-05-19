@@ -3,7 +3,29 @@ import HRdatagrid from "../../components/HRdatagrid/HRdatagrid";
 import { Header, Wrapper, Card } from "./HRHome.styles";
 import logo from "../../Images/logo3.svg";
 import LoginButton from "../../components/Log/LoginButton";
+import { useEffect } from "react";
+import { setLocalStorage } from "../../helper";
+
+const getMeals = () => {
+  fetch("/api/CreateMeals")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+        setLocalStorage({key:"Meals",value:data.data})
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 const HRHome = () => {
+
+  useEffect(() =>{
+    getMeals();
+  },[])
+ 
+  
   return (
     <>
       <Wrapper>
@@ -16,30 +38,22 @@ const HRHome = () => {
           </section>
           <nav className="links">
             <ul>
-              <li>
-                <a href="#">Reports</a>
-              </li>
+             
               <li>
                 <a href="HRMeals">Meals</a>
               </li>
               <li>
                 <a href="HRBookings">Bookings</a>
               </li>
+              
               <li>
-                <a href="#">Car Wash</a>
-              </li>
-              <li>
-                <a href="#">Users</a>
+                <a href="HRhome">Users</a>
               </li>
             </ul>
           </nav>
         </Header>
-        <section className="titlepage">
-          <h2>Manage Users</h2>
-        </section>
-        <Card>
+        
           <HRdatagrid></HRdatagrid>
-        </Card>
         <LoginButton />
       </Wrapper>
     </>

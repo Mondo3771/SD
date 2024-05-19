@@ -56,38 +56,38 @@ module.exports = async function (context, req) {
         }
       }
       break;
+
     case "DELETE":
-      try {
-        data = req.query;
-        if (
-          data.Booking_ID === undefined ||
-          data.Booking_ID === "" ||
-          data.Booking_ID === null
-        ) {
-          context.res = {
-            status: 400,
-            message: "ID cannot be null or empty",
-            body: {},
-          };
-        } else {
-          const resultSet = await pool
-            .request()
-            .input("Bookings_ID", sql.Int, data.Booking_ID)
-            .query(`DELETE FROM Bookings WHERE Booking_ID = @Bookings_ID `);
-          context.res = {
-            staus: 200,
-            body: { message: "Deleted" },
-          };
-        }
-      } catch (err) {
-        context.res = {
-          status: 500,
-          message: "Error deleting data from the database",
-          body: {},
-        };
-        console.error("Error running query", err);
-      }
-      break;
+  try {
+    const data = req.query;
+
+    if (!data.Booking_ID) {
+      context.res = {
+        status: 400,
+        body: { message: "Booking_ID cannot be null or empty" },
+      };
+      return;
+    }
+
+    const resultSet = await pool
+      .request()
+      .input("Bookings_ID", sql.Int, data.Booking_ID)
+      .query(`DELETE FROM Bookings WHERE Booking_ID = @Bookings_ID`);
+      console.log(resultSet);
+
+    context.res = {
+      status: 200,
+      body: { message: "Deleted" },
+    };
+  } catch (err) {
+    context.res = {
+      status: 500,
+      body: { message: "Error deleting data from the database" },
+    };
+    console.error("Error running query", err);
+  }
+  break;
+
     case "POST":
       try {
         console.log(data);

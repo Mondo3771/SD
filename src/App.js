@@ -25,6 +25,8 @@ import LogoutButton from "./components/Log/LogoutButton";
 import { register } from "swiper/element/bundle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { fetchStorageData,setLocalStorage } from "./helper";
 // register Swiper custom elements
 register();
 
@@ -39,27 +41,42 @@ const GuardedRoute = ({ component: Component, auth, ...rest }) => (
 
 function App() {
   const { logout, isAuthenticated, user } = useAuth0();
+  console.log(isAuthenticated,"authen");
+  console.log(user,"user");
+  setLocalStorage({ key: "Profile", value: user });
+
+  const employee = fetchStorageData({ key: "User" });
+  
+
+  const HRallowed=()=>{
+      if(employee.EMP_type==='HR' || isAuthenticated){
+          return true
+      }
+      else{
+        return false;
+      }
+
+
+
+  }
+
 
   return (
-    <>
-      {/* <BrowserRouter>
-       <Switch>
-         <Route exact path="/" component={LandingNew} index />
-         <Route path="/DashBoard" component={StaffDashboard} />
-         <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={true} />
-         <GuardedRoute path="/HRhome" component={HRHome} auth ={true} />
-         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={true} />
-         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={true} />
-         <GuardedRoute path="/Lunch" component={Carousel} auth ={true}/>
-         <GuardedRoute path="/Reports" component={TempReportPage} auth ={true}/>
-       </Switch>
-     </BrowserRouter> */}
-      {/* <StaffCarWash></StaffCarWash> */}
-      {/* <TempReportPage></TempReportPage> */}
-      {/* <Carousel></Carousel> */}
-      <StaffBookings></StaffBookings>
-    </> // <StaffDashboard/>
-    // <Reporting></Reporting>
+    // <>
+    //    <BrowserRouter>
+    //    <Switch>
+    //      <Route exact path="/" component={LandingNew} index />
+    //      <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
+    //      <GuardedRoute path="/HRhome" component={HRHome} auth ={true} />
+    //      <GuardedRoute path="/HRMeals" component={HRMeals} auth ={true} />
+    //      <GuardedRoute path="/HRBookings" component={HRBookings} auth ={true} />
+    //      <GuardedRoute path="/Lunch" component={Carousel} auth ={isAuthenticated}/>
+    //      <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
+    //   </Switch>
+    //  </BrowserRouter>
+    // </> 
+    <StaffDashboard/>
+
   );
 }
 
