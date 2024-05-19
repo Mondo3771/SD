@@ -59,7 +59,7 @@ function App() {
 
 
   return (
-   
+   <>
        <BrowserRouter>
        <Switch>
          <Route exact path="/" component={LandingNew} index />
@@ -71,6 +71,7 @@ function App() {
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
       </Switch>
      </BrowserRouter>
+     <ToastContainer/>
     </>
   );
 }
