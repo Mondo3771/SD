@@ -3,7 +3,7 @@ import background from "../../Images/Bckgrd.svg";
 export const Feedback = styled.article`
   background-color: var(--dark);
   height: 60vh;
-  width: 30vw;
+  width: fit-content;
   color: red;
 
   display: flex;

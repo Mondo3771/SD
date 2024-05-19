@@ -372,11 +372,11 @@ const Reporting = ({ User }) => {
               data={data}
               layout={layout}
               style={{
-                width: "100%",
+                width: "100vh",
                 height: "70vh",
                 margin: "3vw",
-                // border: "2px solid black",
-                // borderRadius: "8%",
+                border: "2px solid black",
+                borderRadius: "8%",
               }}
             />
             <Feedback>
@@ -405,8 +405,8 @@ const Reporting = ({ User }) => {
                   width: "100%",
                   height: "50vh",
                   margin: "40px",
-                  border: "2px solid black",
-                  borderRadius: "8%",
+                  // border: "2px solid black",
+                  //borderRadius: "8%",
                 }}
               />
             </Summary>
