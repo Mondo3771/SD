@@ -175,8 +175,7 @@ const Carousel = () => {
 
   return (
     <>
-      <StaffHeader />
-      {modalOpen && (
+    {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
           data={selectedBooking}
@@ -184,6 +183,8 @@ const Carousel = () => {
           booking={empBook && empBook.length > 0}
         />
       )}
+      <StaffHeader />
+      
 
       <Wrapper>
         {Loaded ? (
@@ -271,6 +272,23 @@ const Carousel = () => {
                             ></button>
                           </div>
                         ))}
+                    {empBook &&
+                      empBook.map((meal, index) => (
+                        <div key={index}>
+                          <p>Meal:{meal.Name_of_Meal}</p>
+                          <p>Description:{meal.Description}</p>
+                          <button
+                            onClick={() => {
+                              DeleteBooking(meal.Booking_ID);
+                              setdelBook((prev) => !prev); // Trigger state change to refresh data
+                              setActionTriggered(true)
+                            }}
+                          >
+                            Cancel
+                          </button>
+                         
+                        </div>
+                      ))}
 
                       {/* <button onClick={DeleteBooking(b_ID)}>Cancel</button> */}
                     </>

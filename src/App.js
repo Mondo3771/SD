@@ -62,21 +62,21 @@ function App() {
 
 
   return (
-    // <>
-    //    <BrowserRouter>
-    //    <Switch>
-    //      <Route exact path="/" component={LandingNew} index />
-    //      <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
-    //      <GuardedRoute path="/HRhome" component={HRHome} auth ={true} />
-    //      <GuardedRoute path="/HRMeals" component={HRMeals} auth ={true} />
-    //      <GuardedRoute path="/HRBookings" component={HRBookings} auth ={true} />
-    //      <GuardedRoute path="/Lunch" component={Carousel} auth ={isAuthenticated}/>
-    //      <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
-    //   </Switch>
-    //  </BrowserRouter>
-    // </> 
-    <StaffDashboard/>
-
+    <>
+       <BrowserRouter>
+       <Switch>
+         <Route exact path="/" component={LandingNew} index />
+         <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
+         <GuardedRoute path="/HRhome" component={HRHome} auth ={HRallowed()} />
+         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={HRallowed()} />
+         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={HRallowed()} />
+         <GuardedRoute path="/staffBooking" component={Carousel} auth ={isAuthenticated}/>
+         <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
+      </Switch>
+     </BrowserRouter>
+     {/* <ToastContainer/> */}
+    </> // <StaffDashboard/>
+    // <Reporting></Reporting>
   );
 }
 

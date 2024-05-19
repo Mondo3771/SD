@@ -31,7 +31,7 @@ const HRBookings = () => {
           </nav>
         </Header>
         <section className="titlepage">
-          <h2>Manage Users</h2>
+          <h2>Bookings</h2>
         </section>
         <Card>
           <HRBookingsGrid></HRBookingsGrid>

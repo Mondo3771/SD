@@ -15,7 +15,7 @@ const StaffHeader = ({ employee }) => {
 
 
   const Lunch = () => {
-    history.push('/Lunch');
+    history.push('/staffBooking');
   }
 
   const Home = () => {
@@ -48,7 +48,7 @@ const StaffHeader = ({ employee }) => {
               <a onClick={Reports}>Reports</a>
             </li>
             <li>
-              <a onClick={Lunch}>Lunch</a>
+              <a onClick={Lunch}>Bookings</a>
             </li>
           </ul>
         </nav>
