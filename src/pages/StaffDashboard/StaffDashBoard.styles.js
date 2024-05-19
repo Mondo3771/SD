@@ -370,6 +370,7 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
         <button
           type="button"
           className="stopButton"
+          aria-label="Stop Button"
           style={{
             color: !timerRunning || stop ? "var(--whiter)" : "gray",
           }}

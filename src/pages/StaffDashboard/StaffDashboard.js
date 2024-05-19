@@ -60,7 +60,7 @@ const StaffDashboard = () => {
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
-  const pause = () => {
+  const pause = (taskToPause,time) => {
     fetch(`/api/Tasks/`, {
       method: "PUT",
       headers: {
@@ -84,7 +84,7 @@ const StaffDashboard = () => {
     fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        console.log("Success:");
         const uniques = filterUniqueProjects(data.data);
         setUniqueProjectNames(uniques);
         setAllProjects(data.data);
@@ -134,7 +134,7 @@ const StaffDashboard = () => {
         console.error("Error:", error);
       });
   };
-  const deleteTask = () => {
+  const deleteTask = (taskToDelete) => {
     fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
       method: "DELETE",
       headers: {
@@ -178,13 +178,12 @@ const StaffDashboard = () => {
   };
   const handlePause = (taskToPause, time) => {
     console.log("pause ", taskToPause);
-    pause();
+    pause(taskToPause,time);
   };
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
-    deleteTask();
+    deleteTask(taskToDelete);
     setAllProjects((a) => a.filter((p) => p.Task_ID !== taskToDelete.Task_ID));
-
     // setSheets(updatedSheets);
     setUniqueProjectNames(
       filterUniqueProjects(
@@ -299,6 +298,7 @@ const StaffDashboard = () => {
                     <button className="deleteButtonFin">
                       <TrashIcon
                         className="TrashIcon"
+                        aria-label="Delete Button"
                         width={25}
                         onClick={() => handleDelete(s)}
                         alt="Delete Icon"

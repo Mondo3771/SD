@@ -94,14 +94,14 @@ test("Adding a Task", async () => {
 
   fireEvent.click(createTaskButton);
   let addTaskButton, Project, Task;
-  await waitFor( async () => {
+  await waitFor(async () => {
     expect(screen.getByLabelText("Add Task")).toBeInTheDocument();
     addTaskButton = screen.getByLabelText("Add Task");
     Project = screen.getByLabelText("Project Place Holder");
     Task = screen.getByLabelText("Task Name Place Holder");
-    await userEvent.type(Project, "Projects",{delay: 1});
+    await userEvent.type(Project, "Projects", { delay: 1 });
     await userEvent.type(Task, "Tasks");
-  
+
     global.fetch = jest.fn().mockImplementationOnce(() =>
       Promise.resolve({
         json: () =>
@@ -127,7 +127,7 @@ test("Adding a Task", async () => {
   expect(screen.getByText("Projects")).toBeInTheDocument();
 });
 
-test("Play and Pause Button", async () => {
+test("Play, Pause, Stop and Delete Button", async () => {
   global.fetch = jest.fn().mockImplementationOnce(() =>
     Promise.resolve({
       json: () =>
@@ -150,11 +150,42 @@ test("Play and Pause Button", async () => {
   let debug;
   await act(async () => {
     const { debug } = render(<StaffDashboard />);
-    debug();
+    // debug();
   });
   const playButton = screen.getByLabelText("Play Button");
   const pauseButton = screen.getByLabelText("Pause Button");
+  const stopButton = screen.getByLabelText("Stop Button")
+  const DeleteButton = screen.getByLabelText("Delete Button")
   // fireEvent.click(playButton);
-  // fireEvent.click(pauseButton);
-  // screen.debug();
+
+  global.fetch = jest.fn().mockImplementationOnce(() =>
+    Promise.resolve({
+      json: () =>
+        Promise.resolve({
+          message: "Pause",
+        }),
+    })
+  );
+  fireEvent.click(playButton);
+  fireEvent.click(pauseButton);
+  global.fetch = jest.fn().mockImplementationOnce(() =>
+  Promise.resolve({
+    json: () =>
+      Promise.resolve({
+        message: "Stoped the stuff",
+      }),
+  })
+);
+
+fireEvent.click(stopButton);
+global.fetch = jest.fn().mockImplementationOnce(() =>
+Promise.resolve({
+  json: () =>
+    Promise.resolve({
+      message: "Deleted the stuff",
+    }),
+})
+);
+fireEvent.click(DeleteButton)
+
 });
