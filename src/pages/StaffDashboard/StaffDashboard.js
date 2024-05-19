@@ -1,6 +1,10 @@
 //react
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { fetchStorageData, setLocalStorage } from "../../helper";
+
+
+//icons
 import {
   ClockIcon,
   ArrowRightIcon,
@@ -19,6 +23,8 @@ import {
   TaskContainer,
   Wrapper,
 } from "./StaffDashBoard.styles";
+
+import StaffHeader from "../../components/StaffHeader/StaffHeader";
 
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -51,12 +57,12 @@ function filterTasksByProject(Sheets, projectName) {
 }
 
 const StaffDashboard = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const history = useHistory();
-  const data = location.state.params; // Remove this line
-  const User = data.user;
+  const data=fetchStorageData({key:"User"})
+  console.log(data,'fetching data');
   const Emp_ID = data.Emp_ID;
-  // const Emp_ID = 1;
+  // const Emp_ID = 87;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
@@ -196,8 +202,8 @@ const StaffDashboard = () => {
   };
   return (
     <Wrapper>
-      {/* <StaffHeader employee={data}></StaffHeader> */}
-      <Header>
+      <StaffHeader employee={data}></StaffHeader>
+      {/* <Header>
         <section className="logo">
           <img src={logo} width="55vw" height="55vh"></img>
           <h1>
@@ -213,13 +219,13 @@ const StaffDashboard = () => {
               <a href="#">Reports</a>
             </li>
             <li>
-              {/* <a>Lunch</a> */}
+              <a>Lunch</a>
               <a onClick={Lunch}>Lunch</a>
             </li>
           </ul>
         </nav>
         <ArrowRightIcon width={24} />
-      </Header>
+      </Header> */}
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>

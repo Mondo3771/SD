@@ -4,7 +4,6 @@ import {
   Card,
   CreateMealCard,
   Header,
-  MealCard,
   MealCardFin,
   ShowMealCard,
   Wrapper,
@@ -12,15 +11,30 @@ import {
 // import logo from "../../pages/HRHome/Images/logo3.svg";
 import logo from "../../Images/logo3.svg";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { fetchStorageData } from "../../helper";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const HRMeals = () => {
   const [Meals, setMeals] = useState([]);
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
-  const [changed, setChanged] = useState(false);
+  const history = useHistory();
+
 
   useEffect(() => {
+    const User = fetchStorageData({key:"User"}); 
+    console.log(User)
+
+    if (!User) {
+      // Go back to landing page
+      history.push("/");
+      console.log("user",User)
+
+    }else 
+    if(User.Emp_Type !== "HR"){
+      // Go back to their home page depending on whether they are a staff or manager
+    }
     const getMeals = () => {
       fetch("/api/CreateMeals")
         .then((response) => {
@@ -34,13 +48,14 @@ const HRMeals = () => {
           console.log(error);
         });
     };
+
     getMeals();
     // fetch all meals from database
   }, []);
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal) => {
+  const changeAvailable = (meal,bool) =>
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
@@ -48,22 +63,23 @@ const HRMeals = () => {
       },
       body: JSON.stringify({
         Meal_ID: meal.Meal_ID,
-        Availability: !meal.Availability,
+        Availability: bool,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         setViewMeal((prev) => {
-          let temp = prev;
-          temp.Availability = !meal.Availability;
+          console.log(prev);
+          let temp = meal;
+          temp.Availability = bool;
+          console.log(temp);
           return temp;
         });
         setMeals((all) => {
-          console.log(all);
-          const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID);
-          temp.Availability = !meal.Availability;
-          const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
+          const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID)[0];
           const result = all;
+          temp.Availability = bool;
+          const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
           result[index] = temp;
           console.log(result);
           return result;
@@ -137,7 +153,7 @@ const HRMeals = () => {
   };
 
   const changeAvailableViewMeal = (event) => {
-    changeAvailable(viewMeal);
+    changeAvailable(viewMeal,event.target.checked);
   };
 
   const deleteMeal = () => {
@@ -254,7 +270,7 @@ const HRMeals = () => {
                 <h3>{viewMeal.Name_of_Meal}</h3>
                 <label></label>
                 <p>Description: {viewMeal.Description}</p>
-                <section>
+                <section className=".available">
                   <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
                   <input
                     type="checkbox"
@@ -262,12 +278,13 @@ const HRMeals = () => {
                     onChange={changeAvailableViewMeal}
                   ></input>
                 </section>
-                {changed && <button> Save Changes</button>}
-                {changed && <button> Save Changes</button>}
+                {/* {changed && <button onClick={() => setChanged(p => !p)}> Save Changes</button>} */}
                 <button onClick={deleteMeal}>
                   <TrashIcon width={25} />
                 </button>
-                <button onClick={() => setViewMealState(false)}>Back</button>
+                <button onClick={() => {
+                  console.log("Meals",Meals);
+                  setViewMealState(false)}}>Back</button>
               </ShowMealCard>
             )}
           </section>

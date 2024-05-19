@@ -7,10 +7,16 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 const StaffHeader = ({employee}) => {
     const history=useHistory();
     const Lunch=()=>{
-        history.push('/Lunch',{ params:employee });
+        history.push('/Lunch');
     }
     const Home=()=>{
-      history.push('/DashBoard',{ params:employee });
+      history.push('/DashBoard');
+
+
+    }
+
+    const Reports=()=>{
+      history.push('/Reports');
 
 
     }
@@ -28,7 +34,7 @@ const StaffHeader = ({employee}) => {
           <a onClick={Home}>Home</a>
         </li>
         <li>
-          <a href="#">Reports</a>
+          <a onClick={Reports}>Reports</a>
         </li>
         <li>
           <a onClick={Lunch}>Lunch</a>
