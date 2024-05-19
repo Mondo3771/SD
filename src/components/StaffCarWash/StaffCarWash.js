@@ -60,15 +60,44 @@ const StaffCarWash = ({onOpenModal}) => {
   const [selectedBooking,setSelectedBooking]=useState(null);
   const [empBook,setempBook]=useState(null);
 
+
+  //states for actual carwash
+  const [dates,setDates]=useState(null);
+  const[IDmonday,setIDmonday]=useState(null);
+  const[IDthursday,setIDthursday]=useState(null);
+
+
+
   
 
 
 
-  const Book = () => {
-    setSelectedBooking({Date:MondayDate});
-    setModalOpen(true);
-    setActionTriggered(true)
-  };
+  // const Book = () => {
+  //   setSelectedBooking({Date:MondayDate});
+  //   setModalOpen(true);
+  //   setActionTriggered(true)
+  // };
+
+  // fetching Carwash data
+  useEffect(()=>{
+    const getcarwash = () => {
+
+      fetch("/api/CarWash")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setDates(data.data)
+          return data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          return "Error";
+        });
+    };
+    getcarwash();
+
+
+  },[])
 
 
   useEffect(() => {
@@ -83,7 +112,7 @@ const StaffCarWash = ({onOpenModal}) => {
       // Create a new date object and set it to the nearest Monday
       const nearestMonday = new Date(today);
       nearestMonday.setDate(today.getDate() + daysToAdd);
-      const formattedDate = nearestMonday.toISOString().split('T')[0] + ' 00:00:00.000';
+      const formattedDate = nearestMonday.toISOString().split('T')[0] + 'T00:00:00.000Z';
 
       console.log(formattedDate);
   
@@ -100,7 +129,7 @@ const StaffCarWash = ({onOpenModal}) => {
       nearestThursday.setDate(today.getDate() + daysToAdd);
 
       // Format the date as 'YYYY-MM-DD 00:00:00.000'
-      const formattedDate = nearestThursday.toISOString().split('T')[0] + ' 00:00:00.000';
+      const formattedDate = nearestThursday.toISOString().split('T')[0] + 'T00:00:00.000Z';
       console.log(formattedDate);
       return formattedDate;
     };
@@ -111,27 +140,82 @@ const StaffCarWash = ({onOpenModal}) => {
 
   useEffect(()=>{
     const findQuantities = () => {
-      const mondayItem = mockQuantity.find(item => item.Date === MondayDate);
-      const thursdayItem = mockQuantity.find(item => item.Date === ThursdayDate);
+      console.log(dates,"this is the day");
+      const mondayItem = dates? dates.find(item => item.date === MondayDate):null;
+      const thursdayItem = dates?dates.find(item => item.date === ThursdayDate):null;
+
+      setIDmonday(mondayItem.Car_wash);
+      setIDthursday(thursdayItem.Car_wash);
+
+
+
+      
 
       setMondayQuant(mondayItem ? mondayItem.Quantity : 11);
       setThursdayQuant(thursdayItem ? thursdayItem.Quantity : 11);
       if(!mondayItem){
         //post with MondayDate and 11
+        const Postcarwash = (data) => {
+         
+        
+          fetch("/api/CarWash", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              setIDmonday(data.data.Car_wash);
+              console.log("Success:", data.message);
+              return "Success";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              return "Error";
+            });
+        };
+        Postcarwash({Quantity:11,Date:MondayDate.split('T')[0]})
+
 
       }
       if(!thursdayItem){
           //post with thursdayItem and 11
+          const Postcarwash = (data) => {
+         
+        
+            fetch("/api/CarWash", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                setIDthursday(data.data.Car_wash);
+
+                console.log("Success:", data.message);
+                return "Success";
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                return "Error";
+              });
+          };
+          Postcarwash({Quantity:11,Date:ThursdayDate.split('T')[0]})
+  
 
 
       }
     };
 
-    if (MondayDate && ThursdayDate) {
+    if (MondayDate && ThursdayDate && dates) {
       findQuantities();
     }
 
-  },[MondayDate,ThursdayDate])
+  },[MondayDate,ThursdayDate,dates])
 
 
 
@@ -176,7 +260,7 @@ const StaffCarWash = ({onOpenModal}) => {
 
   const mondayBook = () => {
     setSelectedBooking({Date:MondayDate,Quantity:MondayQuant,Day:'Monday'});
-    onOpenModal({Date:MondayDate,Quantity:MondayQuant,Day:'Monday'}, employee,empBook,actionTriggered);
+    onOpenModal({Date:MondayDate.split('T')[0],Quantity:MondayQuant,Day:'Monday',Car_wash:IDmonday}, employee,empBook,actionTriggered);
 
     // setModalOpen(true);
     setActionTriggered(true)
@@ -184,7 +268,7 @@ const StaffCarWash = ({onOpenModal}) => {
 
   const thursdayBook = () => {
     setSelectedBooking({Date:ThursdayDate,Quantity:ThursdayQuant,Day:'Thursday'});
-    onOpenModal({Date:ThursdayDate,Quantity:ThursdayQuant,Day:'Thursday'}, employee,empBook,actionTriggered);
+    onOpenModal({Date:ThursdayDate.split('T')[0],Quantity:ThursdayQuant,Day:'Thursday',Car_wash:IDthursday}, employee,empBook,actionTriggered);
 
     // setModalOpen(true);
     setActionTriggered(true)
