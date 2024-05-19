@@ -9,7 +9,7 @@ import {
   MockUser,
 } from "../../components/FeedBackComponent/FeedBack.styles";
 import { useState } from "react";
-import { Body, Wrapper } from "./TempReportPage.styles";
+import { Body, Wrapper, Heading } from "./TempReportPage.styles";
 import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
 import Reporting from "../../components/Reporting/Reporting";
@@ -135,30 +135,35 @@ export const TempReportPage = () => {
   return (
     <>
       <StaffHeader></StaffHeader>
+      <>
+        {firstLoad ? (
+          <Wrapper>
+            <Reporting User={employee}></Reporting>
+            {console.log(employee)}
+            <Heading>
+              <h2>Feedback</h2>
+            </Heading>
+            <Body>
+              <ShowUsers Users={Users} onUserClick={handleUserClick} />
+              <FeedBack
+                FeedBackArray={AllFeedback}
+                User={employee}
+                Receiver={Receiver}
+                onSendFeedBack={handleSendFeedback}
+              />
+            </Body>
 
-      {firstLoad ? (
-        <Wrapper>
-          <Reporting User={employee}></Reporting>
-          {console.log(employee)}
-          <Body>
-            <ShowUsers Users={Users} onUserClick={handleUserClick} />
-            <FeedBack
-              FeedBackArray={AllFeedback}
-              User={employee}
-              Receiver={Receiver}
-              onSendFeedBack={handleSendFeedback}
-            />
-          </Body>
-          {UserClicked && MockUser.EMP_type === "Manager" ? ( //change
-            <>
-              <Reporting User={ReportUser}></Reporting>
-              <button onClick={closeReport}>close</button>
-            </>
-          ) : null}
-        </Wrapper>
-      ) : (
-        <Loader></Loader>
-      )}
+            {UserClicked && MockUser.EMP_type === "Manager" ? ( //change
+              <>
+                <Reporting User={ReportUser}></Reporting>
+                <button onClick={closeReport}>close</button>
+              </>
+            ) : null}
+          </Wrapper>
+        ) : (
+          <Loader></Loader>
+        )}
+      </>
     </>
   );
 };

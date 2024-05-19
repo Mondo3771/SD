@@ -385,7 +385,7 @@ const Reporting = ({ User }) => {
                 {feedback
                   ? feedback.map((item, index) => (
                       <p key={index}>
-                        <p>
+                        <p className="messagebox">
                           <strong>{item.Name}:</strong> {item.Comment}. date:
                           {item.date}
                         </p>
@@ -429,6 +429,11 @@ const Reporting = ({ User }) => {
                   backgroundColor: "#white",
                 })}
               />
+              <input
+                type="number"
+                value={chooseHour}
+                onChange={handlehourChange}
+              ></input>
             </Progress>
           </Bottom>
         </Main>

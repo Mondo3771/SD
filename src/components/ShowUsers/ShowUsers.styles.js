@@ -4,24 +4,31 @@ export const Wrapper = styled.div`
   scroll-behavior: smooth;
   display: flex;
   flex-flow: column;
-  width: 500px;
-  outline: 3px solid gray;
+  width: 60vw;
+  outline: 2px solid white;
   outline-offset: 3px 0 1px 0;
-  border-radius: 5px;
+  border-radius: 20px;
   overflow: scroll;
   overflow-x: hidden;
   padding: 1rem 0;
 
   align-items: center;
+  background: transparent;
 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   .ProfileImage {
     width: 60px;
     height: 60px;
+    color: var(--white);
   }
 
   .User:hover {
-    background: gray;
+    background: var(--dark);
     color: white;
+  }
+  user-select.clicked {
+    background: var(--dark);
   }
 `;
 
@@ -43,6 +50,8 @@ export const User = styled.article`
 export const InfoContainer = styled.section`
   display: flex;
   flex-direction: column;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.8rem;
 
   // border: 1px solid black;
 
@@ -53,6 +62,14 @@ export const InfoContainer = styled.section`
   h3,
   p {
     margin: 0;
+    color: var(--white);
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+  h3 {
+    color: var(--white);
   }
 `;
 

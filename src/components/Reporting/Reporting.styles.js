@@ -13,14 +13,20 @@ export const Feedback = styled.article`
   border-radius: 4%;
   margin-bottom: 40px;
   padding: 2vw;
+  gap: 1vh;
   .text {
     display: flex;
+
     border: 10px black;
     justify-content: center;
     flex-direction: column;
     background-color: transparent;
     border-radius: 8%;
     padding: 0%.8;
+    .messagebox {
+      padding-bottom: 1vh;
+      border-bottom: 1px solid white;
+    }
   }
 `;
 export const Heading = styled.section`
@@ -48,7 +54,7 @@ export const Main = styled.section`
   background-color: rgba(19, 7, 46, 0.4);
   padding-top: 0;
   border: 2px solid white;
-  border-radius: 5%;
+  border-radius: 30px;
   //change back to trasparent
   display: flex;
   flex-direction: column;
@@ -89,6 +95,7 @@ export const Progress = styled.article`
   padding: 2vh;
   align-items: center;
   color: var(--white);
+  gap: 3vh;
   //background-color: var(--white);
   background-color: transparent;
   //backdrop-filter: blur(10px);
@@ -97,6 +104,12 @@ export const Progress = styled.article`
   margin: 0;
   p {
     color: white;
+  }
+  input {
+    width: 7vw;
+    height: 3vh;
+    font-size: 1rem;
+    border-radius: 10px;
   }
 `;
 
