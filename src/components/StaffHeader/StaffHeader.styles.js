@@ -4,7 +4,7 @@ import background from "../../Images/Bckgrd.svg";
 export const Header = styled.div`
   position: sticky;
   z-index: 9999;
-  width: 100%;
+  max-width: 100vw;
 
   /* background-image: url(${background}); */
   background-color: #17154d;

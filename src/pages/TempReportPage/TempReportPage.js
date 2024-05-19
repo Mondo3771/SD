@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-import { Body,UserReport } from "./TempReportPage.styles";
+import { Body,UserReport, Wrapper, Heading } from "./TempReportPage.styles";
 import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
 import Reporting from "../../components/Reporting/Reporting";
@@ -153,6 +153,9 @@ export const TempReportPage = () => {
         <>
           <Reporting User={employee}></Reporting>
           {console.log(employee)}
+          <Heading>
+              <h2>Feedback</h2>
+            </Heading>
           <Body>
             <ShowUsers Users={Users} onUserClick={handleUserClick} />
             <FeedBack
@@ -162,18 +165,10 @@ export const TempReportPage = () => {
               onSendFeedBack={handleSendFeedback}
             />
           </Body>
-          {UserClicked && employee.EMP_type === "Manager" ? (
+          {UserClicked && employee.EMP_type === "Manager" ? ( //change
             <>
-            {/* {toast.success("Scroll below to see their report")} */}
-              <UserReport>
-              <button className="close" onClick={closeReport}>    
-                <XMarkIcon width="24" height="24" />
-              </button>
-
               <Reporting User={ReportUser}></Reporting>
-
-              </UserReport>
-              
+              <button onClick={closeReport}>close</button>
             </>
           ) : null}
         </>
