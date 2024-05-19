@@ -16,70 +16,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Modal from "../Modal/Modal";
 import Loader from "../Loader/Loader";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-
 import StaffHeader from "../StaffHeader/StaffHeader";
-import { useActionData } from "react-router";
 import { fetchStorageData, setLocalStorage } from "../../helper";
-
-const mock = [
-  {
-    Meal: "Pizza",
-    Description:
-      "A garden on a crust! Fresh veggies atop a bed of melted mozzarella, drizzled with our secret sauce. Dive into a slice of freshness today!",
-    Allergens: "Contains Milk",
-    Date: "20/03/2121",
-    Available: true,
-  },
-  {
-    Meal: "burger",
-    Date: "21/03/2121",
-    Available: true,
-    Description:
-      "A garden on a crust! Fresh veggies atop a bed of melted mozzarella, drizzled with our secret sauce. Dive into a slice of freshness today!",
-    Allergens: "Contains Milk",
-  },
-  {
-    Meal: "sushi",
-    Date: "22/03/2121",
-    Available: false,
-    Description:
-      "A garden on a crust! Fresh veggies atop a bed of melted mozzarella, drizzled with our secret sauce. Dive into a slice of freshness today!",
-    Allergens: "Contains Milk",
-  },
-  {
-    Meal: "spaghetti",
-    Date: "23/03/2121",
-    Available: true,
-    Description:
-      "A garden on a crust! Fresh veggies atop a bed of melted mozzarella, drizzled with our secret sauce. Dive into a slice of freshness today!",
-    Allergens: "Contains Milk",
-  },
-  {
-    Meal: "salad",
-    Date: "24/03/2121",
-    Available: false,
-    Description:
-      "A garden on a crust! Fresh veggies atop a bed of melted mozzarella, drizzled with our secret sauce. Dive into a slice of freshness today!",
-    Allergens: "Contains Milk",
-  },
-  {
-    Meal: "steak",
-    Date: "25/03/2121",
-    Available: true,
-    Description:
-      "A garden on a crust! Fresh veggies atop a bed of melted mozzarella, drizzled with our secret sauce. Dive into a slice of freshness today!",
-    Allergens: "Contains Milk",
-  },
-  {
-    Meal: "sandwich",
-    Date: "26/03/2121",
-    Available: true,
-    Description:
-      "A garden on a crust! Fresh veggies atop a bed of melted mozzarella, drizzled with our secret sauce. Dive into a slice of freshness today!",
-    Allergens: "Contains Milk",
-  },
-];
 
 const DeleteBooking = (Booking_ID) => {
   fetch(`/api/Meals?Booking_ID=${Booking_ID}`, {
@@ -175,7 +113,7 @@ const Carousel = () => {
 
   return (
     <>
-    {modalOpen && (
+      {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
           data={selectedBooking}
@@ -184,7 +122,6 @@ const Carousel = () => {
         />
       )}
       <StaffHeader />
-      
 
       <Wrapper>
         {Loaded ? (
@@ -272,23 +209,22 @@ const Carousel = () => {
                             ></button>
                           </div>
                         ))}
-                    {empBook &&
-                      empBook.map((meal, index) => (
-                        <div key={index}>
-                          <p>Meal:{meal.Name_of_Meal}</p>
-                          <p>Description:{meal.Description}</p>
-                          <button
-                            onClick={() => {
-                              DeleteBooking(meal.Booking_ID);
-                              setdelBook((prev) => !prev); // Trigger state change to refresh data
-                              setActionTriggered(true)
-                            }}
-                          >
-                            Cancel
-                          </button>
-                         
-                        </div>
-                      ))}
+                      {empBook &&
+                        empBook.map((meal, index) => (
+                          <div key={index}>
+                            <p>Meal:{meal.Name_of_Meal}</p>
+                            <p>Description:{meal.Description}</p>
+                            <button
+                              onClick={() => {
+                                DeleteBooking(meal.Booking_ID);
+                                setdelBook((prev) => !prev); // Trigger state change to refresh data
+                                setActionTriggered(true);
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        ))}
 
                       {/* <button onClick={DeleteBooking(b_ID)}>Cancel</button> */}
                     </>

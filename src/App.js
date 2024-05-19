@@ -9,7 +9,6 @@ import StaffDashboard, {
   StaffDashBoardLoader,
 } from "./pages/StaffDashboard/StaffDashboard";
 
-import Reporting from "./components/Reporting/Reporting";
 
 import LandingNew from "./pages/LandingNew/LandingNew";
 import HRMeals from "./pages/HRMeals/HRMeals";
@@ -19,14 +18,11 @@ import StaffCarWash from "./components/StaffCarWash/StaffCarWash";
 import { TempReportPage } from "./pages/TempReportPage/TempReportPage";
 import StaffBookings from "./pages/StaffBookings/StaffBookings";
 
-// import { register } from "swiper/element/bundle";
-import LoginButton from "./components/Log/LoginButton";
-import LogoutButton from "./components/Log/LogoutButton";
 import { register } from "swiper/element/bundle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { fetchStorageData,setLocalStorage } from "./helper";
+import { fetchStorageData, setLocalStorage } from "./helper";
 // register Swiper custom elements
 register();
 
@@ -41,40 +37,54 @@ const GuardedRoute = ({ component: Component, auth, ...rest }) => (
 
 function App() {
   const { logout, isAuthenticated, user } = useAuth0();
-  console.log(isAuthenticated,"authen");
-  console.log(user,"user");
+  console.log(isAuthenticated, "authen");
+  console.log(user, "user");
   setLocalStorage({ key: "Profile", value: user });
 
   const employee = fetchStorageData({ key: "User" });
-  
 
-  const HRallowed=()=>{
-      if(employee.EMP_type==='HR' || isAuthenticated){
-          return true
-      }
-      else{
-        return false;
-      }
-
-
-
-  }
-
+  const HRallowed = () => {
+    if (isAuthenticated && employee.EMP_type === "HR") {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <>
-       <BrowserRouter>
-       <Switch>
-         <Route exact path="/" component={LandingNew} index />
-         <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
-         <GuardedRoute path="/HRhome" component={HRHome} auth ={HRallowed()} />
-         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={HRallowed()} />
-         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={HRallowed()} />
-         <GuardedRoute path="/staffBooking" component={Carousel} auth ={isAuthenticated}/>
-         <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
-      </Switch>
-     </BrowserRouter>
-     {/* <ToastContainer/> */}
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={LandingNew} index />
+          <GuardedRoute
+            path="/Dashboard"
+            component={StaffDashboard}
+            auth={isAuthenticated}
+          />
+          <GuardedRoute path="/HRhome" component={HRHome} auth={HRallowed()} />
+          <GuardedRoute
+            path="/HRMeals"
+            component={HRMeals}
+            auth={HRallowed()}
+          />
+          <GuardedRoute
+            path="/HRBookings"
+            component={HRBookings}
+            auth={HRallowed()}
+          />
+          <GuardedRoute
+            path="/staffBooking"
+            component={Carousel}
+            auth={isAuthenticated}
+          />
+          <GuardedRoute
+            path="/Reports"
+            component={TempReportPage}
+            auth={isAuthenticated}
+          />
+        </Switch>
+      </BrowserRouter>
+      {/* <ToastContainer/> */}
     </> // <StaffDashboard/>
     // <Reporting></Reporting>
   );

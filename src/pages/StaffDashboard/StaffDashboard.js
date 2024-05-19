@@ -84,10 +84,10 @@ const StaffDashboard = () => {
     };
     Projects();
 
-    const uniques = filterUniqueProjects(allProjects);
-    setUniqueProjectNames(uniques);
-    setAllProjects(allProjects);
-    setLoaded(true);
+    // const uniques = filterUniqueProjects(allProjects);
+    // setUniqueProjectNames(uniques);
+    // setAllProjects(allProjects);
+    // setLoaded(true);
   }, []);
 
   const [task, setTask] = useState("");
