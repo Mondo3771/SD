@@ -70,13 +70,11 @@ function App() {
          <GuardedRoute path="/HRhome" component={HRHome} auth ={HRallowed()} />
          <GuardedRoute path="/HRMeals" component={HRMeals} auth ={HRallowed()} />
          <GuardedRoute path="/HRBookings" component={HRBookings} auth ={HRallowed()} />
-         <GuardedRoute path="/staffBooking" component={Carousel} auth ={isAuthenticated}/>
+         <GuardedRoute path="/staffBooking" component={StaffBookings} auth ={isAuthenticated}/>
          <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
       </Switch>
      </BrowserRouter>
-     {/* <ToastContainer/> */}
-    </> // <StaffDashboard/>
-    // <Reporting></Reporting>
+    </>
   );
 }
 

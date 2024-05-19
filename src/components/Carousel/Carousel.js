@@ -9,7 +9,7 @@ import {
   Swrapper,
   PageSec,
 } from "./Carousel.styles";
-import StaffCarWash from "../StaffCarWash/StaffCarWash";
+// import StaffCarWash from "../StaffCarWash/StaffCarWash";
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -99,7 +99,7 @@ const DeleteBooking = (Booking_ID) => {
     });
 };
 
-const Carousel = () => {
+const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
   const data = fetchStorageData({ key: "User" });
 
   const [Meals, setMeals] = useState(null);
@@ -117,6 +117,7 @@ const Carousel = () => {
   const Book = (booking) => {
     setSelectedBooking(booking);
     setModalOpen(true);
+    onOpenModal(booking, data,empBook);
     setActionTriggered(true)
   };
 
@@ -179,14 +180,18 @@ const Carousel = () => {
 
   return (
     <>
-    {modalOpen && (
-        <Modal
+    {/* {modalOpen && (
+       
+        <>
+         <Modal
           setOpenModal={setModalOpen}
           data={selectedBooking}
           employee={data}
           booking={empBook && empBook.length > 0}
         />
-      )}
+        </>
+
+      )} */}
       <StaffHeader />
       
 
@@ -286,7 +291,7 @@ const Carousel = () => {
               </section>
             </Swrapper>
             </MealsMain>
-            <StaffCarWash></StaffCarWash>
+            {StaffCarWash}
           </PageSec>
         ) : (
           <Loader />

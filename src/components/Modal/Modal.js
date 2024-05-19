@@ -28,6 +28,11 @@ function Modal({ setOpenModal, data, employee, booking }) {
 
     setOpenModal(false);
   };
+  const confirmCarBooking=()=>{
+    setOpenModal(false);
+
+
+  }
 
   return (
     <main className="modalBackground">
@@ -56,12 +61,51 @@ function Modal({ setOpenModal, data, employee, booking }) {
                 X
               </button>
             </div>
+            {data.Description?(
+            <>
+            
             <h2>{data.Name_of_Meal}</h2>
             <p>Description: {data.Description}</p>
-            {/* <p>Available: {data.Available ? "Yes" : "No"}</p> */}
             <section className="section">
               <button onClick={confirmBooking}>Confirm Booking</button>
             </section>
+              </>
+            )
+            :
+            (
+              <>
+              {data.Quantity===0?
+              (
+                <>
+                <article className="already">
+                  <p className="already">There is no available carwash for this day</p>
+                  <button
+                    onClick={() => {
+                      setOpenModal(false);
+                    }}
+                  >
+                    Close
+                  </button>
+                </article>
+              </>
+              )
+              :(
+
+                <>
+                  <h2>Car Wash Booking</h2>
+                  <p> {data.Day}: {data.Date.split(' ')[0]}</p>
+                  <p>Quantity left:{data.Quantity}</p>
+
+                  <section className="section">
+                  <button onClick={confirmCarBooking}>Confirm Booking</button>
+                </section>
+                </>
+
+              )}
+              </>
+              
+         
+            )}
           </>
         )}
       </section>
