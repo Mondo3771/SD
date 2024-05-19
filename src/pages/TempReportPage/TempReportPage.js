@@ -108,16 +108,36 @@ export const TempReportPage = () => {
       Message_ID: Math.random() * 1000,
     };
 
-    // newMessage.Message_ID = data.Message_ID;
     newMessage.Date = formatDate(newMessage.Date);;
-    const storageChange = [
-      ...fetchStorageData({ key: "Feedback" }),
-      newMessage,
-    ];
-    setLocalStorage({ key: "Feedback", value: storageChange });
-    setAllFeedBack((prev) => [newMessage, ...prev]);
-    toast.success(`Message successfully sent!`);
 
+    fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        Message: feedback,
+        Sent_ID: sender.Emp_ID,
+        Rec_ID: receiver.Emp_ID,
+        Date: today,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        newMessage.Message_ID = data.Message_ID;
+        newMessage.Date = formatDate(newMessage.Date)
+        const storageChange = [
+          ...fetchStorageData({ key: "Feedback" }),
+          newMessage,
+        ];
+        setLocalStorage({ key: "Feedback", value: storageChange });
+        setAllFeedBack((prev) => [newMessage, ...prev]);
+        toast.success(`Message successfully sent!`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const closeReport = () => {

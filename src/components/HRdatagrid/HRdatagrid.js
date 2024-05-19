@@ -311,7 +311,7 @@ const HRdatagrid = () => {
               borderRadius: "0",
               color: "var(--white)",
               "& .headername": {
-                backgroundColor: "var(--darkest)",
+                backgroundColor: "var(--dark)",
                 color: "var(--white)",
               },
               "& .name":{

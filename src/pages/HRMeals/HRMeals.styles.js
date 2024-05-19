@@ -113,6 +113,8 @@ export const Card = styled.section`
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   max-width: 60vw;
   background-color: transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid white;
   :hover {
     cursor: pointer;
@@ -142,6 +144,9 @@ export const CreateMealCard = styled.article`
   border-radius: 20px;
   background-color: transparent;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow-y: auto;
   overflow: hidden;
   max-width: 63vw;
 
