@@ -1,5 +1,3 @@
-
-
 import {
   Wrapper,
   Card,
@@ -113,11 +111,10 @@ const Carousel = () => {
 
   const [actionTriggered, setActionTriggered] = useState(false); //i want to refresh 1 second after an action
 
-
   const Book = (booking) => {
     setSelectedBooking(booking);
     setModalOpen(true);
-    setActionTriggered(true)
+    setActionTriggered(true);
   };
 
   useEffect(() => {
@@ -149,7 +146,6 @@ const Carousel = () => {
     fetchEmployeeMeal();
   }, [data.Emp_ID, modalOpen, delBook]);
 
-
   useEffect(() => {
     if (actionTriggered) {
       const timer = setTimeout(() => {
@@ -166,7 +162,7 @@ const Carousel = () => {
               console.log(book.data[0].Booking_ID, "book");
             });
         };
-    
+
         fetchEmployeeMeal();
 
         // Reset actionTriggered state
@@ -203,85 +199,84 @@ const Carousel = () => {
                   <h3>Our Menu</h3>
                 </section>
 
-              <Swiper
-                effect={"coverflow"}
-                grabCursor={true}
-                centeredSlides={true}
-                loop={false}
-                slidesPerView={"1.5"}
-                coverflowEffect={{
-                  rotate: 0,
-                  stretch: 0,
-                  depth: 100,
-                  modifier: 2.5,
-                }}
-                pagination={{ el: ".swiper-pagination", clickable: true }}
-                navigation
-                // ={{
-                //   nextEl: '.swiper-button-next',
-                //   prevEl: '.swiper-button-prev',
-                //   clickable: true,
-                // }}
-                onSlideChange={(swiper) => setTopCardIndex(swiper.realIndex)}
-                className="swiper_container"
-              >
-                {Meals.map(
-                  (
-                    booking,
-                    index //change
-                  ) => (
-                    <SwiperSlide key={index}>
-                      <Card
-                        onClick={() => Book(booking)}
-                        isTop={index === topCardIndex}
-                      >
-                        <section className="textwrap">
-                          <h1>{booking.Name_of_Meal}</h1>
-                          <p>Description: {booking.Description}</p>
-                          {/* <p>Allergens: {booking.Allergens}</p> */}
-                          {/* <p>Date: {booking.Date}</p> */}
-                          {/* <button>Order</button> */}
-                        </section>
-                      </Card>
-                    </SwiperSlide>
-                  )
-                )}
-              </Swiper>
-              <section className="bookings">
-                {!(empBook && empBook.length > 0) ? (
-                  <p>
-                    Welcome to the Meals page! We take your health and
-                    productivity seriously. That's why we offer a selection of
-                    nutritious and delicious lunches designed to boost both your
-                    energy and performance. Enjoy a delightful lunch break that
-                    keeps you focused and productive throughout the day. Bon
-                    appétit!
-                  </p>
-                ) : (
-                  <>
-                    <h2>Your Booking for Today:</h2>
+                <Swiper
+                  effect={"coverflow"}
+                  grabCursor={true}
+                  centeredSlides={true}
+                  loop={false}
+                  slidesPerView={"1.5"}
+                  coverflowEffect={{
+                    rotate: 0,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 2.5,
+                  }}
+                  pagination={{ el: ".swiper-pagination", clickable: true }}
+                  navigation
+                  // ={{
+                  //   nextEl: '.swiper-button-next',
+                  //   prevEl: '.swiper-button-prev',
+                  //   clickable: true,
+                  // }}
+                  onSlideChange={(swiper) => setTopCardIndex(swiper.realIndex)}
+                  className="swiper_container"
+                >
+                  {Meals.map(
+                    (
+                      booking,
+                      index //change
+                    ) => (
+                      <SwiperSlide key={index}>
+                        <Card
+                          onClick={() => Book(booking)}
+                          isTop={index === topCardIndex}
+                        >
+                          <section className="textwrap">
+                            <h1>{booking.Name_of_Meal}</h1>
+                            <p>Description: {booking.Description}</p>
+                            {/* <p>Allergens: {booking.Allergens}</p> */}
+                            {/* <p>Date: {booking.Date}</p> */}
+                            {/* <button>Order</button> */}
+                          </section>
+                        </Card>
+                      </SwiperSlide>
+                    )
+                  )}
+                </Swiper>
+                <section className="bookings">
+                  {!(empBook && empBook.length > 0) ? (
+                    <p>
+                      Welcome to the Meals page! We take your health and
+                      productivity seriously. That's why we offer a selection of
+                      nutritious and delicious lunches designed to boost both
+                      your energy and performance. Enjoy a delightful lunch
+                      break that keeps you focused and productive throughout the
+                      day. Bon appétit!
+                    </p>
+                  ) : (
+                    <>
+                      <h2>Your Booking for Today:</h2>
 
-                    {empBook &&
-                      empBook.map((meal, index) => (
-                        <div key={index}>
-                          <p>Meal:{meal.Name_of_Meal}</p>
-                          <p>Description:{meal.Description}</p>
-                          <button
-                            onClick={() => {
-                              DeleteBooking(meal.Booking_ID);
-                              setdelBook((prev) => !prev); // Trigger state change to refresh data
-                              setActionTriggered(true)
-                            }}
-                          ></button>
-                         
-                        </div>
-                      ))}
+                      {empBook &&
+                        empBook.map((meal, index) => (
+                          <div key={index}>
+                            <p>Meal:{meal.Name_of_Meal}</p>
+                            <p>Description:{meal.Description}</p>
+                            <button
+                              onClick={() => {
+                                DeleteBooking(meal.Booking_ID);
+                                setdelBook((prev) => !prev); // Trigger state change to refresh data
+                                setActionTriggered(true);
+                              }}
+                            ></button>
+                          </div>
+                        ))}
 
-                  {/* <button onClick={DeleteBooking(b_ID)}>Cancel</button> */}
-                  </>
-                )}
-              </section>
-            </Swrapper>
+                      {/* <button onClick={DeleteBooking(b_ID)}>Cancel</button> */}
+                    </>
+                  )}
+                </section>
+              </Swrapper>
             </MealsMain>
             <StaffCarWash></StaffCarWash>
           </PageSec>

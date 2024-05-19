@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchStorageData, setLocalStorage } from "../../helper";
-
-import StaffHeader from "../../components/StaffHeader/StaffHeader";
 //icons
 import {
   ClockIcon,
@@ -25,7 +23,6 @@ import {
 import StaffHeader from "../../components/StaffHeader/StaffHeader";
 import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
-import LogoutButton from "../../components/Log/LogoutButton";
 import { toast } from "react-toastify";
 import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
 // import sheet from "styled-components/dist/sheet";
@@ -85,12 +82,12 @@ const StaffDashboard = () => {
           console.error("Error:", error);
         });
     };
-    // Projects();
-    // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}]
+    Projects();
+
     const uniques = filterUniqueProjects(allProjects);
-          setUniqueProjectNames(uniques);
+    setUniqueProjectNames(uniques);
     setAllProjects(allProjects);
-    setLoaded(true)
+    setLoaded(true);
   }, []);
 
   const [task, setTask] = useState("");
@@ -121,14 +118,14 @@ const StaffDashboard = () => {
             setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
             return [taskToAdd, ...prev];
           });
-          toast.success(`${taskToAdd.Description} successfully created!`)
+          toast.success(`${taskToAdd.Description} successfully created!`);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
     add();
-    setCreate(handleClick)
+    setCreate(handleClick);
   };
 
   const projectNameChange = (event) => {
@@ -196,35 +193,6 @@ const StaffDashboard = () => {
         console.error("Error:", error);
       });
   };
-
-  useEffect(() => {
-    Projects();
-  }, []);
-
-  const [task, setTask] = useState("");
-  const [name, setName] = useState("");
-
-  const [createTask, setCreate] = useState(false);
-
-  const handleClick = (prev) => !prev;
-
-  const handleAdd = (taskToAdd) => {
-    taskToAdd["Emp_ID"] = Emp_ID;
-    taskToAdd["Task_ID"] = Math.random() * 100;
-    add(taskToAdd);
-  };
-
-  const projectNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const taskChange = (event) => {
-    setTask(event.target.value);
-  };
-  const handlePause = (taskToPause, time) => {
-    console.log("pause ", taskToPause);
-    pause(taskToPause, time);
-  };
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
     deleteTask(taskToDelete);
@@ -236,7 +204,6 @@ const StaffDashboard = () => {
       )
     );
   };
-  const data = ""
   const Lunch = () => {
     history.push("/Lunch", { params: data });
   };
@@ -322,7 +289,7 @@ const StaffDashboard = () => {
                       <TrashIcon
                         className="TrashIcon"
                         aria-label="Delete Button"
-                        width= {"25px"}
+                        width={"25px"}
                         onClick={() => handleDelete(s)}
                         alt="Delete Icon"
                       />{" "}
