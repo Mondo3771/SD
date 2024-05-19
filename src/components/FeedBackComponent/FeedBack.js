@@ -5,10 +5,6 @@ import { Message, Wrapper, Wrap, SendFeedBackWrapper } from "./FeedBack.styles";
 
 //
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
-
-// parameters: feebackArray is an array of all the feedback in the database filtered for a person who was clicked
-//              on on the showUsers component
-//              User is the user who is on the page (Determines Manager/Staff)
 export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
   const [InputMessage, setInputMessage] = useState("");
   const [changed, setChanged] = useState(false);

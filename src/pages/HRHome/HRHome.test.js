@@ -60,7 +60,6 @@ test("renders HRHome component", async () => {
     );
   });
   // Check if the navigation links are rendered
-  screen.debug();
   const bookingsLink = screen.getByText("Bookings");
   expect(bookingsLink).toBeInTheDocument();
   const usersLink = screen.getByText("Users");

@@ -74,6 +74,5 @@ test("should render HRdatagrid with users", async () => {
         <HRdatagrid />
       </MemoryRouter>
     );
-    debug();
   });
 });
