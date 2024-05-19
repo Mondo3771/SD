@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 
 //icons
 import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
-import { formatDate, formatTime } from "../../helper";
+import { formatDate, formatTime } from "../../helper.js";
 
 
 

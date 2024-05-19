@@ -10,7 +10,16 @@ import StaffDashboard from "./StaffDashboard";
 import fetchMock from "jest-fetch-mock";
 import "@testing-library/jest-dom/extend-expect";
 import userEvent from "@testing-library/user-event";
-import e from "express";
+
+// Import the function you're testing
+import { fetchStorageData } from '../../helper'; // replace with actual module
+
+// Mock the function
+jest.mock('../../helper', () => ({
+  ...jest.requireActual('../../helper'),
+  fetchStorageData: () => Promise.resolve({ Emp_ID: '86' }),
+  
+}));
 
 fetchMock.enableMocks();
 jest.mock("react-router-dom", () => ({

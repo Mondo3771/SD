@@ -2,17 +2,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchStorageData, setLocalStorage } from "../../helper";
-
-
-//icons
 import {
   ClockIcon,
   ArrowRightIcon,
   TrashIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
-
-import logo from "../../Images/logo3.svg";
 import {
   allProjects,
   Card,
@@ -25,8 +20,6 @@ import {
 } from "./StaffDashBoard.styles";
 
 import StaffHeader from "../../components/StaffHeader/StaffHeader";
-
-import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
 function filterUniqueProjects(projects) {
@@ -59,14 +52,13 @@ function filterTasksByProject(Sheets, projectName) {
 const StaffDashboard = () => {
   // const location = useLocation();
   const history = useHistory();
-  const data=fetchStorageData({key:"User"})
-  console.log(data,'fetching data');
+  const data = fetchStorageData({ key: "User" });
   const Emp_ID = data.Emp_ID;
   // const Emp_ID = 87;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
-  const pause = (taskToPause,time) => {
+  const pause = (taskToPause, time) => {
     fetch(`/api/Tasks/`, {
       method: "PUT",
       headers: {
@@ -174,17 +166,15 @@ const StaffDashboard = () => {
   };
 
   const projectNameChange = (event) => {
-    console.log(event.target.value);
     setName(event.target.value);
   };
 
   const taskChange = (event) => {
-    console.log(event.target.value);
     setTask(event.target.value);
   };
   const handlePause = (taskToPause, time) => {
     console.log("pause ", taskToPause);
-    pause(taskToPause,time);
+    pause(taskToPause, time);
   };
   const handleDelete = (taskToDelete) => {
     // pass task id to delete

@@ -55,7 +55,7 @@ const HRMeals = () => {
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal,bool) =>
+  const changeAvailable = (meal,bool) =>{
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
