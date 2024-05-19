@@ -43,7 +43,6 @@ test("should render HRdatagrid with no users", async () => {
         <HRdatagrid />
       </MemoryRouter>
     );
-    debug();
   });
 });
 
@@ -61,14 +60,7 @@ test("should render HRdatagrid with users", async () => {
               Name: "Kabelo",
               Surname: "Rankoane",
               token: "google-oauth2|104356444367191158010",
-            },
-            {
-              Department: "HR",
-              EMP_type: "Staff",
-              Emp_ID: 84,
-              Name: "Mondo",
-              token: "google-oauth2|108823478247906648302",
-            },
+            }
           ],
           // Add Tasks here
         }),

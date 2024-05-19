@@ -24,18 +24,6 @@ const HRMeals = () => {
 
 
   useEffect(() => {
-    const User = fetchStorageData({key:"User"}); 
-    console.log(User)
-
-    // if (!User) {
-    //   // Go back to landing page
-    //   history.push("/");
-    //   console.log("user",User)
-
-    // }else 
-    // if(User.Emp_Type !== "HR"){
-    //   // Go back to their home page depending on whether they are a staff or manager
-    // }
     const getMeals = () => {
       fetch("/api/CreateMeals")
         .then((response) => {
@@ -242,7 +230,7 @@ const HRMeals = () => {
                   name="description"
                   className="input"
                   type="text"
-                  aria-label="Descriptoin of Meal"
+                  aria-label="Description of Meal"
                   placeholder="Description"
                   onChange={descriptionChange}
                 ></input>
@@ -257,7 +245,7 @@ const HRMeals = () => {
                     }}
                   ></input>
                 </section>
-                <button onClick={createMeal} data-test-id="Create Meal">
+                <button onClick={createMeal} aria-label="Create Meal">
                   Create
                 </button>
               </CreateMealCard>
@@ -270,12 +258,12 @@ const HRMeals = () => {
                   <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
                   <input
                     type="checkbox"
-                    aria-label="Chamge Availabel"
+                    aria-label="Change Available"
                     onChange={changeAvailableViewMeal}
                   ></input>
                 </section>
                 {/* {changed && <button onClick={() => setChanged(p => !p)}> Save Changes</button>} */}
-                <button onClick={deleteMeal}>
+                <button onClick={deleteMeal} aria-label="Delete Button">
                   <TrashIcon width={25} />
                 </button>
                 <button onClick={() => {

@@ -20,7 +20,6 @@ const getMeals = () => {
 };
 
 const HRHome = () => {
-
   useEffect(() =>{
     getMeals();
   },[])
@@ -52,8 +51,7 @@ const HRHome = () => {
             </ul>
           </nav>
         </Header>
-        
-          <HRdatagrid></HRdatagrid>
+          <HRdatagrid data-test-ID="HRdataGRid" ></HRdatagrid>
         <LoginButton />
       </Wrapper>
     </>

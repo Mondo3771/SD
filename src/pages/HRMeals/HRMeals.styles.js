@@ -211,30 +211,34 @@ export const ShowMealCard = styled.article`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    input{
+    input {
       width: 2vw;
-    height: 2vh;
-  }
+      height: 2vh;
+    }
 
-  h3 {
-    font-size: 1.2rem;
+    h3 {
+      font-size: 1.2rem;
+    }
   }
 `;
 
 export const MealCardFin = ({ meal, click }) => (
-  <MealCard key={meal.Meal_Id} onClick={() => click(meal)}>
+  <MealCard
+    key={meal.Meal_Id}
+    onClick={() => click(meal)}
+    data-testid={`MealCard-${meal.Meal_ID}`}
+  >
     <h3>{meal.Name_of_Meal}</h3>
     <p>{meal.Description}</p>
     <p>{meal.Availability ? "Available" : "Not Available"}</p>
   </MealCard>
 );
 
-export const MockMeals = 
-[
+export const MockMeals = [
   {
-  Meal_Id:1,
-  Name_of_Meal: "Masala",
-  Availability: true,
-  Description: "lorem ipsum dolor sit amet dolor",
-  }
-]
+    Meal_Id: 1,
+    Name_of_Meal: "Masala",
+    Availability: true,
+    Description: "lorem ipsum dolor sit amet dolor",
+  },
+];

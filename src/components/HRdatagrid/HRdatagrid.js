@@ -89,9 +89,7 @@ const HRdatagrid = () => {
   const [OpenReport, setOpenReport] = useState(false);
   const [userReportpageinfo, setuserReportpageinfo] = useState(null);
   const location = useLocation();
-  console.log(location);
   const user = location.state.params;
-
   const [allEmployeedata, setallEmployeedata] = useState(null);
   const [Loaded, setLoaded] = useState(false);
 
@@ -159,7 +157,7 @@ const HRdatagrid = () => {
           }}
           onClick={() => userReport(params.row)}
         >
-          <DocumentIcon width="2vw" height="3vh" textAlign="center" />
+          <DocumentIcon width="2vw" height="3vh" textalign="center" />
         </button>
       ),
     },
@@ -202,7 +200,7 @@ const HRdatagrid = () => {
 
       //renderCell: (params) => <AdminActions {...(params, rowId, setrowId)} />,
       renderCell: (params) => (
-        <button
+        <button aria-label="delete"
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
@@ -223,7 +221,7 @@ const HRdatagrid = () => {
             )
           }
         >
-          <TrashIcon width="2vw" height="3vh" textAlign="center" />
+          <TrashIcon width="2vw" height="3vh" textalign="center" />
         </button>
       ),
     },
@@ -258,7 +256,7 @@ const HRdatagrid = () => {
                 }}
                 onClick={closeReport}
               >
-                <XMarkIcon width="2vw" height="3vh" textAlign="center" />
+                <XMarkIcon width="2vw" height="3vh" textalign="center" />
               </button>
               <Reporting User={userReportpageinfo}></Reporting>
             </>
@@ -294,7 +292,7 @@ const HRdatagrid = () => {
                       height: "80vh",
                       width: "80vw",
                       gap: 5,
-                      textAlign: "center",
+                      textalign: "center",
                       boxShadow: 2,
                       borderRadius: "20px",
                       color: "var(--white)",
