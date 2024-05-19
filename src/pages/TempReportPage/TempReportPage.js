@@ -84,12 +84,11 @@ export const TempReportPage = () => {
   }, []);
 
   const handleUserClick = (user) => {
-    // Filter allfeedback users
     console.log(user, "user");
     setuserClicked(true);
     setReportUser(user);
     const fullFeedback = fetchStorageData({ key: "Feedback" }) ?? [];
-    // fullFeedback.filter(f => f.Send_ID === user.Emp_ID);
+
     const t = fullFeedback.filter(
       (f) => f.Sent_ID === user.Emp_ID || f.Receive_ID === user.Emp_ID
     );

@@ -48,8 +48,9 @@ export const Wrapper = styled.div`
   background-image: url(${newback});
   background-size: cover;
   background-position: top;
-
-  gap: 2rem;
+  height: 100vh;
+  gap: 1rem;
+  overflow-x: hidden;
 
   .titlepage {
     display: flex;
@@ -94,11 +95,8 @@ export const Card = styled.article`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  //background: linear-gradient(65deg, var(--darkest), #3f2182);
-  //background: linear-gradient(120deg, #16154e, var(--dark));
+  overflow-x: hidden;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  //background-color: var(--whiter);
-  //background: linear-gradient(135deg, #16154e, var(--dark));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 

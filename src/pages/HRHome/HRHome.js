@@ -27,7 +27,6 @@ const HRHome = () => {
  
   
   return (
-    <>
       <Wrapper>
         <Header>
           <section className="logo">
@@ -45,18 +44,20 @@ const HRHome = () => {
               <li>
                 <a href="HRBookings">Bookings</a>
               </li>
-              
               <li>
                 <a href="HRhome">Users</a>
               </li>
+              <li>
+              {" "}
+              <LoginButton className={"logout"} />
+            </li>
             </ul>
           </nav>
         </Header>
         
           <HRdatagrid></HRdatagrid>
-        <LoginButton />
       </Wrapper>
-    </>
+  
   );
 };
 

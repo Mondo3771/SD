@@ -14,11 +14,10 @@ export const Card = styled.article`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  //background: linear-gradient(65deg, var(--darkest), #3f2182);
-  //background: linear-gradient(120deg, #16154e, var(--dark));
+  overflow-x: hidden;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  //background-color: var(--whiter);
-  //background: linear-gradient(135deg, #16154e, var(--dark));
+
+
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 

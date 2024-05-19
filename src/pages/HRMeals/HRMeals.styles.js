@@ -11,9 +11,16 @@ export const Header = styled.header`
   align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
+  .logout button{
+    background: inherit;
+    border: none;
+    color: aliceblue;
+  }
+
   .logo {
     display: flex;
   }
+
 
   a {
     font-size: 1.35rem;
@@ -37,9 +44,21 @@ export const Header = styled.header`
   li a:hover {
     color: var(--white);
   }
+
+  @media (max-width: 768px) {
+    a {
+      font-size: 0.8rem;
+    }
+    ul {
+      gap: 1rem;
+    }
+    .logoPic {
+      width : 30px
+    }
+  }
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.body`
   display: flex;
   flex-direction: column;
   background-image: url(${newback});
@@ -47,66 +66,73 @@ export const Wrapper = styled.div`
   background-position: top;
   height: 100vh;
   gap: 1rem;
+  overflow-x: hidden;
 
-  .titlepage {
-    display: flex;
-    flex-direction: left;
-    text-align: left;
-    padding-left: 4vw;
-    width: 40vw;
-    height: 5vh;
+  .title {
+    margin-left: 4vw;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--white);
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 
   .container {
     display: flex;
-    width: 95vw;
+    width: 90vw;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    padding: 2vw;
+    padding: 2vw; 
+  }
+
+  @media (max-width: 768px){
+    .title {
+      font-size: 1.5rem;
+    }
+    .container {
+      flex-direction:column;
+      gap: 0.5rem;
+    }
   }
 `;
 
-export const Card = styled.article`
+export const Card = styled.section`
   display: grid;
   gap: 5vw;
-  // row-gap: 50px;
-  // column-gap: 50px;
+
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
   flex: 0.7;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 20px;
-  max-height: 60vh;
+  /* max-height: 60vh; */
+  height: 380px;
   color: var(--white);
   align-items: center;
   padding: 30px;
-  //margin: 0 20px;
   overflow-y: auto;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   max-width: 60vw;
-  //background-color: #31174b;//dark purple
-  /* background-color: var(--white); */
   background-color: transparent;
-  /* backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
   border: 1px solid white;
   :hover {
     cursor: pointer;
     background-color: var(--darkpurple);
   }
+
+  @media (max-width: 768px){
+    width: 100%;
+    height: 400px;
+    flex: 1;
+  }
+
 `;
 
-export const CreateMealCard = styled.div`
+export const CreateMealCard = styled.article`
   display: flex;
   flex-direction: column;
-  //width: 12vw;
   gap: 2rem;
   width: 30vw;
-  height: 62vh;
+  height: 400px;
   color: var(--dark);
   flex: 0.3;
   margin: 0 20px;
@@ -114,12 +140,10 @@ export const CreateMealCard = styled.div`
   padding: 20px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 20px;
-  /* background-color: var(--white); */
   background-color: transparent;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  /* backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
-  overflow-y: auto;
+  overflow: hidden;
+  max-width: 63vw;
 
   h2,
   p {
@@ -170,26 +194,55 @@ export const CreateMealCard = styled.div`
   label {
     font-weight: bold;
   }
+
+  @media (max-width:768px){
+  
+    font-size: 0.75rem;
+    /* width: 50%; */
+    flex:1;
+
+    h2 {
+      font-size: 1.3rem;
+      margin : 0.5rem 0 ;
+    }
+    button {
+      width: 70px;
+      margin: 0;
+      padding: 5px;
+    }
+    .input {
+      padding: 1px 5px ;
+      width: 100%;
+    }
+
+    ::placeholder {
+      font-size:0.9rem;
+    }
+
+  }
 `;
 
 export const MealCard = styled.article`
   border: 1px solid white;
   display: flex;
-  /* width: 20vw; */
   flex-direction: column;
   background-color: var(--dark);
   border-radius: 10px;
   padding: 2vw;
+
+  @media (max-width: 768px){
+    font-size: 0.65rem;
+  }
 `;
 
 export const ShowMealCard = styled.article`
   display: flex;
   width: 40vw;
-  height: 48vh;
+  height: 360px;
   flex-direction: column;
   gap: 0.5rem;
   color: var(--white);
-  flex: 0.2;
+  flex: 0.3;
   margin: 0 20px;
   border: 1px solid white;
   padding: 40px;
@@ -198,16 +251,24 @@ export const ShowMealCard = styled.article`
   background-color: var(--dark);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1rem;
-  overflow-y: auto;
+  overflow-y: hidden;
 
   button {
+   
     border-radius: 10px;
     width: 8vw;
     height: 5vh;
     font-size: 1rem;
     background-color: var(--white);
     color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+  .trashIcon,.backIcon {
+    width: 25px;
+  }
+ 
   .available {
     display: flex;
     align-items: center;
@@ -223,7 +284,29 @@ export const ShowMealCard = styled.article`
   }
 
   @media (max-width: 768px){
-    
+    height: 180px;
+    font-size: 0.65rem;
+    flex:0.7;
+
+    button {
+      display: flex;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      font-size: 0.65rem;
+    }
+
+    .trashIcon,.backIcon {
+      width: 15px;
+      height: 15px;
+    }
+
+    p {
+      font-size: 0.5rem;
+    }
+    h3 {
+      margin: 0;
+    }
   }
 `;
 

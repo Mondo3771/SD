@@ -84,6 +84,10 @@ const HRBookingsGrid = () => {
 
   useEffect(() => {
     fetchData(setallBookings, setLoaded);
+// const temp = [{id:0, Name:"Tapiwa",Surname: "Mazarura", EMP_type: "HR", Date_of_booking: "2015:02:09",Meal:"Tikka"}]
+// setallBookings(temp)
+// setLoaded(true)
+    
   }, []);
 
   const columns = [

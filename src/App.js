@@ -55,28 +55,25 @@ function App() {
       else{
         return false;
       }
-
-
-
   }
 
 
   return (
-    // <>
-    //    <BrowserRouter>
-    //    <Switch>
-    //      <Route exact path="/" component={LandingNew} index />
-    //      <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
-    //      <GuardedRoute path="/HRhome" component={HRHome} auth ={true} />
-    //      <GuardedRoute path="/HRMeals" component={HRMeals} auth ={true} />
-    //      <GuardedRoute path="/HRBookings" component={HRBookings} auth ={true} />
-    //      <GuardedRoute path="/Lunch" component={Carousel} auth ={isAuthenticated}/>
-    //      <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
-    //   </Switch>
-    //  </BrowserRouter>
-    // </> 
-    <HRMeals/>
+   
+       <BrowserRouter>
+       <Switch>
+         <Route exact path="/" component={LandingNew} index />
+         <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
+         <GuardedRoute path="/HRhome" component={HRHome} auth ={true} />
+         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={true} />
+         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={true} />
+         <GuardedRoute path="/Lunch" component={Carousel} auth ={isAuthenticated}/>
+         <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
+      </Switch>
+     </BrowserRouter>
+  
     // <StaffDashboard/>
+    // <HRBookings></HRBookings>
 
   );
 }

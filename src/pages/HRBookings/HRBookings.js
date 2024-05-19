@@ -6,7 +6,6 @@ import React from "react";
 
 const HRBookings = () => {
   return (
-    <>
       <Wrapper>
         <Header>
           <section className="logo">
@@ -27,6 +26,10 @@ const HRBookings = () => {
               <li>
                 <a href="HRhome">Users</a>
               </li>
+              <li>
+              {" "}
+              <LoginButton className={"logout"} />
+            </li>
             </ul>
           </nav>
         </Header>
@@ -36,9 +39,7 @@ const HRBookings = () => {
         <Card>
           <HRBookingsGrid></HRBookingsGrid>
         </Card>
-        <LoginButton/>
       </Wrapper>
-    </>
   );
 };
 

@@ -20,6 +20,8 @@ import { type } from "@testing-library/user-event/dist/type";
 import Reporting from "../Reporting/Reporting";
 import { Card ,Title} from "./HRdatagrid.styles";
 import { setLocalStorage } from "../../helper";
+import { MockUser } from "../FeedBackComponent/FeedBack.styles";
+import { MockUsers } from "../ShowUsers/ShowUsers.styles";
 
 
 const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
@@ -96,7 +98,7 @@ const HRdatagrid = () => {
   const location = useLocation();
 
   console.log(location, "location");
-  let user = null;
+  let user = "";
   if (!location.state) {
     user = { Emp_ID: 1 };
   } else {
@@ -107,6 +109,13 @@ const HRdatagrid = () => {
 
   useEffect(() => {
     fetchData(user, setallEmployeedata, setLoaded);
+    // const temp = MockUsers.map((employee, index) => ({
+    //   ...employee,
+    //   id: index + 1, // Assigning a unique id to each row
+    // }));
+    // setallEmployeedata(temp)
+    // setLoaded(true)
+
   }, []);
 
 
