@@ -12,6 +12,7 @@ import {
   Dater,
   Heading,
   ChartSection,
+  Top
 } from "./Reporting.styles";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
@@ -343,7 +344,7 @@ const Reporting = ({ User }) => {
     },
   };
 
-  const { toPDF, targetRef } = usePDF({ filename: User.Name + "-Report.pdf" });
+  const { toPDF, targetRef } = usePDF({ filename: User.Name?User.Name + "-Report.pdf" : + "My-Report.pdf"});
 
     useEffect(() => {
         // Sort comments by date in descending order (from latest to earliest)
@@ -385,12 +386,12 @@ const Reporting = ({ User }) => {
         <>
          
             <main ref={targetRef}>
+            <Heading>
             <h2> {User.Name? 'Report for ' + User.Name: 'My Report'}</h2>
 
-           
-
-            <Main  >
-                <Dater>
+          <button onClick={() => toPDF()}>Download PDF</button>
+        </Heading>
+        <Dater>
                 <article>
                         <label htmlFor="year">Year:</label>
                         <input type="number" id="year" value={selectedYear} onChange={handleYearChange} />
@@ -401,22 +402,62 @@ const Reporting = ({ User }) => {
                     </article>
 
                 </Dater>
+
+           
+
+            <Main  >
+                
+{/* 
+                <Top>
+                    
+                    <Plot
+                        data={data}
+                        layout={layout}
+                        style={{ width: '60%', height: '60vh',margin:'40px' }}
+                    />
+                    <Feedback>
+                    <h2>Hello</h2> 
+                    {sortFeed?sortFeed.map((item, index) => (
+                        <p key={index}>
+                            <p><strong>{item.Name}:</strong> {item.message}</p>
+                        </p>
+                    )):null}
+
+
+                 </Feedback>
+
+                </Top> */}
+                <ChartSection>
+            <Plot
+              data={data}
+              layout={layout}
+              style={{
+                width: "100vh",
+                height: "70vh",
+                margin: "3vw",
+                border: "2px solid white",
+                borderRadius: "20px",
+              }}
+            />
+            <Feedback>
+              <h2>Notifications</h2>
+              <section className="text">
+                {sortFeed
+                  ? sortFeed.map((item, index) => (
+                      <p key={index}>
+                        <p className="messagebox">
+                          {/* <strong>
+                            {item.Name}:</strong> */}
+                           <strong> Message: {item.Message}</strong>
+                           <strong>date:{item.Date.split('T')[0]}</strong> 
+                        </p>
+                      </p>
+                    ))
+                  : null}
+              </section>
+            </Feedback>
+          </ChartSection>
      
-                <Plot
-                    data={data}
-                    layout={layout}
-                    style={{ width: '60%', height: '60vh',margin:'40px' }}
-                />
-                <Feedback>
-                <h2>Hello</h2> 
-                {sortFeed?sortFeed.map((item, index) => (
-                    <p key={index}>
-                        <p><strong>{item.Name}:</strong> {item.Comment}. date:{item.date}</p>
-                    </p>
-                )):null}
-
-
-                </Feedback>
 
           <Bottom>
             <Summary>

@@ -149,6 +149,8 @@ export const TempReportPage = () => {
   return (
     <>
       <StaffHeader></StaffHeader>
+      <Wrapper>
+
       {firstLoad ? (
         <>
           <Reporting User={employee}></Reporting>
@@ -175,6 +177,8 @@ export const TempReportPage = () => {
       ) : (
         <Loader></Loader>
       )}
+            </Wrapper>
+
     </>
   );
 };

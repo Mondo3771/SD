@@ -161,7 +161,7 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
             .then((book) => {
               console.log(book.data, "noooooooo");
               setempBook(book.data);
-              setb_ID(book.data[0].Booking_ID);
+              setb_ID(book.data[0]?book.data[0].Booking_ID:null);
               console.log(book.data[0].Name_of_Meal, "meal");
               console.log(book.data[0].Booking_ID, "book");
             });

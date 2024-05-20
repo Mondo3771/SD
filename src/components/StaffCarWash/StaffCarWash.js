@@ -98,7 +98,7 @@ const StaffCarWash = ({onOpenModal}) => {
     getcarwash();
 
 
-  },[])
+  },[actionTriggered])
 
 
   useEffect(() => {
@@ -262,6 +262,7 @@ const StaffCarWash = ({onOpenModal}) => {
 
   const mondayBook = () => {
     setSelectedBooking({Date:MondayDate,Quantity:MondayQuant,Day:'Monday'});
+    console.log(empBook);
     onOpenModal({Date:MondayDate.split('T')[0],Quantity:MondayQuant,Day:'Monday',Car_wash:IDmonday}, employee,empBook,actionTriggered);
 
     // setModalOpen(true);
@@ -351,6 +352,7 @@ const deletecarwashbooking = (data) => {
       .then((response) => response.json())
       .then((data) => {
       console.log("Success:", data.message);
+      setActionTriggered(prev=>prev);
       return "Success";
       })
       .catch((error) => {
@@ -363,14 +365,7 @@ const deletecarwashbooking = (data) => {
 
   return (
    <>
-   {/* {modalOpen && (
-      <Modal
-        setOpenModal={setModalOpen}
-        data={selectedBooking}
-        employee={employee}
-        booking={empBook && empBook.length > 0}
-      />
-    )} */}
+ 
     <Wrapper>
       <ImageSec>
         <h3>Professional Cleaning Service</h3>
@@ -383,7 +378,7 @@ const deletecarwashbooking = (data) => {
             <>
              <h5>Your Booking</h5>
                   <p> {empBook.date.split('T')[0]}</p>
-                  <button onClick={deletecarwashbooking(empBook.booking_id)}>delete</button>
+                  <button onClick={()=>deletecarwashbooking(empBook.booking_id)}>delete</button>
             </>
                  
 

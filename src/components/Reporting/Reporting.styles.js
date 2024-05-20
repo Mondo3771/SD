@@ -24,6 +24,8 @@ export const Feedback = styled.article`
     border-radius: 8%;
     padding: 0%.8;
     .messagebox {
+      display: flex;
+      flex-direction: column;
       padding-bottom: 1vh;
       border-bottom: 1px solid white;
     }
@@ -159,3 +161,10 @@ export const ChartSection = styled.section`
   display: flex;
   flex-direction: row;
 `;
+
+
+export const  Top=styled.article`
+display: flex;
+flex-direction: row;
+
+`

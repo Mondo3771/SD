@@ -4,6 +4,7 @@ import "./Modal.css";
 // import { PostBooking } from "../Carousel/fetch";
 
 function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
+  console.log(booking,'modal');
   const confirmBooking = () => {
     const PostBooking = (Emp_ID, Meal_ID) => {
       fetch(`/api/Meals`, {
