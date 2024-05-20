@@ -1,6 +1,6 @@
 //react
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchStorageData, setLocalStorage } from "../../helper";
 //icons
 import {
@@ -56,7 +56,7 @@ function filterTasksByProject(Sheets, projectName) {
 }
 
 const StaffDashboard = () => {
-  // const location = useLocation();
+  const location = useLocation();
   const history = useHistory();
   const data = fetchStorageData({ key: "User" });
   const Emp_ID = data.Emp_ID;
@@ -204,12 +204,13 @@ const StaffDashboard = () => {
       )
     );
   };
+  // const data = ""
   const Lunch = () => {
     history.push("/Lunch", { params: data });
   };
   return (
     <Wrapper>
-      <StaffHeader employee={MockUser}></StaffHeader>
+      <StaffHeader employee={data}></StaffHeader>
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>
@@ -300,7 +301,7 @@ const StaffDashboard = () => {
             );
           })}
       </Card>
-      <LoginButton />
+      {/* <LoginButton /> */}
     </Wrapper>
   );
 };

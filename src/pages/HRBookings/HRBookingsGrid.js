@@ -80,6 +80,10 @@ const HRBookingsGrid = () => {
   const [Loaded, setLoaded] = useState(false);
   useEffect(() => {
     fetchData(setallBookings, setLoaded);
+// const temp = [{id:0, Name:"Tapiwa",Surname: "Mazarura", EMP_type: "HR", Date_of_booking: "2015:02:09",Meal:"Tikka"}]
+// setallBookings(temp)
+// setLoaded(true)
+    
   }, []);
 
   const columns = [
@@ -146,7 +150,7 @@ const HRBookingsGrid = () => {
             )
           }
         >
-          <TrashIcon width="2vw" height="3vh" textalign="center" />
+          <TrashIcon className="icons" width="2vw" height="3vh" textalign="center" />
         </button>
       ),
     },
@@ -168,7 +172,7 @@ const HRBookingsGrid = () => {
               borderRadius: "0",
               color: "var(--white)",
               "& .headername": {
-                backgroundColor: "var(--dark)",
+                backgroundColor: "var(--darkest)",
                 color: "var(--white)",
               },
               "& .first": {

@@ -22,10 +22,9 @@ import StaffHeader from "../../components/StaffHeader/StaffHeader";
 
 
 export const TempReportPage = () => {
-  // const location = useLocation();
-  // const employee = location.state.params;
-  const employee=fetchStorageData({key:"User"})
+  const location = useLocation();
 
+  const employee=fetchStorageData({key:"User"})
 
   const [Users, setUsers] = useState(MockUsers);
   const [Receiver, setReceiver] = useState({});
@@ -51,6 +50,7 @@ export const TempReportPage = () => {
           (p) => p.Department === mainUser.Department
         );
         setUsers(arr);
+        // setLocalStorage({ key: "Users", value: MockUsers });
       })
       .catch();
   };
@@ -58,10 +58,10 @@ export const TempReportPage = () => {
   useEffect(() => {
     // Get All the info you need on this page once (AllFeedback,AllUsers)
     // Get from storage
-    setLocalStorage({ key: "Users", value: MockUsers });
-    setFirstLoad(true);
-    setAllFeedBack(MockFeedBack);
-    setLocalStorage({ key: "Feedback", value: MockFeedBack });
+    // setLocalStorage({ key: "Users", value: MockUsers });
+    // setFirstLoad(true);
+    // setAllFeedBack(MockFeedBack);
+    // setLocalStorage({ key: "Feedback", value: MockFeedBack });
 
     const feedback = () => {
       fetch(`/api/feedback?Emp_ID=${Emp_ID}`, {
@@ -85,12 +85,11 @@ export const TempReportPage = () => {
   }, []);
 
   const handleUserClick = (user) => {
-    // Filter allfeedback users
     console.log(user, "user");
     setuserClicked(true);
     setReportUser(user);
     const fullFeedback = fetchStorageData({ key: "Feedback" }) ?? [];
-    // fullFeedback.filter(f => f.Send_ID === user.Emp_ID);
+
     const t = fullFeedback.filter(
       (f) => f.Sent_ID === user.Emp_ID || f.Receive_ID === user.Emp_ID
     );
@@ -110,15 +109,7 @@ export const TempReportPage = () => {
       Message_ID: Math.random() * 1000,
     };
 
-    // newMessage.Message_ID = data.Message_ID;
     newMessage.Date = formatDate(newMessage.Date);;
-    const storageChange = [
-      ...fetchStorageData({ key: "Feedback" }),
-      newMessage,
-    ];
-    setLocalStorage({ key: "Feedback", value: storageChange });
-    setAllFeedBack((prev) => [newMessage, ...prev]);
-    toast.success(`Message successfully sent!`);
 
     fetch("/api/feedback", {
       method: "POST",

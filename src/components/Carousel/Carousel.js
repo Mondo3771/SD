@@ -7,7 +7,7 @@ import {
   Swrapper,
   PageSec,
 } from "./Carousel.styles";
-import StaffCarWash from "../StaffCarWash/StaffCarWash";
+// import StaffCarWash from "../StaffCarWash/StaffCarWash";
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -35,7 +35,7 @@ const DeleteBooking = (Booking_ID) => {
     });
 };
 
-const Carousel = () => {
+const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
   const data = fetchStorageData({ key: "User" });
 
   const [Meals, setMeals] = useState(null);
@@ -52,7 +52,8 @@ const Carousel = () => {
   const Book = (booking) => {
     setSelectedBooking(booking);
     setModalOpen(true);
-    setActionTriggered(true);
+    onOpenModal(booking, data,empBook,actionTriggered);
+    setActionTriggered(prev=>!prev);
   };
 
   useEffect(() => {
@@ -73,19 +74,19 @@ const Carousel = () => {
       fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
         .then((response) => response.json())
         .then((book) => {
-          console.log(book.data, "noooooooo");
+          // console.log(book.data, "noooooooo");
           setempBook(book.data);
           setb_ID(book.data[0].Booking_ID);
-          console.log(book.data[0].Name_of_Meal, "meal");
-          console.log(book.data[0].Booking_ID, "book");
+          // console.log(book.data[0].Name_of_Meal, "meal");
+          // console.log(book.data[0].Booking_ID, "book");
         });
     };
 
     fetchEmployeeMeal();
-  }, [data.Emp_ID, modalOpen, delBook]);
+  }, [data.Emp_ID, modalOpen, delBook,actionTriggered]);
+
 
   useEffect(() => {
-    if (actionTriggered) {
       const timer = setTimeout(() => {
         // Action to be performed 1 second after modal is closed or delete button is clicked
         console.log("Action triggered 1 second later");
@@ -105,22 +106,27 @@ const Carousel = () => {
 
         // Reset actionTriggered state
         setActionTriggered(false);
-      }, 1000);
+      }, 500);
 
       return () => clearTimeout(timer); // Clear timeout if the component is unmounted or actionTriggered changes
-    }
+    
   }, [actionTriggered]);
 
   return (
     <>
-      {modalOpen && (
-        <Modal
+    {/* {modalOpen && (
+       
+        <>
+         <Modal
           setOpenModal={setModalOpen}
           data={selectedBooking}
           employee={data}
           booking={empBook && empBook.length > 0}
         />
-      )}
+        </>
+
+      )} */}
+      {/* {modalOpen?setActionTriggered(prev=>!prev):null} */}
       <StaffHeader />
 
       <Wrapper>
@@ -232,7 +238,7 @@ const Carousel = () => {
                 </section>
               </Swrapper>
             </MealsMain>
-            <StaffCarWash></StaffCarWash>
+            {StaffCarWash}
           </PageSec>
         ) : (
           <Loader />

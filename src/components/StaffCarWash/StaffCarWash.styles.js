@@ -1,23 +1,35 @@
 import styled from "styled-components";
 import carwashimg from "../../Images/Carwash.svg";
+
 export const Wrapper = styled.main`
-  // background: var(--white);
   background-color: transparent;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  /* border-radius: 30px; */
   height: 80vh;
   width: 80vw;
-  //margin: 80px;
   align-items: center;
   text-align: justify;
   padding: 2rem;
   display: flex;
   flex-direction: row-reverse;
   gap: 5vw;
-
   justify-content: center;
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 95vw;
+    gap: 2vw;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
+
 export const ImageSec = styled.section`
   background-image: url(${carwashimg});
   background-size: cover;
@@ -39,23 +51,32 @@ export const ImageSec = styled.section`
     justify-content: center;
     margin-top: 25vh;
   }
+
+  @media (max-width: 1200px) {
+    width: 60vw;
+    height: 40vh;
+    h3 {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+    height: 30vh;
+    h3 {
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 export const Weather = styled.section`
-  /* border: 2px solid;
-  border-color: var(--dark);
-  border-radius: 20px; */
-
   padding-top: 3vh;
   align-items: center;
   height: 22vh;
   width: 23vw;
   border-radius: 10%;
   font-size: 1rem;
-  .MapPinIcon {
-    width: 0.1 vw;
-    height: 0.1 vh;
-  }
+
   .WeatherText {
     background-color: var(--white);
     border-radius: 10%;
@@ -72,11 +93,13 @@ export const Weather = styled.section`
       font-size: 1.1rem;
       padding: 1vh;
     }
+
     h2 {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 1.5rem;
       color: var(--dark);
     }
+
     h5 {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 1rem;
@@ -84,6 +107,7 @@ export const Weather = styled.section`
       padding: 0;
       margin: 0;
     }
+
     h6 {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 2rem;
@@ -93,20 +117,56 @@ export const Weather = styled.section`
       margin: 0;
     }
   }
-  //background-color: red;
+
+  @media (max-width: 1200px) {
+    width: 60vw;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+    .WeatherText {
+      p,
+      h2,
+      h5,
+      h6 {
+        font-size: 1rem;
+      }
+    }
+  }
 `;
+
 export const Text = styled.section`
   padding: 2vh;
   align-items: center;
   height: 22vh;
   width: 25vw;
   border-radius: 10%;
+
+  @media (max-width: 1200px) {
+    width: 60vw;
+    height: auto;
+  }
+
+  @media (max-width: 768px) {
+    width: 80vw;
+  }
 `;
-export const Right = styled.body`
+
+export const Right = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4vh;
+
+  @media (max-width: 1200px) {
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    justify-content: center;
+    align-items: center;
+  }
 `;
+
 export const Booking = styled.section`
   display: flex;
   flex-direction: row;
@@ -114,17 +174,22 @@ export const Booking = styled.section`
   gap: 3rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.1rem;
+
   h4 {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.3rem;
     color: var(--white);
+  }
+
+  @media (max-width: 1200px) {
+    /* flex-direction: column; */
+    gap: 2rem;
   }
 `;
 
 export const WeatherSec = styled.section`
   height: 35vh;
   width: 45vw;
-  //background-color: red;
   display: flex;
   flex-direction: row;
 
@@ -133,7 +198,6 @@ export const WeatherSec = styled.section`
     width: 23vw;
     font-size: 1rem;
     color: var(--dark);
-    //background: blue;
   }
 
   h5 {
@@ -150,18 +214,40 @@ export const WeatherSec = styled.section`
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 1vh;
   }
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    height: auto;
+    .text {
+      width: 60vw;
+      h5 {
+        font-size: 2rem;
+      }
+      li {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+    justify-content: center;
+    .text {
+      width: 80vw;
+    }
+  }
 `;
+
 export const Card = styled.article`
   height: 30vh;
   width: 20vw;
-  //background-color: #9b67a8;
   background-color: var(--dark);
   border-radius: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 6vh;
+  gap: 3vh;
 
   button {
     height: 4vh;
@@ -172,6 +258,22 @@ export const Card = styled.article`
     :hover {
       background-color: var(--darkest);
       cursor: pointer;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    width: 60vw;
+    height: 20vh;
+    button {
+      width: 50vw;
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 80vw;
+    height: 15vh;
+    button {
+      width: 60vw;
     }
   }
 `;

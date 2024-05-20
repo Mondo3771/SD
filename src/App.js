@@ -38,47 +38,35 @@ function App() {
   const { logout, isAuthenticated, user } = useAuth0();
   setLocalStorage({ key: "Profile", value: user });
 
-  let emp;
-  const HRallowed = () => {
-    return true;
-  };
+  const employee = fetchStorageData({ key: "User" });
+  
+
+  const HRallowed=()=>{
+      if( isAuthenticated ||employee.EMP_type==='HR'){
+          return true
+      }
+      else{
+        return false;
+      }
+  }
+
 
   return (
-    <>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={LandingNew} index />
-          <GuardedRoute
-            path="/Dashboard"
-            component={StaffDashboard}
-            auth={isAuthenticated}
-          />
-          <GuardedRoute path="/HRhome" component={HRHome} auth={HRallowed()} />
-          <GuardedRoute
-            path="/HRMeals"
-            component={HRMeals}
-            auth={HRallowed()}
-          />
-          <GuardedRoute
-            path="/HRBookings"
-            component={HRBookings}
-            auth={HRallowed()}
-          />
-          <GuardedRoute
-            path="/staffBooking"
-            component={Carousel}
-            auth={isAuthenticated}
-          />
-          <GuardedRoute
-            path="/Reports"
-            component={TempReportPage}
-            auth={isAuthenticated}
-          />
-        </Switch>
-      </BrowserRouter>
-      {/* <ToastContainer/> */}
-    </> // <StaffDashboard/>
-    // <Reporting></Reporting>
+   <>
+       <BrowserRouter>
+       <Switch>
+         <Route exact path="/" component={LandingNew} index />
+         <GuardedRoute path='/Dashboard' component={StaffDashboard} auth ={isAuthenticated} />
+         <GuardedRoute path="/HRhome" component={HRHome} auth ={HRallowed()} />
+         <GuardedRoute path="/HRMeals" component={HRMeals} auth ={HRallowed()} />
+         <GuardedRoute path="/HRBookings" component={HRBookings} auth ={HRallowed()} />
+         <GuardedRoute path="/staffBooking" component={StaffBookings} auth ={isAuthenticated}/>
+         <GuardedRoute path="/Reports" component={TempReportPage} auth ={isAuthenticated}/>
+      </Switch>
+     </BrowserRouter>
+     <ToastContainer/>
+    </>
+  // <HRHome />
   );
 }
 

@@ -6,6 +6,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { XMarkIcon,UserIcon } from '@heroicons/react/24/outline';
 import { fetchStorageData } from '../../helper';
 // import {MockUser} from '../../';
+import LoginButton from '../Log/LoginButton';
 
 const StaffHeader = ({ employee }) => {
   const history = useHistory();
@@ -52,8 +53,16 @@ const StaffHeader = ({ employee }) => {
             </li>
           </ul>
         </nav>
+        <nav className='icons'>
         <button className='profile' onClick={toggleAside}><UserIcon width={24} height={24}/></button>
-        <ArrowRightIcon width={24} />
+        <LoginButton />
+
+          
+          
+        </nav>
+       
+        {/* <ArrowRightIcon width={24} /> */}
+
       </Header>
       {isAsideOpen && (
         <Aside className="aside-menu">

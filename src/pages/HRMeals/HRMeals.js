@@ -5,12 +5,13 @@ import {
   CreateMealCard,
   Header,
   MealCardFin,
+  MockMeals,
   ShowMealCard,
   Wrapper,
 } from "./HRMeals.styles";
-// import logo from "../../pages/HRHome/Images/logo3.svg";
+
 import logo from "../../Images/logo3.svg";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { ArrowUturnLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { fetchStorageData } from "../../helper";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import LoginButton from "../../components/Log/LoginButton";
@@ -22,8 +23,10 @@ const HRMeals = () => {
   const [loaded, setLoaded] = useState(false);
   const history = useHistory();
 
-
   useEffect(() => {
+    const User = fetchStorageData({ key: "User" });
+    console.log(User);
+
     const getMeals = () => {
       fetch("/api/CreateMeals")
         .then((response) => {
@@ -39,12 +42,14 @@ const HRMeals = () => {
     };
 
     getMeals();
+    // setMeals(MockMeals)
+    // setLoaded(true)
     // fetch all meals from database
   }, []);
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal,bool) =>{
+  const changeAvailable = (meal, bool) => {
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
@@ -142,7 +147,7 @@ const HRMeals = () => {
   };
 
   const changeAvailableViewMeal = (event) => {
-    changeAvailable(viewMeal,event.target.checked);
+    changeAvailable(viewMeal, event.target.checked);
   };
 
   const deleteMeal = () => {
@@ -174,66 +179,71 @@ const HRMeals = () => {
   };
 
   return (
-    <>
-      <Wrapper>
-        <Header>
-          <section className="logo">
-            <img src={logo} width="55vw" height="55vh" alt=""></img>
-            <h1>
-              <a href="/">SYNERGY</a>
-            </h1>
-          </section>
-          <nav className="links" alt="">
-            <ul>
-              <li>
-                <a href="HRMeals">Meals</a>
-              </li>
-              <li>
-                <a href="HRBookings">Bookings</a>
-              </li>
-              
-              <li>
-                <a href="HRhome">Users</a>
-              </li>
-            </ul>
-          </nav>
-        </Header>
-        <section className="titlepage">
-          <h2>Meals</h2>
+    <Wrapper>
+      <Header>
+        <section className="logo">
+          <img
+            src={logo}
+            width="55vw"
+            height="55vh"
+            alt=""
+            className="logoPic"
+          ></img>
+          <h1>
+            <a href="/">SYNERGY</a>
+          </h1>
         </section>
-        {loaded && (
-          <section className="container">
-            <Card>
-              {Meals.map((meal) => {
-                return (
-                  <MealCardFin
-                    key={meal.Meal_ID}
-                    meal={meal}
-                    click={mealClick}
-                  />
-                );
-              })}
-            </Card>
-            {!viewMealState ? (
-              <CreateMealCard>
-                <h2>Create Meals</h2>
+        <nav className="links" alt="">
+          <ul>
+            <li>
+              <a href="HRMeals">Meals</a>
+            </li>
+            <li>
+              <a href="HRBookings">Bookings</a>
+            </li>
 
-                <input
-                  name="name"
-                  className="input"
+            <li>
+              <a href="HRhome">Users</a>
+            </li>
+            <li>
+              {" "}
+              <LoginButton className={"logout"} />
+            </li>
+          </ul>
+        </nav>
+      </Header>
+
+      <h2 className="title">Meals</h2>
+
+      {loaded && (
+        <section className="container">
+          <Card>
+            {Meals.map((meal) => {
+              return (
+                <MealCardFin key={meal.Meal_ID} meal={meal} click={mealClick} />
+              );
+            })}
+          </Card>
+          {!viewMealState ? (
+            <CreateMealCard>
+              <h2>Create Meals</h2>
+
+              <input
+                name="name"
+                className="input"
                   aria-label="Name of meal"
-                  placeholder="Name"
-                  type="text"
-                  onChange={mealNameChange}
-                ></input>
-                <input
-                  name="description"
-                  className="input"
-                  type="text"
+                placeholder="Name"
+                type="text"
+                onChange={mealNameChange}
+              ></input>
+              <input
+                name="description"
+                className="input"
+                type="text"
                   aria-label="Description of Meal"
-                  placeholder="Description"
-                  onChange={descriptionChange}
-                ></input>
+                placeholder="Description"
+                onChange={descriptionChange}
+              ></input>
 
                 <section className="available">
                   <p>Available</p>
@@ -280,4 +290,3 @@ const HRMeals = () => {
 };
 
 export default HRMeals;
-// export {ge}

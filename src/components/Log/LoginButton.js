@@ -2,6 +2,7 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { clearStorage } from "../../helper";
+import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
 const LoginButton = ({ child }) => {
   const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
   if (!isAuthenticated) {
@@ -23,8 +24,20 @@ const LoginButton = ({ child }) => {
             logout({ returnTo: window.location.origin });
             clearStorage();
           }}
+          style={{
+            backgroundColor: 'transparent',
+            color: 'white',
+            border: 'none'
+
+          }}
+          style={{
+            backgroundColor: 'transparent',
+            color: 'white',
+            border: 'none'
+
+          }}
         >
-          Log Out
+          <ArrowLeftStartOnRectangleIcon width={24} height={24}/>
         </button>
         <br />
       </>

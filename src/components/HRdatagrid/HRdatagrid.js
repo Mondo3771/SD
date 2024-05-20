@@ -16,6 +16,9 @@ import { type } from "@testing-library/user-event/dist/type";
 import Reporting from "../Reporting/Reporting";
 import { Card, Title } from "./HRdatagrid.styles";
 import { setLocalStorage } from "../../helper";
+import { MockUser } from "../FeedBackComponent/FeedBack.styles";
+import { MockUsers } from "../ShowUsers/ShowUsers.styles";
+
 
 const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
   DELETEEmp(Emp_ID);
@@ -95,6 +98,13 @@ const HRdatagrid = () => {
 
   useEffect(() => {
     fetchData(user, setallEmployeedata, setLoaded);
+    // const temp = MockUsers.map((employee, index) => ({
+    //   ...employee,
+    //   id: index + 1, // Assigning a unique id to each row
+    // }));
+    // setallEmployeedata([...temp,...temp,...temp])
+    // setLoaded(true)
+
   }, []);
 
   const userReport = (user) => {
@@ -158,7 +168,7 @@ const HRdatagrid = () => {
           }}
           onClick={() => userReport(params.row)}
         >
-          <DocumentIcon width="2vw" height="3vh" textalign="center" />
+          <DocumentIcon className="icons" width="2vw" height="3vh" textalign="center" />
         </button>
       ),
     },
@@ -188,7 +198,7 @@ const HRdatagrid = () => {
           }}
           onClick={() => updateEmp(params)}
         >
-          <CheckCircleIcon width="2vw" height="3vh" />
+          <CheckCircleIcon className="icons" width="2vw" height="3vh" />
         </button>
       ),
     },
@@ -223,7 +233,7 @@ const HRdatagrid = () => {
             )
           }
         >
-          <TrashIcon width="2vw" height="3vh" textalign="center" />
+          <TrashIcon className="icons" width="2vw" height="3vh" textalign="center" />
         </button>
       ),
     },
@@ -243,62 +253,70 @@ const HRdatagrid = () => {
     <>
       {Loaded ? (
         <>
-          {OpenReport ? (
-            <>
-              <button
-                style={{
-                  backgroundColor: "transparent",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "30px",
-                  height: "6vh",
-                  width: "4vw",
-                  fontSize: "0.5rem",
-                  cursor: "pointer",
-                }}
-                onClick={closeReport}
-              >
-                <XMarkIcon width="2vw" height="3vh" textalign="center" />
-              </button>
-              <Reporting User={userReportpageinfo}></Reporting>
-            </>
-          ) : (
-            <>
-              <Title className="titlepage">Manage Users</Title>
+        
+        {OpenReport?
+          <>
+            <button 
+            style={{
 
-              <Card>
-                <Box
-                  sx={{
-                    height: "80vh",
-                    width: "90vw",
-                    padding: 0,
-                    borderRadius: "0",
-                    color: "var(--white)",
-                    "& .headername": {
-                      backgroundColor: "var(--dark)",
-                      color: "var(--white)",
-                    },
-                    "& .name": {
-                      borderRadius: "20px 0 0 0",
-                    },
-                    "& .remove": {
-                      borderRadius: " 0 20px 0 0",
-                    },
-                  }}
-                >
-                  <DataGrid
-                    rows={allEmployeedata}
-                    columns={columns}
-                    processRowUpdate={handleProcessRowUpdate}
-                    sx={{
-                      height: "80vh",
-                      width: "80vw",
-                      gap: 5,
-                      textalign: "center",
-                      boxShadow: 2,
-                      borderRadius: "20px",
-                      color: "var(--white)",
-                      fontSize: "1.1rem",
+              backgroundColor: "transparent",
+              color: "white",
+              border: "none",
+              borderRadius: "30px",
+              height: "6vh",
+              width: "4vw",
+              fontSize: "0.5rem",
+              cursor: "pointer",
+            }}
+            
+            onClick={closeReport}>
+            <XMarkIcon width="2vw" height="3vh" textAlign="center" />
+
+             </button>
+             <Reporting User={userReportpageinfo}></Reporting>
+           
+
+          </>:
+          <>
+          <Title className="titlepage">
+            Manage Users
+          </Title>
+          
+          <Card>
+
+
+          <Box
+            sx={{
+              height: "80vh",
+              width: "90vw",
+              padding: 0,
+              borderRadius: "0",
+              color: "var(--white)",
+              "& .headername": {
+                backgroundColor: "var(--darkest)",
+                color: "var(--white)",
+              },
+              "& .name":{
+                  borderRadius: "20px 0 0 0",
+              },
+              "& .remove":{
+                borderRadius: " 0 20px 0 0",
+            }
+            }}
+          >
+            <DataGrid
+              rows={allEmployeedata}
+              columns={columns}
+              processRowUpdate={handleProcessRowUpdate}
+              sx={{
+                height: "80vh",
+                width: "80vw",
+                gap: 5,
+                textalign: "center",
+                boxShadow: 2,
+                borderRadius: "20px",
+                color: "var(--white)",
+                fontSize: "1.1rem",
 
                       background:
                         "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
