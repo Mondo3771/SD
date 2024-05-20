@@ -54,7 +54,6 @@ const HRHome = () => {
             </ul>
           </nav>
         </Header>
-        
           <HRdatagrid></HRdatagrid>
       </Wrapper>
   

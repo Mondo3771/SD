@@ -5,6 +5,7 @@ import { Message, Wrapper, Wrap, SendFeedBackWrapper } from "./FeedBack.styles";
 
 //
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import { formatDate } from "../../helper";
 
 // parameters: feebackArray is an array of all the feedback in the database filtered for a person who was clicked
 //              on on the showUsers component
@@ -32,17 +33,17 @@ export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
             if (p.Sent_ID !== User.Emp_ID) {
               return (
                 <Message key={p.Message_ID} className="Message">
-                  {/* <h4>{p.Send_Name}</h4> */}
+                  <h4>{p.Send_Name}</h4>
                   <h2>{p.Message}</h2>
-                  <p>{p.Date}</p>
+                  <p>{formatDate( p.Date)}</p>
                 </Message>
               );
             } else {
               return (
                 <Message key={p.Message_ID} className="Message Green">
-                  {/* <h4>{p.Send_Name}</h4> */}
+                  <h4>You</h4>
                   <h2>{p.Message}</h2>
-                  <p>{p.Date}</p>
+                  <p>{formatDate( p.Date)}</p>
                 </Message>
               );
             }

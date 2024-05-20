@@ -78,7 +78,16 @@ export const Wrapper = styled.div`
     cursor: pointer;
     background: white;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+  }
+  .icons {
+    transition: all 50ms ease-in-out;
+  }
+ 
+  .MuiDataGrid-row .icons:hover {
+    color: red;
+    width: 25px;
+    height: 25px;
   }
 `;
 export const Card = styled.article`

@@ -152,7 +152,7 @@ const HRBookingsGrid = () => {
           )
           }
         >
-          <TrashIcon width="2vw" height="3vh" textAlign="center"/>
+          <TrashIcon className="icons" width="2vw" height="3vh" textAlign="center"/>
         </button>
       ),
     },
@@ -174,7 +174,7 @@ const HRBookingsGrid = () => {
               borderRadius: "0",
               color: "var(--white)",
               "& .headername": {
-                backgroundColor: "var(--dark)",
+                backgroundColor: "var(--darkest)",
                 color: "var(--white)",
               },
               "& .first": {

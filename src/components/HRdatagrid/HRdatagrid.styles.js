@@ -4,6 +4,7 @@ export const Card = styled.article`
   //scroll-behavior: smooth;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 50px;
+  /* border: 2px solid saddlebrown; */
   box-shadow: 10px;
   width: 80vw;
   max-height: 80vh;
@@ -16,7 +17,6 @@ export const Card = styled.article`
   overflow-y: auto;
   overflow-x: hidden;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-
 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -36,6 +36,7 @@ export const Card = styled.article`
   .MuiBox-root,
   .MuiDataGrid-main {
     border-radius: 20px 20px 0 0;
+    background: var(--darkest);
   }
 
   .MuiDataGrid-row {
@@ -46,8 +47,17 @@ export const Card = styled.article`
     cursor: pointer;
     background: white;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
+  .icons {
+    transition: all 70ms ease-in-out;
+  }
+  .MuiDataGrid-row .icons:last-child:hover {
+    color: red;
+    width: 25px;
+    height: 25px;
+  }
+
 `;
 
 export const Title = styled.h2`

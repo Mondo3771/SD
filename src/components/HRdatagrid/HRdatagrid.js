@@ -113,7 +113,7 @@ const HRdatagrid = () => {
     //   ...employee,
     //   id: index + 1, // Assigning a unique id to each row
     // }));
-    // setallEmployeedata(temp)
+    // setallEmployeedata([...temp,...temp,...temp])
     // setLoaded(true)
 
   }, []);
@@ -131,8 +131,6 @@ const HRdatagrid = () => {
     setuserReportpageinfo(true);
 
   }
-
-
 
   const columns = [
     {
@@ -187,7 +185,7 @@ const HRdatagrid = () => {
             userReport(params.row)
           }
         >
-          <DocumentIcon width="2vw" height="3vh" textAlign="center" />
+          <DocumentIcon className="icons" width="2vw" height="3vh" textAlign="center" />
         </button>
       )
 
@@ -218,7 +216,7 @@ const HRdatagrid = () => {
           }}
           onClick={() => updateEmp(params)}
         >
-          <CheckCircleIcon width="2vw" height="3vh" />
+          <CheckCircleIcon className="icons" width="2vw" height="3vh" />
         </button>
       ),
     },
@@ -253,7 +251,7 @@ const HRdatagrid = () => {
             )
           }
         >
-          <TrashIcon width="2vw" height="3vh" textAlign="center" />
+          <TrashIcon className="icons" width="2vw" height="3vh" textAlign="center" />
         </button>
       ),
     },
@@ -311,7 +309,7 @@ const HRdatagrid = () => {
               borderRadius: "0",
               color: "var(--white)",
               "& .headername": {
-                backgroundColor: "var(--dark)",
+                backgroundColor: "var(--darkest)",
                 color: "var(--white)",
               },
               "& .name":{

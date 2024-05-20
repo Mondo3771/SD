@@ -49,7 +49,7 @@ function App() {
   
 
   const HRallowed=()=>{
-      if(employee.EMP_type==='HR' || isAuthenticated){
+      if( isAuthenticated ||employee.EMP_type==='HR'){
           return true
       }
       else{
@@ -73,6 +73,7 @@ function App() {
      </BrowserRouter>
      <ToastContainer/>
     </>
+  // <HRHome />
   );
 }
 

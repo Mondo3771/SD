@@ -30,6 +30,10 @@ export const Wrapper = styled.section`
   .Green {
     border: 5px solid green;
   }
+
+  .Green h4 {
+    text-decoration: none;
+  }
 `;
 
 export const SendFeedBackWrapper = styled.section`
