@@ -12,7 +12,7 @@ const StaffHeader = ({ employee }) => {
   const history = useHistory();
   const [isAsideOpen, setIsAsideOpen] = useState(false);
   const user = fetchStorageData({ key: "User" }) ?? employee;
-  // const Profile= fetchStorageData({ key: "Profile" });
+  const Profile= fetchStorageData({ key: "Profile" });
 
 
   const Lunch = () => {
@@ -71,9 +71,9 @@ const StaffHeader = ({ employee }) => {
           </button> */}
           <nav>
             <ul>
-              {/* <img src={Profile.picture}/>
+              <img src={Profile.picture}/>
               <li>{Profile.name}</li>
-              <li>{Profile.email}</li> */}
+              <li>{Profile.email}</li>
               <li>{user.EMP_type}</li>
               {/* Add more items as needed */}
             </ul>

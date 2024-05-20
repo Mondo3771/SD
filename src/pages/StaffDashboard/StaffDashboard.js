@@ -81,9 +81,13 @@ const StaffDashboard = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          const uniques = filterUniqueProjects(data.data);
+          let projects = data.data.sort((a,b) => {
+            return new Date(a.Date)- new Date(b.Date)
+          })
+          const uniques = filterUniqueProjects(projects);
+
           setUniqueProjectNames(uniques);
-          setAllProjects(data.data);
+          setAllProjects(projects);
           setLoaded(true);
         })
         .catch((error) => {

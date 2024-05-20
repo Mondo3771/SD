@@ -7,6 +7,7 @@ const LoginButton = ({ child }) => {
   if (!isAuthenticated) {
     return (
       <button
+      className="loginButton"
         onClick={() => {
           loginWithRedirect();
           // child(user);
