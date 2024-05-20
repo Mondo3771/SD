@@ -200,21 +200,6 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
                   ) : (
                     <>
                       <h2>Your Booking for Today:</h2>
-
-                      {empBook &&
-                        empBook.map((meal, index) => (
-                          <div key={index}>
-                            <p>Meal:{meal.Name_of_Meal}</p>
-                            <p>Description:{meal.Description}</p>
-                            <button
-                              onClick={() => {
-                                DeleteBooking(meal.Booking_ID);
-                                setdelBook((prev) => !prev); // Trigger state change to refresh data
-                                setActionTriggered(true);
-                              }}
-                            ></button>
-                          </div>
-                        ))}
                       {empBook &&
                         empBook.map((meal, index) => (
                           <div key={index}>
