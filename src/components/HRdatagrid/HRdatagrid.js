@@ -10,15 +10,11 @@ import {
   CheckCircleIcon,
   DocumentIcon,
   XCircleIcon,
-  XMarkIcon
-  
-
-  
-  
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { type } from "@testing-library/user-event/dist/type";
 import Reporting from "../Reporting/Reporting";
-import { Card ,Title} from "./HRdatagrid.styles";
+import { Card, Title } from "./HRdatagrid.styles";
 import { setLocalStorage } from "../../helper";
 import { MockUser } from "../FeedBackComponent/FeedBack.styles";
 import { MockUsers } from "../ShowUsers/ShowUsers.styles";
@@ -30,8 +26,8 @@ const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
   setallEmployeedata(updatedEmployees);
 };
 
-const updateEmp = (params) =>{
-  toast.success("Changes saved")
+const updateEmp = (params) => {
+  toast.success("Changes saved");
 
   fetch("/api/AllEmployees", {
     method: "PUT",
@@ -41,7 +37,7 @@ const updateEmp = (params) =>{
     body: JSON.stringify({
       Emp_ID: params.row.Emp_ID,
       EMP_type: params.row.EMP_type,
-      Department: params.row.Department
+      Department: params.row.Department,
     }),
   })
     .then((response) => response.json())
@@ -53,14 +49,14 @@ const updateEmp = (params) =>{
       console.error("Error:", error);
       return "Error";
     });
-}
-
+};
 
 const fetchData = (users, setallEmployeedatas, setLoadeds) =>
   fetch("/api/AllEmployees")
     .then((response) => response.json())
     .then((employees) => {
-      setLocalStorage({key: "AllUsers", value: employees.data})
+      console.log(employees);
+      setLocalStorage({ key: "AllUsers", value: employees.data });
       const employeesWithId = employees.data
         .filter((employee) => employee.Emp_ID !== users.Emp_ID)
         .map((employee, index) => ({
@@ -93,17 +89,10 @@ const DELETEEmp = (Emp_ID) => {
 
 const HRdatagrid = () => {
   const [rowId, setrowId] = useState(null);
-  const [OpenReport,setOpenReport]=useState(false);
-  const [userReportpageinfo,setuserReportpageinfo]=useState(null);
+  const [OpenReport, setOpenReport] = useState(false);
+  const [userReportpageinfo, setuserReportpageinfo] = useState(null);
   const location = useLocation();
-
-  console.log(location, "location");
-  let user = "";
-  if (!location.state) {
-    user = { Emp_ID: 1 };
-  } else {
-    user = location.state.params;
-  }
+  const user = location.state.params;
   const [allEmployeedata, setallEmployeedata] = useState(null);
   const [Loaded, setLoaded] = useState(false);
 
@@ -118,19 +107,15 @@ const HRdatagrid = () => {
 
   }, []);
 
-
-  const userReport=(user)=>{
+  const userReport = (user) => {
     closeReport();
-    setOpenReport(true)
+    setOpenReport(true);
     setuserReportpageinfo(user);
-
-
-  }
-  const closeReport=()=>{
-    setOpenReport(false)
+  };
+  const closeReport = () => {
+    setOpenReport(false);
     setuserReportpageinfo(true);
-
-  }
+  };
 
   const columns = [
     {
@@ -155,21 +140,21 @@ const HRdatagrid = () => {
       headerClassName: "headername",
     },
     {
-      field:"Department",
-      headerName:" Department",
-      flex:1,
+      field: "Department",
+      headerName: " Department",
+      flex: 1,
       editable: true,
       headerClassName: "headername",
-
     },
     {
-      field:"Reports",
-      headerName:" Report",
-      type:"actions",
-      flex:1,
+      field: "Reports",
+      headerName: " Report",
+      type: "actions",
+      flex: 1,
       headerClassName: "headername",
       renderCell: (params) => (
         <button
+          aria-label={`report_icon_${params.row.id}`}
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
@@ -181,16 +166,12 @@ const HRdatagrid = () => {
             fontSize: "0.5rem",
             cursor: "pointer",
           }}
-          onClick={() =>
-            userReport(params.row)
-          }
+          onClick={() => userReport(params.row)}
         >
-          <DocumentIcon className="icons" width="2vw" height="3vh" textAlign="center" />
+          <DocumentIcon className="icons" width="2vw" height="3vh" textalign="center" />
         </button>
-      )
-
+      ),
     },
-    
 
     {
       field: "actions",
@@ -202,6 +183,7 @@ const HRdatagrid = () => {
       //renderCell: (params) => <AdminActions {...(params, rowId, setrowId)} />,
       renderCell: (params) => (
         <button
+        aria-label={`Update_icon_${params.row.id}`}
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
@@ -230,7 +212,7 @@ const HRdatagrid = () => {
 
       //renderCell: (params) => <AdminActions {...(params, rowId, setrowId)} />,
       renderCell: (params) => (
-        <button
+        <button aria-label={`delete_icon_${params.row.id}`}
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
@@ -251,7 +233,7 @@ const HRdatagrid = () => {
             )
           }
         >
-          <TrashIcon className="icons" width="2vw" height="3vh" textAlign="center" />
+          <TrashIcon className="icons" width="2vw" height="3vh" textalign="center" />
         </button>
       ),
     },
@@ -260,7 +242,9 @@ const HRdatagrid = () => {
 
   const handleProcessRowUpdate = (newRow, oldRow) => {
     // Update the row data with the new value
-    const updatedRows = allEmployeedata.map(row => (row.id === oldRow.id ? newRow : row));
+    const updatedRows = allEmployeedata.map((row) =>
+      row.id === oldRow.id ? newRow : row
+    );
     setallEmployeedata(updatedRows);
     return newRow;
   };
@@ -269,7 +253,6 @@ const HRdatagrid = () => {
     <>
       {Loaded ? (
         <>
-        
         {OpenReport?
           <>
             <button 
@@ -328,27 +311,22 @@ const HRdatagrid = () => {
                 height: "80vh",
                 width: "80vw",
                 gap: 5,
-                textAlign: "center",
+                textalign: "center",
                 boxShadow: 2,
                 borderRadius: "20px",
                 color: "var(--white)",
                 fontSize: "1.1rem",
 
-                background: "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
-                // backdropFilter: "blur(10px)",
-                // WebkitBackdropFilter: "blur(10px)",
-                // fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-              }}
-            />
-          </Box>
-          </Card>
-
-          
-          </>
-
-          
-          }
-          
+                      background:
+                        "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
+                      // backdropFilter: "blur(10px)",
+                      // WebkitBackdropFilter: "blur(10px)",
+                      // fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
+                    }}
+                  />
+                </Box>
+              </Card>
+            </>}
         </>
       ) : (
         <Loader></Loader>

@@ -15,7 +15,7 @@ const formatDate = (date) => {
 const removeBooking = (id, Booking_ID, setallBookings, allBookings) => {
   deleteBooking(Booking_ID);
   const updatedBookings = allBookings.filter((b) => b.id !== id);
- setallBookings(updatedBookings);
+  setallBookings(updatedBookings);
 };
 const deleteBooking = (Booking_ID) => {
   fetch("/api/Bookings", {
@@ -42,33 +42,31 @@ const fetchData = (setallBookings, setLoaded) => {
   fetch("/api/Bookings")
     .then((response) => response.json())
     .then((Bookings) => {
-      const allUsers = fetchStorageData({key: "AllUsers"})
+      console.log(Bookings);
+      const allUsers = fetchStorageData({ key: "AllUsers" });
       const BookingsArr = Bookings.data.map((b, index) => {
         let temp = b;
         temp["Date_of_booking"] = temp["Date_of_booking"]
           ? formatDate(temp["Date_of_booking"])
           : "Null";
 
-
         for (let i = 0; i < allUsers.length; i++) {
-          if (allUsers[i].Emp_ID == temp.Emp_ID){
+          if (allUsers[i].Emp_ID == temp.Emp_ID) {
             temp["Name"] = allUsers[i].Name;
             temp["Surname"] = allUsers[i].Surname;
             temp["EMP_type"] = allUsers[i].EMP_type;
           }
-          
-        } 
-        
-        const allMeals =  fetchStorageData({key: "Meals"})
+        }
 
+        const allMeals = fetchStorageData({ key: "Meals" });
+        console.log(allMeals);
         for (let i = 0; i < allMeals.length; i++) {
-          if (allMeals[i].Meal_ID == temp.Meal_ID){
+          if (allMeals[i].Meal_ID == temp.Meal_ID) {
             temp["Meal"] = allMeals[i].Name_of_Meal;
           }
-          
-        } 
+        }
 
-        // return 
+        // return
         return { ...temp, id: index + 1 };
       });
       setallBookings(BookingsArr);
@@ -76,12 +74,10 @@ const fetchData = (setallBookings, setLoaded) => {
     });
 };
 
-
 const HRBookingsGrid = () => {
   const [rowId, setrowId] = useState(null);
   const [allBookings, setallBookings] = useState(null);
   const [Loaded, setLoaded] = useState(false);
-
   useEffect(() => {
     fetchData(setallBookings, setLoaded);
 // const temp = [{id:0, Name:"Tapiwa",Surname: "Mazarura", EMP_type: "HR", Date_of_booking: "2015:02:09",Meal:"Tikka"}]
@@ -121,7 +117,7 @@ const HRBookingsGrid = () => {
       flex: 1,
       headerClassName: "headername",
     },
-    { 
+    {
       field: "Remove",
       headerName: "Remove",
       type: "actions",
@@ -144,15 +140,17 @@ const HRBookingsGrid = () => {
             fontSize: "0.5rem",
             cursor: "pointer",
           }}
-          onClick={() => removeBooking(
-            params.row.id,
-            params.row.Booking_ID,
-            setallBookings,
-            allBookings,
-          )
+          aria-label={`delete_icon_${params.row.id}`}
+          onClick={() =>
+            removeBooking(
+              params.row.id,
+              params.row.Booking_ID,
+              setallBookings,
+              allBookings
+            )
           }
         >
-          <TrashIcon className="icons" width="2vw" height="3vh" textAlign="center"/>
+          <TrashIcon className="icons" width="2vw" height="3vh" textalign="center" />
         </button>
       ),
     },
@@ -192,7 +190,7 @@ const HRBookingsGrid = () => {
                 height: "80vh",
                 width: "80vw",
                 gap: 5,
-                textAlign: "center",
+                textalign: "center",
                 boxShadow: 2,
                 borderRadius: "20px",
                 color: "var(--white)",

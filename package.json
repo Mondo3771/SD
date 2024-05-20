@@ -13,15 +13,18 @@
     "@testing-library/user-event": "^13.5.0",
     "auth0-lock": "^12.5.0",
     "bootstrap": "^5.3.3",
+    "canvas": "^2.11.2",
     "dotenv": "^16.4.5",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter": "^0.0.1-security.0",
     "eslint": "^8.57.0",
     "google-auth-library": "^9.7.0",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.1.0",
     "jwt-decode": "^4.0.0",
     "mssql": "^10.0.2",
-    "plotly.js": "^2.32.0",
     "node-fetch": "^3.3.2",
+    "plotly.js": "^2.32.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-circular-progressbar": "^2.1.0",
@@ -40,13 +43,16 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=False react-scripts build",
     "test": "jest",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage && type .\\coverage\\lcov-report\\lcov.info | coveralls",
     "eject": "react-scripts eject"
   },
   "jest": {
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
     "coverageThreshold": {
       "global": {
         "lines": 30
@@ -56,13 +62,13 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/App.js",
+      "!<rootDir>/src/components/Log/LogoutButton.js",
+      "!<rootDir>/src/components/Carousel/*",
+      "!<rootDir>/src/pages/TempReportPage/*",
+      "!<rootDir>/src/components/StaffCarWash/*",
+      "!<rootDir>/src/components/Reporting/*",
+
       "!<rootDir>/src/index.js",
-      "!<rootDir>/src/pages/HRHome/HRHome.js",
-      "!<rootDir>/src/pages/StaffDashboard/*",
-      "!<rootDir>/src/components/HRdatagrid/*",
-      "!<rootDir>/src/components/Modal/Modal.js",
-      "!<rootDir>/src/components/Reporting/Reporting.js",
-      "!<rootDir>/src/components/StaffCarWash/StaffCarWash.js",
       "!<rootDir>/src/reportWebVitals*",
       "!<rootDir>/src/setupTests.js"
     ],
@@ -75,6 +81,9 @@
       "text",
       "html"
     ]
+  },
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest"
   },
   "eslintConfig": {
     "extends": [

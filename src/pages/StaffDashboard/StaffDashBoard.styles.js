@@ -5,7 +5,9 @@ import React, { useEffect, useState } from "react";
 
 //icons
 import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
-import { formatDate, formatTime } from "../../helper";
+import { formatDate, formatTime } from "../../helper.js";
+
+
 
 export const Wrapper = styled.div`
   display: flex;
@@ -442,7 +444,9 @@ export const ProjectHolder = styled.div`
     border-radius: 0px 10px 10px 0;
     margin: 10px 0;
     border: 2px solid var(--white);
-    padding: 5px 2px;
+    border-radius: 0px 10px 10px 0;
+    margin: 10px 0 10px 0px;
+    padding: 5px 100px;
   }
 
   .deleteButtonFin:hover {
@@ -600,6 +604,7 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
         <button
           type="button"
           className="playButton"
+          aria-label="Play Button"
           style={{
             color: !timerRunning ? "var(--whiter)" : "gray",
           }}
@@ -612,6 +617,7 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
         <button
           type="button"
           className="pauseButton"
+          aria-label="Pause Button"
           style={{
             color: timerRunning ? "var(--whiter)" : "gray",
           }}
@@ -627,6 +633,7 @@ export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
         <button
           type="button"
           className="stopButton"
+          aria-label="Stop Button"
           style={{
             color: !timerRunning || stop ? "var(--whiter)" : "gray",
           }}

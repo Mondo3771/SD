@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchStorageData, setLocalStorage } from "../../helper";
-
-import StaffHeader from "../../components/StaffHeader/StaffHeader";
 //icons
 import {
   ClockIcon,
@@ -11,8 +9,6 @@ import {
   TrashIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
-
-import logo from "../../Images/logo3.svg";
 import {
   allProjects,
   Card,
@@ -24,12 +20,9 @@ import {
   Wrapper,
 } from "./StaffDashBoard.styles";
 
-
-
-//import { useLocation } from "react-router-dom";
+import StaffHeader from "../../components/StaffHeader/StaffHeader";
 import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
-import LogoutButton from "../../components/Log/LogoutButton";
 import { toast } from "react-toastify";
 import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
 // import sheet from "styled-components/dist/sheet";
@@ -63,10 +56,9 @@ function filterTasksByProject(Sheets, projectName) {
 }
 
 const StaffDashboard = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const history = useHistory();
-  const data=fetchStorageData({key:"User"})
-  console.log(data,'fetching data');
+  const data = fetchStorageData({ key: "User" });
   const Emp_ID = data.Emp_ID;
   // const Emp_ID = 87;
   const [Loaded, setLoaded] = useState(false);
@@ -95,11 +87,11 @@ const StaffDashboard = () => {
         });
     };
     Projects();
-    // const p = [{Project: "s", Description: "s",Time: 0, Date: "2014",Task_ID: 1}]
+
     // const uniques = filterUniqueProjects(allProjects);
-    //       setUniqueProjectNames(uniques);
+    // setUniqueProjectNames(uniques);
     // setAllProjects(allProjects);
-    // setLoaded(true)
+    // setLoaded(true);
   }, []);
 
   const [task, setTask] = useState("");
@@ -130,14 +122,14 @@ const StaffDashboard = () => {
             setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
             return [taskToAdd, ...prev];
           });
-          toast.success(`${taskToAdd.Description} successfully created!`)
+          toast.success(`${taskToAdd.Description} successfully created!`);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
     add();
-    setCreate(handleClick)
+    setCreate(handleClick);
   };
 
   const projectNameChange = (event) => {
@@ -190,26 +182,25 @@ const StaffDashboard = () => {
         console.error("Error:", error);
       });
   };
+  const deleteTask = (taskToDelete) => {
+    fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
-    const deleteTask = () => {
-      fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data.message);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
-    deleteTask();
+    deleteTask(taskToDelete);
     setAllProjects((a) => a.filter((p) => p.Task_ID !== taskToDelete.Task_ID));
-
     // setSheets(updatedSheets);
     setUniqueProjectNames(
       filterUniqueProjects(
@@ -233,7 +224,10 @@ const StaffDashboard = () => {
           <section className="title">
             <button
               className="createTaskButton"
-              onClick={() => setCreate(handleClick)}
+              onClick={() => {
+                setCreate(handleClick);
+              }}
+              aria-label="Create Task Button"
             >
               <h2>Create a task</h2>
             </button>
@@ -246,6 +240,7 @@ const StaffDashboard = () => {
               <input
                 type="text"
                 placeholder="Project Name"
+                aria-label="Project Place Holder"
                 value={name}
                 onChange={projectNameChange}
               ></input>
@@ -254,12 +249,14 @@ const StaffDashboard = () => {
               <input
                 type="text"
                 placeholder="Task Name"
+                aria-label="Task Name Place Holder"
                 value={task}
                 onChange={taskChange}
               ></input>
             </LabelHolder>
             <button
               type="button"
+              aria-label="Add Task"
               onClick={() => {
                 const today = new Date().toISOString().slice(0, 10);
                 const newTask = {
@@ -273,7 +270,7 @@ const StaffDashboard = () => {
                 return handleAdd(newTask);
               }}
             >
-              <PlusIcon width={30}></PlusIcon>
+              <PlusIcon alt="Plus Icon" width={30}></PlusIcon>
             </button>
           </CreateTaskContainer>
         )}
@@ -296,8 +293,10 @@ const StaffDashboard = () => {
                     <button className="deleteButtonFin">
                       <TrashIcon
                         className="TrashIcon"
-                        width= {"25px"}
+                        aria-label="Delete Button"
+                        width={"25px"}
                         onClick={() => handleDelete(s)}
+                        alt="Delete Icon"
                       />{" "}
                     </button>
                   </article>

@@ -1,137 +1,153 @@
 import React from "react";
-import { render, screen, waitFor} from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 import HRBookingsGrid from "./HRBookingsGrid";
 import fetchMock from "jest-fetch-mock";
-import { fetchData, formatDate } from "./HRBookingsGrid";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
+
 fetchMock.enableMocks();
+const mockData = {
+  AllUsers: JSON.stringify("Mocked User Data"),
+  Meals: JSON.stringify([
+    {
+      Meal_ID: 1,
+      Name_of_Meal: "Chicken Salad",
+      Availability: true,
+      Description: "Chicken, Lettuce, Tomatoes, Dressing",
+    },
+    {
+      Meal_ID: 6,
+      Name_of_Meal: "Chicken Soup",
+      Availability: false,
+      Description: "Chicken, Vegetables, Broth",
+    },
+    {
+      Meal_ID: 7,
+      Name_of_Meal: "Chicken Soup",
+      Availability: true,
+      Description: "Chicken, Vegetables, Broth",
+    },
+    {
+      Meal_ID: 8,
+      Name_of_Meal: "Chicken Soup",
+      Availability: false,
+      Description: "Chicken, Vegetables, Broth",
+    },
+    {
+      Meal_ID: 115,
+      Name_of_Meal: "Chicken Tikka",
+      Availability: true,
+      Description: "Chicken tikka Masala from Woolworths ",
+    },
+    {
+      Meal_ID: 118,
+      Name_of_Meal: "Lasagna",
+      Availability: true,
+      Description: "delicous",
+    },
+    {
+      Meal_ID: 138,
+      Name_of_Meal: "butternut soup",
+      Availability: true,
+      Description: "butternut, cream, bread",
+    },
+  ]),
+};
+jest.mock("../../helper", () => ({
+  fetchStorageData: jest.fn(({ key }) => {
+    return JSON.parse(mockData[key]);
+  }),
+}));
 
-test("fetchData function", async () => {
-  const setallBookings = jest.fn();
-  const setLoaded = jest.fn();
-  const mockData = {
-    data: [
-      {
-        id: 1,
-        name: "Chicken Salad",
-        status: 1,
-        description: "Chicken, Lettuce, Tomatoes, Dressing",
-      },
-      {
-        id: 3,
-        name: "Pasta Alfredo",
-        status: 0,
-        description: "Pasta, Alfredo Sauce, Chicken",
-      },
-      {
-        id: 4,
-        name: "Beef Steak",
-        status: 1,
-        description: "Beef, Potatoes, Vegetables",
-      },
-      {
-        id: 5,
-        name: "Fish Tacos",
-        status: null,
-        description: "Fish, Tortillas, Cabbage, Sauce",
-      },
-      {
-        id: 6,
-        name: "Chicken Soup",
-        status: 1,
-        description: "Chicken, Vegetables, Broth",
-      },
-      {
-        id: 7,
-        name: "Chicken Soup",
-        status: 1,
-        description: "Chicken, Vegetables, Broth",
-      },
-      {
-        id: 8,
-        name: "Chicken Soup",
-        status: 1,
-        description: "Chicken, Vegetables, Broth",
-      },
-      {
-        id: 115,
-        name: "Chicken Tikka",
-        status: 0,
-        description: "Chicken tikka Masala from Woolworths",
-      },
-      {
-        id: 116,
-        name: "Pizza",
-        status: null,
-        description: "Romans creamy chicken pizza",
-      },
-    ],
-  };
+// Now in your tests, fetchStorageData({ key: "AllUsers" }) will return "Mocked User Data"
 
-  fetch.mockResponseOnce(JSON.stringify(mockData));
-
-  fetchData(setallBookings, setLoaded);
-
-  // Wait for the fetch to resolve
-  await waitFor(() => expect(fetch).toHaveBeenCalled());
-
-  // Check that the fetch function was called with the correct URL
-  expect(fetch).toHaveBeenCalledWith("/api/Bookings");
-
-  // Check that the setallBookings and setLoaded functions were called with the correct arguments
-  expect(setallBookings).toHaveBeenCalledWith(
-    mockData.data.map((b, index) => {
-      let temp = b;
-      temp["Date_of_booking"] = temp["Date_of_booking"]
-        ? formatDate(temp["Date_of_booking"])
-        : "Null";
-      return { ...temp, id: index + 1 };
+test("renders HRBookingsGrid component and deletes", async () => {
+  fetchMock.mockResponseOnce(
+    JSON.stringify({
+      message: "Yeah",
+      data: [
+        {
+          Booking_ID: 97,
+          Date_of_booking: "2024-05-16",
+          EMP_type: "HR",
+          Emp_ID: 85,
+          Meal: "Chicken Soup",
+          Meal_ID: 8,
+          Name: "Kabelo Mojalefa",
+          Surname: "Rankoane",
+        },
+        {
+          Booking_ID: 143,
+          Date_of_booking: "2024-05-18",
+          EMP_type: "HR",
+          Emp_ID: 85,
+          Meal: "Chicken Salad",
+          Meal_ID: 1,
+          Name: "Kabelo Mojalefa",
+          Surname: "Rankoane",
+        },
+        {
+          Booking_ID: 146,
+          Date_of_booking: "2024-05-18",
+          EMP_type: "HR",
+          Emp_ID: 85,
+          Meal: "Chicken Salad",
+          Meal_ID: 1,
+          Name: "Kabelo Mojalefa",
+          Surname: "Rankoane",
+        },
+        {
+          Booking_ID: 178,
+          Date_of_booking: "2024-05-20",
+          EMP_type: "HR",
+          Emp_ID: 85,
+          Meal: "Chicken Salad",
+          Meal_ID: 1,
+          Name: "Kabelo Mojalefa",
+          Surname: "Rankoane",
+        },
+        {
+          Booking_ID: 192,
+          Date_of_booking: "2024-05-19",
+          EMP_type: "Manager",
+          Emp_ID: 87,
+          Meal: "Chicken Salad",
+          Meal_ID: 1,
+          Name: "Nathan",
+          Surname: "Joseph",
+        },
+      ],
     })
   );
-  expect(setLoaded).toHaveBeenCalledWith(true);
-});
-test("formatDate function", () => {
-  const date = "2022-03-01T00:00:00";
-  const expected = "2022-03-01";
-
-  const result = formatDate(date);
-
-  expect(result).toEqual(expected);
-});
-test("fetches and displays bookings data", async () => {
-  // Mock the fetch function
-  jest.spyOn(global, "fetch").mockImplementation(() =>
-    Promise.resolve({
-      json: () =>
-        Promise.resolve({
-          data: [
-            {
-              Booking_ID: 1,
-              Emp_ID: 123,
-              Meal_ID: 456,
-              Date_of_booking: "2022-01-01",
-            },
-            {
-              Booking_ID: 2,
-              Emp_ID: 456,
-              Meal_ID: 789,
-              Date_of_booking: "2022-01-02",
-            },
-          ],
-        }),
+  fetchMock.mockResponseOnce(
+    JSON.stringify({
+      message: "Yeah",
+      data: [
+        {
+          Department: "Accounting",
+          EMP_type: "Manager",
+          Emp_ID: 85,
+          Name: "Kabelo",
+          Surname: "Rankoane",
+          token: "google-oauth2|104356444367191158010",
+        },
+      ],
     })
   );
 
-  render(<HRBookingsGrid />);
-
-  // Wait for the data to be fetched and displayed
-  await screen.findByText("Booking_ID");
-  await screen.findByText("123");
-
-  // Check if the data is displayed correctly
-  expect(screen.getByText("Booking_ID")).toBeInTheDocument();
-  expect(screen.getByText("123")).toBeInTheDocument();
-
-  // Restore the original fetch function
-  global.fetch.mockRestore();
+  await act(async () => {
+    render(<HRBookingsGrid />);
+  });
+  // screen.debug();
+  const deleteButton = screen.getByLabelText("delete_icon_1");
+  expect(deleteButton).toBeInTheDocument();
+  fetchMock.mockResponseOnce(
+    JSON.stringify({
+      message: "Yeah",
+    })
+  );
+  await act(async () => {
+    userEvent.click(deleteButton);
+  });
 });

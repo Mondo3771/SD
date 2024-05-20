@@ -231,6 +231,7 @@ const HRMeals = () => {
               <input
                 name="name"
                 className="input"
+                aria-label="Name of meal"
                 placeholder="Name"
                 type="text"
                 onChange={mealNameChange}
@@ -239,6 +240,7 @@ const HRMeals = () => {
                 name="description"
                 className="input"
                 type="text"
+                aria-label="Description of Meal"
                 placeholder="Description"
                 onChange={descriptionChange}
               ></input>
@@ -253,7 +255,7 @@ const HRMeals = () => {
                   }}
                 ></input>
               </section>
-              <button onClick={createMeal} data-test-id="Create Meal">
+              <button onClick={createMeal} aria-label="Create Meal">
                 Create
               </button>
             </CreateMealCard>
@@ -266,12 +268,13 @@ const HRMeals = () => {
                 <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
                 <input
                   type="checkbox"
+                  aria-label="Change Available"
                   onChange={changeAvailableViewMeal}
                 ></input>
               </section>
               {/* {changed && <button onClick={() => setChanged(p => !p)}> Save Changes</button>} */}
-              <button onClick={deleteMeal}>
-                <TrashIcon width={25} className="trashIcon" />
+              <button onClick={deleteMeal} aria-label="Delete Button">
+                <TrashIcon width={25} />
               </button>
               <button
                 onClick={() => {
@@ -279,10 +282,11 @@ const HRMeals = () => {
                   setViewMealState(false);
                 }}
               >
-                <ArrowUturnLeftIcon className="backIcon" width={25}/>
+                Back
               </button>
             </ShowMealCard>
           )}
+          <LoginButton />
         </section>
       )}
     </Wrapper>

@@ -11,7 +11,7 @@ export const Header = styled.header`
   align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
-  .logout button{
+  .logout button {
     background: inherit;
     border: none;
     color: aliceblue;
@@ -20,7 +20,6 @@ export const Header = styled.header`
   .logo {
     display: flex;
   }
-
 
   a {
     font-size: 1.35rem;
@@ -53,7 +52,7 @@ export const Header = styled.header`
       gap: 1rem;
     }
     .logoPic {
-      width : 30px
+      width: 30px;
     }
   }
 `;
@@ -81,15 +80,15 @@ export const Wrapper = styled.body`
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    padding: 2vw; 
+    padding: 2vw;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     .title {
       font-size: 1.5rem;
     }
     .container {
-      flex-direction:column;
+      flex-direction: column;
       gap: 0.5rem;
     }
   }
@@ -121,12 +120,11 @@ export const Card = styled.section`
     background-color: var(--darkpurple);
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     width: 100%;
     height: 400px;
     flex: 1;
   }
-
 `;
 
 export const CreateMealCard = styled.article`
@@ -200,15 +198,14 @@ export const CreateMealCard = styled.article`
     font-weight: bold;
   }
 
-  @media (max-width:768px){
-  
+  @media (max-width: 768px) {
     font-size: 0.75rem;
     /* width: 50%; */
-    flex:1;
+    flex: 1;
 
     h2 {
       font-size: 1.3rem;
-      margin : 0.5rem 0 ;
+      margin: 0.5rem 0;
     }
     button {
       width: 70px;
@@ -216,14 +213,13 @@ export const CreateMealCard = styled.article`
       padding: 5px;
     }
     .input {
-      padding: 1px 5px ;
+      padding: 1px 5px;
       width: 100%;
     }
 
     ::placeholder {
-      font-size:0.9rem;
+      font-size: 0.9rem;
     }
-
   }
 `;
 
@@ -235,7 +231,7 @@ export const MealCard = styled.article`
   border-radius: 10px;
   padding: 2vw;
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     font-size: 0.65rem;
   }
 `;
@@ -259,7 +255,6 @@ export const ShowMealCard = styled.article`
   overflow-y: hidden;
 
   button {
-   
     border-radius: 10px;
     width: 8vw;
     height: 5vh;
@@ -270,10 +265,11 @@ export const ShowMealCard = styled.article`
     align-items: center;
     justify-content: center;
   }
-  .trashIcon,.backIcon {
+  .trashIcon,
+  .backIcon {
     width: 25px;
   }
- 
+
   .available {
     display: flex;
     align-items: center;
@@ -288,10 +284,10 @@ export const ShowMealCard = styled.article`
     }
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     height: 180px;
     font-size: 0.65rem;
-    flex:0.7;
+    flex: 0.7;
 
     button {
       display: flex;
@@ -301,7 +297,8 @@ export const ShowMealCard = styled.article`
       font-size: 0.65rem;
     }
 
-    .trashIcon,.backIcon {
+    .trashIcon,
+    .backIcon {
       width: 15px;
       height: 15px;
     }
@@ -316,7 +313,11 @@ export const ShowMealCard = styled.article`
 `;
 
 export const MealCardFin = ({ meal, click }) => (
-  <MealCard key={meal.Meal_Id} onClick={() => click(meal)}>
+  <MealCard
+    key={meal.Meal_Id}
+    onClick={() => click(meal)}
+    data-testid={`MealCard-${meal.Meal_ID}`}
+  >
     <h3>{meal.Name_of_Meal}</h3>
     <p>{meal.Description}</p>
     <p>{meal.Availability ? "Available" : "Not Available"}</p>
