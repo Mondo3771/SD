@@ -4,6 +4,7 @@ import "./Modal.css";
 // import { PostBooking } from "../Carousel/fetch";
 
 function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
+  console.log(booking,'modal');
   const confirmBooking = () => {
     const PostBooking = (Emp_ID, Meal_ID) => {
       fetch(`/api/Meals`, {
@@ -30,6 +31,54 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
     setOpenModal(false);
   };
   const confirmCarBooking=()=>{
+    const postcarwashbooking = (info) => {
+    
+      fetch("/api/CarBookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(info),
+      })
+        .then((response) => response.json())
+        .then((book) => {
+          const Updatecarwash = (data) => {
+            // this is what data should have atleast
+            // {
+            // "Car_wash": 13,
+            //      "Quantity": 2
+            //     }
+          
+            fetch("/api/CarWash", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                return "Success";
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                return "Error";
+              });
+          };
+          console.log(info);
+          console.log({Car_wash:info.Car_wash,Quantity:data.Quantity-1});
+          Updatecarwash({Car_wash:info.Car_wash,Quantity:data.Quantity-1})
+          console.log("Success:", data.message);
+          setActionTriggered(prev=>prev);
+
+          return "Success";
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          return "Error";
+        });
+    };
+    postcarwashbooking({Car_wash:data.Car_wash,Emp_ID:employee.Emp_ID, Date:data.Date})
     setOpenModal(false);
 
 
@@ -94,7 +143,7 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
 
                 <>
                   <h2>Car Wash Booking</h2>
-                  <p> {data.Day}: {data.Date.split(' ')[0]}</p>
+                  <p> {data.Day}: {data.Date}</p>
                   <p>Quantity left:{data.Quantity}</p>
 
                   <section className="section">

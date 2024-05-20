@@ -41,11 +41,8 @@ function App() {
   const employee = fetchStorageData({ key: "User" });
 
   const HRallowed = () => {
-    if (isAuthenticated || (!!employee && employee.EMP_type === "HR")) {
-      return true;
-    } else {
-      return false;
-    }
+
+    return true;
   };
 
   return (

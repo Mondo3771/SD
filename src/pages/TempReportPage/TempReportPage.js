@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-import { Body,UserReport } from "./TempReportPage.styles";
+import { Body,UserReport, Wrapper, Heading } from "./TempReportPage.styles";
 import { fetchStorageData, formatDate, setLocalStorage } from "../../helper";
 import { toast } from "react-toastify";
 import Reporting from "../../components/Reporting/Reporting";
@@ -26,9 +26,9 @@ export const TempReportPage = () => {
 
   const employee=fetchStorageData({key:"User"})
 
-  const [Users, setUsers] = useState(MockUsers);
+  const [Users, setUsers] = useState([]);
   const [Receiver, setReceiver] = useState({});
-  const [AllFeedback, setAllFeedBack] = useState(MockFeedBack);
+  const [AllFeedback, setAllFeedBack] = useState([]);
   const [firstLoad, setFirstLoad] = useState(true); //change
 
   const [UserClicked, setuserClicked] = useState(false);
@@ -72,7 +72,6 @@ export const TempReportPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data.data);
           get();
           setAllFeedBack(data.data);
           setLocalStorage({ key: "Feedback", value: data.data });
@@ -80,8 +79,6 @@ export const TempReportPage = () => {
         });
     };
     feedback();
-
-    // setReceiver(MockUsers[2]);
   }, []);
 
   const handleUserClick = (user) => {
@@ -148,10 +145,15 @@ export const TempReportPage = () => {
   return (
     <>
       <StaffHeader></StaffHeader>
+      <Wrapper>
+
       {firstLoad ? (
         <>
           <Reporting User={employee}></Reporting>
           {console.log(employee)}
+          <Heading>
+              <h2>Feedback</h2>
+            </Heading>
           <Body>
             <ShowUsers Users={Users} onUserClick={handleUserClick} />
             <FeedBack
@@ -161,24 +163,18 @@ export const TempReportPage = () => {
               onSendFeedBack={handleSendFeedback}
             />
           </Body>
-          {UserClicked && employee.EMP_type === "Manager" ? (
+          {UserClicked && employee.EMP_type === "Manager" ? ( //change
             <>
-            {/* {toast.success("Scroll below to see their report")} */}
-              <UserReport>
-              <button className="close" onClick={closeReport}>    
-                <XMarkIcon width="24" height="24" />
-              </button>
-
               <Reporting User={ReportUser}></Reporting>
-
-              </UserReport>
-              
+              <button onClick={closeReport}>close</button>
             </>
           ) : null}
         </>
       ) : (
         <Loader></Loader>
       )}
+            </Wrapper>
+
     </>
   );
 };

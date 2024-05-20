@@ -33,10 +33,12 @@ module.exports = async function (context, req) {
             .request()
             .input("Emp_ID", sql.Int, req.query.Emp_ID)
             .query(
+
               `SELECT Meals.*, Bookings.Booking_ID 
               FROM Bookings 
               JOIN Meals ON Bookings.Meal_ID = Meals.Meal_ID 
               WHERE Bookings.Emp_ID = @Emp_ID AND Bookings.Date_of_booking >= CAST(GETDATE() AS DATE);`
+
             );
             console.log();
           context.res = {
