@@ -15,10 +15,9 @@ import {
 import { type } from "@testing-library/user-event/dist/type";
 import Reporting from "../Reporting/Reporting";
 import { Card, Title } from "./HRdatagrid.styles";
-import { setLocalStorage } from "../../helper";
+import { fetchStorageData, setLocalStorage } from "../../helper";
 import { MockUser } from "../FeedBackComponent/FeedBack.styles";
 import { MockUsers } from "../ShowUsers/ShowUsers.styles";
-
 
 const removeEmp = (id, Emp_ID, setallEmployeedata, allEmployeedata) => {
   DELETEEmp(Emp_ID);
@@ -92,7 +91,7 @@ const HRdatagrid = () => {
   const [OpenReport, setOpenReport] = useState(false);
   const [userReportpageinfo, setuserReportpageinfo] = useState(null);
   const location = useLocation();
-  const user = location.state.params;
+  const user = fetchStorageData({ key: "User" }) ?? location.state.params;
   const [allEmployeedata, setallEmployeedata] = useState(null);
   const [Loaded, setLoaded] = useState(false);
 
@@ -104,7 +103,6 @@ const HRdatagrid = () => {
     // }));
     // setallEmployeedata([...temp,...temp,...temp])
     // setLoaded(true)
-
   }, []);
 
   const userReport = (user) => {
@@ -168,7 +166,12 @@ const HRdatagrid = () => {
           }}
           onClick={() => userReport(params.row)}
         >
-          <DocumentIcon className="icons" width="2vw" height="3vh" textalign="center" />
+          <DocumentIcon
+            className="icons"
+            width="2vw"
+            height="3vh"
+            textalign="center"
+          />
         </button>
       ),
     },
@@ -183,7 +186,7 @@ const HRdatagrid = () => {
       //renderCell: (params) => <AdminActions {...(params, rowId, setrowId)} />,
       renderCell: (params) => (
         <button
-        aria-label={`Update_icon_${params.row.id}`}
+          aria-label={`Update_icon_${params.row.id}`}
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
@@ -212,7 +215,8 @@ const HRdatagrid = () => {
 
       //renderCell: (params) => <AdminActions {...(params, rowId, setrowId)} />,
       renderCell: (params) => (
-        <button aria-label={`delete_icon_${params.row.id}`}
+        <button
+          aria-label={`delete_icon_${params.row.id}`}
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
@@ -233,7 +237,12 @@ const HRdatagrid = () => {
             )
           }
         >
-          <TrashIcon className="icons" width="2vw" height="3vh" textalign="center" />
+          <TrashIcon
+            className="icons"
+            width="2vw"
+            height="3vh"
+            textalign="center"
+          />
         </button>
       ),
     },
@@ -253,69 +262,62 @@ const HRdatagrid = () => {
     <>
       {Loaded ? (
         <>
-        {OpenReport?
-          <>
-            <button 
-            style={{
+          {OpenReport ? (
+            <>
+              <button
+                style={{
+                  backgroundColor: "transparent",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "30px",
+                  height: "6vh",
+                  width: "4vw",
+                  fontSize: "0.5rem",
+                  cursor: "pointer",
+                }}
+                onClick={closeReport}
+              >
+                <XMarkIcon width="2vw" height="3vh" textAlign="center" />
+              </button>
+              <Reporting User={userReportpageinfo}></Reporting>
+            </>
+          ) : (
+            <>
+              <Title className="titlepage">Manage Users</Title>
 
-              backgroundColor: "transparent",
-              color: "white",
-              border: "none",
-              borderRadius: "30px",
-              height: "6vh",
-              width: "4vw",
-              fontSize: "0.5rem",
-              cursor: "pointer",
-            }}
-            
-            onClick={closeReport}>
-            <XMarkIcon width="2vw" height="3vh" textAlign="center" />
-
-             </button>
-             <Reporting User={userReportpageinfo}></Reporting>
-           
-
-          </>:
-          <>
-          <Title className="titlepage">
-            Manage Users
-          </Title>
-          
-          <Card>
-
-
-          <Box
-            sx={{
-              height: "80vh",
-              width: "90vw",
-              padding: 0,
-              borderRadius: "0",
-              color: "var(--white)",
-              "& .headername": {
-                backgroundColor: "var(--darkest)",
-                color: "var(--white)",
-              },
-              "& .name":{
-                  borderRadius: "20px 0 0 0",
-              },
-              "& .remove":{
-                borderRadius: " 0 20px 0 0",
-            }
-            }}
-          >
-            <DataGrid
-              rows={allEmployeedata}
-              columns={columns}
-              processRowUpdate={handleProcessRowUpdate}
-              sx={{
-                height: "80vh",
-                width: "80vw",
-                gap: 5,
-                textalign: "center",
-                boxShadow: 2,
-                borderRadius: "20px",
-                color: "var(--white)",
-                fontSize: "1.1rem",
+              <Card>
+                <Box
+                  sx={{
+                    height: "80vh",
+                    width: "90vw",
+                    padding: 0,
+                    borderRadius: "0",
+                    color: "var(--white)",
+                    "& .headername": {
+                      backgroundColor: "var(--darkest)",
+                      color: "var(--white)",
+                    },
+                    "& .name": {
+                      borderRadius: "20px 0 0 0",
+                    },
+                    "& .remove": {
+                      borderRadius: " 0 20px 0 0",
+                    },
+                  }}
+                >
+                  <DataGrid
+                    rows={allEmployeedata}
+                    columns={columns}
+                    processRowUpdate={handleProcessRowUpdate}
+                    sx={{
+                      height: "80vh",
+                      width: "80vw",
+                      gap: 5,
+                      textalign: "center",
+                      boxShadow: 2,
+                      borderRadius: "20px",
+                      color: "var(--white)",
+                      fontSize: "1.1rem",
 
                       background:
                         "linerar-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)",
@@ -326,7 +328,8 @@ const HRdatagrid = () => {
                   />
                 </Box>
               </Card>
-            </>}
+            </>
+          )}
         </>
       ) : (
         <Loader></Loader>
