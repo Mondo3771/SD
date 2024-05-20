@@ -54,7 +54,7 @@ const HRHome = () => {
           </nav>
         </Header>
           <HRdatagrid data-test-ID="HRdataGRid" ></HRdatagrid>
-        <LoginButton />
+        {/* <LoginButton /> */}
       </Wrapper>
   
   );
