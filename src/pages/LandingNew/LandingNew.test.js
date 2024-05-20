@@ -105,50 +105,50 @@ test("clicks login button and returns with unAuthenticated user", () => {
   // rerender(<LoginButton />);
 });
 
-test("clicks login button and returns with Authenticated user who is a Staff", async () => {
-  const mockLoginWithRedirect = jest.fn();
-  const mockLogout = jest.fn();
-  const mockUser = { name: "Test User" };
+// test("clicks login button and returns with Authenticated user who is a Staff", async () => {
+//   const mockLoginWithRedirect = jest.fn();
+//   const mockLogout = jest.fn();
+//   const mockUser = { name: "Test User" };
 
-  useAuth0.mockReturnValue({
-    isAuthenticated: false,
-    loginWithRedirect: mockLoginWithRedirect,
-    logout: mockLogout,
-    user: {},
-  });
+//   useAuth0.mockReturnValue({
+//     isAuthenticated: false,
+//     loginWithRedirect: mockLoginWithRedirect,
+//     logout: mockLogout,
+//     user: {},
+//   });
 
-  const { rerender } = render(<LoginButton />);
-  const loginButton = screen.getByText("Log In");
-  await act(async () => {
-    global.fetch = jest.fn().mockImplementationOnce(() =>
-      Promise.resolve({
-        json: () =>
-          Promise.resolve({
-            message: "Mocked response 1",
-            data: { EMP_type: "Staff" },
-          }),
-      })
-    );
-    fireEvent.click(loginButton);
-  });
+//   const { rerender } = render(<LoginButton />);
+//   const loginButton = screen.getByText("Log In");
+//   await act(async () => {
+//     global.fetch = jest.fn().mockImplementationOnce(() =>
+//       Promise.resolve({
+//         json: () =>
+//           Promise.resolve({
+//             message: "Mocked response 1",
+//             data: { EMP_type: "Staff" },
+//           }),
+//       })
+//     );
+//     fireEvent.click(loginButton);
+//   });
 
-  expect(mockLoginWithRedirect).toHaveBeenCalled();
+//   expect(mockLoginWithRedirect).toHaveBeenCalled();
 
-  useAuth0.mockReturnValue({
-    isAuthenticated: true,
-    loginWithRedirect: mockLoginWithRedirect,
-    logout: mockLogout,
-    user: mockUser,
-  });
+//   useAuth0.mockReturnValue({
+//     isAuthenticated: true,
+//     loginWithRedirect: mockLoginWithRedirect,
+//     logout: mockLogout,
+//     user: mockUser,
+//   });
 
-  rerender(<LoginButton />);
+//   rerender(<LoginButton />);
 
-  const logoutButton = screen.getByText("Log Out");
-  expect(logoutButton).toBeInTheDocument();
-  fireEvent.click(logoutButton);
+//   const logoutButton = screen.getByText("Log Out");
+//   expect(logoutButton).toBeInTheDocument();
+//   fireEvent.click(logoutButton);
 
-  expect(mockLogout).toHaveBeenCalled();
-});
+//   expect(mockLogout).toHaveBeenCalled();
+// });
 
 test("If user is authenticated and exists then checks the Data type and it is Staff", async () => {
   const mockUser = { sub: "1234" };

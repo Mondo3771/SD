@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Header,Aside } from './StaffHeader.styles';
-import logo from '../../Images/logo3.svg';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import { XMarkIcon,UserIcon } from '@heroicons/react/24/outline';
-import { fetchStorageData } from '../../helper';
+import React, { useState } from "react";
+import { Header, Aside } from "./StaffHeader.styles";
+import logo from "../../Images/logo3.svg";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, UserIcon } from "@heroicons/react/24/outline";
+import { fetchStorageData } from "../../helper";
 // import {MockUser} from '../../';
-import LoginButton from '../Log/LoginButton';
+import LoginButton from "../Log/LoginButton";
 
 const StaffHeader = ({ employee }) => {
   const history = useHistory();
@@ -14,22 +14,21 @@ const StaffHeader = ({ employee }) => {
   const user = fetchStorageData({ key: "User" }) ?? employee;
   // const Profile= fetchStorageData({ key: "Profile" });
 
-
   const Lunch = () => {
-    history.push('/staffBooking');
-  }
+    history.push("/staffBooking");
+  };
 
   const Home = () => {
-    history.push('/Dashboard');
-  }
+    history.push("/Dashboard");
+  };
 
   const Reports = () => {
-    history.push('/Reports');
-  }
+    history.push("/Reports");
+  };
 
   const toggleAside = () => {
     setIsAsideOpen(!isAsideOpen);
-  }
+  };
 
   return (
     <>
@@ -53,16 +52,14 @@ const StaffHeader = ({ employee }) => {
             </li>
           </ul>
         </nav>
-        <nav className='icons'>
-        <button className='profile' onClick={toggleAside}><UserIcon width={24} height={24}/></button>
-        <LoginButton />
-
-          
-          
+        <nav className="icons">
+          <button className="profile" onClick={toggleAside}>
+            <UserIcon width={24} height={24} />
+          </button>
+          <LoginButton />
         </nav>
-       
-        {/* <ArrowRightIcon width={24} /> */}
 
+        {/* <ArrowRightIcon width={24} /> */}
       </Header>
       {isAsideOpen && (
         <Aside className="aside-menu">
@@ -71,9 +68,9 @@ const StaffHeader = ({ employee }) => {
           </button> */}
           <nav>
             <ul>
-              {/* <img src={Profile.picture}/>
+              <img src={Profile.picture} />
               <li>{Profile.name}</li>
-              <li>{Profile.email}</li> */}
+              <li>{Profile.email}</li>
               <li>{user.EMP_type}</li>
               {/* Add more items as needed */}
             </ul>
@@ -82,6 +79,6 @@ const StaffHeader = ({ employee }) => {
       )}
     </>
   );
-}
+};
 
 export default StaffHeader;
