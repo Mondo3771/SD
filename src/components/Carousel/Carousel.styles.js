@@ -16,6 +16,8 @@ export const Wrapper = styled.section`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+  width: 100%;
   /* align-items: center; */
 
   .bookings {

@@ -314,7 +314,7 @@ const Reporting = ({ User }) => {
   const datapie = [
     {
       values: [Active, inActive],
-      labels: ["In progress", "Completed"],
+      labels: ["Completed","In progress" ],
       type: "pie",
 
       marker: { colors: ["#e8cdde", "#9B67A8"] },

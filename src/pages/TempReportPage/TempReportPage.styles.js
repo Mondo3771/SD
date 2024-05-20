@@ -12,12 +12,12 @@ export const Body = styled.body`
   padding: 3rem;
   justify-content: space-between;
   gap: 8vh;
-  //background-color: transparent;
-  //background-color: red;
+
 
   background-color: rgba(19, 7, 46, 0.4);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);  
+  overflow-x: hidden;
 `;
 export const Wrapper = styled.section`
   background-image: url(${background});
@@ -36,7 +36,7 @@ export const Wrapper = styled.section`
 `;
 
 export const FeedbackSection = styled.section`
-  width: 100vw;
+  width: 100%;
   height: fit-content;
   display: flex;
   flex-direction: row;
