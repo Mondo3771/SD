@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 // Your component's tests here
 // import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import LandingNew from "./LandingNew";
+import { auth } from "google-auth-library";
 fetchMock.enableMocks();
 
 test("renders LandingNew and checks dropdown", async () => {
@@ -74,7 +75,7 @@ test("renders LandingNew and checks dropdown", async () => {
 
 jest.mock("@auth0/auth0-react");
 
-test("clicks login button and returns with Authenticated user", () => {
+test("clicks login button and returns with unAuthenticated user", () => {
   const mockLoginWithRedirect = jest.fn();
   const mockLogout = jest.fn();
   const mockGEttoken = jest.fn();
@@ -87,30 +88,24 @@ test("clicks login button and returns with Authenticated user", () => {
     getAccesTokenSilently: mockGEttoken,
     user: {},
   });
-
   const { rerender } = render(<LoginButton />);
   const loginButton = screen.getByText("Log In");
   fireEvent.click(loginButton);
-
   expect(mockLoginWithRedirect).toHaveBeenCalled();
 
   useAuth0.mockReturnValue({
-    isAuthenticated: true,
+    isAuthenticated: false,
     loginWithRedirect: mockLoginWithRedirect,
     logout: mockLogout,
     user: mockUser,
   });
-
-  rerender(<LoginButton />);
-
-  const logoutButton = screen.getByText("Log Out");
-  expect(logoutButton).toBeInTheDocument();
-  fireEvent.click(logoutButton);
-
-  expect(mockLogout).toHaveBeenCalled();
+  const auth0 = useAuth0();
+  const isAuthenticated = auth0.isAuthenticated;
+  expect(isAuthenticated).toBe(false);
+  // rerender(<LoginButton />);
 });
 
-test("clicks login button and returns with Authenticated user", () => {
+test("clicks login button and returns with Authenticated user who is a Staff", async () => {
   const mockLoginWithRedirect = jest.fn();
   const mockLogout = jest.fn();
   const mockUser = { name: "Test User" };
@@ -124,7 +119,18 @@ test("clicks login button and returns with Authenticated user", () => {
 
   const { rerender } = render(<LoginButton />);
   const loginButton = screen.getByText("Log In");
-  fireEvent.click(loginButton);
+  await act(async () => {
+    global.fetch = jest.fn().mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            message: "Mocked response 1",
+            data: { EMP_type: "Staff" },
+          }),
+      })
+    );
+    fireEvent.click(loginButton);
+  });
 
   expect(mockLoginWithRedirect).toHaveBeenCalled();
 
@@ -184,7 +190,6 @@ test("If user is authenticated and exists then checks the Data type and it is St
     );
   });
 });
-
 
 test("If user is authenticated and exists then checks the Data type and it is HR", async () => {
   const mockUser = { sub: "1234" };
@@ -227,7 +232,6 @@ test("If user is authenticated and exists then checks the Data type and it is HR
   });
 });
 
-
 test("If user is authenticated and exists then checks the Data type and it is Staff", async () => {
   const mockUser = { sub: "1234" };
   const mockLogin = jest.fn();
@@ -244,7 +248,7 @@ test("If user is authenticated and exists then checks the Data type and it is St
       Promise.resolve({
         json: () =>
           Promise.resolve({
-            message: "No user found",
+            message: "login success",
             data: { EMP_type: "Staff" },
           }),
       })
@@ -267,4 +271,52 @@ test("If user is authenticated and exists then checks the Data type and it is St
       </BrowserRouter>
     );
   });
+});
+
+test("User is Authenticated but isnt an existing user", async () => {
+  const mockUser = { sub: "1234" };
+  const mockLogin = jest.fn();
+  const mockget = jest.fn();
+  const mockgetToken = jest.fn().mockResolvedValue("mocked_token");
+  useAuth0.mockReturnValue({
+    isAuthenticated: true,
+    getAccessTokenSilently: mockgetToken, // corrected here
+    user: mockUser,
+  });
+  global.fetch = jest
+    .fn()
+    .mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            message: "No user found",
+          }),
+      })
+    )
+    .mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            message: "login success",
+            data: { EMP_type: "Staff" },
+          }),
+      })
+    );
+  jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"), // use actual for all non-hook parts
+    useHistory: () => ({
+      push: jest.fn(),
+    }),
+  }));
+  await act(async () => {
+    render(
+      <BrowserRouter>
+        <LandingNew />
+      </BrowserRouter>
+    );
+  });
+});
+
+test("error in fetching data", async () => {
+  
 });

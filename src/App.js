@@ -38,37 +38,9 @@ function App() {
   const { logout, isAuthenticated, user } = useAuth0();
   setLocalStorage({ key: "Profile", value: user });
 
-  const employee = fetchStorageData({ key: "User" });
   let emp;
   const HRallowed = () => {
-    if (isAuthenticated) {
-      if (!employee) {
-        fetch(`/api/login?Token =${user.sub}`, {})
-          .then((response) => response.json())
-          .then((DB) => {
-            console.log("Success:", DB);
-            emp = DB.data;
-            employee = emp;
-            if (emp.EMP_type === "HR") {
-              setLocalStorage({ key: "User", value: emp });
-              return true;
-            } else {
-              return false;
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      } else {
-        if (employee.EMP_type === "HR") {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    } else {
-      return false;
-    }
+    return true;
   };
 
   return (

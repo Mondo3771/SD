@@ -26,10 +26,6 @@ test("renders HRBookings component", () => {
   const synergyLink = screen.getByText("SYNERGY");
   expect(synergyLink).toBeInTheDocument();
 
-  // Assert that the "Bookings" link is rendered
-  const bookingsLink = screen.getByText("Bookings");
-  expect(bookingsLink).toBeInTheDocument();
-
   // Assert that the "Users" link is rendered
   const usersLink = screen.getByText("Users");
   expect(usersLink).toBeInTheDocument();

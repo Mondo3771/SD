@@ -144,6 +144,7 @@ const HRdatagrid = () => {
       headerClassName: "headername",
       renderCell: (params) => (
         <button
+          aria-label={`report_icon_${params.row.id}`}
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
@@ -172,6 +173,7 @@ const HRdatagrid = () => {
       //renderCell: (params) => <AdminActions {...(params, rowId, setrowId)} />,
       renderCell: (params) => (
         <button
+        aria-label={`Update_icon_${params.row.id}`}
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",
@@ -200,7 +202,7 @@ const HRdatagrid = () => {
 
       //renderCell: (params) => <AdminActions {...(params, rowId, setrowId)} />,
       renderCell: (params) => (
-        <button aria-label="delete"
+        <button aria-label={`delete_icon_${params.row.id}`}
           {...(params, rowId, setrowId)}
           style={{
             backgroundColor: "transparent",

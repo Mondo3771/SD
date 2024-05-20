@@ -69,7 +69,6 @@ const LandingNew = () => {
               .then((DB) => {
                 setLocalStorage({ key: "User", value: DB.data });
                 const Us = fetchStorageData({ key: "User" });
-                console.log(Us);
                 setLoaded(true);
                 history.push(`/DashBoard`, { params: DB.data });
               })

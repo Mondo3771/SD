@@ -59,6 +59,7 @@ test("renders HRHome component", async () => {
       </MemoryRouter>
     );
   });
+  screen.debug();
   // Check if the navigation links are rendered
   const bookingsLink = screen.getByText("Bookings");
   expect(bookingsLink).toBeInTheDocument();
