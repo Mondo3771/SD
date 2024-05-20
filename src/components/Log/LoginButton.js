@@ -1,9 +1,10 @@
 //LoginButton.js
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { clearStorage } from "../../helper";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
 const LoginButton = ({ child }) => {
-  const { loginWithRedirect, isAuthenticated, user,logout } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
   if (!isAuthenticated) {
     return (
       <button
@@ -32,6 +33,13 @@ const LoginButton = ({ child }) => {
         <button
           onClick={() => {
             logout({ returnTo: window.location.origin });
+            clearStorage();
+          }}
+          style={{
+            backgroundColor: 'transparent',
+            color: 'white',
+            border: 'none'
+
           }}
           style={{
             backgroundColor: 'transparent',
@@ -46,7 +54,6 @@ const LoginButton = ({ child }) => {
       </>
     );
   }
-  return null;
 };
 
 export default LoginButton;

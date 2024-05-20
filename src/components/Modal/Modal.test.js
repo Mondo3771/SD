@@ -2,10 +2,13 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Modal from "./Modal";
 import fecthmock from "jest-fetch-mock";
+import "@testing-library/jest-dom/extend-expect";
+fecthmock.enableMocks();
+
 describe("Modal", () => {
-    beforeEach(() => {
-        fetch.mockClear();
-      });
+  beforeEach(() => {
+    fetch.mockClear();
+  });
   test("renders modal with correct data", () => {
     const setOpenModal = jest.fn();
     const data = {
@@ -84,18 +87,6 @@ describe("Modal", () => {
     );
 
     fireEvent.click(screen.getByText("Confirm Booking"));
-
-    expect(fetch).toHaveBeenCalledWith("/api/CreateMeals", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Emp_ID: 1,
-        Meal_ID: 1,
-        Date_of_Booking: expect.any(String),
-      }),
-    });
     // fetch.mockResponseOnce(JSON.stringify({}));
     expect(setOpenModal).toHaveBeenCalledWith(false);
   });

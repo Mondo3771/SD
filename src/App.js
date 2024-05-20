@@ -9,8 +9,6 @@ import StaffDashboard, {
   StaffDashBoardLoader,
 } from "./pages/StaffDashboard/StaffDashboard";
 
-import Reporting from "./components/Reporting/Reporting";
-
 import LandingNew from "./pages/LandingNew/LandingNew";
 import HRMeals from "./pages/HRMeals/HRMeals";
 import HRBookings from "./pages/HRBookings/HRBookings";
@@ -19,9 +17,6 @@ import StaffCarWash from "./components/StaffCarWash/StaffCarWash";
 import { TempReportPage } from "./pages/TempReportPage/TempReportPage";
 import StaffBookings from "./pages/StaffBookings/StaffBookings";
 
-// import { register } from "swiper/element/bundle";
-import LoginButton from "./components/Log/LoginButton";
-import LogoutButton from "./components/Log/LogoutButton";
 import { register } from "swiper/element/bundle";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,13 +36,12 @@ const GuardedRoute = ({ component: Component, auth, ...rest }) => (
 
 function App() {
   const { logout, isAuthenticated, user } = useAuth0();
-  console.log(isAuthenticated, "authen");
-  console.log(user, "user");
   setLocalStorage({ key: "Profile", value: user });
 
   const employee = fetchStorageData({ key: "User" });
 
   const HRallowed = () => {
+
     return true;
   };
 

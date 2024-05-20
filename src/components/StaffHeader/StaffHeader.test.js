@@ -11,10 +11,6 @@ test("StaffHeader renders correctly", () => {
   expect(homeLink).toBeInTheDocument();
   const reportsLink = screen.getByText("Reports");
   expect(reportsLink).toBeInTheDocument();
-
-  // Assert that the Lunch link is rendered
-  const lunchLink = screen.getByText("Lunch");
-  expect(lunchLink).toBeInTheDocument();
 });
 
 test("Clicking on Home link navigates to Dashboard", () => {
@@ -30,7 +26,7 @@ test("Clicking on Home link navigates to Dashboard", () => {
   fireEvent.click(homeLink);
 
   // Assert that the URL has changed to "/Dashboard"
-  expect(history.location.pathname).toBe("/DashBoard");
+  expect(history.location.pathname).toBe("/Dashboard");
 });
 
 test("Clicking on Lunch link navigates to Lunch page", () => {
@@ -40,7 +36,19 @@ test("Clicking on Lunch link navigates to Lunch page", () => {
       <StaffHeader employee={{ name: "John Doe" }} />
     </Router>
   );
-  const lunchLink = screen.getByText("Lunch");
+  const lunchLink = screen.getByText("Bookings");
   fireEvent.click(lunchLink);
-  expect(history.location.pathname).toBe("/Lunch");
+  expect(history.location.pathname).toBe("/staffBooking");
+});
+
+test("Clicking on Reports link navigates to Reports page", () => {
+  const history = createMemoryHistory();
+  render(
+    <Router history={history}>
+      <StaffHeader employee={{ name: "John Doe" }} />
+    </Router>
+  );
+  const reportsLink = screen.getByText("Reports");
+  fireEvent.click(reportsLink);
+  expect(history.location.pathname).toBe("/Reports");
 });
