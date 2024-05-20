@@ -36,7 +36,7 @@ export const Card = styled.article`
   .MuiBox-root,
   .MuiDataGrid-main {
     border-radius: 20px 20px 0 0;
-    background: var(--darkest);
+   
   }
 
   .MuiDataGrid-row {

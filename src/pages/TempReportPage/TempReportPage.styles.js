@@ -19,12 +19,6 @@ export const Body = styled.body`
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 `;
-// export const Feedback = styled.section`
-//   height: 70vh;
-//   width: 97vw;
-//   display: flex;
-//   //background-color: blue;
-// `;
 export const Wrapper = styled.section`
   background-image: url(${background});
   // background-color: blue;
@@ -34,9 +28,11 @@ export const Wrapper = styled.section`
   flex-direction: column;
   justify-content: center;
   gap: 3vh;
-  width: 100vw;
+  width: 100%;
   height: fit-content;
   align-items: center;
+  overflow-x: hidden;
+
 `;
 
 export const FeedbackSection = styled.section`

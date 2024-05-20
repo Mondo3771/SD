@@ -94,6 +94,7 @@ export const SendFeedBackWrapper = styled.section`
   textarea {
     background-color: transparent;
     border-radius: 20px;
+    color: var(--white);
   }
 `;
 
@@ -121,6 +122,7 @@ export const Message = styled.article`
   }
   h4 {
     text-decoration: underline;
+    color: var(--white);
   }
   h2 {
     font-size: 1rem;

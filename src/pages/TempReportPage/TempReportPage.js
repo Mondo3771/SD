@@ -26,9 +26,9 @@ export const TempReportPage = () => {
 
   const employee=fetchStorageData({key:"User"})
 
-  const [Users, setUsers] = useState(MockUsers);
+  const [Users, setUsers] = useState([]);
   const [Receiver, setReceiver] = useState({});
-  const [AllFeedback, setAllFeedBack] = useState(MockFeedBack);
+  const [AllFeedback, setAllFeedBack] = useState([]);
   const [firstLoad, setFirstLoad] = useState(true); //change
 
   const [UserClicked, setuserClicked] = useState(false);

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import background from "../../Images/Bckgrd.svg";
 
-export const Header = styled.div`
+export const Header = styled.header`
   position: sticky;
   z-index: 9999;
   max-width: 100vw;
+  overflow-x: hidden;
 
   /* background-image: url(${background}); */
   background-color: #17154d;
