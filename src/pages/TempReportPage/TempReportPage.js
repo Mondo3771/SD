@@ -72,7 +72,6 @@ export const TempReportPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data.data);
           get();
           setAllFeedBack(data.data);
           setLocalStorage({ key: "Feedback", value: data.data });
@@ -80,8 +79,6 @@ export const TempReportPage = () => {
         });
     };
     feedback();
-
-    // setReceiver(MockUsers[2]);
   }, []);
 
   const handleUserClick = (user) => {
