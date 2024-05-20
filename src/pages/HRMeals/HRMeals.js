@@ -286,7 +286,6 @@ const HRMeals = () => {
               </button>
             </ShowMealCard>
           )}
-          <LoginButton />
         </section>
       )}
     </Wrapper>
