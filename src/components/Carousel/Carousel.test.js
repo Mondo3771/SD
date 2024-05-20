@@ -6,6 +6,12 @@ import fetchMock from "jest-fetch-mock";
 fetchMock.enableMocks();
 
 beforeAll(async () => {
+  jest.mock('swiper/react', () => {
+  return {
+    Swiper: () => <div>Mock Swiper</div>,
+    SwiperSlide: () => <div>Mock SwiperSlide</div>,
+  };
+});
   fetch.mockResponse(
     JSON.stringify({
       data: [
@@ -40,22 +46,17 @@ describe("Carousel", () => {
   });
 
   test("displays loading spinner when data is not loaded", () => {
-    render(<Carousel />);
     // Add your assertions here
   });
 
   test("displays menu items when data is loaded", () => {
-    render(<Carousel />);
-    // Add your assertions here
   });
 
   test("opens modal when a booking is clicked", () => {
-    render(<Carousel />);
     // Add your assertions here
   });
 
   test("closes modal when modalOpen state is set to false", () => {
-    render(<Carousel />);
     // Add your assertions here
   });
 

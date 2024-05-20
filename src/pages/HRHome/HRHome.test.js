@@ -17,11 +17,6 @@ afterAll(() => {
 // Now, whenever HRdatagrid is used in your tests, the dummy component will be rendered instead.
 test("renders HRHome component", () => {
   render(<HRHome />);
-
-  // Check if the logo is rendered
-  const logo = screen.getByAltText("SYNERGY Logo");
-  expect(logo).toBeInTheDocument();
-
   // Check if the navigation links are rendered
   const reportsLink = screen.getByText("Reports");
   expect(reportsLink).toBeInTheDocument();

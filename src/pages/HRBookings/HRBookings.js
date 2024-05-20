@@ -1,3 +1,4 @@
+import LoginButton from "../../components/Log/LoginButton";
 import logo from "../../Images/logo3.svg";
 import { Card, Header, Wrapper } from "./HRBookings.styles";
 import HRBookingsGrid from "./HRBookingsGrid";
@@ -5,7 +6,6 @@ import React from "react";
 
 const HRBookings = () => {
   return (
-    <>
       <Wrapper>
         <Header>
           <section className="logo">
@@ -17,31 +17,29 @@ const HRBookings = () => {
           <nav className="links">
             <ul>
               <li>
-                <a href="#">Reports</a>
-              </li>
-              <li>
                 <a href="HRMeals">Meals</a>
               </li>
               <li>
-                <a href="#">Bookings</a>
+                <a href="HRBookings">Bookings</a>
+              </li>
+              
+              <li>
+                <a href="HRhome">Users</a>
               </li>
               <li>
-                <a href="#">Car Wash</a>
-              </li>
-              <li>
-                <a href="#">Users</a>
-              </li>
+              {" "}
+              <LoginButton className={"logout"} />
+            </li>
             </ul>
           </nav>
         </Header>
         <section className="titlepage">
-          <h2>Manage Users</h2>
+          <h2>Bookings</h2>
         </section>
         <Card>
           <HRBookingsGrid></HRBookingsGrid>
         </Card>
       </Wrapper>
-    </>
   );
 };
 

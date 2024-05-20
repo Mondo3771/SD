@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import background from "../../Images/Bckgrd.svg";
-import meal from "../../Images/Meals.svg";
+import meal from "../../Images/NewMeals.svg";
 
 //whole page
 export const Wrapper = styled.section`
-  padding-top: 3rem;
+  //padding-top: 3rem;
   background-image: url(${background});
   background-size: cover;
-  background-position: center;
+  background-position: left;
   width: 100vw;
   /* padding: 4rem 1rem; */
-  margin: 0 auto;
+  /* margin: 0 auto; */
   height: fit-content;
   display: flex;
   flex-direction: row;
@@ -18,13 +18,15 @@ export const Wrapper = styled.section`
   align-items: center;
   /* align-items: center; */
 
-  .bookings{
-    p{
-      color: black;
+  .bookings {
+    p {
+      color: var(--white);
+
       padding-top: 1vw;
+      font-size: 1.1rem;
     }
-    h2{
-      color: var(--dark);
+    h2 {
+      color: var(--white);
     }
   }
 
@@ -80,7 +82,7 @@ export const Wrapper = styled.section`
   }
 
   .swiper_container {
-    height:30vh;
+    height: 30vh;
     width: 40vw;
     //padding-top: 17rem;
     /* position: relative; */
@@ -159,18 +161,17 @@ export const Wrapper = styled.section`
       transform: translateX(-20%) !important;
     }
   }
- 
 
-/* Example CSS for hover effect on navigation buttons */
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  /* background-color: #dddddd; Change background color on hover */
-  color: black; /* Change text color on hover */
-}
-.swiper-button-next,.swiper-button-prev{
-  color: var(--white);
-}
-
+  /* Example CSS for hover effect on navigation buttons */
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    /* background-color: #dddddd; Change background color on hover */
+    color: black; /* Change text color on hover */
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: var(--white);
+  }
 
   .slider-controler .slider-arrow {
     background: var(--white);
@@ -180,7 +181,7 @@ export const Wrapper = styled.section`
     left: 42%;
     transform: translateX(-42%);
     filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
-/* @media (max-width: 990px) {
+    /* @media (max-width: 990px) {
   .slider-controler .swiper-button-next {
     left: 70% !important;
     transform: translateX(-70%) !important;
@@ -212,11 +213,11 @@ export const Wrapper = styled.section`
 `;
 
 export const Card = styled.article`
- background-color: ${({ isTop }) => isTop ? 'var(--darkpurple)' : 'var(--dark)'};
- /* border: ${({ isTop }) => isTop ? 'solid 5px black' : '0px'}; */
- filter: ${({ isTop }) => isTop ? 'none' : 'blur(2px)'};
+  background-color: ${({ isTop }) =>
+    isTop ? "var(--dark)" : "var(--darkpurple)"};
+  /* border: ${({ isTop }) => (isTop ? "solid 5px black" : "0px")}; */
+  filter: ${({ isTop }) => (isTop ? "none" : "blur(2px)")};
   transition: filter 0.3s ease; // Add transition for smoother blur effect
-
 
   display: flex;
   flex-direction: column;
@@ -238,16 +239,19 @@ export const Card = styled.article`
     padding-left: 0.5;
     display: flex;
     flex-direction: column;
+    color: var(--white);
   }
   h1 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.5rem;
+    color: var(--white);
     //text-align: center;
   }
 
   p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1 rem;
+    color: var(--white);
   }
 
   /* Media query for smaller screens */
@@ -257,19 +261,20 @@ export const Card = styled.article`
   }
 
   button {
-    width: 8vw;
+    padding-top: 5px;
+    width: 5vw;
     height: 20vh;
     background-color: var(--white);
     color: var(--darkest);
     border-radius: 10px;
     font-size: 1.1rem;
+    cursor: pointer;
   }
   &:hover {
     /* background-color: var( --darkpurple); // Change to a lighter background on hover */
     transform: scale(1.05); // Scale up the card on hover
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); // Add a slight shadow on hover
     cursor: pointer;
-
   }
 `;
 
@@ -285,13 +290,13 @@ export const Left = styled.section`
   p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1rem;
-    color: var(--darkest);
+    color: var(--white);
   }
 
   h2 {
     font-size: 3rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: var(--dark);
+    color: var(--white);
     //text-align: center;
     margin-top: 15vh;
     //align-items: center;
@@ -316,22 +321,25 @@ export const Left = styled.section`
   }
 `;
 
-export const Main = styled.section`
-  background: var(--white);
-  /* background-color: transparent; */
-  /* backdrop-filter:blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
+export const MealsMain = styled.section`
+  //background: var(--white);
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 30px;
   height: 80vh;
   width: 80vw;
-  margin: 80px;
+  /* margin-top: 80px; */
   text-align: justify;
   padding: 2rem;
   display: flex;
   flex-direction: row;
   gap: 5vw;
 `;
-
+export const PageSec = styled.body`
+  display: flex;
+  flex-direction: column;
+`;
 export const Swrapper = styled.section`
   background: transparent;
   height: 70vh;
@@ -347,7 +355,7 @@ export const Swrapper = styled.section`
     font-size: 3rem;
     text-align: left;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: var(--dark);
+    color: var(--white);
     //padding-bottom: 5vh;
     //text-align: center;
     //margin-top: 15vh;
@@ -361,7 +369,7 @@ export const Swrapper = styled.section`
     p {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       font-size: 1.1rem;
-      color: var(--darkest);
+      color: var(--white);
     }
   }
 `;

@@ -4,23 +4,29 @@ import {
   Card,
   CreateMealCard,
   Header,
-  MealCard,
   MealCardFin,
+  MockMeals,
   ShowMealCard,
   Wrapper,
 } from "./HRMeals.styles";
-// import logo from "../../pages/HRHome/Images/logo3.svg";
+
 import logo from "../../Images/logo3.svg";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { ArrowUturnLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { fetchStorageData } from "../../helper";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import LoginButton from "../../components/Log/LoginButton";
 
 const HRMeals = () => {
   const [Meals, setMeals] = useState([]);
   const [newMeal, setNewMeal] = useState({});
   const [viewMeal, setViewMeal] = useState({});
   const [loaded, setLoaded] = useState(false);
-  const [changed, setChanged] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
+    const User = fetchStorageData({ key: "User" });
+    console.log(User);
+
     const getMeals = () => {
       fetch("/api/CreateMeals")
         .then((response) => {
@@ -34,13 +40,16 @@ const HRMeals = () => {
           console.log(error);
         });
     };
+
     getMeals();
+    // setMeals(MockMeals)
+    // setLoaded(true)
     // fetch all meals from database
   }, []);
 
   const [viewMealState, setViewMealState] = useState(false);
 
-  const changeAvailable = (meal) => {
+  const changeAvailable = (meal, bool) => {
     fetch("/api/CreateMeals", {
       method: "PUT",
       headers: {
@@ -48,22 +57,23 @@ const HRMeals = () => {
       },
       body: JSON.stringify({
         Meal_ID: meal.Meal_ID,
-        Availability: !meal.Availability,
+        Availability: bool,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         setViewMeal((prev) => {
-          let temp = prev;
-          temp.Availability = !meal.Availability;
+          console.log(prev);
+          let temp = meal;
+          temp.Availability = bool;
+          console.log(temp);
           return temp;
         });
         setMeals((all) => {
-          console.log(all);
-          const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID);
-          temp.Availability = !meal.Availability;
-          const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
+          const temp = all.filter((a) => a.Meal_ID === meal.Meal_ID)[0];
           const result = all;
+          temp.Availability = bool;
+          const index = all.findIndex((a) => a.Meal_ID === meal.Meal_ID);
           result[index] = temp;
           console.log(result);
           return result;
@@ -137,7 +147,7 @@ const HRMeals = () => {
   };
 
   const changeAvailableViewMeal = (event) => {
-    changeAvailable(viewMeal);
+    changeAvailable(viewMeal, event.target.checked);
   };
 
   const deleteMeal = () => {
@@ -169,110 +179,114 @@ const HRMeals = () => {
   };
 
   return (
-    <>
-      <Wrapper>
-        <Header>
-          <section className="logo">
-            <img src={logo} width="55vw" height="55vh" alt=""></img>
-            <h1>
-              <a href="/">SYNERGY</a>
-            </h1>
-          </section>
-          <nav className="links" alt="">
-            <ul>
-              <li>
-                <a href="#">Reports</a>
-              </li>
-              <li>
-                <a href="HRMeals">Meals</a>
-              </li>
-              <li>
-                <a href="HRBookings">Bookings</a>
-              </li>
-              <li>
-                <a href="#">Car Wash</a>
-              </li>
-              <li>
-                <a href="#">Users</a>
-              </li>
-            </ul>
-          </nav>
-        </Header>
-        <section className="titlepage">
-          <h2>Meals</h2>
+    <Wrapper>
+      <Header>
+        <section className="logo">
+          <img
+            src={logo}
+            width="55vw"
+            height="55vh"
+            alt=""
+            className="logoPic"
+          ></img>
+          <h1>
+            <a href="/">SYNERGY</a>
+          </h1>
         </section>
-        {loaded && (
-          <section className="container">
-            <Card>
-              {Meals.map((meal) => {
-                return (
-                  <MealCardFin
-                    key={meal.Meal_ID}
-                    meal={meal}
-                    click={mealClick}
-                  />
-                );
-              })}
-            </Card>
-            {!viewMealState ? (
-              <CreateMealCard>
-                <h2>Create Meals</h2>
+        <nav className="links" alt="">
+          <ul>
+            <li>
+              <a href="HRMeals">Meals</a>
+            </li>
+            <li>
+              <a href="HRBookings">Bookings</a>
+            </li>
 
-                <input
-                  name="name"
-                  className="input"
-                  placeholder="Name"
-                  type="text"
-                  onChange={mealNameChange}
-                ></input>
-                <input
-                  name="description"
-                  className="input"
-                  type="text"
-                  placeholder="Description"
-                  onChange={descriptionChange}
-                ></input>
+            <li>
+              <a href="HRhome">Users</a>
+            </li>
+            <li>
+              {" "}
+              <LoginButton className={"logout"} />
+            </li>
+          </ul>
+        </nav>
+      </Header>
 
-                <section className="available">
-                  <p>Available</p>
-                  <input
-                    type="checkbox"
-                    aria-label="Available"
-                    onClick={(e) => {
-                      availableChange(e);
-                    }}
-                  ></input>
-                </section>
-                <button onClick={createMeal} data-test-id="Create Meal">
-                  Create
-                </button>
-              </CreateMealCard>
-            ) : (
-              <ShowMealCard>
-                <h3>{viewMeal.Name_of_Meal}</h3>
-                <label></label>
-                <p>Description: {viewMeal.Description}</p>
-                <section>
-                  <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
-                  <input
-                    type="checkbox"
-                    onChange={changeAvailableViewMeal}
-                  ></input>
-                </section>
-                {changed && <button> Save Changes</button>}
-                {changed && <button> Save Changes</button>}
-                <button onClick={deleteMeal}>
-                  <TrashIcon width={25} />
-                </button>
-                <button onClick={() => setViewMealState(false)}>Back</button>
-              </ShowMealCard>
-            )}
-          </section>
-        )}
-      </Wrapper>
-    </>
+      <h2 className="title">Meals</h2>
+
+      {loaded && (
+        <section className="container">
+          <Card>
+            {Meals.map((meal) => {
+              return (
+                <MealCardFin key={meal.Meal_ID} meal={meal} click={mealClick} />
+              );
+            })}
+          </Card>
+          {!viewMealState ? (
+            <CreateMealCard>
+              <h2>Create Meals</h2>
+
+              <input
+                name="name"
+                className="input"
+                placeholder="Name"
+                type="text"
+                onChange={mealNameChange}
+              ></input>
+              <input
+                name="description"
+                className="input"
+                type="text"
+                placeholder="Description"
+                onChange={descriptionChange}
+              ></input>
+
+              <section className="available">
+                <p>Available</p>
+                <input
+                  type="checkbox"
+                  aria-label="Available"
+                  onClick={(e) => {
+                    availableChange(e);
+                  }}
+                ></input>
+              </section>
+              <button onClick={createMeal} data-test-id="Create Meal">
+                Create
+              </button>
+            </CreateMealCard>
+          ) : (
+            <ShowMealCard>
+              <h3>{viewMeal.Name_of_Meal}</h3>
+              <label></label>
+              <p>Description: {viewMeal.Description}</p>
+              <section className=".available">
+                <p>{viewMeal.Availability ? "Available" : "Not Available"}</p>
+                <input
+                  type="checkbox"
+                  onChange={changeAvailableViewMeal}
+                ></input>
+              </section>
+              {/* {changed && <button onClick={() => setChanged(p => !p)}> Save Changes</button>} */}
+              <button onClick={deleteMeal}>
+                <TrashIcon width={25} className="trashIcon" />
+              </button>
+              <button
+                onClick={() => {
+                  console.log("Meals", Meals);
+                  setViewMealState(false);
+                }}
+              >
+                <ArrowUturnLeftIcon className="backIcon" width={25}/>
+              </button>
+            </ShowMealCard>
+          )}
+        </section>
+      )}
+    </Wrapper>
   );
 };
 
 export default HRMeals;
-// export {ge}

@@ -1,7 +1,9 @@
 //react
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { fetchStorageData, setLocalStorage } from "../../helper";
 
+import StaffHeader from "../../components/StaffHeader/StaffHeader";
 //icons
 import {
   ClockIcon,
@@ -11,7 +13,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 import logo from "../../Images/logo3.svg";
-// StaffDashboard styles
 import {
   allProjects,
   Card,
@@ -23,10 +24,14 @@ import {
   Wrapper,
 } from "./StaffDashBoard.styles";
 
-import { useLocation } from "react-router-dom";
+
+
+//import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import LoginButton from "../../components/Log/LoginButton";
 import LogoutButton from "../../components/Log/LogoutButton";
+import { toast } from "react-toastify";
+import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
 // import sheet from "styled-components/dist/sheet";
 
 // Function to filter unique Project values and return an array of unique projects
@@ -60,10 +65,10 @@ function filterTasksByProject(Sheets, projectName) {
 const StaffDashboard = () => {
   const location = useLocation();
   const history = useHistory();
-  const data = location.state.params; // Remove this line
-  const User = data.user;
+  const data=fetchStorageData({key:"User"})
+  console.log(data,'fetching data');
   const Emp_ID = data.Emp_ID;
-  // const Emp_ID = 1;
+  // const Emp_ID = 87;
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
@@ -121,12 +126,14 @@ const StaffDashboard = () => {
             setUniqueProjectNames(filterUniqueProjects([taskToAdd, ...prev]));
             return [taskToAdd, ...prev];
           });
+          toast.success(`${taskToAdd.Description} successfully created!`)
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     };
     add();
+    setCreate(handleClick)
   };
 
   const projectNameChange = (event) => {
@@ -206,35 +213,13 @@ const StaffDashboard = () => {
       )
     );
   };
+  // const data = ""
   const Lunch = () => {
     history.push("/Lunch", { params: data });
   };
   return (
     <Wrapper>
-      {/* <StaffHeader employee={data}></StaffHeader> */}
-      <Header>
-        <section className="logo">
-          <img src={logo} width="55vw" height="55vh"></img>
-          <h1>
-            <a href="/">SYNERGY</a>
-          </h1>
-        </section>
-        <nav className="links">
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">Reports</a>
-            </li>
-            <li>
-              {/* <a>Lunch</a> */}
-              <a onClick={Lunch}>Lunch</a>
-            </li>
-          </ul>
-        </nav>
-        <ArrowRightIcon width={24} />
-      </Header>
+      <StaffHeader employee={data}></StaffHeader>
       <section className="titlepage">
         <h2>Task Tracker</h2>
       </section>
@@ -307,7 +292,7 @@ const StaffDashboard = () => {
                     <button className="deleteButtonFin">
                       <TrashIcon
                         className="TrashIcon"
-                        width={25}
+                        width= {"25px"}
                         onClick={() => handleDelete(s)}
                       />{" "}
                     </button>
@@ -317,8 +302,7 @@ const StaffDashboard = () => {
             );
           })}
       </Card>
-      <LoginButton />
-      <LogoutButton />
+      {/* <LoginButton /> */}
     </Wrapper>
   );
 };

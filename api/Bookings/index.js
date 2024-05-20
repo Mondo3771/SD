@@ -24,8 +24,32 @@ module.exports = async function (context, req) {
         console.error("Error running query", err);
       }
 
-
       break;
+
+    case "DELETE":
+      try {
+        const { Booking_ID } = req.body;
+        const resultSet = await pool
+          .request()
+          .input("Booking_ID", sql.Int,Booking_ID)
+          .query(`DELETE FROM Bookings WHERE Booking_id = @Booking_ID`);
+        context.res = {
+          status: 200,
+          body: {
+            data: resultSet.recordset,
+            message: "Successfully deleted Booking",
+          },
+        };
+      } catch (err) {
+        context.res = {
+          status: 500,
+          message: "Error connecting to the database",
+          body: {},
+        };
+        console.error("Error running query", err);
+      }
+      break;
+
     default:
       context.res = {
         status: 400,
@@ -35,3 +59,20 @@ module.exports = async function (context, req) {
       break;
   }
 };
+
+// const deleteBooking= async (Booking_ID) => {
+//   fetch("/api/Bookings", {
+//     method: "DELETE",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ Booking_ID }),
+//   })
+//     .then((response) => response.json())
+//     .then((DB) => {
+//       console.log("Success:", DB.message);
+//     })
+//     .catch((error) => {
+//       console.error("Error:", error);
+//   })
+// }
