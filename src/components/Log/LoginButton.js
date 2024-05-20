@@ -11,6 +11,17 @@ const LoginButton = ({ child }) => {
           loginWithRedirect();
           // child(user);
         }}
+        style={{
+          borderRadius: "20px",
+          color: "var(--darkest)",
+          height: "5vh",
+          width: "10vw",
+          background: "transparent",
+          color: "white",
+          border: "solid var(--white) 3px",
+          cursor: "pointer",
+
+        }}
       >
         Log In
       </button>

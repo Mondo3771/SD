@@ -1,20 +1,22 @@
 import styled from "styled-components";
 
 export const Wrap = styled.body`
+  //last 2 columns
   display: flex;
-  width: 900px;
-  // border: 2px solid black;
+  //background-color: red;
+  width: 100vw;
+  //border: 2px solid black;
   height: 100%;
-  gap: 1.5rem;
+  gap: 5vh;
 `;
 
 export const Wrapper = styled.section`
   scroll-behavior: smooth;
   display: flex;
   flex-flow: column;
-  outline: 3px solid black;
+  outline: 2px solid white;
   outline-offset: 3px 0 1px 0;
-  border-radius: 5px;
+  border-radius: 20px;
   overflow: scroll;
   overflow-x: hidden;
   margin: 0 auto;
@@ -22,13 +24,18 @@ export const Wrapper = styled.section`
   flex: 1;
   align-items: center;
   transition: 250ms ease-in-out;
-
-  .Message:hover {
-    background: gray;
+  width: 32vw;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid white;
+  .Message {
+    //background: var(--dark);
     color: black;
+    border-bottom: 1px solid white;
+    border-radius: 0;
   }
   .Green {
-    border: 5px solid green;
+    //border: 2px solid white;
   }
 
   .Green h4 {
@@ -41,12 +48,15 @@ export const SendFeedBackWrapper = styled.section`
   display: flex;
   flex-flow: column;
   flex: 1;
-  outline: 3px solid black;
+  outline: 2px solid white;
   outline-offset: 3px 0 1px 0;
-  border-radius: 5px;
+  border-radius: 20px;
   margin: 0 auto;
   padding: 12px;
+  //background-color: rgba(255, 255, 255, 0.2);
   transition: 250ms ease-in-out;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   .MessageInput {
     height: 75%;
@@ -58,7 +68,8 @@ export const SendFeedBackWrapper = styled.section`
 
   ::placeholder {
     color: gray;
-    font-size: 2rem;
+    font-size: 1.5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-style: italic;
   }
 
@@ -80,6 +91,10 @@ export const SendFeedBackWrapper = styled.section`
     cursor: not-allowed;
     background-color: gray;
   }
+  textarea {
+    background-color: transparent;
+    border-radius: 20px;
+  }
 `;
 
 export const Message = styled.article`
@@ -89,7 +104,7 @@ export const Message = styled.article`
   width: 90%;
   border-radius: 10px;
   transition: 250ms ease-in-out;
-  border: 5px solid black;
+  //border-bottom: 1px solid white;
   padding: 3px;
   cursor: pointer;
   padding: 10px;
@@ -108,7 +123,7 @@ export const Message = styled.article`
     text-decoration: underline;
   }
   h2 {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 `;
 
@@ -163,5 +178,5 @@ export const MockUser = {
   Surname: "Mazarura",
   Emp_ID: 83,
   Department: "Home Affairs",
-  Emp_type:"Manager"
+  Emp_type: "Manager",
 };

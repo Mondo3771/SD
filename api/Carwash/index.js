@@ -55,6 +55,7 @@ module.exports = async function (context, req) {
 
       break;
     case "PUT":
+      console.log(data);
       try {
         if (
           data.Car_wash === undefined ||
@@ -70,7 +71,7 @@ module.exports = async function (context, req) {
           // If the ID exists, update the Emp_type
           const resultSet = await pool
             .request()
-            .input("Quantity", sql.Bit, data.Quantity)
+            .input("Quantity", sql.Int, data.Quantity)
             .input("Car_wash", sql.Int, data.Car_wash)
             .query(
               `UPDATE Carwashs SET Quantity = @Quantity WHERE Car_wash = @Car_wash`
