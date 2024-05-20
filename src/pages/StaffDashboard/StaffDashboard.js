@@ -56,7 +56,7 @@ function filterTasksByProject(Sheets, projectName) {
 }
 
 const StaffDashboard = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const history = useHistory();
   const data = fetchStorageData({ key: "User" });
   const Emp_ID = data.Emp_ID;

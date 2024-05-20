@@ -253,7 +253,6 @@ const HRdatagrid = () => {
     <>
       {Loaded ? (
         <>
-        
         {OpenReport?
           <>
             <button 
@@ -327,8 +326,7 @@ const HRdatagrid = () => {
                   />
                 </Box>
               </Card>
-            </>
-          )}
+            </>}
         </>
       ) : (
         <Loader></Loader>
