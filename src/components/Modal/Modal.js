@@ -101,7 +101,7 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
             </article>
           </>
         ) : (
-          <>
+          <> {console.log(booking,'no ways hoza')}
             <div className="titleCloseBtn">
               <button
                 onClick={() => {

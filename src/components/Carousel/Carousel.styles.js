@@ -3,7 +3,7 @@ import background from "../../Images/Bckgrd.svg";
 import meal from "../../Images/NewMeals.svg";
 
 //whole page
-export const Wrapper = styled.section`
+export const Wrapper = styled.main`
   //padding-top: 3rem;
   background-image: url(${background});
   background-size: cover;

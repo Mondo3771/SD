@@ -9,6 +9,8 @@ export const Feedback = styled.article`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+
+
   margin: 3vw;
   border-radius: 4%;
   margin-bottom: 40px;
@@ -29,6 +31,7 @@ export const Feedback = styled.article`
       padding-bottom: 1vh;
       border-bottom: 1px solid white;
     }
+    
   }
 `;
 export const Heading = styled.section`
@@ -49,6 +52,10 @@ export const Heading = styled.section`
     color: var(--dark);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 `;
 export const Main = styled.section`
