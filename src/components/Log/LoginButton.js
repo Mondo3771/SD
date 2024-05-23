@@ -10,7 +10,9 @@ const LoginButton = ({ child }) => {
       <button
       className="loginButton"
         onClick={() => {
-          loginWithRedirect();
+          loginWithRedirect({
+            prompt: "consent",
+          });
           // child(user);
         }}
         style={{

@@ -36,6 +36,13 @@ const LandingNew = () => {
   };
   // console.log(isAuthenticated, Loaded);
   if (isAuthenticated && !Loaded) {
+    const token = getAccessTokenSilently(
+      {
+        audience: "http://localhost3000/api/login",
+        scope: "read:current_user",
+      },
+    );
+    console.log(token);
     childToParent(user);
   }
 

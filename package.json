@@ -43,7 +43,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=False react-scripts build",
+    "build": " react-scripts build",
     "test": "jest",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage && type .\\coverage\\lcov-report\\lcov.info | coveralls",
@@ -63,11 +63,6 @@
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/App.js",
       "!<rootDir>/src/components/Log/LogoutButton.js",
-      "!<rootDir>/src/components/Carousel/*",
-      "!<rootDir>/src/pages/TempReportPage/*",
-      "!<rootDir>/src/components/StaffCarWash/*",
-      "!<rootDir>/src/components/Reporting/*",
-
       "!<rootDir>/src/index.js",
       "!<rootDir>/src/reportWebVitals*",
       "!<rootDir>/src/setupTests.js"
