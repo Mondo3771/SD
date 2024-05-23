@@ -55,7 +55,7 @@ module.exports = async function (context, req) {
 
       break;
     case "PUT":
-      console.log(data);
+      console.log(data,'hey');
       try {
         if (
           data.Car_wash === undefined ||

@@ -15,6 +15,8 @@ import {
   Top
 } from "./Reporting.styles";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+
 
 const mockGraph = [
   {
@@ -353,7 +355,9 @@ const Reporting = ({ User }) => {
         if(feedback){
             
             feedback.forEach(comment=>{
+              
             const comDate = new Date(comment.Date);
+              console.log(comDate);
             const comYear = comDate.getFullYear();
             const comMonth = comDate.getMonth() + 1; 
             if (comYear === selectedYear && comMonth === selectedMonth) {
@@ -363,7 +367,7 @@ const Reporting = ({ User }) => {
             }
             
 
-        });}
+        })}
         const sortedFeedback = [...monthFeed].sort((a, b) => new Date(b.date) - new Date(a.date));
 
         setfeedback(sortedFeedback);
@@ -389,7 +393,7 @@ const Reporting = ({ User }) => {
             <Heading>
             <h2> {User.Name? 'Report for ' + User.Name: 'My Report'}</h2>
 
-          <button onClick={() => toPDF()}>Download PDF</button>
+          <button onClick={() => toPDF()}><ArrowDownTrayIcon width={24} height={24}/> Download</button>
         </Heading>
         <Dater>
                 <article>
@@ -398,7 +402,7 @@ const Reporting = ({ User }) => {
                     </article>
                     <article>
                         <label htmlFor="month">Month:</label>
-                        <input type="number" id="month" value={selectedMonth} onChange={handleMonthChange} />
+                        <input type="number" id="month" value={selectedMonth} onChange={handleMonthChange}  min="1" max="12" />
                     </article>
 
                 </Dater>
@@ -448,7 +452,7 @@ const Reporting = ({ User }) => {
                         <p className="messagebox">
                           {/* <strong>
                             {item.Name}:</strong> */}
-                           <strong> Message: {item.Message}</strong>
+                           <strong> Message: {item.Message}</strong><br/>
                            <strong>date:{item.Date.split('T')[0]}</strong> 
                         </p>
                       </p>
@@ -496,6 +500,7 @@ const Reporting = ({ User }) => {
                 type="number"
                 value={chooseHour}
                 onChange={handlehourChange}
+                min='1'
               ></input>
             </Progress>
           </Bottom>

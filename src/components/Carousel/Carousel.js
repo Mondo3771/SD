@@ -69,22 +69,43 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchEmployeeMeal = () => {
+  //     fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
+  //       .then((response) => response.json())
+  //       .then((book) => {
+  //         // console.log(book.data, "noooooooo");
+  //         setempBook(book.data);
+  //         setb_ID(book.data[0].Booking_ID);
+  //         // console.log(book.data[0].Name_of_Meal, "meal");
+  //         // console.log(book.data[0].Booking_ID, "book");
+  //       });
+  //   };
+
+  //   fetchEmployeeMeal();
+  // }, []);
   useEffect(() => {
     const fetchEmployeeMeal = () => {
       fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
         .then((response) => response.json())
         .then((book) => {
-          // console.log(book.data, "noooooooo");
           setempBook(book.data);
           setb_ID(book.data[0].Booking_ID);
-          // console.log(book.data[0].Name_of_Meal, "meal");
-          // console.log(book.data[0].Booking_ID, "book");
+        })
+        .catch((error) => {
+          console.error('Error fetching employee meal:', error);
         });
     };
 
+    // Initial fetch
     fetchEmployeeMeal();
-  }, [data.Emp_ID, modalOpen, delBook,actionTriggered]);
 
+    // Set up polling interval
+    const intervalId = setInterval(fetchEmployeeMeal, 2000); // Poll every 2 seconds
+
+    // Cleanup on component unmount
+    return () => clearInterval(intervalId);
+  }, [data.Emp_ID]);
 
   useEffect(() => {
       const timer = setTimeout(() => {
@@ -134,9 +155,9 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
           <PageSec>
             <MealsMain>
               <Left>
-                <section className="text">
+                <article className="text">
                   <h2>Something Healthy, Something Tasty!</h2>
-                </section>
+                </article>
               </Left>
               <Swrapper>
                 <section className="text">
