@@ -8,7 +8,7 @@ const LoginButton = ({ child }) => {
   if (!isAuthenticated) {
     return (
       <button
-      className="loginButton"
+        className="loginButton"
         onClick={() => {
           loginWithRedirect({
             prompt: "consent",
@@ -24,7 +24,6 @@ const LoginButton = ({ child }) => {
           color: "white",
           border: "solid var(--white) 3px",
           cursor: "pointer",
-
         }}
       >
         Log In
@@ -39,19 +38,12 @@ const LoginButton = ({ child }) => {
             clearStorage();
           }}
           style={{
-            backgroundColor: 'transparent',
-            color: 'white',
-            border: 'none'
-
-          }}
-          style={{
-            backgroundColor: 'transparent',
-            color: 'white',
-            border: 'none'
-
+            backgroundColor: "transparent",
+            color: "white",
+            border: "none",
           }}
         >
-          <ArrowLeftStartOnRectangleIcon width={24} height={24}/>
+          <ArrowLeftStartOnRectangleIcon width={24} height={24} />
         </button>
         <br />
       </>
