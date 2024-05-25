@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wrap = styled.body`
+export const Wrap = styled.section`
   //last 2 columns
   display: flex;
   //background-color: red;

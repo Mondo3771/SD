@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import background from "../../Images/Bckgrd.svg";
-export const Body = styled.body`
+export const Body = styled.section`
   display: flex;
   //margin: 1rem;
   border: 2px solid white;

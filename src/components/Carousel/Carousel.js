@@ -7,14 +7,12 @@ import {
   Swrapper,
   PageSec,
 } from "./Carousel.styles";
-// import StaffCarWash from "../StaffCarWash/StaffCarWash";
 import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import Modal from "../Modal/Modal";
 import Loader from "../Loader/Loader";
 import StaffHeader from "../StaffHeader/StaffHeader";
 import { fetchStorageData, setLocalStorage } from "../../helper";

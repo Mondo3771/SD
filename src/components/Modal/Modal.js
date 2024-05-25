@@ -3,8 +3,8 @@ import "./Modal.css";
 
 // import { PostBooking } from "../Carousel/fetch";
 
-function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
-  console.log(booking,'modal');
+function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {
+  console.log(booking, "modal");
   const confirmBooking = () => {
     const PostBooking = (Emp_ID, Meal_ID) => {
       fetch(`/api/Meals`, {
@@ -21,8 +21,7 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
         .then((response) => response.json())
         .then((book) => {
           console.log(book.data, "hey");
-          setActionTriggered(prev=>prev);
-          
+          setActionTriggered((prev) => prev);
         });
     };
     // console.log(data.Meal_ID);
@@ -30,9 +29,8 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
 
     setOpenModal(false);
   };
-  const confirmCarBooking=()=>{
+  const confirmCarBooking = () => {
     const postcarwashbooking = (info) => {
-    
       fetch("/api/CarBookings", {
         method: "POST",
         headers: {
@@ -48,7 +46,7 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
             // "Car_wash": 13,
             //      "Quantity": 2
             //     }
-          
+
             fetch("/api/CarWash", {
               method: "PUT",
               headers: {
@@ -66,10 +64,13 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
               });
           };
           console.log(info);
-          console.log({Car_wash:info.Car_wash,Quantity:data.Quantity-1});
-          Updatecarwash({Car_wash:info.Car_wash,Quantity:data.Quantity-1})
+          console.log({ Car_wash: info.Car_wash, Quantity: data.Quantity - 1 });
+          Updatecarwash({
+            Car_wash: info.Car_wash,
+            Quantity: data.Quantity - 1,
+          });
           console.log("Success:", data.message);
-          setActionTriggered(prev=>prev);
+          setActionTriggered((prev) => prev);
 
           return "Success";
         })
@@ -78,11 +79,13 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
           return "Error";
         });
     };
-    postcarwashbooking({Car_wash:data.Car_wash,Emp_ID:employee.Emp_ID, Date:data.Date})
+    postcarwashbooking({
+      Car_wash: data.Car_wash,
+      Emp_ID: employee.Emp_ID,
+      Date: data.Date,
+    });
     setOpenModal(false);
-
-
-  }
+  };
 
   return (
     <main className="modalBackground">
@@ -91,7 +94,7 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
           <>
             <article className="already">
               <p className="already">You already have a booking</p>
-              <button
+              <button aria-label="Close"
                 onClick={() => {
                   setOpenModal(false);
                 }}
@@ -101,7 +104,9 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
             </article>
           </>
         ) : (
-          <> {console.log(booking,'no ways hoza')}
+          <>
+            {" "}
+            {console.log(booking, "no ways hoza")}
             <div className="titleCloseBtn">
               <button
                 onClick={() => {
@@ -111,50 +116,50 @@ function Modal({ setOpenModal, data, employee, booking ,setActionTriggered}) {
                 X
               </button>
             </div>
-            {data.Description?(
-            <>
-            
-            <h2>{data.Name_of_Meal}</h2>
-            <p>Description: {data.Description}</p>
-            <section className="section">
-              <button onClick={confirmBooking}>Confirm Booking</button>
-            </section>
-              </>
-            )
-            :
-            (
+            {data.Description ? (
               <>
-              {data.Quantity===0?
-              (
-                <>
-                <article className="already">
-                  <p className="already">There is no available carwash for this day</p>
-                  <button
-                    onClick={() => {
-                      setOpenModal(false);
-                    }}
-                  >
-                    Close
+                <h2>{data.Name_of_Meal}</h2>
+                <p>Description: {data.Description}</p>
+                <section className="section">
+                  <button onClick={confirmBooking} aria-label="Confirm">
+                    Confirm Booking
                   </button>
-                </article>
-              </>
-              )
-              :(
-
-                <>
-                  <h2>Car Wash Booking</h2>
-                  <p> {data.Day}: {data.Date}</p>
-                  <p>Quantity left:{data.Quantity}</p>
-
-                  <section className="section">
-                  <button onClick={confirmCarBooking}>Confirm Booking</button>
                 </section>
-                </>
-
-              )}
               </>
-              
-         
+            ) : (
+              <>
+                {data.Quantity === 0 ? (
+                  <>
+                    <article className="already">
+                      <p className="already">
+                        There is no available carwash for this day
+                      </p>
+                      <button
+                        onClick={() => {
+                          setOpenModal(false);
+                        }}
+                      >
+                        Close
+                      </button>
+                    </article>
+                  </>
+                ) : (
+                  <>
+                    <h2>Car Wash Booking</h2>
+                    <p>
+                      {" "}
+                      {data.Day}: {data.Date}
+                    </p>
+                    <p>Quantity left:{data.Quantity}</p>
+
+                    <section className="section">
+                      <button aria-label="Confirm" onClick={confirmCarBooking}>
+                        Confirm Booking
+                      </button>
+                    </section>
+                  </>
+                )}
+              </>
             )}
           </>
         )}

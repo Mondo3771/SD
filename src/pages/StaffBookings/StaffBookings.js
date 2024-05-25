@@ -30,8 +30,6 @@ const StaffBookings = () => {
         />
       )}
       <Carousel onOpenModal={handleOpenModal}  component={<StaffCarWash onOpenModal={handleOpenModal}/>}/>
-      
-      
     </>
   );
 };

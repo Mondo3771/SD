@@ -31,7 +31,6 @@ jest.mock("react-router-dom", () => ({
     state: { params: "some params" },
   }),
 }));
-const originalError = console.error;
 
 beforeEach(() => {
   fetchMock.resetMocks();
