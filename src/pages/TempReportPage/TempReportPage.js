@@ -62,12 +62,7 @@ export const TempReportPage = () => {
   };
 
   useEffect(() => {
-    // Get All the info you need on this page once (AllFeedback,AllUsers)
-    // Get from storage
-    // setLocalStorage({ key: "Users", value: MockUsers });
-    // setFirstLoad(true);
-    // setAllFeedBack(MockFeedBack);
-    // setLocalStorage({ key: "Feedback", value: MockFeedBack });
+
     feedback();
   }, []);
 

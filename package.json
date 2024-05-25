@@ -44,7 +44,7 @@
   "scripts": {
     "start": "react-scripts start",
 
-    "build": "CI=False react-scripts build",
+    "build": "react-scripts build",
 
     "test": "jest",
     "coverage": "jest --coverage",

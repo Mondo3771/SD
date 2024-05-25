@@ -220,7 +220,6 @@ export const Card = styled.article`
   /* border: ${({ isTop }) => (isTop ? "solid 5px black" : "0px")}; */
   filter: ${({ isTop }) => (isTop ? "none" : "blur(2px)")};
   transition: filter 0.3s ease; // Add transition for smoother blur effect
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -231,6 +230,7 @@ export const Card = styled.article`
   height: 30vh;
   width: 26vw;
   border-radius: 20px;
+  
 
   .textwrap {
     width: 25vw;
@@ -338,7 +338,7 @@ export const MealsMain = styled.section`
   flex-direction: row;
   gap: 5vw;
 `;
-export const PageSec = styled.body`
+export const PageSec = styled.section`
   display: flex;
   flex-direction: column;
 `;

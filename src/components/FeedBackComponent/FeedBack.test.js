@@ -1,6 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { FeedBack } from "./FeedBack";
+import userEvent from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 
 describe("FeedBack component", () => {
   const mockFeedBackArray = [
@@ -40,7 +42,7 @@ describe("FeedBack component", () => {
       />
     );
   });
-  test("should render FeedBack component", () => {
+  test("should render FeedBack component", async () => {
     const { debug } = render(
       <FeedBack
         FeedBackArray={mockFeedBackArray}
@@ -49,7 +51,11 @@ describe("FeedBack component", () => {
         onSendFeedBack={mockSendFeedBack}
       />
     );
-
-    
+    const inputfield = screen.getAllByLabelText("Imput field")[0];
+    const sendButton = screen.getAllByLabelText("Save button")[0];
+    await act(async () => {
+      userEvent.type(inputfield, "HE");
+      userEvent.click(sendButton);
+    });
   });
 });

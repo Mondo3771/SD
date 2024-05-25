@@ -16,6 +16,7 @@ import "swiper/css/navigation";
 import Loader from "../Loader/Loader";
 import StaffHeader from "../StaffHeader/StaffHeader";
 import { fetchStorageData, setLocalStorage } from "../../helper";
+import { logDOM } from "@testing-library/react";
 
 const DeleteBooking = (Booking_ID) => {
   fetch(`/api/Meals?Booking_ID=${Booking_ID}`, {
@@ -33,7 +34,15 @@ const DeleteBooking = (Booking_ID) => {
     });
 };
 
-const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
+/**
+ * Carousel component for displaying meals and bookings.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.onOpenModal - Function to open the modal.
+ * @param {React.Component} props.component - Component for staff car wash.
+ * @returns {JSX.Element} The rendered Carousel component.
+ */
+const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
   const data = fetchStorageData({ key: "User" });
 
   const [Meals, setMeals] = useState(null);
@@ -44,28 +53,25 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
   const [topCardIndex, setTopCardIndex] = useState(0);
   const [b_ID, setb_ID] = useState(null);
   const [delBook, setdelBook] = useState(false);
+  const fetchData = () => {
+    console.log("fetching meals");
+    fetch("/api/Meals")
+      .then((response) => response.json())
+      .then((meals) => {
+        // console.log(meals.data, "meals");
+        setMeals(meals.data);
+        setLoaded(true);
+      });
+  };
 
   const [actionTriggered, setActionTriggered] = useState(false); //i want to refresh 1 second after an action
 
   const Book = (booking) => {
     setSelectedBooking(booking);
     setModalOpen(true);
-    onOpenModal(booking, data,empBook,actionTriggered);
-    setActionTriggered(prev=>!prev);
+    onOpenModal(booking, data, empBook, actionTriggered);
+    setActionTriggered((prev) => !prev);
   };
-
-  useEffect(() => {
-    const fetchData = () => {
-      fetch("/api/Meals")
-        .then((response) => response.json())
-        .then((meals) => {
-          setMeals(meals.data);
-          setLoaded(true);
-        });
-    };
-
-    fetchData();
-  }, []);
 
   // useEffect(() => {
   //   const fetchEmployeeMeal = () => {
@@ -83,15 +89,18 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
   //   fetchEmployeeMeal();
   // }, []);
   useEffect(() => {
+    console.log(fetchData());
+
     const fetchEmployeeMeal = () => {
       fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
         .then((response) => response.json())
         .then((book) => {
+          console.log(book.data, "noooooooo");
           setempBook(book.data);
           setb_ID(book.data[0].Booking_ID);
         })
         .catch((error) => {
-          console.error('Error fetching employee meal:', error);
+          console.error("Error fetching employee meal:", error);
         });
     };
 
@@ -106,34 +115,33 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
   }, [data.Emp_ID]);
 
   useEffect(() => {
-      const timer = setTimeout(() => {
-        // Action to be performed 1 second after modal is closed or delete button is clicked
-        console.log("Action triggered 1 second later");
-        const fetchEmployeeMeal = () => {
-          fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
-            .then((response) => response.json())
-            .then((book) => {
-              console.log(book.data, "noooooooo");
-              setempBook(book.data);
-              setb_ID(book.data[0]?book.data[0].Booking_ID:null);
-              console.log(book.data[0].Name_of_Meal, "meal");
-              console.log(book.data[0].Booking_ID, "book");
-            });
-        };
+    const timer = setTimeout(() => {
+      // Action to be performed 1 second after modal is closed or delete button is clicked
+      console.log("Action triggered 1 second later");
+      const fetchEmployeeMeal = () => {
+        fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
+          .then((response) => response.json())
+          .then((book) => {
+            console.log(book.data, "noooooooo");
+            setempBook(book.data);
+            setb_ID(book.data[0] ? book.data[0].Booking_ID : null);
+            console.log(book.data[0].Name_of_Meal, "meal");
+            console.log(book.data[0].Booking_ID, "book");
+          });
+      };
 
-        fetchEmployeeMeal();
+      fetchEmployeeMeal();
 
-        // Reset actionTriggered state
-        setActionTriggered(false);
-      }, 500);
+      // Reset actionTriggered state
+      setActionTriggered(false);
+    }, 500);
 
-      return () => clearTimeout(timer); // Clear timeout if the component is unmounted or actionTriggered changes
-    
+    return () => clearTimeout(timer); // Clear timeout if the component is unmounted or actionTriggered changes
   }, [actionTriggered]);
 
   return (
     <>
-    {/* {modalOpen && (
+      {/* {modalOpen && (
        
         <>
          <Modal
@@ -191,6 +199,7 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {
                     ) => (
                       <SwiperSlide key={index}>
                         <Card
+                        aria-label="Card"
                           onClick={() => Book(booking)}
                           isTop={index === topCardIndex}
                         >
