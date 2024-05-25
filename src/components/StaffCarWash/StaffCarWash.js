@@ -80,30 +80,56 @@ const StaffCarWash = ({onOpenModal}) => {
   // };
 
   // fetching Carwash data
-  useEffect(()=>{
-    const getcarwash = () => {
+  // useEffect(()=>{
+  //   const getcarwash = () => {
 
+  //     fetch("/api/CarWash")
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         setDates(data.data)
+  //         return data;
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error:", error);
+  //         return "Error";
+  //       });
+  //   };
+  //   getcarwash();
+
+
+  // },[])
+  useEffect(() => {
+    const getCarWash = () => {
       fetch("/api/CarWash")
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          setDates(data.data)
+          setDates(data.data);
           return data;
         })
         .catch((error) => {
           console.error("Error:", error);
-          return "Error";
+          setError(error);
         });
     };
-    getcarwash();
 
+    // Initial fetch
+    getCarWash();
 
-  },[actionTriggered])
+    // Set up polling interval
+    const intervalId = setInterval(getCarWash, 2000); // Poll every 2 seconds
 
+    // Cleanup on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     const calculateNearestMonday = () => {
       const today = new Date();
+      if(today.toISOString().split('T')[1].split(':')[0]>21){
+        today.setDate(today.getDate() + 1)
+    }
       const dayOfWeek = today.getDay(); // Sunday - Saturday : 0 - 6
       console.log(dayOfWeek);
   
@@ -123,7 +149,12 @@ const StaffCarWash = ({onOpenModal}) => {
     };
 
     const calculateNearestThursday = () => {
+      
       const today = new Date();
+      if(today.toISOString().split('T')[1].split(':')[0]>21){
+        today.setDate(today.getDate() + 1)
+    }
+
       const dayOfWeek = today.getDay(); // Sunday - Saturday : 0 - 6
 
       const daysToAdd = (4 - dayOfWeek + 7) % 7 || 7;
@@ -278,61 +309,56 @@ const StaffCarWash = ({onOpenModal}) => {
   };
   const employee = fetchStorageData({ key: "User" });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      // Action to be performed 1 second after modal is closed or delete button is clicked
-      console.log("Action triggered 1 second later");
-      const getcarwashbooking = (data) => {
-        // this is what data should have atleast
-        // {
-        //     "Emp_ID": 85
-        //   }
-        // this is what comes back
-        // {
-        //     "data": [
-        //       {
-        //         "booking_id": 1,
-        //         "Car_wash": 1,
-        //         "Emp_ID": 85,
-        //         "date": "2024-05-07T00:00:00.000Z"
-        //       },
-        //       {
-        //         "booking_id": 2,
-        //         "Car_wash": 2,
-        //         "Emp_ID": 85,
-        //         "date": "2024-05-07T00:00:00.000Z"
-        //       },
-        //       {
-        //         "booking_id": 3,
-        //         "Car_wash": 3,
-        //         "Emp_ID": 85,
-        //         "date": "2024-05-07T00:00:00.000Z"
-        //       }
-        //     ],
-        //     "message": "Successfully retrieved Carwashs"
-        //   }
-        fetch(`/api/CarBookings?Emp_ID=${data.Emp_ID}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setempBook(data.data[0])
-            setBookingID(data.data[0].booking_id)
-            console.log(data);
-            return data;
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            return "Error";
-          });
-      };
-      getcarwashbooking({Emp_ID:employee.Emp_ID})
+//   useEffect(() => {
+//       const getcarwashbooking = (data) => {
+     
+//         fetch(`/api/CarBookings?Emp_ID=${data.Emp_ID}`)
+//           .then((response) => response.json())
+//           .then((data) => {
+//             setempBook(data.data[0])
+//             setBookingID(data.data[0].booking_id)
+//             console.log(data);
+//             return data;
+//           })
+//           .catch((error) => {
+//             console.error("Error:", error);
+//             return "Error";
+//           });
+//       };
+//       getcarwashbooking({Emp_ID:employee.Emp_ID})
 
-      // Reset actionTriggered state
-      setActionTriggered(false);
-    }, 500);
 
-    return () => clearTimeout(timer); // Clear timeout if the component is unmounted or actionTriggered changes
   
-}, [actionTriggered]);
+// }, []);
+useEffect(() => {
+  const getCarWashBooking = () => {
+    fetch(`/api/CarBookings?Emp_ID=${employee.Emp_ID}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.data && data.data.length > 0) {
+          setempBook(data.data[0]);
+          setBookingID(data.data[0].booking_id);
+        } else {
+          setempBook(null);
+          setBookingID(null);
+        }
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setError(error);
+      });
+  };
+
+  // Initial fetch
+  getCarWashBooking();
+
+  // Set up polling interval
+  const intervalId = setInterval(getCarWashBooking, 2000); // Poll every 2 seconds
+
+  // Cleanup on component unmount
+  return () => clearInterval(intervalId);
+}, [employee.Emp_ID]);
 
 const deletecarwashbooking = (data) => {
   // this is what data should have atleast
@@ -353,12 +379,38 @@ const deletecarwashbooking = (data) => {
       .then((data) => {
       console.log("Success:", data.message);
       setActionTriggered(prev=>prev);
+
+      const date = new Date(empBook.date);
+
+      // getUTCDay returns the day of the week (0 for Sunday, 1 for Monday, etc.)
+      const dayOfWeek = date.getUTCDay();
+      const car=dates.find(item=>item.date===empBook.date);
+      console.log(car,'big ahh car');
+      fetch("/api/CarWash", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({Car_wash:car.Car_wash,Quantity:dayOfWeek===1?MondayQuant+1:ThursdayQuant+1}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          return "Success";
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          return "Error";
+        });
+
+
       return "Success";
       })
       .catch((error) => {
       console.error("Error:", error);
       return "Error";
       });
+
+     
 
 };
 
@@ -377,8 +429,10 @@ const deletecarwashbooking = (data) => {
             {empBook?
             <>
              <h5>Your Booking</h5>
-                  <p> {empBook.date.split('T')[0]}</p>
-                  <button onClick={()=>deletecarwashbooking(empBook.booking_id)}>delete</button>
+             <br/>
+                  <p> Date of your Car Wash booking:<br/>
+                   {empBook.date.split('T')[0]}</p>
+                  <button onClick={()=>deletecarwashbooking(empBook.booking_id)}>Cancel</button>
             </>
                  
 
