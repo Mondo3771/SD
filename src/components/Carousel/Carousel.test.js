@@ -95,7 +95,7 @@ test("renders without errors", async () => {
     return <div data-testid="mockComponent">{props.children}</div>;
   };
 
-  openModal = jest.fn();
+  const openModal = jest.fn();
 
   await act(async () => {
     render(<Carousel onOpenModal={openModal} component={<MockComponent />} />);
