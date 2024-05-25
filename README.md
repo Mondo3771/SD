@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# This is a guide on how to run Synergy on your local machine.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This project is a React application that uses the Azure Static Web Apps (SWA) CLI API simulator for local development and testing. This guide will help you set up the development environment by installing the necessary npm dependencies and the SWA CLI.
 
-In the project directory, you can run:
+## Prerequisites
 
-### `npm start`
+- Node.js (version 16.x or later)
+- git (version)
+-----------------------------------------------------------------------
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Follow these steps to set up your development environment:
+_____________________________________________________________________________________
+### 1. Clone the Repository
 
-### `npm test`
+- Open a terminal and clone the repository to the local machine:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+git clone https://github.com/Mondo3771/SD.git
 
-### `npm run build`
+- Navigate into the SD folder
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+cd SD 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+_____________________________________________________________________________________
+### 2. Install dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- In the terminal run the following command
 
-### `npm run eject`
+npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- This will download the dependencies you will need to run the application.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+_____________________________________________________________________________________
+### 3. Install the SWA CLI
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- To install the SWA CLI globally, run in your terminal:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+npm install -g @azure/static-web-apps-cli
 
-## Learn More
+- The SWA CLI (Azure Static Web Apps CLI) allows you to run the Static Web Apps locally and emulate the behavior of the Azure environment.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+_____________________________________________________________________________________
+### 4. Change your package file
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Without closing the terminal, open your file exlporer and navigate to the SD folder and open the package.json file in a text editor.
+- Go to line 47 and change ` "build": "CI=False react-scripts build" ` to ` "build": "CI=False react-scripts build" `
+- Without changing this THE APPLICATION WILL NOT RUN.
 
-### Code Splitting
+_____________________________________________________________________________________
+### 5. Build the application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- In the terminal run:
 
-### Analyzing the Bundle Size
+npm run build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- This command creates an optimized production build of the React application on http://localhost:4280.
+_____________________________________________________________________________________
+### 6. Start the SWA CLI
 
-### Making a Progressive Web App
+- In you terminal run:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+swa start build --api-location api
 
-### Advanced Configuration
+- This command will start the SWA CLI and serve the API from the api directory.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+_____________________________________________________________________________________
+### 7. Open the application
 
-### Deployment
+- On your browser navigate to http://localhost:4280 and the application will be open.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+ 
