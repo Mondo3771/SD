@@ -260,8 +260,8 @@ const StaffCarWash = ({ onOpenModal }) => {
           if (
             data &&
             data.data &&
-            data.data.booking_id &&
-            data.data.length > 0
+            data.data.length > 0 &&
+            data.data[0].booking_id
           ) {
             setempBook(data.data[0]);
             setBookingID(data.data[0].booking_id);
