@@ -12,152 +12,10 @@ import {
   Dater,
   Heading,
   ChartSection,
-  Top
+  Top,
 } from "./Reporting.styles";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
-
-
-const mockGraph = [
-  {
-    Project: "Standard bank App",
-    Time: 249,
-    Date: "2024-04-02 00:00:00.000",
-    Active: 1,
-  },
-  {
-    Project: "Finance Management System",
-    Time: 1802,
-    Date: "2024-04-04 00:00:00.000",
-    Active: 0,
-  },
-  {
-    Project: "E-commerce Platform",
-    Time: 2954,
-    Date: "2024-04-07 00:00:00.000",
-    Active: 0,
-  },
-  {
-    Project: "Standard bank App",
-    Time: 23,
-    Date: "2024-04-09 00:00:00.000",
-    Active: 1,
-  },
-  {
-    Project: "Healthcare Management App",
-    Time: 2191,
-    Date: "2024-04-12 00:00:00.000",
-    Active: 0,
-  },
-  {
-    Project: "Standard bank App",
-    Time: 409,
-    Date: "2024-06-14 00:00:00.000",
-    Active: 1,
-  },
-  {
-    Project: "Online Learning Platform",
-    Time: 2430,
-    Date: "2024-04-17 00:00:00.000",
-    Active: 0,
-  },
-  {
-    Project: "Standard bank App",
-    Time: 1309,
-    Date: "2024-05-19 00:00:00.000",
-    Active: 1,
-  },
-  {
-    Project: "Inventory Management System",
-    Time: 1945,
-    Date: "2024-04-22 00:00:00.000",
-    Active: 0,
-  },
-  {
-    Project: "Standard bank App",
-    Time: 733,
-    Date: "2024-04-24 00:00:00.000",
-    Active: 1,
-  },
-  {
-    Project: "HR Management Software",
-    Time: 18239,
-    Date: "2023-04-27 00:00:00.000",
-    Active: 0,
-  },
-  {
-    Project: "Standard bank App",
-    Time: 2031,
-    Date: "2024-04-29 00:00:00.000",
-    Active: 1,
-  },
-  {
-    Project: "Standard bank App",
-    Time: 2502,
-    Date: "2024-04-06 00:00:00.000",
-    Active: 1,
-  },
-  {
-    Project: "Data Analysis Platform",
-    Time: 1704,
-    Date: "2024-04-11 00:00:00.000",
-    Active: 0,
-  },
-  {
-    Project: "Project Management Tool",
-    Time: 2213,
-    Date: "2024-04-16 00:00:00.000",
-    Active: 0,
-  },
-];
-
-// a query that joins employee with feedback for specfic employee
-const mockFeed = [
-  {
-    Name: "Nathan",
-    Comment: "Good job in completing task",
-    date: "2024-04-11 00:00:00.000",
-  },
-  {
-    Name: "Emily",
-    Comment: "Impressive work! Keep it up!",
-    date: "2024-04-15 00:00:00.000",
-  },
-  {
-    Name: "Michael",
-    Comment: "Well done! Your efforts are appreciated.",
-    date: "2024-04-18 00:00:00.000",
-  },
-  {
-    Name: "Sophia",
-    Comment: "Great progress! Looking forward to more updates.",
-    date: "2023-04-21 00:00:00.000",
-  },
-  {
-    Name: "Daniel",
-    Comment: "Fantastic job on this task!",
-    date: "2024-05-24 00:00:00.000",
-  },
-  {
-    Name: "Nathan",
-    Comment: "Keep up the good work!",
-    date: "2024-04-27 00:00:00.000",
-  },
-  {
-    Name: "Olivia",
-    Comment: "Excellent work! Your dedication is evident.",
-    date: "2024-04-30 00:00:00.000",
-  },
-  {
-    Name: "Emily",
-    Comment: "Impressive work! Keep it up!",
-    date: "2024-04-16 00:00:00.000",
-  },
-];
-
-
-
-
 const Reporting = ({ User }) => {
   const [tasks, settasks] = useState(null);
   const [Projects, setProjects] = useState(new Set());
@@ -165,8 +23,7 @@ const Reporting = ({ User }) => {
   const [hours, setHours] = useState(null);
 
   const [feedback, setfeedback] = useState(null);
-    const[sortFeed,setSortfeed]=useState(null);
-
+  const [sortFeed, setSortfeed] = useState(null);
 
   const [Active, setActive] = useState(0);
   const [inActive, setinActive] = useState(0);
@@ -178,87 +35,84 @@ const Reporting = ({ User }) => {
   const [chooseHour, setchooseHour] = useState(150);
   const [percentage, setpercentage] = useState(0);
 
-    useEffect(()=>{
-        const GetAllTasks = (Emp_ID) => {
-            fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
-              .then((response) => response.json())
-              .then((data) => {
-                console.log("Success:", data.data);
-                settasks(data.data);
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-              });
-          };
-          GetAllTasks(User.Emp_ID)
-          const fetchFeedback = (Emp_ID) => {
-            fetch(`/api/feedback?Emp_ID=${Emp_ID}`, {
-              method: "Get",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                // console.log(data.data);
-                // setLocalStorage({ key: "Feedback", value: data.data });
-                // setFirstLoad(true);
+  const fetchFeedback = (Emp_ID) => {
+    fetch(`/api/feedback?Emp_ID=${Emp_ID}`, {
+      method: "Get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data.data);
+        // setLocalStorage({ key: "Feedback", value: data.data });
+        // setFirstLoad(true);
 
-                
-                const filteredFeedback = data.data.filter(feedback => feedback.Receive_ID=== Emp_ID);
+        const filteredFeedback = data.data.filter(
+          (feedback) => feedback.Receive_ID === Emp_ID
+        );
 
+        // Set the filtered feedback data to state
+        setfeedback(filteredFeedback);
+        setSortfeed(filteredFeedback);
+      });
+  };
 
-                // Set the filtered feedback data to state
-                setfeedback(filteredFeedback);
-                setSortfeed(filteredFeedback);
-              });
-          };
-          fetchFeedback(User.Emp_ID)
+  const GetAllTasks = (Emp_ID) => {
+    console.log("Startyimg");
+    fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
+      .then((response) =>response.json()
+      )
+      .then((data) => {
+        console.log("Success:", data.data);
+        settasks(data.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
-    },[User])
+  useEffect(() => {
+    GetAllTasks(User.Emp_ID);
+    console.log("ge");
+    fetchFeedback(User.Emp_ID);
+  }, [User]);
 
-    
+  useEffect(() => {
+    const projectMap = {};
+    let activecount = 0;
+    let inactivecount = 0;
+    let hours = 0;
 
-  
+    if (tasks) {
+      tasks.forEach((task) => {
+        const taskDate = new Date(task.Date);
+        const taskYear = taskDate.getFullYear();
+        const taskMonth = taskDate.getMonth() + 1;
 
-    useEffect(() => {
-        const projectMap = {};
-        let activecount = 0;
-        let inactivecount = 0;
-        let hours = 0;
-
-    
-          if(tasks){
-            tasks.forEach(task => {
-                const taskDate = new Date(task.Date);
-                const taskYear = taskDate.getFullYear();
-                const taskMonth = taskDate.getMonth() + 1; 
-    
-                if (taskYear === selectedYear && taskMonth === selectedMonth) {
-                    task.Active === true ? activecount++ : inactivecount++;//chnage
-                    if (!projectMap[task.Project]) {
-                        projectMap[task.Project] = 0;
-                    }
-                    projectMap[task.Project] += task.Time;
-                    hours += task.Time;
-                }
-            });
-            setProjects(new Set(Object.keys(projectMap)));
-            setProjectTimeMap(projectMap);
-            setActive(activecount);
-            console.log(activecount,'no');
-            setinActive(inactivecount);
-            console.log(activecount,'nocap');
-
-    setTotalHours(hours);
-
+        if (taskYear === selectedYear && taskMonth === selectedMonth) {
+          task.Active === true ? activecount++ : inactivecount++; //chnage
+          if (!projectMap[task.Project]) {
+            projectMap[task.Project] = 0;
           }
-      
-    }, [selectedYear, selectedMonth,tasks]); 
+          projectMap[task.Project] += task.Time;
+          hours += task.Time;
+        }
+      });
+      setProjects(new Set(Object.keys(projectMap)));
+      setProjectTimeMap(projectMap);
+      setActive(activecount);
+      // console.log(activecount, "no");
+      setinActive(inactivecount);
+      // console.log(activecount, "nocap");
 
-    const handleYearChange = event => {
-        setSelectedYear(parseInt(event.target.value));
-    };
+      setTotalHours(hours);
+    }
+  }, [selectedYear, selectedMonth, tasks]);
+
+  const handleYearChange = (event) => {
+    setSelectedYear(parseInt(event.target.value));
+  };
 
   const handleMonthChange = (event) => {
     setSelectedMonth(parseInt(event.target.value));
@@ -316,7 +170,7 @@ const Reporting = ({ User }) => {
   const datapie = [
     {
       values: [Active, inActive],
-      labels: ["Completed","In progress" ],
+      labels: ["Completed", "In progress"],
       type: "pie",
 
       marker: { colors: ["#e8cdde", "#9B67A8"] },
@@ -346,72 +200,78 @@ const Reporting = ({ User }) => {
     },
   };
 
-  const { toPDF, targetRef } = usePDF({ filename: User.Name?User.Name + "-Report.pdf" : + "My-Report.pdf"});
+  const { toPDF, targetRef } = usePDF({
+    filename: User.Name ? User.Name + "-Report.pdf" : +"My-Report.pdf",
+  });
 
-    useEffect(() => {
-        // Sort comments by date in descending order (from latest to earliest)
-        
-        const monthFeed=[];
-        if(feedback){
-            
-            feedback.forEach(comment=>{
-              
-            const comDate = new Date(comment.Date);
-              console.log(comDate);
-            const comYear = comDate.getFullYear();
-            const comMonth = comDate.getMonth() + 1; 
-            if (comYear === selectedYear && comMonth === selectedMonth) {
-                monthFeed.push(comment)
+  useEffect(() => {
+    // Sort comments by date in descending order (from latest to earliest)
 
-
-            }
-            
-
-        })}
-        const sortedFeedback = [...monthFeed].sort((a, b) => new Date(b.date) - new Date(a.date));
-
-        setfeedback(sortedFeedback);
-    }, [selectedYear, selectedMonth]);
-    
-    
-    useEffect(()=>{
-        const total=TotalHours?Math.floor((TotalHours/3600)/ chooseHour*100):0;
-
-        setpercentage( total>100?100:total);
-
-    },[chooseHour,TotalHours])
-
-
-    const handlehourChange=(event)=>{
-        setchooseHour(event.target.value)
-
+    const monthFeed = [];
+    if (feedback) {
+      feedback.forEach((comment) => {
+        const comDate = new Date(comment.Date);
+        console.log(comDate);
+        const comYear = comDate.getFullYear();
+        const comMonth = comDate.getMonth() + 1;
+        if (comYear === selectedYear && comMonth === selectedMonth) {
+          monthFeed.push(comment);
+        }
+      });
     }
-    return (
-        <>
-         
-            <main ref={targetRef}>
-            <Heading>
-            <h2> {User.Name? 'Report for ' + User.Name: 'My Report'}</h2>
+    const sortedFeedback = [...monthFeed].sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
 
-          <button onClick={() => toPDF()}><ArrowDownTrayIcon width={24} height={24}/> Download</button>
+    setfeedback(sortedFeedback);
+  }, [selectedYear, selectedMonth]);
+
+  useEffect(() => {
+    const total = TotalHours
+      ? Math.floor((TotalHours / 3600 / chooseHour) * 100)
+      : 0;
+
+    setpercentage(total > 100 ? 100 : total);
+  }, [chooseHour, TotalHours]);
+
+  const handlehourChange = (event) => {
+    setchooseHour(event.target.value);
+  };
+  return (
+    <>
+      <main ref={targetRef}>
+        <Heading>
+          <h2> {User.Name ? "Report for " + User.Name : "My Report"}</h2>
+
+          <button onClick={() => toPDF()}>
+            <ArrowDownTrayIcon width={24} height={24} /> Download
+          </button>
         </Heading>
         <Dater>
-                <article>
-                        <label htmlFor="year">Year:</label>
-                        <input type="number" id="year" value={selectedYear} onChange={handleYearChange} />
-                    </article>
-                    <article>
-                        <label htmlFor="month">Month:</label>
-                        <input type="number" id="month" value={selectedMonth} onChange={handleMonthChange}  min="1" max="12" />
-                    </article>
+          <article>
+            <label htmlFor="year">Year:</label>
+            <input
+              type="number"
+              id="year"
+              value={selectedYear}
+              onChange={handleYearChange}
+            />
+          </article>
+          <article>
+            <label htmlFor="month">Month:</label>
+            <input
+              type="number"
+              id="month"
+              value={selectedMonth}
+              onChange={handleMonthChange}
+              min="1"
+              max="12"
+            />
+          </article>
+        </Dater>
 
-                </Dater>
-
-           
-
-            <Main  >
-                
-{/* 
+        <Main>
+          {/* 
                 <Top>
                     
                     <Plot
@@ -431,7 +291,7 @@ const Reporting = ({ User }) => {
                  </Feedback>
 
                 </Top> */}
-                <ChartSection>
+          <ChartSection>
             <Plot
               data={data}
               layout={layout}
@@ -452,8 +312,9 @@ const Reporting = ({ User }) => {
                         <p className="messagebox">
                           {/* <strong>
                             {item.Name}:</strong> */}
-                           <strong> Message: {item.Message}</strong><br/>
-                           <strong>date:{item.Date.split('T')[0]}</strong> 
+                          <strong> Message: {item.Message}</strong>
+                          <br />
+                          <strong>date:{item.Date.split("T")[0]}</strong>
                         </p>
                       </p>
                     ))
@@ -461,7 +322,6 @@ const Reporting = ({ User }) => {
               </section>
             </Feedback>
           </ChartSection>
-     
 
           <Bottom>
             <Summary>
@@ -500,7 +360,7 @@ const Reporting = ({ User }) => {
                 type="number"
                 value={chooseHour}
                 onChange={handlehourChange}
-                min='1'
+                min="1"
               ></input>
             </Progress>
           </Bottom>

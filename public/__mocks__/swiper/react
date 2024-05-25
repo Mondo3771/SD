@@ -1,0 +1,5 @@
+// public/__mocks__/swiper/react.js
+module.exports = {
+  Swiper: ({ children, ...props }) => ({ ...props, children, mockName: 'Swiper' }),
+  SwiperSlide: ({ children, ...props }) => ({ ...props, children, mockName: 'SwiperSlide' })
+};

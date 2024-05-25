@@ -14,7 +14,7 @@ export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
   const [InputMessage, setInputMessage] = useState("");
   const [changed, setChanged] = useState(false);
 
-  console.log(FeedBackArray);
+  // console.log(FeedBackArray);
 
   const handleInputMessageChange = (event) => {
     if (event.target.value.length === 0) {
@@ -50,7 +50,7 @@ export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
           })}
       </Wrapper>
       <SendFeedBackWrapper className="SendFeebackSection">
-        <textarea
+        <textarea aria-label="Imput field"
           maxLength="250"
           className="MessageInput"
           type="text"
@@ -59,7 +59,7 @@ export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
           onChange={handleInputMessageChange}
         ></textarea>
         <label>Characters left: {250 - InputMessage.length}</label>
-        <button
+        <button aria-label="Save button"
           disabled={!changed}
           className="SaveButton"
           onClick={() => {

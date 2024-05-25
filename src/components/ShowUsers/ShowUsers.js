@@ -3,7 +3,7 @@ import { InfoContainer, User, Wrapper } from "./ShowUsers.styles";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 
 export const ShowUsers = ({ Users, onUserClick }) => {
-  console.log("Users",Users)
+  // console.log("Users",Users)
   return (
     <Wrapper>
       {Users.map((user) => (
