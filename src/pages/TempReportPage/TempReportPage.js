@@ -54,7 +54,7 @@ export const TempReportPage = () => {
         console.log(data.Message);
         const mainUser = fetchStorageData({ key: "User" });
         const arr = data.data.filter(
-          (p) => p.Department === mainUser.Department
+          (p) => p.Department === mainUser.Department && p.Emp_ID !== mainUser.Emp_ID
         );
         setUsers(arr);
       })
