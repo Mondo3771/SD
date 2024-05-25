@@ -59,8 +59,10 @@ const Reporting = ({ User }) => {
   };
 
   const GetAllTasks = (Emp_ID) => {
+
     fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
-      .then((response) => response.json())
+      .then((response) =>response.json()
+      )
       .then((data) => {
         console.log("Success:", data.data);
         settasks(data.data);
@@ -268,6 +270,7 @@ const Reporting = ({ User }) => {
         </Dater>
 
         <Main>
+
           <ChartSection>
             <Plot
               data={data}
@@ -286,11 +289,13 @@ const Reporting = ({ User }) => {
                 {sortFeed
                   ? sortFeed.map((item, index) => (
                       <p key={index} className="messagebox">
-                        {/* <strong>
+                        <p >
+                          {/* <strong>
                             {item.Name}:</strong> */}
-                        <strong> Message: {item.Message}</strong>
-                        <br />
-                        <strong>date:{item.Date.split("T")[0]}</strong>
+                          <strong> Message: {item.Message}</strong>
+                          <br />
+                          <strong>date:{item.Date.split("T")[0]}</strong>
+                        </p>
                       </p>
                     ))
                   : null}
