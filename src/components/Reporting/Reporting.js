@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Plot from "react-plotly.js";
-import { usePDF } from "react-to-pdf";
+import Plot from "react-plotly.js";//for our plotting
+import { usePDF } from "react-to-pdf";// to convert into pdf
 
 import {
   Feedback,
@@ -14,28 +14,28 @@ import {
   ChartSection,
   Top,
 } from "./Reporting.styles";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";// circular progress bar
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 const Reporting = ({ User }) => {
-  const [tasks, settasks] = useState(null);
-  const [Projects, setProjects] = useState(new Set());
-  const [projectTimeMap, setProjectTimeMap] = useState({});
+  const [tasks, settasks] = useState(null);//to store tasks from timesheets for user so this is what we will use to graph
+  const [Projects, setProjects] = useState(new Set());//to store projects from each task
+  const [projectTimeMap, setProjectTimeMap] = useState({});// to store time spent on each project
   const [hours, setHours] = useState(null);
 
-  const [feedback, setfeedback] = useState(null);
-  const [sortFeed, setSortfeed] = useState(null);
+  const [feedback, setfeedback] = useState(null);// to stroe feedback from fetch
+  const [sortFeed, setSortfeed] = useState(null);// to sort the feedback
 
-  const [Active, setActive] = useState(0);
-  const [inActive, setinActive] = useState(0);
-  const [TotalHours, setTotalHours] = useState(0);
+  const [Active, setActive] = useState(0);// to store the no. of active tasks
+  const [inActive, setinActive] = useState(0);///to store no. of inactive tasks
+  const [TotalHours, setTotalHours] = useState(0);// to change circulare progress bar
 
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());// to change according to year the user selects
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);// tp change according to month user seleected
 
   const [chooseHour, setchooseHour] = useState(150);
   const [percentage, setpercentage] = useState(0);
 
-  const fetchFeedback = (Emp_ID) => {
+  const fetchFeedback = (Emp_ID) => {// fetch all the feed back
     fetch(`/api/feedback?Emp_ID=${Emp_ID}`, {
       method: "Get",
       headers: {
@@ -49,7 +49,7 @@ const Reporting = ({ User }) => {
         // setFirstLoad(true);
 
         const filteredFeedback = data.data.filter(
-          (feedback) => feedback.Receive_ID === Emp_ID
+          (feedback) => feedback.Receive_ID === Emp_ID//filter so that we only have the ones that were sent to us
         );
 
         // Set the filtered feedback data to state
@@ -58,21 +58,21 @@ const Reporting = ({ User }) => {
       });
   };
 
-  const GetAllTasks = (Emp_ID) => {
 
+  const GetAllTasks = (Emp_ID) => {// to fetch all tasks from DB
     fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
       .then((response) =>response.json()
       )
       .then((data) => {
         console.log("Success:", data.data);
-        settasks(data.data);
+        settasks(data.data);// sets it for us
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
 
-  useEffect(() => {
+  useEffect(() => {//This was used to do all the fetches again if new User info is passed so that it can change according to the specific user
     GetAllTasks(User.Emp_ID);
     fetchFeedback(User.Emp_ID);
   }, [User]);
@@ -89,9 +89,9 @@ const Reporting = ({ User }) => {
         const taskYear = taskDate.getFullYear();
         const taskMonth = taskDate.getMonth() + 1;
 
-        if (taskYear === selectedYear && taskMonth === selectedMonth) {
-          task.Active === true ? activecount++ : inactivecount++; //chnage
-          if (!projectMap[task.Project]) {
+        if (taskYear === selectedYear && taskMonth === selectedMonth) {// sorting based on the year and month selected
+          task.Active === true ? activecount++ : inactivecount++; //getting info for active vs inactive to display on pie chart
+          if (!projectMap[task.Project]) {//this all done to sort the projects
             projectMap[task.Project] = 0;
           }
           projectMap[task.Project] += task.Time;
@@ -107,13 +107,13 @@ const Reporting = ({ User }) => {
 
       setTotalHours(hours);
     }
-  }, [selectedYear, selectedMonth, tasks]);
+  }, [selectedYear, selectedMonth, tasks]);// changing when the following changes
 
-  const handleYearChange = (event) => {
+  const handleYearChange = (event) => {// cahnge according to user changing year
     setSelectedYear(parseInt(event.target.value));
   };
 
-  const handleMonthChange = (event) => {
+  const handleMonthChange = (event) => {// cahnge according to user changing month
     setSelectedMonth(parseInt(event.target.value));
   };
   const colors = [
@@ -124,16 +124,16 @@ const Reporting = ({ User }) => {
     "rgb(155, 103, 168)",
   ];
 
-  const data = Object.keys(projectTimeMap).map((project, index) => ({
+  const data = Object.keys(projectTimeMap).map((project, index) => ({// the data based on the projects to be displaeyd on bar graph
     x: [project],
-    y: [projectTimeMap[project] / 3600],
+    y: [projectTimeMap[project] / 3600],// it is in seconds in the DB so want to convert into hours
     type: "bar",
     marker: {
       color: colors[index % colors.length],
     },
   }));
 
-  const layout = {
+  const layout = {// layout for bargraph
     title: {
       text: "Time Spent on Tasks by Project",
       font: {
@@ -166,9 +166,9 @@ const Reporting = ({ User }) => {
     },
     showlegend: false,
   };
-  const datapie = [
+  const datapie = [// layout for pie chart
     {
-      values: [Active, inActive],
+      values: [Active, inActive],//the active vs inactive
       labels: ["Completed", "In progress"],
       type: "pie",
 
@@ -199,7 +199,7 @@ const Reporting = ({ User }) => {
     },
   };
 
-  const { toPDF, targetRef } = usePDF({
+  const { toPDF, targetRef } = usePDF({// what is ussed to downlaod the pdf
     filename: User.Name ? User.Name + "-Report.pdf" : +"My-Report.pdf",
   });
 
@@ -225,7 +225,7 @@ const Reporting = ({ User }) => {
     setfeedback(sortedFeedback);
   }, [selectedYear, selectedMonth]);
 
-  useEffect(() => {
+  useEffect(() => {//used to change according to what user specfies fro the circular progresser
     const total = TotalHours
       ? Math.floor((TotalHours / 3600 / chooseHour) * 100)
       : 0;
@@ -233,13 +233,15 @@ const Reporting = ({ User }) => {
     setpercentage(total > 100 ? 100 : total);
   }, [chooseHour, TotalHours]);
 
-  const handlehourChange = (event) => {
+  const handlehourChange = (event) => {// used to track change for the above useffect
     setchooseHour(event.target.value);
   };
   return (
     <>
+    {/* {this targetRef is what is used to specific that its children is what needs to be downloaded} */}
       <main ref={targetRef}>
         <Heading>
+          {/* {User.Name will be null if im viewing my own report } */}
           <h2> {User.Name ? "Report for " + User.Name : "My Report"}</h2>
 
           <button onClick={() => toPDF()}>
@@ -272,6 +274,7 @@ const Reporting = ({ User }) => {
         <Main>
 
           <ChartSection>
+            {/* {bar Graph to plot hours} */}
             <Plot
               data={data}
               layout={layout}
@@ -283,6 +286,8 @@ const Reporting = ({ User }) => {
                 borderRadius: "20px",
               }}
             />
+              {/* {Feedback that loops throgh feedback and displays it } */}
+
             <Feedback>
               <h2>Notifications</h2>
               <section className="text">
@@ -305,6 +310,8 @@ const Reporting = ({ User }) => {
 
           <Bottom>
             <Summary>
+               {/* {pie Graph to plot active vs inactive} */}
+
               <Plot
                 data={datapie}
                 layout={layoutpie}
@@ -319,6 +326,8 @@ const Reporting = ({ User }) => {
             </Summary>
 
             <Progress>
+             {/*the circular progress bar */}
+
               <p>Productivity rate per {chooseHour} hours</p>
 
               <CircularProgressbar

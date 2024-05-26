@@ -1,11 +1,10 @@
 import React from "react";
 import "./Modal.css";
 
-// import { PostBooking } from "../Carousel/fetch";
 
-function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {
+function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {//each of these passed to the modal
   console.log(booking, "modal");
-  const confirmBooking = () => {
+  const confirmBooking = () => {//post for a meal booking when employee clicks confirm
     const PostBooking = (Emp_ID, Meal_ID) => {
       fetch(`/api/Meals`, {
         method: "POST",
@@ -15,7 +14,7 @@ function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {
         body: JSON.stringify({
           Emp_ID: Emp_ID,
           Meal_ID: Meal_ID,
-          Date_of_booking: new Date().toISOString(),
+          Date_of_booking: new Date().toISOString(),//changing the format of the date
         }),
       })
         .then((response) => response.json())
@@ -27,9 +26,9 @@ function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {
     // console.log(data.Meal_ID);
     PostBooking(employee.Emp_ID, data.Meal_ID);
 
-    setOpenModal(false);
+    setOpenModal(false);// closing the modal
   };
-  const confirmCarBooking = () => {
+  const confirmCarBooking = () => {// post car wash booking
     const postcarwashbooking = (info) => {
       fetch("/api/CarBookings", {
         method: "POST",
@@ -40,7 +39,7 @@ function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {
       })
         .then((response) => response.json())
         .then((book) => {
-          const Updatecarwash = (data) => {
+          const Updatecarwash = (data) => {// to update the quantity when  a user confirms their carwash booking
             // this is what data should have atleast
             // {
             // "Car_wash": 13,
@@ -79,18 +78,21 @@ function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {
           return "Error";
         });
     };
-    postcarwashbooking({
+    postcarwashbooking({//calling it with this information for API call
       Car_wash: data.Car_wash,
       Emp_ID: employee.Emp_ID,
       Date: data.Date,
     });
-    setOpenModal(false);
+    setOpenModal(false);// close modal
   };
 
   return (
     <main className="modalBackground">
+      {/* {covers whole background and blurs out} */}
       <section className="modalContainer">
-        {booking ? (
+              {/* Body of Modal */}
+
+        {booking ? (// if there is a booking say you have a booking
           <>
             <article className="already">
               <p className="already">You already have a booking</p>
@@ -116,7 +118,7 @@ function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {
                 X
               </button>
             </div>
-            {data.Description ? (
+            {data.Description ? (// this is to differetiate what data to be displayed from either car wash or meal booking, data.Descriptions does not exist for car wash
               <>
                 <h2>{data.Name_of_Meal}</h2>
                 <p>Description: {data.Description}</p>
@@ -128,7 +130,7 @@ function Modal({ setOpenModal, data, employee, booking, setActionTriggered }) {
               </>
             ) : (
               <>
-                {data.Quantity === 0 ? (
+                {data.Quantity === 0 ? (// this is to display not available if it is is fully booked
                   <>
                     <article className="already">
                       <p className="already">

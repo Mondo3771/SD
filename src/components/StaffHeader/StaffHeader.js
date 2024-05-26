@@ -9,10 +9,10 @@ import { fetchStorageData } from "../../helper";
 import LoginButton from "../Log/LoginButton";
 
 const StaffHeader = ({ employee }) => {
-  const history = useHistory();
-  const [isAsideOpen, setIsAsideOpen] = useState(false);
-  const user = fetchStorageData({ key: "User" }) ?? employee;
-  const Profile= fetchStorageData({ key: "Profile" });
+  const history = useHistory();//to locate to different pages
+  const [isAsideOpen, setIsAsideOpen] = useState(false);// to open the profile of user in an aside 
+  const user = fetchStorageData({ key: "User" }) ?? employee;// fetch from local storage (decalred in helper.js)
+  const Profile= fetchStorageData({ key: "Profile" });// same
 
   const Lunch = () => {
     history.push("/staffBooking");
@@ -27,7 +27,7 @@ const StaffHeader = ({ employee }) => {
   };
 
   const toggleAside = () => {
-    setIsAsideOpen(!isAsideOpen);
+    setIsAsideOpen(!isAsideOpen);//same button is used to open and close this aside
   };
 
   return (

@@ -1,5 +1,8 @@
+// styled components
 import styled from "styled-components";
+// background
 import newback from "../../Images/Bckgrd.svg";
+// react
 import React from "react";
 
 export const Header = styled.header`
@@ -57,7 +60,7 @@ export const Header = styled.header`
   }
 `;
 
-export const Wrapper = styled.body`
+export const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
   background-image: url(${newback});
@@ -311,6 +314,7 @@ export const ShowMealCard = styled.article`
     }
   }
 `;
+
 
 export const MealCardFin = ({ meal, click }) => (
   <MealCard

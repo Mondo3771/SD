@@ -29,6 +29,7 @@ jest.mock("../../helper", () => ({
 }));
 
 test("renders without errors", async () => {
+
   // global.fetch = jest.fn().mockImplementation(() =>
   //   Promise.resolve({
   //     json: () =>
@@ -91,6 +92,8 @@ test("renders without errors", async () => {
         }),
     })
   );
+
+
   const MockComponent = (props) => {
     return <div data-testid="mockComponent">{props.children}</div>;
   };
@@ -106,4 +109,5 @@ test("renders without errors", async () => {
   await act(async () => {
     fireEvent.click(delteButton[0]);
   });
+  // Add your assertions here
 });

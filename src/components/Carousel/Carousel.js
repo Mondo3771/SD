@@ -8,17 +8,21 @@ import {
   PageSec,
 } from "./Carousel.styles";
 import React, { useState, useEffect } from "react";
+
+//below is For the slider that displays meals
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
+
 import Loader from "../Loader/Loader";
 import StaffHeader from "../StaffHeader/StaffHeader";
 import { fetchStorageData, setLocalStorage } from "../../helper";
 import { logDOM } from "@testing-library/react";
 
-const DeleteBooking = (Booking_ID) => {
+const DeleteBooking = (Booking_ID) => {//API call to delete a specific booking
   fetch(`/api/Meals?Booking_ID=${Booking_ID}`, {
     method: "DELETE",
     headers: {
@@ -34,26 +38,17 @@ const DeleteBooking = (Booking_ID) => {
     });
 };
 
-/**
- * Carousel component for displaying meals and bookings.
- *
- * @param {Object} props - The component props.
- * @param {Function} props.onOpenModal - Function to open the modal.
- * @param {React.Component} props.component - Component for staff car wash.
- * @returns {JSX.Element} The rendered Carousel component.
- */
-const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
+const Carousel = ({ onOpenModal,component:StaffCarWash }) => {//this is the componet that takes props modal and a child carwash
   const data = fetchStorageData({ key: "User" });
 
-  const [Meals, setMeals] = useState(null);
-  const [empBook, setempBook] = useState(null);
-  const [selectedBooking, setSelectedBooking] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [Loaded, setLoaded] = useState(false);
-  const [topCardIndex, setTopCardIndex] = useState(0);
-  const [b_ID, setb_ID] = useState(null);
-  const [delBook, setdelBook] = useState(false);
-  const fetchData = () => {
+  const [Meals, setMeals] = useState(null);// For all meals
+  const [empBook, setempBook] = useState(null);//for details of meal booking for employee
+  const [selectedBooking, setSelectedBooking] = useState(null);//to pass to modal
+  const [modalOpen, setModalOpen] = useState(false);//so that modal knows when to be open or closed
+  const [Loaded, setLoaded] = useState(false);// to call the loader
+  const [topCardIndex, setTopCardIndex] = useState(0);// specific index so that we could edit the top card of slider seperately
+  const [b_ID, setb_ID] = useState(null);// booking ID
+  const [delBook, setdelBook] = useState(false);// booking to delete
     console.log("fetching meals");
     fetch("/api/Meals")
       .then((response) => response.json())
@@ -64,15 +59,19 @@ const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
       });
   };
 
+
   const [actionTriggered, setActionTriggered] = useState(false); //i want to refresh 1 second after an action
 
-  const Book = (booking) => {
+  const Book = (booking) => {// function called when we click an element on slider
     setSelectedBooking(booking);
     setModalOpen(true);
+    onOpenModal(booking, data,empBook,actionTriggered);//what triggers the openeing of the modal, and this data is passed to determine what displayes on modal
+    setActionTriggered(prev=>!prev);
+  };
+
     onOpenModal(booking, data, empBook, actionTriggered);
     setActionTriggered((prev) => !prev);
   };
-
   // useEffect(() => {
   //   const fetchEmployeeMeal = () => {
   //     fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
@@ -88,7 +87,8 @@ const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
 
   //   fetchEmployeeMeal();
   // }, []);
-  useEffect(() => {
+  useEffect(() => {// fetch from booking of an employee
+
     console.log(fetchData());
 
     const fetchEmployeeMeal = () => {
@@ -157,7 +157,7 @@ const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
       <StaffHeader />
 
       <Wrapper>
-        {Loaded ? (
+        {Loaded ? (// if Loaded is true then do the folllowing else display the loader
           <PageSec>
             <MealsMain>
               <Left>
@@ -169,7 +169,7 @@ const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
                 <section className="text">
                   <h3>Our Menu</h3>
                 </section>
-
+                {/* {This is what we use to create the swiper} */}
                 <Swiper
                   effect={"coverflow"}
                   grabCursor={true}
@@ -192,11 +192,12 @@ const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
                   onSlideChange={(swiper) => setTopCardIndex(swiper.realIndex)}
                   className="swiper_container"
                 >
-                  {Meals.map(
+                  {Meals.map(//map through each meal from fetch
                     (
                       booking,
-                      index //change
+                      index 
                     ) => (
+                      // {individual slide on slider}
                       <SwiperSlide key={index}>
                         <Card
                         aria-label="Card"
@@ -216,7 +217,7 @@ const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
                   )}
                 </Swiper>
                 <section className="bookings">
-                  {!(empBook && empBook.length > 0) ? (
+                  {!(empBook && empBook.length > 0) ? (// if there is no booking then display the below text, else display the employee booking with a cancel button
                     <p>
                       Welcome to the Meals page! We take your health and
                       productivity seriously. That's why we offer a selection of
@@ -251,6 +252,7 @@ const Carousel = ({ onOpenModal, component: StaffCarWash }) => {
                 </section>
               </Swrapper>
             </MealsMain>
+            {/* {calling the child component StaffCarWash} */}
             {StaffCarWash}
           </PageSec>
         ) : (

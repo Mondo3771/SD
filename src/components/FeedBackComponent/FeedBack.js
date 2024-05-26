@@ -1,56 +1,61 @@
+// Importing necessary libraries and components
 import React, { useState } from "react";
+import { Message, Wrapper, Wrap, SendFeedBackWrapper } from "./FeedBack.styles"; // Styled components
+import { CheckBadgeIcon } from "@heroicons/react/24/outline"; // Check badge icon from Heroicons
+import { formatDate } from "../../helper"; // Helper function to format date
 
-//styles file
-import { Message, Wrapper, Wrap, SendFeedBackWrapper } from "./FeedBack.styles";
-
-//
-import { CheckBadgeIcon } from "@heroicons/react/24/outline";
-import { formatDate } from "../../helper";
-
-// parameters: feebackArray is an array of all the feedback in the database filtered for a person who was clicked
-//              on on the showUsers component
-//              User is the user who is on the page (Determines Manager/Staff)
+// FeedBack component definition
 export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
+  // State variables for the input message and a flag to track changes
   const [InputMessage, setInputMessage] = useState("");
   const [changed, setChanged] = useState(false);
 
-  // console.log(FeedBackArray);
-
+  // Handler for changes in the input message
   const handleInputMessageChange = (event) => {
+    // If the input message is empty, set the changed flag to false
     if (event.target.value.length === 0) {
       setChanged(false);
-    } else {
+    }
+    // Otherwise, set the changed flag to true
+    else {
       setChanged(true);
     }
+    // Update the input message
     setInputMessage(event.target.value);
   };
 
+  // Rendering the component
   return (
     <Wrap>
       <Wrapper>
-        {
-          FeedBackArray.map((p) => {
-            if (p.Sent_ID !== User.Emp_ID) {
-              return (
-                <Message key={p.Message_ID} className="Message">
-                  <h4>{p.Send_Name}</h4>
-                  <h2>{p.Message}</h2>
-                  <p>{formatDate( p.Date)}</p>
-                </Message>
-              );
-            } else {
-              return (
-                <Message key={p.Message_ID} className="Message Green">
-                  <h4>You</h4>
-                  <h2>{p.Message}</h2>
-                  <p>{formatDate( p.Date)}</p>
-                </Message>
-              );
-            }
-          })}
+        {/* Mapping over the FeedBackArray and creating a Message component for each feedback */}
+        {FeedBackArray.map((p) => {
+          // If the feedback was not sent by the current user
+          if (p.Sent_ID !== User.Emp_ID) {
+            return (
+              <Message key={p.Message_ID} className="Message">
+                <h4>{p.Send_Name}</h4>
+                <h2>{p.Message}</h2>
+                <p>{formatDate(p.Date)}</p>
+              </Message>
+            );
+          }
+          // If the feedback was sent by the current user
+          else {
+            return (
+              <Message key={p.Message_ID} className="Message Green">
+                <h4>You</h4>
+                <h2>{p.Message}</h2>
+                <p>{formatDate(p.Date)}</p>
+              </Message>
+            );
+          }
+        })}
       </Wrapper>
       <SendFeedBackWrapper className="SendFeebackSection">
-        <textarea aria-label="Imput field"
+        {/* Textarea for the input message */}
+        <textarea
+          aria-label="Imput field"
           maxLength="250"
           className="MessageInput"
           type="text"
@@ -58,11 +63,15 @@ export const FeedBack = ({ FeedBackArray, User, Receiver, onSendFeedBack }) => {
           value={InputMessage}
           onChange={handleInputMessageChange}
         ></textarea>
+        {/* Label showing the number of characters left */}
         <label>Characters left: {250 - InputMessage.length}</label>
-        <button aria-label="Save button"
+        {/* Button to save the feedback */}
+        <button
+          aria-label="Save button"
           disabled={!changed}
           className="SaveButton"
           onClick={() => {
+            // On click, send the feedback, reset the changed flag and the input message
             onSendFeedBack(User, Receiver, InputMessage);
             setChanged(false);
             setInputMessage("");
