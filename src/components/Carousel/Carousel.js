@@ -49,6 +49,7 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {//this is the comp
   const [topCardIndex, setTopCardIndex] = useState(0);// specific index so that we could edit the top card of slider seperately
   const [b_ID, setb_ID] = useState(null);// booking ID
   const [delBook, setdelBook] = useState(false);// booking to delete
+  const fetchData = () => {//fetch all meals
     console.log("fetching meals");
     fetch("/api/Meals")
       .then((response) => response.json())
