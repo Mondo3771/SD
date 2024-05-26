@@ -32,7 +32,7 @@ import { toast } from "react-toastify";
 
 
 
-// Function to filter unique Project values and return an array of unique projects
+// Function to filter and return the unique projects from an array of tasks  
 function filterUniqueProjects(projects) {
   const uniqueProjects = {};
   const result = [];
@@ -47,6 +47,7 @@ function filterUniqueProjects(projects) {
   return result;
 }
 
+// Function to filter and return tasks in a given projects
 function filterTasksByProject(Sheets, projectName) {
   const tasks = [];
 
@@ -61,30 +62,43 @@ function filterTasksByProject(Sheets, projectName) {
 }
 
 const StaffDashboard = () => {
-  // const location = useLocation();
+
+  // useHistory is to help with navigating between pages
   const history = useHistory();
+  // Fetch the current users information from local storage
   const data = fetchStorageData({ key: "User" });
+  // Storing the currenc  users Emp_ID in a const variable 
   const Emp_ID = data.Emp_ID;
-  // const Emp_ID = 87;
+
+  // Initializing the variables to render components on the pages
   const [Loaded, setLoaded] = useState(false);
   const [AllProjects, setAllProjects] = useState([]);
   const [uniqueProjectNames, setUniqueProjectNames] = useState([]);
 
+  // Initializing the variables for new projects/task to be added later
+  const [task, setTask] = useState("");
+  const [name, setName] = useState("");
+  const [createTask, setCreate] = useState(false);
+
+  // UseEffect will be called once at the start of the rendering of the page
   useEffect(() => {
     //replace allprojects with data from fetch
 
+    // Projects function is a fetch that will get allprojects and tasks the current user has done
     const Projects = () => {
       fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           let projects = data.data.sort((a,b) => {
             return new Date(a.Date)- new Date(b.Date)
           })
-          const uniques = filterUniqueProjects(projects);
 
+          const uniques = filterUniqueProjects(projects);
+          // Fill the state variables with results from the the fetch
           setUniqueProjectNames(uniques);
           setAllProjects(projects);
+          // Changing the Loaded variable to true will allow the components to be rendered only after the fetching and
+          // processing is complete
           setLoaded(true);
         })
         .catch((error) => {
@@ -92,20 +106,18 @@ const StaffDashboard = () => {
         });
     };
     Projects();
-
-    // const uniques = filterUniqueProjects(allProjects);
-    // setUniqueProjectNames(uniques);
-    // setAllProjects(allProjects);
-    // setLoaded(true);
   }, []);
 
-  const [task, setTask] = useState("");
-  const [name, setName] = useState("");
 
-  const [createTask, setCreate] = useState(false);
-
+  // Give a boolean value return its not value
+  // Called when the button create a new task is clicked or when the task is finished
   const handleClick = (prev) => !prev;
 
+  // This function is called takes in a new task and does a POST to the database to addd it
+  // It also adds the task or the front end 
+  // Before adding the task, we must determine if the task is from a new project or not
+  // If it is from a new project add that project and its task to the front of the 
+  // setUniqueProjectNames and allprojects arrays. Otherwise add the task to the front of its own project 
   const handleAdd = (taskToAdd) => {
     taskToAdd["Emp_ID"] = Emp_ID;
     taskToAdd["Task_ID"] = Math.random() * 100;
@@ -134,16 +146,21 @@ const StaffDashboard = () => {
         });
     };
     add();
+    // close create ne task section
     setCreate(handleClick);
   };
 
+  // when the input field for the project is changed, change the project name variable with this change
   const projectNameChange = (event) => {
     setName(event.target.value);
   };
 
+  // when the input field for the task is changed, change the task name variable with this change
   const taskChange = (event) => {
     setTask(event.target.value);
   };
+
+  // When the pause button is clicked, we do a PUT request to add the time at pause to the database for that task
   const handlePause = (taskToPause, time) => {
     console.log("pause ", taskToPause);
     // takes time from the task and task id
@@ -168,10 +185,10 @@ const StaffDashboard = () => {
     };
     pause();
   };
+
+  // When the stop button is clicked, we do a PUT request to change the active status of the task to the database
   const handleStop = (taskToStop) => {
-    // console.log(taskToStop);
-    // in here we pass a task_id and
-    //cahnge true to false ,,,, ACtive
+  
     fetch(`/api/Tasks/?Task_ID=${taskToStop.Task_ID}`, {
       method: "PUT",
       headers: {
@@ -187,6 +204,8 @@ const StaffDashboard = () => {
         console.error("Error:", error);
       });
   };
+
+  // This fucntion deletes a task from the database given its Message_ID
   const deleteTask = (taskToDelete) => {
     fetch(`/api/Tasks/?Task_ID=${taskToDelete.Task_ID}`, {
       method: "DELETE",
@@ -202,18 +221,20 @@ const StaffDashboard = () => {
         console.error("Error:", error);
       });
   };
+
+  // This function calls the deleteTask() function and does the necessary front-end adjustments
+  // i.e deleting the message and re-rendering, deleting projects
   const handleDelete = (taskToDelete) => {
     // pass task id to delete
     deleteTask(taskToDelete);
     setAllProjects((a) => a.filter((p) => p.Task_ID !== taskToDelete.Task_ID));
-    // setSheets(updatedSheets);
     setUniqueProjectNames(
       filterUniqueProjects(
         AllProjects.filter((p) => p.Task_ID !== taskToDelete.Task_ID)
       )
     );
   };
-  // const data = ""
+
   const Lunch = () => {
     history.push("/Lunch", { params: data });
   };
@@ -284,8 +305,6 @@ const StaffDashboard = () => {
             return (
               <ProjectHolder key={index}>
                 <h2>{name}</h2>
-
-                {/* {filterTasksByProject(AllProjects, name).map((s) => s.Component)} */}
                 {filterTasksByProject(AllProjects, name).map((s) => (
                   <article className="SheetHolderFin">
                     <TaskContainer
@@ -310,11 +329,10 @@ const StaffDashboard = () => {
             );
           })}
       </Card>
-      {/* <LoginButton /> */}
     </Wrapper>
   );
 };
 
 export default StaffDashboard;
 
-// export { Projects, add, pause, deleteTask };
+
