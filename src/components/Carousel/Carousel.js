@@ -68,10 +68,6 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {//this is the comp
     onOpenModal(booking, data,empBook,actionTriggered);//what triggers the openeing of the modal, and this data is passed to determine what displayes on modal
     setActionTriggered(prev=>!prev);
   };
-
-    onOpenModal(booking, data, empBook, actionTriggered);
-    setActionTriggered((prev) => !prev);
-  };
   // useEffect(() => {
   //   const fetchEmployeeMeal = () => {
   //     fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
