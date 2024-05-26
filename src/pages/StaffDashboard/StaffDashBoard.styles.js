@@ -1,10 +1,14 @@
+// style components
 import styled from "styled-components";
+// background image components
 import background from "../../Images/Bckgrd.svg";
 //react
 import React, { useEffect, useState } from "react";
 
 //icons
 import { PlayIcon, PauseIcon, StopIcon } from "@heroicons/react/24/outline";
+
+// helpers
 import { formatDate, formatTime } from "../../helper.js";
 
 
@@ -559,14 +563,18 @@ export const TaskDescription = styled.section`
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Given a task in a unique project, renders it and adds to it the necessary functions 
 export const TaskContainer = ({ task, onPause, onStop, allProjects }) => {
+
+  // intialize the state variables
   const [timerRunning, setTimerRunning] = useState(false);
   const [stop, setStop] = useState(task.Active);
   const [time, setTime] = useState(task.Time);
-  // const [initial,setInitial] = useState(false)
 
+  // given a boolean value return its not
   const handleButtonClick = (prev) => !prev;
 
+  // useEffect called to set and update the timer every second as long the timer is running
   useEffect(() => {
     let interval;
 
