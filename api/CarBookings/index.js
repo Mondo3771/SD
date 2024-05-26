@@ -10,7 +10,7 @@ module.exports = async function (context, req) {
       try {
         const resultSet = await pool
           .request()
-          .query(`SELECT * FROM Carwash_Booking where Emp_ID = ${data.Emp_ID}`);
+          .query(`SELECT * FROM Carwash_Booking where Emp_ID = ${data.Emp_ID}  and date >= CAST(GETDATE() AS DATE)`);
         context.res = {
           status: 200,
           body: {

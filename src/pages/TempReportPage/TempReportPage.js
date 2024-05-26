@@ -74,7 +74,7 @@ export const TempReportPage = () => {
         const mainUser = fetchStorageData({ key: "User" });
         // Filter the Users array  to only allow the user to see and interact with people in their department
         const arr = data.data.filter(
-          (p) => p.Department === mainUser.Department
+          (p) => p.Department === mainUser.Department && p.Emp_ID !== mainUser.Emp_ID
         );
         setUsers(arr);
       })

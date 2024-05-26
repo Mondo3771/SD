@@ -58,8 +58,8 @@ const Reporting = ({ User }) => {
       });
   };
 
+
   const GetAllTasks = (Emp_ID) => {// to fetch all tasks from DB
-    console.log("Startyimg");
     fetch(`/api/Tasks/?Emp_ID=${Emp_ID}`)
       .then((response) =>response.json()
       )
@@ -74,7 +74,6 @@ const Reporting = ({ User }) => {
 
   useEffect(() => {//This was used to do all the fetches again if new User info is passed so that it can change according to the specific user
     GetAllTasks(User.Emp_ID);
-    console.log("ge");
     fetchFeedback(User.Emp_ID);
   }, [User]);
 
@@ -273,26 +272,7 @@ const Reporting = ({ User }) => {
         </Dater>
 
         <Main>
-          {/* 
-                <Top>
-                    
-                    <Plot
-                        data={data}
-                        layout={layout}
-                        style={{ width: '60%', height: '60vh',margin:'40px' }}
-                    />
-                    <Feedback>
-                    <h2>Hello</h2> 
-                    {sortFeed?sortFeed.map((item, index) => (
-                        <p key={index}>
-                            <p><strong>{item.Name}:</strong> {item.message}</p>
-                        </p>
-                    )):null}
 
-
-                 </Feedback>
-
-                </Top> */}
           <ChartSection>
             {/* {bar Graph to plot hours} */}
             <Plot
@@ -313,8 +293,8 @@ const Reporting = ({ User }) => {
               <section className="text">
                 {sortFeed
                   ? sortFeed.map((item, index) => (
-                      <p key={index}>
-                        <p className="messagebox">
+                      <p key={index} className="messagebox">
+                        <p >
                           {/* <strong>
                             {item.Name}:</strong> */}
                           <strong> Message: {item.Message}</strong>

@@ -1,11 +1,27 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+  waitFor,
+} from "@testing-library/react";
 import Carousel from "./Carousel";
-import { json } from "react-router";
-import { act } from "react-dom/test-utils";
-import fecthmock from "jest-fetch-mock";
+import fetchMock from "jest-fetch-mock";
+import userEvent from "@testing-library/user-event";
+import { scryRenderedComponentsWithType } from "react-dom/test-utils";
+// import { act } from "react-dom/test-utils";
+// import "@testing-library/jest-dom/extend-expect";
 
-fecthmock.enableMocks();
+fetchMock.enableMocks();
+
+beforeEach(() => {
+  fetchMock.resetMocks();
+});
+afterEach(() => {
+  // console.error = originalError;
+  jest.clearAllMocks();
+});
 
 jest.mock("../../helper", () => ({
   ...jest.requireActual("../../helper"),
@@ -13,7 +29,17 @@ jest.mock("../../helper", () => ({
 }));
 
 test("renders without errors", async () => {
-  global.fetch = jest.fn().mockImplementationOnce(() =>
+
+  // global.fetch = jest.fn().mockImplementation(() =>
+  //   Promise.resolve({
+  //     json: () =>
+  //       Promise.resolve({
+  //         data: [],
+  //         message: "Successfully retrieved Meals",
+  //       }),
+  //   })
+  // );
+  global.fetch = jest.fn().mockImplementation(() =>
     Promise.resolve({
       json: () =>
         Promise.resolve({
@@ -67,18 +93,21 @@ test("renders without errors", async () => {
     })
   );
 
-  global.fetch = jest.fn().mockImplementationOnce(() =>
-    Promise.resolve({
-      json: () =>
-        Promise.resolve({
-          data: [],
-          message: "Successfully retrieved Meals",
-        }),
-    })
-  );
+
+  const MockComponent = (props) => {
+    return <div data-testid="mockComponent">{props.children}</div>;
+  };
+
+  const openModal = jest.fn();
 
   await act(async () => {
-    render(<Carousel />);
+    render(<Carousel onOpenModal={openModal} component={<MockComponent />} />);
+  });
+  // Add your assertions here
+  screen.debug();
+  const delteButton = screen.getAllByText("Cancel");
+  await act(async () => {
+    fireEvent.click(delteButton[0]);
   });
   // Add your assertions here
 });

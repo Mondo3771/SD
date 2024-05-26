@@ -20,6 +20,7 @@ import "swiper/css/navigation";
 import Loader from "../Loader/Loader";
 import StaffHeader from "../StaffHeader/StaffHeader";
 import { fetchStorageData, setLocalStorage } from "../../helper";
+import { logDOM } from "@testing-library/react";
 
 const DeleteBooking = (Booking_ID) => {//API call to delete a specific booking
   fetch(`/api/Meals?Booking_ID=${Booking_ID}`, {
@@ -48,6 +49,16 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {//this is the comp
   const [topCardIndex, setTopCardIndex] = useState(0);// specific index so that we could edit the top card of slider seperately
   const [b_ID, setb_ID] = useState(null);// booking ID
   const [delBook, setdelBook] = useState(false);// booking to delete
+    console.log("fetching meals");
+    fetch("/api/Meals")
+      .then((response) => response.json())
+      .then((meals) => {
+        // console.log(meals.data, "meals");
+        setMeals(meals.data);
+        setLoaded(true);
+      });
+  };
+
 
   const [actionTriggered, setActionTriggered] = useState(false); //i want to refresh 1 second after an action
 
@@ -58,19 +69,9 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {//this is the comp
     setActionTriggered(prev=>!prev);
   };
 
-  useEffect(() => {// fetches all meals
-    const fetchData = () => {
-      fetch("/api/Meals")
-        .then((response) => response.json())
-        .then((meals) => {
-          setMeals(meals.data);
-          setLoaded(true);
-        });
-    };
-
-    fetchData();
-  }, []);
-
+    onOpenModal(booking, data, empBook, actionTriggered);
+    setActionTriggered((prev) => !prev);
+  };
   // useEffect(() => {
   //   const fetchEmployeeMeal = () => {
   //     fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
@@ -87,15 +88,19 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {//this is the comp
   //   fetchEmployeeMeal();
   // }, []);
   useEffect(() => {// fetch from booking of an employee
+
+    console.log(fetchData());
+
     const fetchEmployeeMeal = () => {
       fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
         .then((response) => response.json())
         .then((book) => {
+          console.log(book.data, "noooooooo");
           setempBook(book.data);
           setb_ID(book.data[0].Booking_ID);
         })
         .catch((error) => {
-          console.error('Error fetching employee meal:', error);
+          console.error("Error fetching employee meal:", error);
         });
     };
 
@@ -110,34 +115,33 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {//this is the comp
   }, [data.Emp_ID]);
 
   useEffect(() => {
-      const timer = setTimeout(() => {
-        // Action to be performed 1 second after modal is closed or delete button is clicked
-        console.log("Action triggered 1 second later");
-        const fetchEmployeeMeal = () => {
-          fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
-            .then((response) => response.json())
-            .then((book) => {
-              console.log(book.data, "noooooooo");
-              setempBook(book.data);
-              setb_ID(book.data[0]?book.data[0].Booking_ID:null);
-              console.log(book.data[0].Name_of_Meal, "meal");
-              console.log(book.data[0].Booking_ID, "book");
-            });
-        };
+    const timer = setTimeout(() => {
+      // Action to be performed 1 second after modal is closed or delete button is clicked
+      console.log("Action triggered 1 second later");
+      const fetchEmployeeMeal = () => {
+        fetch(`/api/Meals?Emp_ID=${data.Emp_ID}`)
+          .then((response) => response.json())
+          .then((book) => {
+            console.log(book.data, "noooooooo");
+            setempBook(book.data);
+            setb_ID(book.data[0] ? book.data[0].Booking_ID : null);
+            console.log(book.data[0].Name_of_Meal, "meal");
+            console.log(book.data[0].Booking_ID, "book");
+          });
+      };
 
-        fetchEmployeeMeal();
+      fetchEmployeeMeal();
 
-        // Reset actionTriggered state
-        setActionTriggered(false);
-      }, 500);
+      // Reset actionTriggered state
+      setActionTriggered(false);
+    }, 500);
 
-      return () => clearTimeout(timer); // Clear timeout if the component is unmounted or actionTriggered changes
-    
+    return () => clearTimeout(timer); // Clear timeout if the component is unmounted or actionTriggered changes
   }, [actionTriggered]);
 
   return (
     <>
-    {/* {modalOpen && (
+      {/* {modalOpen && (
        
         <>
          <Modal
@@ -196,6 +200,7 @@ const Carousel = ({ onOpenModal,component:StaffCarWash }) => {//this is the comp
                       // {individual slide on slider}
                       <SwiperSlide key={index}>
                         <Card
+                        aria-label="Card"
                           onClick={() => Book(booking)}
                           isTop={index === topCardIndex}
                         >
