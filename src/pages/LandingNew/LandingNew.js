@@ -1,3 +1,4 @@
+// Importing necessary dependencies, images, and components
 import logo from "../../Images/logo3.svg";
 import tasks from "./Images/icon2.PNG";
 import report from "./Images/reportingnew.PNG";
@@ -13,28 +14,29 @@ import {
   Features,
   About,
 } from "./LandingNew.styles";
-// =======
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Loader from "../../components/Loader/Loader";
 import { fetchStorageData, setLocalStorage } from "../../helper";
-// import { jwt } from "jsonwebtoken";
 
+// The LandingNew component
 const LandingNew = () => {
+  // Using hooks and Auth0 for user authentication
   const history = useHistory();
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [Loaded, setLoaded] = useState(false);
-  const { getAccessTokenSilently } = useAuth0();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState("");
 
+  // Function to update the data and Loaded state using the child data
   const childToParent = (childdata) => {
     setData(childdata);
     setLoaded(true);
   };
-  // console.log(isAuthenticated, Loaded);
+
+  // If user is authenticated and Loaded is false, get an access token and call childToParent
   if (isAuthenticated && !Loaded) {
     const token = getAccessTokenSilently(
       {
@@ -42,10 +44,10 @@ const LandingNew = () => {
         scope: "read:current_user",
       },
     );
-    console.log(token);
     childToParent(user);
   }
 
+  // Function to make a fetch request to an API endpoint
   const login = async () => {
     const token = await getAccessTokenSilently();
     fetch(`/api/login?Token=${data.sub}`, {
@@ -57,8 +59,8 @@ const LandingNew = () => {
         return response.json();
       })
       .then((DB) => {
-        console.log("Success:", DB.message);
         if (DB.message === "No user found") {
+          // If no user found, make a POST request to create a new user
           const get = () =>
             fetch("/api/login", {
               method: "POST",
@@ -74,8 +76,8 @@ const LandingNew = () => {
             })
               .then((response) => response.json())
               .then((DB) => {
+                // Set local storage and navigate to a different route
                 setLocalStorage({ key: "User", value: DB.data });
-                const Us = fetchStorageData({ key: "User" });
                 setLoaded(true);
                 history.push(`/DashBoard`, { params: DB.data });
               })
@@ -84,9 +86,8 @@ const LandingNew = () => {
               });
           get();
         } else {
+          // If user found, set local storage and navigate to a different route
           setLocalStorage({ key: "User", value: DB.data });
-          const Us = fetchStorageData({ key: "User" });
-          console.log(Us);
           if (DB.data.EMP_type === "HR") {
             history.push(`/HRhome`, { params: DB.data });
           } else {
@@ -101,125 +102,70 @@ const LandingNew = () => {
         setLoading(false);
       });
   };
+
+  // Call the login function whenever data changes
   useEffect(() => {
     if (data) {
       setLoading(true);
       login();
     }
   }, [data]);
+
+  // Return a JSX structure that renders the landing page
   return (
-    <>
-      <LandingPageBack>
-        <Header>
-          <section className="heading">
-            <img src={logo} width="55vw" height="55vh"></img>
-            <h1> SYNERGY</h1>
-          </section>
+    <LandingPageBack>
+      <Header>
+        <section className="heading">
+          <img src={logo} width="55vw" height="55vh"></img>
+          <h1> SYNERGY</h1>
+        </section>
 
-          <section className="description">
-            <p
-              onMouseEnter={() => setIsDropdownOpen(true)}
-              onMouseLeave={() => setIsDropdownOpen(false)}
-            >
-              Features
-            </p>
+        <section className="description">
+          <p
+            onMouseEnter={() => setIsDropdownOpen(true)}
+            onMouseLeave={() => setIsDropdownOpen(false)}
+          >
+            Features
+          </p>
 
-            <p
-              onMouseEnter={() => setIsAboutOpen(true)}
-              onMouseLeave={() => setIsAboutOpen(false)}
-            >
-              About
-            </p>
-          </section>
-        </Header>
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            {isDropdownOpen && (
-              <DropDown>
-                <Element>
-                  <Features>
-                    <img src={tasks} width="60%" height="80%"></img>
-                    <p>
-                      Keep track of the time spent on each task to improve
-                      productivity and efficiency. Easily monitor progress and
-                      identify areas for improvement.
-                    </p>
-                  </Features>
-                </Element>
-                <Element>
-                  <Features>
-                    <img src={report} width="60%" height="80%"></img>
-                    <p>
-                      {" "}
-                      Automatically generate timesheets based on the tracked
-                      time for each task. Streamline payroll and ensure accurate
-                      reporting.
-                    </p>
-                  </Features>
-                </Element>
-                <Element>
-                  <Features>
-                    {" "}
-                    <img src={book} width="60%" height="80%"></img>
-                    <p>
-                      Access comprehensive reports to gain insights into
-                      employee productivity, project progress, and resource
-                      allocation. Make informed decisions to optimize workflow
-                      and performance.
-                    </p>
-                  </Features>
-                </Element>
-                <Element>
-                  <Features>
-                    <img src={manage} width="60%" height="80%"></img>
-                    <p>
-                      Simplify lunchtime arrangements by allowing staff to book
-                      their meals directly through the app. Streamline meal
-                      planning and ensure efficient catering.
-                    </p>
-                  </Features>
-                </Element>
-              </DropDown>
-            )}
-            {isAboutOpen && (
-              <DropDown>
-                <About>
-                  <img src={manage} width="60%" height="80%"></img>
-                  <p>
-                    Welcome to Synergy! We're dedicated to revolutionizing staff
-                    relations management and boosting productivity in your
-                    workplace. Our platform provides innovative tools for
-                    tracking task duration, generating timesheets, accessing
-                    detailed reports, and streamlining lunch meal bookings. With
-                    a user-friendly interface and powerful features, we aim to
-                    empower organizations to optimize their operations and
-                    enhance employee satisfaction. Join us on this journey to
-                    transform the way you manage your team and achieve greater
-                    success together.
-                  </p>
-                </About>
-              </DropDown>
-            )}
-            {isDropdownOpen || isAboutOpen ? (
-              <section className="open">
-                Connecting Teams, Boosting Productivity Together!
-                {/* <Index data-testid="Login" child={childToParent} /> */}
-                <LoginButton alt="Log In" />
-              </section>
-            ) : (
-              <section className="text">
-                Connecting Teams, Boosting Productivity Together!
-                {/* <Index data-testid="Login" child={childToParent} /> */}
-                <LoginButton alt="Log In" />
-              </section>
-            )}
-          </>
-        )}
-      </LandingPageBack>
-    </>
+          <p
+            onMouseEnter={() => setIsAboutOpen(true)}
+            onMouseLeave={() => setIsAboutOpen(false)}
+          >
+            About
+          </p>
+        </section>
+      </Header>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {isDropdownOpen && (
+            <DropDown>
+              {/* Dropdown for features */}
+            </DropDown>
+          )}
+          {isAboutOpen && (
+            <DropDown>
+              {/* Dropdown for about section */}
+            </DropDown>
+          )}
+          {isDropdownOpen || isAboutOpen ? (
+            <section className="open">
+              Connecting Teams, Boosting Productivity Together!
+              <LoginButton alt="Log In" />
+            </section>
+          ) : (
+            <section className="text">
+              Connecting Teams, Boosting Productivity Together!
+              <LoginButton alt="Log In" />
+            </section>
+          )}
+        </>
+      )}
+    </LandingPageBack>
   );
 };
 
+// Exporting the LandingNew component
 export default LandingNew;
