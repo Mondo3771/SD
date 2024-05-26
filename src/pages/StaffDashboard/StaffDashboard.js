@@ -1,31 +1,36 @@
 //react
-import React, { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import { fetchStorageData, setLocalStorage } from "../../helper";
+import React, { useState ,useEffect } from "react";
+
+// react router dom
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
+// helpers
+import { fetchStorageData} from "../../helper";
+
 //icons
 import {
   ClockIcon,
-  ArrowRightIcon,
   TrashIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
+
+// styles
 import {
-  allProjects,
   Card,
   CreateTaskContainer,
-  Header,
   LabelHolder,
   ProjectHolder,
   TaskContainer,
   Wrapper,
 } from "./StaffDashBoard.styles";
 
+// components
 import StaffHeader from "../../components/StaffHeader/StaffHeader";
-import { useEffect } from "react";
-import LoginButton from "../../components/Log/LoginButton";
+
+// toast
 import { toast } from "react-toastify";
-import { MockUser } from "../../components/FeedBackComponent/FeedBack.styles";
-// import sheet from "styled-components/dist/sheet";
+
+
 
 // Function to filter unique Project values and return an array of unique projects
 function filterUniqueProjects(projects) {
