@@ -12,7 +12,7 @@ import {
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import Modal from "../Modal/Modal";
 import { fetchStorageData } from "../../helper";
-
+//what was used to test 
 const mockQuantity=[
   {
     Quantity:10,
